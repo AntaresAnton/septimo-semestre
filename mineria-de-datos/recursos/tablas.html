@@ -1,0 +1,527 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Clima-australia</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS v5.2.1 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+</head>
+
+<body>
+    <header>
+        <!-- place navbar here -->
+    </header>
+    <main>
+
+        <section class="weather-metrics py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">
+                    🌏 Métricas Meteorológicas de Australia
+                </h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">📊 Métrica</th>
+                                        <th scope="col">📈 Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>📝 Total de Registros</td>
+                                        <td>142,193</td>
+                                    </tr>
+                                    <tr>
+                                        <td>📍 Ubicaciones Monitoreadas</td>
+                                        <td>49</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>📅 Período Analizado</td>
+                                        <td>2007 - 2017</td>
+                                    </tr>
+                                    <tr>
+                                        <td>🌡️ Promedio de Temperatura Máxima</td>
+                                        <td><span class="text-danger">23.4°C</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>❄️ Promedio de Temperatura Mínima</td>
+                                        <td><span class="text-info">12.2°C</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>💧 Promedio de Humedad a las 3 PM</td>
+                                        <td><span class="text-primary">52%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>🌧️ Precipitación Promedio Diaria</td>
+                                        <td><span class="text-info">2.35 mm</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>☔ Días con Lluvia (>1mm)</td>
+                                        <td>31,877</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <section class="data-cleaning py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">
+                    🧹 Análisis de Valores Nulos
+                </h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-info text-dark">
+                                    <tr>
+                                        <th scope="col">📊 Variable</th>
+                                        <th scope="col">❌ Valores Nulos</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>🌡️ TempMin</td>
+                                        <td><span class="badge bg-success">0.45%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>🌡️ TempMax</td>
+                                        <td><span class="badge bg-success">0.23%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>🌧️ LluviaHoy</td>
+                                        <td><span class="badge bg-success">0.99%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>💨 Velocidad del Viento 9 AM</td>
+                                        <td><span class="badge bg-success">0.95%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>💨 Velocidad del Viento 3 PM</td>
+                                        <td><span class="badge bg-success">1.85%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>💧 Humedad 9 AM</td>
+                                        <td><span class="badge bg-success">1.25%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>💧 Humedad 3 PM</td>
+                                        <td><span class="badge bg-warning text-dark">2.54%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>⏲️ Presión 9 AM</td>
+                                        <td><span class="badge bg-warning text-dark">9.86%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>⏲️ Presión 3 PM</td>
+                                        <td><span class="badge bg-warning text-dark">9.83%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>💧 Evaporación</td>
+                                        <td><span class="badge bg-danger">42.79%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>☀️ Horas de Sol</td>
+                                        <td><span class="badge bg-danger">47.69%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="model-metrics py-5 bg-light">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <!-- Configuración del Modelo -->
+                        <h2 class="text-center mb-4">
+                            ⚙️ Configuración del Modelo
+                        </h2>
+                        <div class="table-responsive mb-5">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">🔧 Parámetro</th>
+                                        <th scope="col">📊 Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>🌳 Número de árboles</td>
+                                        <td>100</td>
+                                    </tr>
+                                    <tr>
+                                        <td>📏 Profundidad máxima</td>
+                                        <td>10</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>🔄 Criterio de división</td>
+                                        <td>Gini</td>
+                                    </tr>
+                                    <tr>
+                                        <td>📊 División mínima de nodos</td>
+                                        <td>2</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Resultados del Modelo -->
+                        <h2 class="text-center mb-4">
+                            📈 Resultados del Modelo
+                        </h2>
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">📊 Métrica</th>
+                                        <th scope="col">💯 Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>🎯 Precisión Global</td>
+                                        <td><span class="text-success">84%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>🌧️ F1-score para días con lluvia</td>
+                                        <td><span class="text-warning">57%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>☀️ F1-score para días sin lluvia</td>
+                                        <td><span class="text-success">90%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="evaluation-metrics py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">
+                    📊 Métricas de Evaluación por Clase
+                </h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">📈 Métrica</th>
+                                        <th scope="col">☀️ Sin Lluvia</th>
+                                        <th scope="col">🌧️ Con Lluvia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>🎯 Precisión</td>
+                                        <td><span class="text-success">86%</span></td>
+                                        <td><span class="text-warning">70%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>🔍 Recall</td>
+                                        <td><span class="text-success">94%</span></td>
+                                        <td><span class="text-danger">47%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>⚖️ F1-Score</td>
+                                        <td><span class="text-success">90%</span></td>
+                                        <td><span class="text-warning">57%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="model-comparison py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">
+                    🤖 Comparación de Modelos
+                </h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">🔧 Modelo</th>
+                                        <th scope="col">🎯 Precisión Global</th>
+                                        <th scope="col">🌧️ F1-Score Lluvia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>📊 Regresión Logística</td>
+                                        <td><span class="text-warning">78%</span></td>
+                                        <td><span class="text-danger">45%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>🔍 K-Nearest Neighbors (KNN)</td>
+                                        <td><span class="text-warning">80%</span></td>
+                                        <td><span class="text-danger">49%</span></td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>🌳 Random Forest</td>
+                                        <td><span class="text-success">84%</span></td>
+                                        <td><span class="text-warning">57%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>⚡ XGBoost</td>
+                                        <td><span class="text-success">86%</span></td>
+                                        <td><span class="text-success">62%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="project-phases py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">
+                    🚀 Fases del Proyecto
+                </h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">📅 Fase</th>
+                                        <th scope="col">📝 Descripción</th>
+                                        <th scope="col">📦 Entregable</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>1️⃣</td>
+                                        <td>🧹 Recolección y limpieza de datos</td>
+                                        <td>📊 Dataset limpio y estructurado</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2️⃣</td>
+                                        <td>🔍 Exploración de datos y análisis de patrones</td>
+                                        <td>📑 Informe de análisis exploratorio</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>3️⃣</td>
+                                        <td>⚙️ Desarrollo del modelo predictivo</td>
+                                        <td>💻 Código de implementación y reporte de métricas</td>
+                                    </tr>
+                                    <tr>
+                                        <td>4️⃣</td>
+                                        <td>📈 Evaluación y optimización</td>
+                                        <td>📊 Comparación de modelos y mejoras propuestas</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>5️⃣</td>
+                                        <td>📚 Documentación y presentación final</td>
+                                        <td>📋 Informe técnico y presentación de resultados</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="strategy-section py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">
+                    🎯 Estrategias de Optimización
+                </h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">⚙️ Estrategia</th>
+                                        <th scope="col">📝 Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>⚡ Uso de XGBoost</td>
+                                        <td>Implementar XGBoost debido a su mejor rendimiento en comparación con Random
+                                            Forest.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>🔧 Ajuste de hiperparámetros</td>
+                                        <td>Aplicar búsqueda en grid para mejorar la precisión del modelo.</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>⚖️ Balanceo de datos</td>
+                                        <td>Usar técnicas como SMOTE para aumentar la representatividad de los días
+                                            lluviosos.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="data-sources py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">
+                    📡 Fuentes de Datos Complementarias
+                </h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">🔍 Fuente de Datos</th>
+                                        <th scope="col">💡 Beneficio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>🛰️ Datos satelitales</td>
+                                        <td>Mejora la predicción de patrones climáticos a gran escala.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>📡 Sensores en tiempo real</td>
+                                        <td>Proporciona información actualizada sobre variables meteorológicas.</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>🌍 Modelos de predicción climática globales</td>
+                                        <td>Permiten incorporar tendencias macroclimáticas en las predicciones.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="glossary py-5 bg-light">
+            <div class="container">
+                <h2 class="text-center mb-4">
+                    📚 Glosario de Términos
+                </h2>
+
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="table-responsive">
+                            <table class="table table-hover shadow-sm border">
+                                <thead class="table-primary text-dark">
+                                    <tr>
+                                        <th scope="col">🔤 Término</th>
+                                        <th scope="col">📖 Definición</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="table-light">
+                                        <td>💾 Minería de Datos</td>
+                                        <td>Proceso de extracción de información útil a partir de grandes volúmenes de
+                                            datos.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>🌳 Random Forest</td>
+                                        <td>Algoritmo de aprendizaje automático basado en múltiples árboles de decisión.
+                                        </td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>⚡ XGBoost</td>
+                                        <td>Algoritmo de gradient boosting optimizado para el rendimiento.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>📊 F1-score</td>
+                                        <td>Métrica que equilibra precisión y recall en la evaluación de modelos.</td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>⚖️ SMOTE</td>
+                                        <td>Técnica para balancear datos de entrenamiento mediante la generación de
+                                            muestras sintéticas.</td>
+                                    </tr>
+                                    <tr>
+                                        <td>🔍 Grid Search</td>
+                                        <td>Método para encontrar la mejor combinación de hiperparámetros en un modelo.
+                                        </td>
+                                    </tr>
+                                    <tr class="table-light">
+                                        <td>📈 Oversampling</td>
+                                        <td>Técnica de balanceo que aumenta la representación de la clase minoritaria.
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <style>
+            .weather-metrics {
+                background: linear-gradient(to bottom, #fff, #ffffff);
+            }
+
+            .table {
+                border-radius: 8px;
+                overflow: hidden;
+            }
+
+            .table thead {
+                background: linear-gradient(45deg, #4a90e2, #67b26f);
+            }
+
+            .table-hover tbody tr:hover {
+                background-color: rgba(74, 144, 226, 0.1);
+            }
+        </style>
+
+
+    </main>
+    <footer>
+        <!-- place footer here -->
+    </footer>
+    <!-- Bootstrap JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
