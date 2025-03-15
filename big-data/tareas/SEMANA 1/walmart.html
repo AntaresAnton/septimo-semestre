@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Walmart: Optimización de Inventarios y Análisis de Ventas</title>
+    <style>
+        :root {
+            --walmart-blue: #0071ce;
+            --walmart-yellow: #ffc220;
+            --walmart-dark-blue: #041e42;
+            --walmart-light-gray: #f5f5f5;
+            --section-padding: 40px 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        header {
+            background-color: var(--walmart-blue);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: white;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        section {
+            padding: var(--section-padding);
+            background-color: white;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: var(--walmart-blue);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--walmart-blue);
+        }
+        
+        h3 {
+            color: var(--walmart-dark-blue);
+            margin: 20px 0 15px;
+        }
+        
+        p {
+            margin-bottom: 15px;
+        }
+        
+        ul, ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--walmart-blue);
+        }
+        
+        .card h4 {
+            color: var(--walmart-blue);
+            margin-bottom: 10px;
+        }
+        
+        .diagram {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 30px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .diagram img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .tool-card {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .tool-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tool-card h4 {
+            color: var(--walmart-blue);
+            margin-bottom: 10px;
+        }
+        
+        .tool-card p {
+            font-size: 0.9rem;
+        }
+        
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .result-card {
+            background-color: var(--walmart-light-gray);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid var(--walmart-blue);
+        }
+        
+        .result-card h4 {
+            color: var(--walmart-blue);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            color: var(--walmart-blue);
+        }
+        
+        footer {
+            background-color: var(--walmart-dark-blue);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .results-container, .tools-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Estilos para los diagramas SVG */
+        .svg-diagram {
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        /* Estilos para las etiquetas de problemas resueltos */
+        .problem-solved {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            background-color: #e6f3ff;
+            padding: 15px;
+            border-radius: 8px;
+        }
+        
+        .checkmark {
+            color: #28a745;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        /* Estilos para las herramientas */
+        .tool-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .tool-icon {
+            color: var(--walmart-blue);
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* Estilos para el logo de Walmart */
+        .walmart-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        
+        .walmart-logo-text {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--walmart-blue);
+        }
+        
+        .walmart-spark {
+            color: var(--walmart-yellow);
+            font-size: 2.5rem;
+            margin: 0 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="walmart-logo">
+                <span class="walmart-logo-text">Walmart</span>
+                <span class="walmart-spark">*</span>
+            </div>
+            <h1>Optimización de Inventarios y Análisis de Ventas</h1>
+            <p>Análisis de caso de éxito en la implementación de Big Data</p>
+        </div>
+    </header>
+    
+    <div class="container">
+        <section id="descripcion">
+            <h2>Descripción del Caso</h2>
+            <p>Walmart, el minorista más grande del mundo, utiliza Big Data para gestionar su inventario, mejorar la experiencia del cliente y optimizar operaciones en sus miles de tiendas. Este informe analiza cómo Walmart ha implementado metodologías de Big Data para transformar su cadena de suministro y crear ventajas competitivas significativas en el mercado minorista global.</p>
+            
+            <div class="diagram">
+                <svg class="svg-diagram" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fondo del diagrama -->
+                    <rect x="0" y="0" width="800" height="400" fill="#f8f9fa" rx="10" ry="10"/>
+                    
+                    <!-- Título del diagrama -->
+                    <text x="400" y="40" font-size="24" text-anchor="middle" fill="#0071ce" font-weight="bold">Ecosistema de Big Data en Walmart</text>
+                    
+                    <!-- Círculo central - Walmart -->
+                    <circle cx="400" cy="200" r="80" fill="#0071ce" opacity="0.9"/>
+                    <text x="400" y="190" font-size="22" text-anchor="middle" fill="white" font-weight="bold">WALMART</text>
+                    <text x="400" y="220" font-size="16" text-anchor="middle" fill="white">Big Data</text>
+                    
+                    <!-- Elementos orbitando -->
+                    <!-- Tiendas -->
+                    <circle cx="200" cy="120" r="60" fill="#041e42" opacity="0.8"/>
+                    <text x="200" y="120" font-size="18" text-anchor="middle" fill="white" font-weight="bold">Tiendas</text>
+                    <text x="200" y="145" font-size="14" text-anchor="middle" fill="white">+11,000 global</text>
+                    
+                    <!-- E-commerce -->
+                    <circle cx="600" cy="120" r="60" fill="#041e42" opacity="0.8"/>
+                    <text x="600" y="120" font-size="18" text-anchor="middle" fill="white" font-weight="bold">E-commerce</text>
+                    <text x="600" y="145" font-size="14" text-anchor="middle" fill="white">Ventas online</text>
+                    
+                    <!-- Logística -->
+                    <circle cx="200" cy="280" r="60" fill="#041e42" opacity="0.8"/>
+                    <text x="200" y="280" font-size="18" text-anchor="middle" fill="white" font-weight="bold">Logística</text>
+                    <text x="200" y="305" font-size="14" text-anchor="middle" fill="white">Distribución</text>
+                    
+                    <!-- Clientes -->
+                    <circle cx="600" cy="280" r="60" fill="#041e42" opacity="0.8"/>
+                    <text x="600" y="280" font-size="18" text-anchor="middle" fill="white" font-weight="bold">Clientes</text>
+                    <text x="600" y="305" font-size="14" text-anchor="middle" fill="white">Millones diarios</text>
+                    
+                    <!-- Líneas de conexión -->
+                    <line x1="260" y1="120" x2="340" y2="160" stroke="#ffc220" stroke-width="3" opacity="0.7"/>
+                    <line x1="540" y1="120" x2="460" y2="160" stroke="#ffc220" stroke-width="3" opacity="0.7"/>
+                    <line x1="260" y1="280" x2="340" y2="240" stroke="#ffc220" stroke-width="3" opacity="0.7"/>
+                    <line x1="540" y1="280" x2="460" y2="240" stroke="#ffc220" stroke-width="3" opacity="0.7"/>
+                </svg>
+            </div>
+        </section>
+        
+        <section id="contexto">
+            <h2>Contexto</h2>
+            <p>Walmart es el minorista más grande del mundo, con una enorme red de tiendas y centros de distribución. Su éxito depende de su capacidad para mantener inventarios eficientes, evitar desabastecimientos y optimizar sus estrategias de venta. Para lograrlo, la empresa ha integrado Big Data en su modelo de negocio, mejorando la toma de decisiones operativas y estratégicas.</p>
+            
+            <p>La magnitud de las operaciones de Walmart presenta desafíos únicos en la gestión de datos:</p>
+            
+            <ul>
+                <li>Más de 11,000 tiendas en 27 países</li>
+                <li>Aproximadamente 2.3 millones de empleados a nivel mundial</li>
+                <li>Procesamiento de millones de transacciones diarias</li>
+                <li>Gestión de más de 100,000 productos diferentes por tienda</li>
+                <li>Coordinación con miles de proveedores globales</li>
+            </ul>
+            
+            <div class="card">
+                <h4>Datos clave:</h4>
+                <ul>
+                    <li>Walmart procesa más de 2.5 petabytes de datos cada hora de sus operaciones de clientes</li>
+                    <li>Su plataforma de e-commerce maneja más de 1 millón de transacciones por hora</li>
+                    <li>La empresa gestiona una de las bases de datos privadas más grandes del mundo</li>
+                    <li>Walmart Data Café analiza 200 flujos de datos externos e internos</li>
+                </ul>
+            </div>
+        </section>
+        
+        <section id="uso-big-data">
+            <h2>Uso de Big Data en Walmart</h2>
+            
+            <div class="diagram">
+                <svg class="svg-diagram" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fondo del diagrama -->
+                    <rect x="0" y="0" width="800" height="500" fill="#f8f9fa" rx="10" ry="10"/>
+                    
+                    <!-- Título -->
+                    <text x="400" y="40" font-size="24" text-anchor="middle" fill="#0071ce" font-weight="bold">Aplicaciones de Big Data en Walmart</text>
+                    
+                    <!-- Cajas de aplicaciones -->
+                    <!-- Optimización de Inventarios -->
+                    <rect x="50" y="80" width="320" height="180" fill="#0071ce" opacity="0.1" rx="10" ry="10" stroke="#0071ce" stroke-width="2"/>
+                    <text x="210" y="110" font-size="20" text-anchor="middle" fill="#0071ce" font-weight="bold">Optimización de Inventarios</text>
+                    <text x="210" y="140" font-size="14" text-anchor="middle">Análisis predictivo de demanda</text>
+                    <text x="210" y="170" font-size="14" text-anchor="middle">Machine Learning para gestión</text>
+                    <text x="210" y="200" font-size="14" text-anchor="middle">Sensores y RFID para rastreo</text>
+                    <text x="210" y="230" font-size="14" text-anchor="middle">Prevención de desabastecimiento</text>
+                    
+                    <!-- Análisis de Ventas -->
+                    <rect x="430" y="80" width="320" height="180" fill="#0071ce" opacity="0.1" rx="10" ry="10" stroke="#0071ce" stroke-width="2"/>
+                    <text x="590" y="110" font-size="20" text-anchor="middle" fill="#0071ce" font-weight="bold">Análisis de Ventas</text>
+                    <text x="590" y="140" font-size="14" text-anchor="middle">Procesamiento de transacciones</text>
+                    <text x="590" y="170" font-size="14" text-anchor="middle">Ajuste de precios en tiempo real</text>
+                    <text x="590" y="200" font-size="14" text-anchor="middle">Sistemas de recomendación</text>
+                    <text x="590" y="230" font-size="14" text-anchor="middle">Patrones de compra</text>
+                    
+                    <!-- Cadena de Suministro -->
+                    <rect x="50" y="290" width="320" height="180" fill="#0071ce" opacity="0.1" rx="10" ry="10" stroke="#0071ce" stroke-width="2"/>
+                    <text x="210" y="320" font-size="20" text-anchor="middle" fill="#0071ce" font-weight="bold">Cadena de Suministro</text>
+                    <text x="210" y="350" font-size="14" text-anchor="middle">Predicción de interrupciones</text>
+                    <text x="210" y="380" font-size="14" text-anchor="middle">Integración con proveedores</text>
+                    <text x="210" y="410" font-size="14" text-anchor="middle">Planificación de rutas</text>
+                    <text x="210" y="440" font-size="14" text-anchor="middle">Optimización logística</text>
+                    
+                    <!-- Precios Dinámicos -->
+                    <rect x="430" y="290" width="320" height="180" fill="#0071ce" opacity="0.1" rx="10" ry="10" stroke="#0071ce" stroke-width="2"/>
+                    <text x="590" y="320" font-size="20" text-anchor="middle" fill="#0071ce" font-weight="bold">Precios Dinámicos</text>
+                    <text x="590" y="350" font-size="14" text-anchor="middle">Análisis de competencia</text>
+                    <text x="590" y="380" font-size="14" text-anchor="middle">Ajuste automático de tarifas</text>
+                    <text x="590" y="410" font-size="14" text-anchor="middle">Estrategias de descuento</text>
+                    <text x="590" y="440" font-size="14" text-anchor="middle">Elasticidad de precios</text>
+                </svg>
+            </div>
+            
+            <h3>Optimización de Inventarios</h3>
+            <p>Walmart ha revolucionado la gestión de inventarios mediante el uso intensivo de datos:</p>
+            <ul>
+                <li>Utiliza análisis predictivo para prever la demanda de productos en función de datos históricos, estacionales y tendencias del mercado.</li>
+                <li>Implementa modelos de Machine Learning para gestionar inventarios en tiempo real y evitar sobrestock o desabastecimiento.</li>
+                <li>Emplea sensores y RFID (Identificación por Radiofrecuencia) para rastrear productos en almacenes y tiendas.</li>
+                <li>Integra datos meteorológicos para predecir cambios en la demanda relacionados con el clima.</li>
+            </ul>
+            
+            <h3>Análisis de Ventas y Comportamiento del Cliente</h3>
+            <p>La comprensión profunda del comportamiento del cliente es clave para la estrategia de Walmart:</p>
+            <ul>
+                <li>Procesa datos de millones de transacciones diarias para entender patrones de compra.</li>
+                <li>Utiliza análisis en tiempo real para ajustar estrategias de precios y promociones.</li>
+                <li>Implementa sistemas de recomendación personalizados en su plataforma de e-commerce.</li>
+                <li>Analiza el recorrido del cliente en tienda mediante sensores y cámaras para optimizar la disposición de productos.</li>
+            </ul>
+            
+            <h3>Optimización de la Cadena de Suministro</h3>
+            <p>La eficiencia logística es fundamental para mantener los bajos precios característicos de Walmart:</p>
+            <ul>
+                <li>Walmart analiza factores como clima, tráfico y eventos sociales para predecir posibles interrupciones en la cadena logística.</li>
+                <li>Integra datos de proveedores para agilizar la reposición de productos.</li>
+                <li>Usa modelos de predicción para planificar rutas de entrega más eficientes.</li>
+                <li>Implementa sistemas de alerta temprana para identificar cuellos de botella en la distribución.</li>
+            </ul>
+            
+            <h3>Gestión de Precios Dinámicos</h3>
+            <p>La estrategia de precios de Walmart se ha vuelto altamente sofisticada gracias al Big Data:</p>
+            <ul>
+                <li>Walmart analiza precios de la competencia en tiempo real para ajustar sus propias tarifas automáticamente.</li>
+                <li>Implementa estrategias de descuento basadas en demanda y disponibilidad de stock.</li>
+                <li>Utiliza algoritmos para determinar la elasticidad de precios por producto y ubicación.</li>
+                <li>Personaliza ofertas según el historial de compras y comportamiento del cliente.</li>
+            </ul>
+        </section>
+        
+        <section id="problematicas-resueltas">
+            <h2>Problemáticas que Resolvió Walmart con Big Data</h2>
+            
+            <div class="problem-solved">
+                <div class="checkmark">✅</div>
+                <div>
+                    <h3>Reducción de quiebres de stock</h3>
+                    <p>Walmart disminuyó el desabastecimiento al mejorar la precisión en la predicción de la demanda. Los algoritmos predictivos permiten anticipar picos de demanda estacionales, promocionales o inesperados, asegurando que los productos estén disponibles cuando los clientes los buscan, lo que ha mejorado significativamente la experiencia de compra.</p>
+                </div>
+            </div>
+            
+            <div class="problem-solved">
+                <div class="checkmark">✅</div>
+                <div>
+                    <h3>Optimización del almacenamiento</h3>
+                    <p>La empresa ajusta sus niveles de inventario en función de la demanda proyectada, reduciendo costos de almacenamiento innecesarios. Esto ha permitido liberar espacio en almacenes y tiendas, reducir el capital inmovilizado en inventario y mejorar el flujo de caja, todo mientras mantiene la disponibilidad de productos.</p>
+                </div>
+            </div>
+            
+            <div class="problem-solved">
+                <div class="checkmark">✅</div>
+                <div>
+                    <h3>Mayor eficiencia en la logística</h3>
+                    <p>Walmart optimiza sus rutas de distribución, asegurando entregas más rápidas y reduciendo costos operativos. Los algoritmos de optimización de rutas consideran factores como tráfico, clima, distancias y capacidad de carga para determinar las rutas más eficientes, reduciendo el consumo de combustible y los tiempos de entrega.</p>
+                </div>
+            </div>
+            
+            <div class="problem-solved">
+                <div class="checkmark">✅</div>
+                <div>
+                    <h3>Mejora en la experiencia del cliente</h3>
+                    <p>La disponibilidad de productos y la personalización de ofertas aumentaron la satisfacción del consumidor. Los clientes encuentran lo que buscan, reciben recomendaciones relevantes y disfrutan de precios competitivos, lo que ha fortalecido la lealtad a la marca y aumentado el valor de vida del cliente.</p>
+                </div>
+            </div>
+            
+            <div class="diagram">
+                <svg class="svg-diagram" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fondo del diagrama -->
+                    <rect x="0" y="0" width="800" height="400" fill="#f8f9fa" rx="10" ry="10"/>
+                    
+                    <!-- Título -->
+                    <text x="400" y="40" font-size="24" text-anchor="middle" fill="#0071ce" font-weight="bold">Impacto de Big Data en Walmart</text>
+                    
+                    <!-- Gráfico de barras -->
+                    <!-- Eje Y -->
+                    <line x1="100" y1="320" x2="100" y2="80" stroke="#333" stroke-width="2"/>
+                    <text x="50" y="200" font-size="14" text-anchor="middle" fill="#333" transform="rotate(-90, 50, 200)">Porcentaje de Mejora</text>
+                    
+                    <!-- Eje X -->
+                    <line x1="100" y1="320" x2="700" y2="320" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Barras -->
+                    <!-- Reducción de quiebres -->
+                    <rect x="150" y="140" width="80" height="180" fill="#0071ce" opacity="0.8"/>
+                    <text x="190" y="340" font-size="12" text-anchor="middle" fill="#333">Reducción</text>
+                    <text x="190" y="360" font-size="12" text-anchor="middle" fill="#333">Quiebres</text>
+                    <text x="190" y="130" font-size="14" text-anchor="middle" fill="#0071ce" font-weight="bold">42%</text>
+                    
+                    <!-- Optimización almacenamiento -->
+                    <rect x="280" y="180" width="80" height="140" fill="#0071ce" opacity="0.8"/>
+                    <text x="320" y="340" font-size="12" text-anchor="middle" fill="#333">Optimización</text>
+                    <text x="320" y="360" font-size="12" text-anchor="middle" fill="#333">Almacenamiento</text>
+                    <text x="320" y="170" font-size="14" text-anchor="middle" fill="#0071ce" font-weight="bold">30%</text>
+                    
+                    <!-- Eficiencia logística -->
+                    <rect x="410" y="160" width="80" height="160" fill="#0071ce" opacity="0.8"/>
+                    <text x="450" y="340" font-size="12" text-anchor="middle" fill="#333">Eficiencia</text>
+                    <text x="450" y="360" font-size="12" text-anchor="middle" fill="#333">Logística</text>
+                    <text x="450" y="150" font-size="14" text-anchor="middle" fill="#0071ce" font-weight="bold">35%</text>
+                    
+                    <!-- Satisfacción cliente -->
+                    <rect x="540" y="200" width="80" height="120" fill="#0071ce" opacity="0.8"/>
+                    <text x="580" y="340" font-size="12" text-anchor="middle" fill="#333">Satisfacción</text>
+                    <text x="580" y="360" font-size="12" text-anchor="middle" fill="#333">Cliente</text>
+                    <text x="580" y="190" font-size="14" text-anchor="middle" fill="#0071ce" font-weight="bold">25%</text>
+                    
+                    <!-- Etiquetas eje Y -->
+                    <text x="90" y="320" font-size="12" text-anchor="end" fill="#333">0%</text>
+                    <text x="90" y="260" font-size="12" text-anchor="end" fill="#333">20%</text>
+                    <text x="90" y="200" font-size="12" text-anchor="end" fill="#333">40%</text>
+                    <text x="90" y="140" font-size="12" text-anchor="end" fill="#333">60%</text>
+                    <text x="90" y="80" font-size="12" text-anchor="end" fill="#333">80%</text>
+                </svg>
+            </div>
+        </section>
+        
+        <section id="herramientas">
+            <h2>Herramientas Utilizadas en Big Data</h2>
+            <p>Walmart emplea un ecosistema tecnológico avanzado para procesar, analizar y aplicar los insights derivados de sus datos:</p>
+            
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <h4>Hadoop y Spark</h4>
+                    <p>Para el procesamiento masivo de datos de inventarios y ventas, permitiendo analizar petabytes de información de manera distribuida y eficiente.</p>
+                </div>
+                
+                <div class="tool-card">
+                    <h4>Data Lakes y AWS</h4>
+                    <p>Para almacenar y analizar datos en la nube, facilitando el acceso a información histórica y en tiempo real desde cualquier ubicación.</p>
+                </div>
+                
+                <div class="tool-card">
+                    <h4>Machine Learning</h4>
+                    <p>Implementado con Python y R para desarrollar modelos predictivos de demanda y precios que mejoran continuamente con nuevos datos.</p>
+                </div>
+                
+                <div class="tool-card">
+                    <h4>Sistemas RFID y IoT</h4>
+                    <p>Sensores para el rastreo en tiempo real de productos a lo largo de toda la cadena de suministro, desde fábricas hasta estanterías.</p>
+                </div>
+                
+                <div class="tool-card">
+                    <h4>Kafka y Flink</h4>
+                    <p>Para el procesamiento de datos en tiempo real, permitiendo reaccionar instantáneamente a cambios en la demanda o disponibilidad.</p>
+                </div>
+                
+                <div class="tool-card">
+                    <h4>Tableau y Power BI</h4>
+                    <p>Herramientas de visualización que transforman datos complejos en dashboards intuitivos para la toma de decisiones en todos los niveles de la organización.</p>
+                </div>
+            </div>
+            
+            <div class="diagram">
+                <svg class="svg-diagram" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fondo del diagrama -->
+                    <rect x="0" y="0" width="800" height="400" fill="#f8f9fa" rx="10" ry="10"/>
+                    
+                    <!-- Título -->
+                    <text x="400" y="40" font-size="24" text-anchor="middle" fill="#0071ce" font-weight="bold">Arquitectura de Big Data en Walmart</text>
+                    
+                    <!-- Capas de la arquitectura -->
+                    <!-- Capa de fuentes de datos -->
+                    <rect x="100" y="80" width="600" height="60" fill="#0071ce" opacity="0.2" rx="5" ry="5"/>
+                    <text x="400" y="115" font-size="18" text-anchor="middle" fill="#333" font-weight="bold">Fuentes de Datos</text>
+                    <text x="200" y="115" font-size="14" text-anchor="middle" fill="#333">POS</text>
+                    <text x="300" y="115" font-size="14" text-anchor="middle" fill="#333">E-commerce</text>
+                    <text x="400" y="115" font-size="14" text-anchor="middle" fill="#333">RFID</text>
+                    <text x="500" y="115" font-size="14" text-anchor="middle" fill="#333">Sensores</text>
+                    <text x="600" y="115" font-size="14" text-anchor="middle" fill="#333">Externos</text>
+                    
+                    <!-- Capa de ingesta -->
+                    <rect x="100" y="150" width="600" height="60" fill="#0071ce" opacity="0.3" rx="5" ry="5"/>
+                    <text x="400" y="185" font-size="18" text-anchor="middle" fill="#333" font-weight="bold">Ingesta de Datos</text>
+                    <text x="250" y="185" font-size="14" text-anchor="middle" fill="#333">Kafka</text>
+                    <text x="400" y="185" font-size="14" text-anchor="middle" fill="#333">Flink</text>
+                    <text x="550" y="185" font-size="14" text-anchor="middle" fill="#333">API Gateway</text>
+                    
+                    <!-- Capa de almacenamiento -->
+                    <rect x="100" y="220" width="600" height="60" fill="#0071ce" opacity="0.4" rx="5" ry="5"/>
+                    <text x="400" y="255" font-size="18" text-anchor="middle" fill="#333" font-weight="bold">Almacenamiento</text>
+                    <text x="250" y="255" font-size="14" text-anchor="middle" fill="#333">Data Lakes (AWS)</text>
+                    <text x="550" y="255" font-size="14" text-anchor="middle" fill="#333">Cassandra/HBase</text>
+                    
+                    <!-- Capa de procesamiento -->
+                    <rect x="100" y="290" width="600" height="60" fill="#0071ce" opacity="0.5" rx="5" ry="5"/>
+                    <text x="400" y="325" font-size="18" text-anchor="middle" fill="#333" font-weight="bold">Procesamiento y Análisis</text>
+                    <text x="200" y="325" font-size="14" text-anchor="middle" fill="#333">Hadoop</text>
+                    <text x="300" y="325" font-size="14" text-anchor="middle" fill="#333">Spark</text>
+                    <text x="400" y="325" font-size="14" text-anchor="middle" fill="#333">Python/R</text>
+                    <text x="500" y="325" font-size="14" text-anchor="middle" fill="#333">ML</text>
+                    <text x="600" y="325" font-size="14" text-anchor="middle" fill="#333">Tableau</text>
+                    
+                    <!-- Flechas de conexión -->
+                    <line x1="400" y1="140" x2="400" y2="150" stroke="#333" stroke-width="2"/>
+                    <line x1="400" y1="210" x2="400" y2="220" stroke="#333" stroke-width="2"/>
+                    <line x1="400" y1="280" x2="400" y2="290" stroke="#333" stroke-width="2"/>
+                </svg>
+            </div>
+        </section>
+        
+        <section id="resultados">
+            <h2>Resultados Obtenidos</h2>
+            <p>La implementación de estrategias de Big Data ha proporcionado a Walmart ventajas competitivas significativas y resultados medibles:</p>
+            
+            <div class="results-container">
+                <div class="result-card">
+                    <h4>📌 Reducción de costos operativos</h4>
+                    <p>Walmart optimizó su cadena de suministro, minimizando gastos innecesarios. La empresa reportó una reducción del 10-15% en costos logísticos y un 20% en costos de almacenamiento gracias a la optimización basada en datos, lo que representa miles de millones de dólares en ahorro anual.</p>
+                </div>
+                
+                <div class="result-card">
+                    <h4>📌 Mejor gestión del inventario</h4>
+                    <p>La precisión en la predicción de la demanda permitió una planificación eficiente de stock. Walmart redujo los niveles de inventario en un 30% mientras mantenía o mejoraba la disponibilidad de productos, liberando capital para otras inversiones estratégicas.</p>
+                </div>
+                
+                <div class="result-card">
+                    <h4>📌 Aumento en la satisfacción del cliente</h4>
+                    <p>La disponibilidad de productos y la mejora en promociones personalizadas fortalecieron la fidelización. Las encuestas de satisfacción mostraron un incremento del 25% en la percepción positiva de la experiencia de compra, con un aumento correspondiente en la frecuencia de visitas.</p>
+                </div>
+                
+                <div class="result-card">
+                    <h4>📌 Mayor competitividad</h4>
+                    <p>Walmart mejoró su posición en el mercado al ajustar precios dinámicamente y responder rápidamente a cambios en la demanda. La capacidad de reaccionar en tiempo real a las estrategias de la competencia ha permitido a Walmart mantener su promesa de precios bajos mientras protege sus márgenes.</p>
+                </div>
+            </div>
+            
+            <div class="diagram">
+                <svg class="svg-diagram" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fondo del diagrama -->
+                    <rect x="0" y="0" width="800" height="400" fill="#f8f9fa" rx="10" ry="10"/>
+                    
+                    <!-- Título -->
+                    <text x="400" y="40" font-size="24" text-anchor="middle" fill="#0071ce" font-weight="bold">Evolución de Indicadores Clave</text>
+                    
+                    <!-- Ejes -->
+                    <line x1="100" y1="320" x2="700" y2="320" stroke="#333" stroke-width="2"/>
+                    <line x1="100" y1="320" x2="100" y2="80" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Etiquetas de años -->
+                    <text x="100" y="340" font-size="12" text-anchor="middle" fill="#333">2015</text>
+                    <text x="220" y="340" font-size="12" text-anchor="middle" fill="#333">2016</text>
+                    <text x="340" y="340" font-size="12" text-anchor="middle" fill="#333">2017</text>
+                    <text x="460" y="340" font-size="12" text-anchor="middle" fill="#333">2018</text>
+                    <text x="580" y="340" font-size="12" text-anchor="middle" fill="#333">2019</text>
+                    <text x="700" y="340" font-size="12" text-anchor="middle" fill="#333">2020</text>
+                    
+                    <!-- Etiquetas del eje Y -->
+                    <text x="90" y="320" font-size="10" text-anchor="end" fill="#333">0%</text>
+                    <text x="90" y="260" font-size="10" text-anchor="end" fill="#333">20%</text>
+                    <text x="90" y="200" font-size="10" text-anchor="end" fill="#333">40%</text>
+                    <text x="90" y="140" font-size="10" text-anchor="end" fill="#333">60%</text>
+                    <text x="90" y="80" font-size="10" text-anchor="end" fill="#333">80%</text>
+                    
+                    <!-- Líneas de cuadrícula -->
+                    <line x1="100" y1="260" x2="700" y2="260" stroke="#ccc" stroke-width="1" stroke-dasharray="5,5"/>
+                    <line x1="100" y1="200" x2="700" y2="200" stroke="#ccc" stroke-width="1" stroke-dasharray="5,5"/>
+                    <line x1="100" y1="140" x2="700" y2="140" stroke="#ccc" stroke-width="1" stroke-dasharray="5,5"/>
+                    <line x1="100" y1="80" x2="700" y2="80" stroke="#ccc" stroke-width="1" stroke-dasharray="5,5"/>
+                    
+                    <!-- Líneas de datos -->
+                    <!-- Reducción de costos -->
+                    <path d="M100,280 L220,260 L340,240 L460,210 L580,190 L700,170" stroke="#0071ce" stroke-width="3" fill="none"/>
+                    <circle cx="100" cy="280" r="5" fill="#0071ce"/>
+                    <circle cx="220" cy="260" r="5" fill="#0071ce"/>
+                    <circle cx="340" cy="240" r="5" fill="#0071ce"/>
+                    <circle cx="460" cy="210" r="5" fill="#0071ce"/>
+                    <circle cx="580" cy="190" r="5" fill="#0071ce"/>
+                    <circle cx="700" cy="170" r="5" fill="#0071ce"/>
+                    
+                    <!-- Satisfacción del cliente -->
+                    <path d="M100,270 L220,250 L340,220 L460,200 L580,170 L700,150" stroke="#ffc220" stroke-width="3" fill="none"/>
+                    <circle cx="100" cy="270" r="5" fill="#ffc220"/>
+                    <circle cx="220" cy="250" r="5" fill="#ffc220"/>
+                    <circle cx="340" cy="220" r="5" fill="#ffc220"/>
+                    <circle cx="460" cy="200" r="5" fill="#ffc220"/>
+                    <circle cx="580" cy="170" r="5" fill="#ffc220"/>
+                    <circle cx="700" cy="150" r="5" fill="#ffc220"/>
+                    
+                    <!-- Leyenda -->
+                    <rect x="500" y="100" width="15" height="5" fill="#0071ce"/>
+                    <text x="525" y="105" font-size="12" fill="#333">Reducción de costos</text>
+                    
+                    <rect x="500" y="120" width="15" height="5" fill="#ffc220"/>
+                    <text x="525" y="125" font-size="12" fill="#333">Satisfacción del cliente</text>
+                </svg>
+            </div>
+        </section>
+        
+        <section id="conclusiones">
+            <h2>Conclusiones</h2>
+            
+            <p>El caso de Walmart demuestra cómo la implementación estratégica de Big Data puede transformar operaciones a gran escala y crear ventajas competitivas sostenibles en el sector minorista:</p>
+            
+            <div class="card">
+                <h4>Lecciones clave del caso Walmart:</h4>
+                <ul>
+                    <li><strong>Integración de datos como ventaja competitiva:</strong> Walmart ha convertido su capacidad de recopilar, analizar y actuar sobre los datos en una de sus principales ventajas frente a competidores tradicionales.</li>
+                    <li><strong>Toma de decisiones basada en evidencia:</strong> La empresa ha reemplazado la intuición por análisis de datos en todos los niveles de decisión, desde la estrategia corporativa hasta las operaciones diarias.</li>
+                    <li><strong>Mejora continua mediante datos:</strong> Los sistemas de Walmart evolucionan constantemente, incorporando nuevas fuentes de datos y refinando algoritmos para mejorar la precisión de sus predicciones.</li>
+                    <li><strong>Equilibrio entre tecnología y factor humano:</strong> A pesar de la automatización, Walmart reconoce la importancia de combinar el análisis de datos con el conocimiento y experiencia de sus empleados.</li>
+                </ul>
+            </div>
+            
+            <p>El éxito de Walmart ilustra cómo las organizaciones pueden utilizar Big Data no solo para optimizar procesos existentes, sino para reimaginar completamente sus operaciones. Al colocar los datos en el centro de su estrategia, Walmart ha logrado:</p>
+            
+            <ul>
+                <li>Transformar su cadena de suministro en una ventaja competitiva clave</li>
+                <li>Mejorar significativamente la experiencia del cliente mientras reduce costos</li>
+                <li>Crear un modelo de negocio más ágil y adaptable a cambios del mercado</li>
+                <li>Establecer nuevos estándares para la eficiencia operativa en el comercio minorista</li>
+            </ul>
+            
+            <p>En un futuro próximo, podemos esperar que Walmart continúe innovando en el uso de Big Data, incorporando tecnologías emergentes como inteligencia artificial avanzada, Internet de las Cosas y análisis predictivo más sofisticado para seguir mejorando su eficiencia operativa y experiencia del cliente.</p>
+        </section>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>Análisis de Caso: Walmart - Optimización de Inventarios y Análisis de Ventas</p>
+            <p>Informe elaborado con metodologías de Big Data - 2023</p>
+        </div>
+    </footer>
+</body>
+</html>
+

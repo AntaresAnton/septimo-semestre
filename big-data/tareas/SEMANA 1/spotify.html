@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caso de Estudio: Spotify - Big Data y Personalización Musical</title>
+    <style>
+        :root {
+            --spotify-green: #1DB954;
+            --spotify-black: #191414;
+            --spotify-white: #FFFFFF;
+            --spotify-gray: #B3B3B3;
+            --spotify-light-gray: #F8F8F8;
+            --spotify-dark-gray: #333333;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Gotham', 'Helvetica Neue', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: var(--spotify-white);
+            color: var(--spotify-black);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--spotify-black);
+            color: var(--spotify-white);
+            padding: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(29,185,84,0.8) 0%, rgba(25,20,20,0.9) 100%);
+            z-index: 1;
+        }
+        
+        .logo {
+            width: 180px;
+            margin-bottom: 1rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+        
+        h2 {
+            font-size: 2rem;
+            margin: 2rem 0 1rem;
+            color: var(--spotify-black);
+            border-bottom: 3px solid var(--spotify-green);
+            padding-bottom: 0.5rem;
+            display: inline-block;
+        }
+        
+        h3 {
+            font-size: 1.5rem;
+            margin: 1.5rem 0 1rem;
+            color: var(--spotify-black);
+        }
+        
+        h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0;
+            color: var(--spotify-black);
+        }
+        
+        p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .content {
+            padding: 2rem 0;
+        }
+        
+        section {
+            margin-bottom: 3rem;
+        }
+        
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .card {
+            background-color: var(--spotify-light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .diagram {
+            margin: 2rem 0;
+            text-align: center;
+        }
+        
+        .svg-diagram {
+            width: 100%;
+            height: auto;
+            max-width: 800px;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .tool-card {
+            background-color: var(--spotify-light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--spotify-green);
+        }
+        
+        .problem-solved {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            background-color: var(--spotify-light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .checkmark {
+            color: var(--spotify-green);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            font-weight: bold;
+        }
+        
+        .results-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .result-card {
+            background-color: var(--spotify-light-gray);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .result-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--spotify-green);
+        }
+        
+        .data-highlight {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--spotify-green);
+            display: block;
+            margin: 1rem 0;
+        }
+        
+        .highlight-label {
+            font-size: 1rem;
+            color: var(--spotify-dark-gray);
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+        
+        blockquote {
+            font-style: italic;
+            border-left: 4px solid var(--spotify-green);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: var(--spotify-dark-gray);
+        }
+        
+        footer {
+            background-color: var(--spotify-black);
+            color: var(--spotify-white);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 3rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background-color: var(--spotify-white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--spotify-green);
+            margin-bottom: 1rem;
+        }
+        
+        .playlist-example {
+            background-color: var(--spotify-black);
+            color: var(--spotify-white);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .playlist-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .playlist-cover {
+            width: 120px;
+            height: 120px;
+            background-color: var(--spotify-green);
+            border-radius: 4px;
+            margin-right: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+        }
+        
+        .playlist-info h4 {
+            color: var(--spotify-white);
+            margin-bottom: 0.5rem;
+        }
+        
+        .playlist-info p {
+            color: var(--spotify-gray);
+            font-size: 0.9rem;
+        }
+        
+        .playlist-tracks {
+            list-style: none;
+            margin: 0;
+        }
+        
+        .playlist-track {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .track-number {
+            width: 30px;
+            color: var(--spotify-gray);
+            font-size: 0.9rem;
+        }
+        
+        .track-info {
+            flex-grow: 1;
+        }
+        
+        .track-title {
+            color: var(--spotify-white);
+            font-weight: 500;
+        }
+        
+        .track-artist {
+            color: var(--spotify-gray);
+            font-size: 0.9rem;
+        }
+        
+        .track-duration {
+            color: var(--spotify-gray);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+            
+            h3 {
+                font-size: 1.2rem;
+            }
+            
+            .container {
+                padding: 0 1rem;
+            }
+            
+            .feature-grid, .tools-grid, .results-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .playlist-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .playlist-cover {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content container">
+                <!-- Logo placeholder instead of SVG -->
+                <div style="width: 180px; height: 54px; background-color: #1DB954; margin: 0 auto 1rem; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">SPOTIFY</div>
+                <h1>Caso de Estudio: Spotify</h1>
+                <p>Descubrimiento de Música y Creación de Playlists Personalizadas mediante Big Data</p>
+            </div>
+        </div>
+    </header>
+    
+    <div class="content container">
+        <section id="descripcion">
+            <h2>Descripción del Caso</h2>
+            <p>Spotify es una plataforma de streaming de música que ha revolucionado la forma en que consumimos contenido musical. Con más de 365 millones de usuarios activos mensuales en más de 178 países, Spotify se enfrenta al desafío de mantener a sus usuarios comprometidos ofreciéndoles recomendaciones personalizadas y playlists adaptadas a sus gustos individuales.</p>
+            
+            <p>El principal reto de Spotify es analizar los patrones de escucha de millones de usuarios para ofrecer recomendaciones relevantes que mantengan a los usuarios en la plataforma, aumenten su satisfacción y reduzcan la tasa de abandono. Para lograrlo, Spotify ha desarrollado un sofisticado sistema de recomendación basado en Big Data, inteligencia artificial y Machine Learning.</p>
+            
+            <div class="card">
+                <h4>Desafíos clave que enfrenta Spotify:</h4>
+                <ul>
+                    <li>Procesar y analizar más de 100 petabytes de datos generados por las interacciones de los usuarios.</li>
+                    <li>Personalizar la experiencia musical para cada uno de sus millones de usuarios.</li>
+                    <li>Equilibrar la recomendación de contenido familiar con el descubrimiento de nueva música.</li>
+                    <li>Mantener a los usuarios comprometidos en un mercado altamente competitivo.</li>
+                    <li>Optimizar el uso de recursos técnicos para ofrecer streaming de alta calidad con mínimas interrupciones.</li>
+                </ul>
+            </div>
+            
+            <div class="diagram">
+                <svg class="svg-diagram" viewBox="0 0 800 300" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fondo del diagrama -->
+                    <rect x="0" y="0" width="800" height="300" fill="#f8f8f9" rx="10" ry="10"/>
+                    
+                    <!-- Título -->
+                    <text x="400" y="40" font-size="20" text-anchor="middle" fill="#000000" font-weight="bold">Volumen de Datos Procesados por Spotify</text>
+                    
+                    <!-- Gráfico de barras -->
+                    <!-- Eje Y -->
+                    <line x1="100" y1="250" x2="100" y2="80" stroke="#333" stroke-width="2"/>
+                    <text x="50" y="165" font-size="14" text-anchor="middle" fill="#333" transform="rotate(-90, 50, 165)">Petabytes</text>
+                    
+                    <!-- Eje X -->
+                    <line x1="100" y1="250" x2="700" y2="250" stroke="#333" stroke-width="2"/>
+                    
+                    <!-- Barras -->
+                    <rect x="150" y="200" width="60" height="50" fill="#1DB954" opacity="0.8"/>
+                    <rect x="250" y="170" width="60" height="80" fill="#1DB954" opacity="0.8"/>
+                    <rect x="350" y="130" width="60" height="120" fill="#1DB954" opacity="0.8"/>
+                    <rect x="450" y="100" width="60" height="150" fill="#1DB954" opacity="0.8"/>
+                    <rect x="550" y="80" width="60" height="170" fill="#1DB954" opacity="0.8"/>
+                    
+                    <!-- Etiquetas de años -->
+                    <text x="180" y="270" font-size="12" text-anchor="middle" fill="#333">2017</text>
+                    <text x="280" y="270" font-size="12" text-anchor="middle" fill="#333">2018</text>
+                    <text x="380" y="270" font-size="12" text-anchor="middle" fill="#333">2019</text>
+                    <text x="480" y="270" font-size="12" text-anchor="middle" fill="#333">2020</text>
+                    <text x="580" y="270" font-size="12" text-anchor="middle" fill="#333">2021</text>
+                    
+                    <!-- Valores -->
+                    <text x="180" y="190" font-size="12" text-anchor="middle" fill="white" font-weight="bold">20</text>
+                    <text x="280" y="160" font-size="12" text-anchor="middle" fill="white" font-weight="bold">40</text>
+                    <text x="380" y="120" font-size="12" text-anchor="middle" fill="white" font-weight="bold">60</text>
+                    <text x="480" y="90" font-size="12" text-anchor="middle" fill="white" font-weight="bold">80</text>
+                    <text x="580" y="70" font-size="12" text-anchor="middle" fill="white" font-weight="bold">100+</text>
+                </svg>
+            </div>
+            
+            <p>Para resolver estos desafíos, Spotify emplea Big Data, inteligencia artificial y Machine Learning para analizar millones de datos en tiempo real y tomar decisiones estratégicas que optimizan tanto la experiencia del usuario como la eficiencia operativa de la plataforma.</p>
+        </section>
+        
+        <section id="contexto">
+            <h2>Contexto</h2>
+            <p>Spotify fue fundada en 2006 en Suecia por Daniel Ek y Martin Lorentzon con la visión de crear una plataforma de música legal que combatiera la piratería y ofreciera a los usuarios acceso instantáneo a toda la música del mundo. Desde entonces, ha crecido hasta convertirse en el servicio de streaming de música más popular globalmente.</p>
+            
+            <p>En un mercado altamente competitivo con rivales como Apple Music, Amazon Music y YouTube Music, Spotify ha logrado diferenciarse principalmente a través de su enfoque en la personalización y el descubrimiento musical. La empresa reconoció tempranamente que su ventaja competitiva no estaría solo en el tamaño de su catálogo, sino en su capacidad para conectar a cada usuario con la música adecuada en el momento adecuado.</p>
+            
+            <p>Este enfoque en la personalización ha llevado a Spotify a convertirse en una empresa impulsada por datos, donde cada decisión está respaldada por análisis y donde la experiencia del usuario se optimiza constantemente a través de algoritmos sofisticados.</p>
+            
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🎵</div>
+                    <h4>+70 millones</h4>
+                    <p>de canciones disponibles en la plataforma</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h4>+365 millones</h4>
+                    <p>de usuarios activos mensuales</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h4>+165 millones</h4>
+                    <p>de suscriptores premium</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌎</div>
+                    <h4>178 países</h4>
+                    <p>con presencia de la plataforma</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="uso-big-data">
+            <h2>Uso de Big Data en Spotify</h2>
+            <p>Spotify emplea el análisis de datos en diversas áreas clave que han transformado radicalmente la industria de la música digital:</p>
+            
+            <h3>Recomendaciones Personalizadas</h3>
+            <p>El sistema de recomendación de Spotify es uno de los ejemplos más sofisticados de aplicación de Big Data en la industria del entretenimiento:</p>
+            <ul>
+                <li>Analiza el historial de reproducción, las canciones que los usuarios saltan, repiten o agregan a playlists.</li>
+                <li>Utiliza algoritmos de filtrado colaborativo para identificar usuarios con gustos similares y recomendar canciones que han gustado a personas con perfiles parecidos.</li>
+                <li>Implementa análisis de contenido musical para identificar características como tempo, tonalidad, instrumentación y energía de cada canción.</li>
+                <li>Combina más de 40 modelos de Machine Learning diferentes para generar recomendaciones precisas y relevantes.</li>
+            </ul>
+            
+            <div class="diagram">
+                <svg class="svg-diagram" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Fondo del diagrama -->
+                    <rect x="0" y="0" width="800" height="400" fill="#f8f8f9" rx="10" ry="10"/>
+                    
+                    <!-- Título -->
+                    <text x="400" y="40" font-size="24" text-anchor="middle" fill="#000000" font-weight="bold">Sistema de Recomendación de Spotify</text>
+                    
+                    <!-- Flujo de datos -->
+                    <!-- Fuentes de datos -->
+                    <rect x="50" y="80" width="320" height="180" fill="#1DB954" opacity="0.1" rx="10" ry="10" stroke="#1DB954" stroke-width="2"/>
+                    <text x="210" y="110" font-size="20" text-anchor="middle" fill="#000000" font-weight="bold">Fuentes de Datos</text>
+                    <text x="210" y="140" font-size="14" text-anchor="middle">Historial de reproducción</text>
+                    <text x="210" y="170" font-size="14" text-anchor="middle">Interacciones (like, skip, etc.)</text>
+                    <text x="210" y="200" font-size="14" text-anchor="middle">Análisis de audio</text>
+                    <text x="210" y="230" font-size="14" text-anchor="middle">Datos contextuales</text>
+                    
+                    <!-- Procesamiento -->
+                    <rect x="430" y="80" width="320" height="180" fill="#1DB954" opacity="0.1" rx="10" ry="10" stroke="#1DB954" stroke-width="2"/>
+                    <text x="590" y="110" font-size="20" text-anchor="middle" fill="#000000" font-weight="bold">Procesamiento</text>
+                    <text x="590" y="140" font-size="14" text-anchor="middle">Filtrado colaborativo</text>
+                    <text x="590" y="170" font-size="14" text-anchor="middle">Análisis de contenido</text>
+                    <text x="590" y="200" font-size="14" text-anchor="middle">Modelos de NLP</text>
+                    <text x="590" y="230" font-size="14" text-anchor="middle">Redes neuronales</text>
+                    
+                    <!-- Resultados -->
+                    <rect x="240" y="290" width="320" height="80" fill="#191414" opacity="0.8" rx="10" ry="10"/>
+                    <text x="400" y="335" font-size="20" text-anchor="middle" fill="white" font-weight="bold">Recomendaciones Personalizadas</text>
+                    
+                    <!-- Flechas de conexión -->
+                    <line x1="370" y1="170" x2="430" y2="170" stroke="#333333" stroke-width="2"/>
+                    <line x1="400" y1="260" x2="400" y2="290" stroke="#333333" stroke-width="2"/>
+                    <polygon points="430,170 420,165 420,175" fill="#333333"/>
+                    <polygon points="400,290 395,280 405,280" fill="#333333"/>
+                </svg>
+            </div>
+            
+            <h3>Creación de Playlists Automatizadas</h3>
+            <p>Las playlists personalizadas son uno de los principales diferenciadores de Spotify:</p>
+            <ul>
+                <li>Discover Weekly: Playlist semanal personalizada con 30 canciones nuevas basadas en los gustos del usuario.</li>
+                <li>Daily Mix: Series de playlists que combinan favoritos del usuario con nuevas recomendaciones agrupadas por género o estilo.</li>
+                <li>Release Radar: Recopilación semanal de nuevos lanzamientos de artistas que el usuario sigue o podría interesarle.</li>
+                <li>Utiliza Modelos de Procesamiento de Lenguaje Natural (NLP) para analizar blogs, reseñas y descripciones de canciones y extraer información útil sobre nuevos artistas y tendencias.</li>
+            </ul>
+            
+            <div class="playlist-example">
+                <div class="playlist-header">
+                    <div class="playlist-cover">🎵</div>
+                    <div class="playlist-info">
+                        <h4>Discover Weekly</h4>
+                        <p>Tu playlist personalizada • Actualizada cada lunes</p>
+                        <p>30 canciones • Aproximadamente 2 horas</p>
+                    </div>
+                </div>
+                
+                <ul class="playlist-tracks">
+                    <li class="playlist-track">
+                        <span class="track-number">1</span>
+                        <div class="track-info">
+                            <div class="track-title">Canción Recomendada #1</div>
+                            <div class="track-artist">Artista A</div>
+                        </div>
+                        <span class="track-duration">3:45</span>
+                    </li>
+                    <li class="playlist-track">
+                        <span class="track-number">2</span>
+                        <div class="track-info">
+                            <div class="track-title">Canción Recomendada #2</div>
+                            <div class="track-artist">Artista B</div>
+                        </div>
+                        <span class="track-duration">4:12</span>
+                    </li>
+                    <li class="playlist-track">
+                        <span class="track-number">3</span>
+                        <div class="track-info">
+                            <div class

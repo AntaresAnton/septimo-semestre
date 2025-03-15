@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendario de Evaluaciones</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .prueba-teorica {
+            background-color: #d4edda;
+        }
+        .prueba-practica {
+            background-color: #cce5ff;
+        }
+        .control {
+            background-color: #fff3cd;
+        }
+        .calendar-header {
+            background-color: #6c757d;
+            color: white;
+        }
+        .event-dot {
+            height: 10px;
+            width: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 5px;
+        }
+        .teorica-dot {
+            background-color: #28a745;
+        }
+        .practica-dot {
+            background-color: #007bff;
+        }
+        .control-dot {
+            background-color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Calendario de Evaluaciones</h1>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0">Leyenda</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-2">
+                            <span class="event-dot teorica-dot"></span>
+                            <span>Prueba Teórica</span>
+                        </div>
+                        <div class="d-flex mb-2">
+                            <span class="event-dot practica-dot"></span>
+                            <span>Prueba Práctica</span>
+                        </div>
+                        <div class="d-flex">
+                            <span class="event-dot control-dot"></span>
+                            <span>Control</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0">Pruebas</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead class="calendar-header">
+                                <tr>
+                                    <th>Evaluación</th>
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="prueba-teorica">
+                                    <td>Prueba #1</td>
+                                    <td>Viernes 25/04</td>
+                                    <td>Teórica</td>
+                                </tr>
+                                <tr class="prueba-practica">
+                                    <td>Prueba #1</td>
+                                    <td>Sábado 26/04</td>
+                                    <td>Práctica</td>
+                                </tr>
+                                <tr class="prueba-teorica">
+                                    <td>Prueba #2</td>
+                                    <td>Viernes 30/05</td>
+                                    <td>Teórica</td>
+                                </tr>
+                                <tr class="prueba-practica">
+                                    <td>Prueba #2</td>
+                                    <td>Sábado 31/05</td>
+                                    <td>Práctica</td>
+                                </tr>
+                                <tr class="prueba-teorica">
+                                    <td>Prueba #3</td>
+                                    <td>Viernes 04/07</td>
+                                    <td>Teórica</td>
+                                </tr>
+                                <tr class="prueba-practica">
+                                    <td>Prueba #3</td>
+                                    <td>Sábado 05/07</td>
+                                    <td>Práctica</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0">Controles</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered">
+                            <thead class="calendar-header">
+                                <tr>
+                                    <th>Evaluación</th>
+                                    <th>Periodo</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="control">
+                                    <td>Control #1</td>
+                                    <td>Semana 4 - Semana 6</td>
+                                </tr>
+                                <tr class="control">
+                                    <td>Control #2</td>
+                                    <td>Semana 6 - Semana 8</td>
+                                </tr>
+                                <tr class="control">
+                                    <td>Control #3</td>
+                                    <td>Semana 10 - Semana 12</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0">Vista de Calendario</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th>Abril</th>
+                                        <th>Mayo</th>
+                                        <th>Junio</th>
+                                        <th>Julio</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <div class="p-2 mb-2 prueba-teorica rounded">
+                                                <strong>25/04</strong> - Prueba #1 Teórica
+                                            </div>
+                                            <div class="p-2 prueba-practica rounded">
+                                                <strong>26/04</strong> - Prueba #1 Práctica
+                                            </div>
+                                            <div class="p-2 mt-2 control rounded">
+                                                <strong>Semanas 4-6</strong> - Control #1
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="p-2 mb-2 control rounded">
+                                                <strong>Semanas 6-8</strong> - Control #2
+                                            </div>
+                                            <div class="p-2 mb-2 prueba-teorica rounded">
+                                                <strong>30/05</strong> - Prueba #2 Teórica
+                                            </div>
+                                            <div class="p-2 prueba-practica rounded">
+                                                <strong>31/05</strong> - Prueba #2 Práctica
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="p-2 control rounded">
+                                                <strong>Semanas 10-12</strong> - Control #3
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="p-2 mb-2 prueba-teorica rounded">
+                                                <strong>04/07</strong> - Prueba #3 Teórica
+                                            </div>
+                                            <div class="p-2 prueba-practica rounded">
+                                                <strong>05/07</strong> - Prueba #3 Práctica
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
