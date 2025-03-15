@@ -1,6 +1,6 @@
 # 📚 Repositorio Séptimo Semestre 🎓
 
-![Banner](https://img.shields.io/badge/Séptimo%20Semestre-2023-blue)
+![Banner](https://img.shields.io/badge/Séptimo%20Semestre-2025-blue)
 ![Contribuciones](https://img.shields.io/badge/Contribuciones-Bienvenidas-brightgreen)
 
 ## 📋 Contenido
