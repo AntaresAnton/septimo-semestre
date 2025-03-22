@@ -1207,325 +1207,187 @@
                     <td>45 minutos</td>
                     <td>15 minutos</td>
                     <td>Medición automática por sistema</td>
-                    <li>Implementar sistema de preregistro</li>
-                    <li>Crear flujos simplificados para casos comunes</li>
-                    <li>Establecer canal directo con especialistas SAG</li>
-                </ul>
-            </td>
-            <td>Analista de Procesos / Coordinador SAG</td>
-        </tr>
-    </table>
+                </tr>
+                <tr>
+                    <td>Tiempo total de espera en temporada alta</td>
+                    <td>8-20 horas</td>
+                    <td>&lt; 2 horas</td>
+                    <td>Medición por muestreo y sistema de tickets</td>
+                </tr>
+                <tr>
+                    <td>Tiempo de procesamiento de documentación de menores</td>
+                    <td>30 minutos</td>
+                    <td>5 minutos</td>
+                    <td>Medición automática por sistema</td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Satisfacción de usuarios</td>
+                    <td>Índice de satisfacción de viajeros</td>
+                    <td>35%</td>
+                    <td>85%</td>
+                    <td>Encuestas periódicas</td>
+                </tr>
+                <tr>
+                    <td>Índice de satisfacción de funcionarios</td>
+                    <td>40%</td>
+                    <td>80%</td>
+                    <td>Encuestas internas</td>
+                </tr>
+                <tr>
+                    <td>Tasa de reclamos formales</td>
+                    <td>15%</td>
+                    <td>&lt; 3%</td>
+                    <td>Registro de reclamos</td>
+                </tr>
+                <tr>
+                    <td rowspan="3">Eficiencia operativa</td>
+                    <td>Capacidad de procesamiento diario</td>
+                    <td>3,500 personas</td>
+                    <td>7,000 personas</td>
+                    <td>Estadísticas del sistema</td>
+                </tr>
+                <tr>
+                    <td>Tasa de errores en documentación</td>
+                    <td>8%</td>
+                    <td>&lt; 1%</td>
+                    <td>Auditorías aleatorias</td>
+                </tr>
+                <tr>
+                    <td>Tiempo de respuesta ante incidentes</td>
+                    <td>120 minutos</td>
+                    <td>30 minutos</td>
+                    <td>Registro de incidentes</td>
+                </tr>
+            </table>
 
-    <h3>6.3 Estrategias para Riesgos Externos</h3>
-    <table>
-        <tr>
-            <th>Riesgo</th>
-            <th>Estrategia</th>
-            <th>Acciones Específicas</th>
-            <th>Responsable</th>
-        </tr>
-        <tr>
-            <td>R55 - Aumento inesperado del flujo de viajeros</td>
-            <td>Mitigar / Aceptar</td>
-            <td>
-                <ul>
-                    <li>Implementar plan de contingencia con refuerzo de personal</li>
-                    <li>Establecer sistema de turnos para regular flujo</li>
-                    <li>Realizar implementación en temporada baja</li>
-                    <li>Desarrollar sistema de escalabilidad automática</li>
-                </ul>
-            </td>
-            <td>Gerente de Proyecto / Coordinador de Operaciones</td>
-        </tr>
-        <tr>
-            <td>R54 - Problemas de conectividad en zonas fronterizas</td>
-            <td>Mitigar</td>
-            <td>
-                <ul>
-                    <li>Implementar sistema con capacidad de operación offline</li>
-                    <li>Establecer enlaces redundantes de comunicación</li>
-                    <li>Desarrollar procedimientos manuales de respaldo</li>
-                    <li>Implementar sincronización diferida</li>
-                </ul>
-            </td>
-            <td>Arquitecto de Infraestructura / Especialista en Redes</td>
-        </tr>
-        <tr>
-            <td>R53 - Restricciones presupuestarias</td>
-            <td>Mitigar / Transferir</td>
-            <td>
-                <ul>
-                    <li>Desarrollar plan de implementación por fases</li>
-                    <li>Identificar componentes críticos vs. opcionales</li>
-                    <li>Buscar financiamiento internacional</li>
-                    <li>Establecer alianzas público-privadas</li>
-                </ul>
-            </td>
-            <td>Director de Proyecto / Gerente Financiero</td>
-        </tr>
-    </table>
+            <div class="chart-container">
+                <canvas id="kpiChart"></canvas>
+            </div>
 
-    <div class="chart-container">
-        <canvas id="estrategiasChart"></canvas>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var ctx = document.getElementById('estrategiasChart').getContext('2d');
-            var chart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Mitigar', 'Transferir', 'Evitar', 'Aceptar', 'Explotar'],
-                    datasets: [{
-                        label: 'Riesgos Técnicos',
-                        data: [80, 10, 5, 5, 0],
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                        borderColor: 'rgb(255, 99, 132)',
-                        pointBackgroundColor: 'rgb(255, 99, 132)'
-                    }, {
-                        label: 'Riesgos de Implementación',
-                        data: [70, 5, 15, 10, 0],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgb(54, 162, 235)',
-                        pointBackgroundColor: 'rgb(54, 162, 235)'
-                    }, {
-                        label: 'Riesgos Operativos',
-                        data: [75, 5, 10, 10, 0],
-                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
-                        borderColor: 'rgb(255, 206, 86)',
-                        pointBackgroundColor: 'rgb(255, 206, 86)'
-                    }, {
-                        label: 'Riesgos de Gestión',
-                        data: [60, 15, 20, 5, 0],
-                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                        borderColor: 'rgb(75, 192, 192)',
-                        pointBackgroundColor: 'rgb(75, 192, 192)'
-                    }, {
-                        label: 'Riesgos Externos',
-                        data: [50, 20, 5, 25, 0],
-                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
-                        borderColor: 'rgb(153, 102, 255)',
-                        pointBackgroundColor: 'rgb(153, 102, 255)'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Distribución de Estrategias por Categoría de Riesgo (%)'
-                        }
-                    },
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: true
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('kpiChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Tiempo procesamiento', 'Tiempo espera', 'Procesamiento menores', 'Satisfacción viajeros', 'Satisfacción funcionarios', 'Tasa reclamos'],
+                            datasets: [{
+                                label: 'Situación Actual',
+                                data: [45, 14, 30, 35, 40, 15],
+                                backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                            }, {
+                                label: 'Meta',
+                                data: [15, 2, 5, 85, 80, 3],
+                                backgroundColor: 'rgba(75, 192, 192, 0.7)'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Comparativa de KPIs: Situación Actual vs. Meta'
+                                }
                             },
-                            suggestedMin: 0,
-                            suggestedMax: 100
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Valor'
+                                    }
+                                }
+                            }
                         }
-                    }
-                }
-            });
-        });
-    </script>
-</section>
+                    });
+                });
+            </script>
+        </section>
 
-<section id="plan-implementacion">
-    <h2>7. Plan de Implementación Detallado</h2>
-    
-    <h3>7.1 Fases de Implementación</h3>
-    <div class="mermaid">
-        flowchart LR
-            subgraph F1["Fase 1: Preparación (2 meses)"]
-                A1[Análisis detallado]
-                A2[Estadísticas de flujo]
-                A3[Evaluación infraestructura]
-                A4[Diseño de soluciones]
-            end
+        <section id="conclusiones">
+            <h2>8. Conclusiones y Recomendaciones</h2>
             
-            subgraph F2["Fase 2: Desarrollo (4 meses)"]
-                B1[Módulo vehículos]
-                B2[Módulo menores]
-                B3[Módulo SAG]
-                B4[Integraciones]
-            end
+            <h3>8.1 Conclusiones</h3>
+            <p>El análisis detallado de la Estructura de Desglose de Trabajo (EDT) y la Estructura de Desglose de Riesgos (RBS) para el proyecto de modernización del Servicio Nacional de Aduanas revela lo siguiente:</p>
+            <ul>
+                <li><strong>Viabilidad técnica:</strong> El proyecto es técnicamente viable, aunque presenta desafíos significativos en términos de integración con sistemas existentes y compatibilidad con sistemas argentinos.</li>
+                <li><strong>Riesgos críticos identificados:</strong> Se han identificado riesgos críticos principalmente en las áreas de conectividad, compatibilidad de sistemas y gestión del aumento de flujo de viajeros.</li>
+                <li><strong>Beneficios potenciales significativos:</strong> La implementación exitosa podría reducir drásticamente los tiempos de espera (de 8-20 horas a menos de 2 horas), mejorar la experiencia de usuarios y optimizar los recursos humanos.</li>
+                <li><strong>Enfoque por fases:</strong> La estrategia de implementación por fases permite mitigar riesgos y realizar ajustes progresivos, maximizando las probabilidades de éxito.</li>
+            </ul>
+
+            <h3>8.2 Recomendaciones Estratégicas</h3>
+            <ol>
+                <li><strong>Priorizar la coordinación internacional:</strong> Establecer acuerdos formales de cooperación técnica con Argentina desde las etapas iniciales del proyecto para garantizar la compatibilidad de sistemas.</li>
+                <li><strong>Implementar soluciones offline robustas:</strong> Considerando los problemas de conectividad en zonas fronterizas, es crucial desarrollar capacidades de operación offline con sincronización diferida.</li>
+                <li><strong>Enfoque en experiencia de usuario:</strong> Diseñar interfaces extremadamente intuitivas y proporcionar asistencia presencial durante la fase inicial para mitigar la resistencia al cambio.</li>
+                <li><strong>Campaña de comunicación integral:</strong> Desarrollar una estrategia de comunicación dirigida a viajeros para informar sobre los nuevos procedimientos antes de su llegada al paso fronterizo.</li>
+                <li><strong>Monitoreo continuo y mejora iterativa:</strong> Establecer un sistema de monitoreo continuo con métricas claras y un proceso de mejora iterativa basado en retroalimentación de usuarios y funcionarios.</li>
+            </ol>
+
+            <h3>8.3 Consideraciones Finales</h3>
+            <p>La modernización del paso fronterizo Los Libertadores representa una oportunidad significativa para mejorar la eficiencia operativa, reducir tiempos de espera y mejorar la experiencia de viajeros. Sin embargo, el éxito del proyecto dependerá de:</p>
+            <ul>
+                <li>Una gestión efectiva de los riesgos identificados, especialmente aquellos relacionados con la integración de sistemas y la conectividad.</li>
+                <li>El compromiso y participación activa de todas las partes interesadas, incluyendo autoridades de ambos países.</li>
+                <li>La capacitación adecuada del personal y una estrategia de gestión del cambio efectiva.</li>
+                <li>La flexibilidad para adaptar el plan según las lecciones aprendidas durante la implementación piloto.</li>
+            </ul>
+            <p>Con una planificación cuidadosa, una gestión de riesgos proactiva y un enfoque centrado en el usuario, este proyecto tiene el potencial de transformar significativamente la operación del paso fronterizo Los Libertadores, convirtiéndolo en un modelo de eficiencia para otros pasos fronterizos en la región.</p>
+        </section>
+
+        <section id="anexos">
+            <h2>9. Anexos</h2>
             
-            subgraph F3["Fase 3: Piloto (3 meses)"]
-                C1[Despliegue inicial]
-                C2[Capacitación intensiva]
-                C3[Campaña informativa]
-                C4[Monitoreo y ajustes]
-            end
-            
-            subgraph F4["Fase 4: Evaluación (2 meses)"]
-                D1[Análisis comparativo]
-                D2[Encuestas satisfacción]
-                D3[Identificación cuellos botella]
-                D4[Implementación mejoras]
-            end
-            
-            subgraph F5["Fase 5: Despliegue (3 meses)"]
-                E1[Implementación completa]
-                E2[Extensión otros pasos]
-                E3[Integración completa]
-                E4[Protocolos permanentes]
-            end
-            
-            F1 --> F2
-            F2 --> F3
-            F3 --> F4
-            F4 --> F5
+            <h3>9.1 Glosario de Términos</h3>
+            <table>
+                <tr>
+                    <th>Término</th>
+                    <th>Definición</th>
+                </tr>
+                <tr>
+                    <td>EDT/WBS</td>
+                    <td>Estructura de Desglose de Trabajo (Work Breakdown Structure) - Herramienta que descompone jerárquicamente el trabajo a ejecutar por el equipo del proyecto para cumplir con los objetivos.</td>
+                </tr>
+                <tr>
+                    <td>RBS</td>
+                    <td>Estructura de Desglose de Riesgos (Risk Breakdown Structure) - Representación jerárquica de los riesgos según sus categorías.</td>
+                </tr>
+                <tr>
+                    <td>SAG</td>
+                    <td>Servicio Agrícola y Ganadero - Organismo chileno encargado del control fitosanitario en fronteras.</td>
+                </tr>
+                <tr>
+                    <td>PDI</td>
+                    <td>Policía de Investigaciones - Organismo chileno encargado del control migratorio.</td>
+                </tr>
+                <tr>
+                    <td>KPI</td>
+                    <td>Indicador Clave de Desempeño (Key Performance Indicator) - Medida cuantificable que evalúa el rendimiento en relación con objetivos específicos.</td>
+                </tr>
+            </table>
+
+            <h3>9.2 Referencias Normativas</h3>
+            <ul>
+                <li>Ley Orgánica del Servicio Nacional de Aduanas (Decreto con Fuerza de Ley N° 329 de 1979)</li>
+                <li>Ordenanza de Aduanas (Decreto con Fuerza de Ley N° 30 de 2004)</li>
+                <li>Acuerdo sobre Documentos de Viaje y de Retorno entre Chile y Argentina (2019)</li>
+                <li>Normativa sobre Tránsito de Menores (Resolución N° 2309 de 2015)</li>
+                <li>Protocolo de Integración Física del Tratado de Maipú de Integración y Cooperación entre Chile y Argentina</li>
+                <li>Normativa SAG para el ingreso de productos de origen vegetal y animal</li>
+            </ul>
+
+            <h3>9.3 Metodología Utilizada</h3>
+            <p>Para la elaboración de este informe y el análisis de la Estructura de Desglose de Trabajo (EDT) y la Estructura de Desglose de Riesgos (RBS) se utilizaron las siguientes metodologías y estándares:</p>
+            <ul>
+                <li><strong>Guía PMBOK (Project Management Body of Knowledge):</strong> Se siguieron los lineamientos de la 6ª edición para la elaboración de la EDT y RBS.</li>
+                <li><strong>ISO 31000:</strong> Se aplicaron los principios de gestión de riesgos definidos en este estándar internacional.</li>
+                <li><strong>Metodología Ágil:</strong> Se incorporaron elementos de metodologías ágiles para el plan de implementación, permitiendo adaptabilidad y mejora continua.</li>
+                <li><strong>Análisis FODA:</strong> Se utilizó para la evaluación inicial de la situación actual y la identificación de oportunidades de mejora.</li>
+                <li><strong>Técnica Delphi:</strong> Se aplicó para la identificación y evaluación de riesgos, consultando a expertos en aduanas, sistemas y gestión fronteriza.</li>
+            </ul>
+        </section>
+
     </div>
-
-    <h3>7.2 Cronograma Detallado de Implementación</h3>
-    <table>
-        <tr>
-            <th>Fase</th>
-            <th>Actividad</th>
-            <th>Duración</th>
-            <th>Dependencias</th>
-            <th>Recursos Clave</th>
-        </tr>
-        <tr>
-            <td rowspan="4">Fase 1: Preparación</td>
-            <td>Análisis detallado de procesos actuales</td>
-            <td>3 semanas</td>
-            <td>-</td>
-            <td>Analistas de procesos, Expertos aduaneros</td>
-        </tr>
-        <tr>
-            <td>Levantamiento de estadísticas de flujo</td>
-            <td>2 semanas</td>
-            <td>-</td>
-            <td>Analistas de datos, Personal de aduanas</td>
-        </tr>
-        <tr>
-            <td>Evaluación de infraestructura tecnológica</td>
-            <td>2 semanas</td>
-            <td>-</td>
-            <td>Arquitectos de TI, Especialistas en redes</td>
-        </tr>
-        <tr>
-            <td>Diseño de soluciones específicas</td>
-            <td>3 semanas</td>
-            <td>Análisis detallado</td>
-            <td>Arquitectos de soluciones, Diseñadores UX</td>
-        </tr>
-        <tr>
-            <td rowspan="4">Fase 2: Desarrollo</td>
-            <td>Desarrollo del módulo de vehículos</td>
-            <td>8 semanas</td>
-            <td>Diseño de soluciones</td>
-            <td>Desarrolladores, Expertos en normativa vehicular</td>
-        </tr>
-        <tr>
-            <td>Desarrollo del módulo de menores</td>
-            <td>6 semanas</td>
-            <td>Diseño de soluciones</td>
-            <td>Desarrolladores, Expertos legales</td>
-        </tr>
-        <tr>
-            <td>Desarrollo del módulo SAG</td>
-            <td>7 semanas</td>
-            <td>Diseño de soluciones</td>
-            <td>Desarrolladores, Especialistas SAG</td>
-        </tr>
-        <tr>
-            <td>Desarrollo de integraciones</td>
-            <td>10 semanas</td>
-            <td>Diseño de soluciones</td>
-            <td>Especialistas en integración, Coordinadores internacionales</td>
-        </tr>
-        <tr>
-            <td rowspan="4">Fase 3: Piloto</td>
-            <td>Despliegue inicial en horarios de bajo flujo</td>
-            <td>3 semanas</td>
-            <td>Desarrollo completo</td>
-            <td>Equipo de implementación, Personal de aduanas</td>
-        </tr>
-        <tr>
-            <td>Capacitación intensiva a funcionarios</td>
-            <td>4 semanas</td>
-            <td>Desarrollo completo</td>
-            <td>Capacitadores, Especialistas en cambio organizacional</td>
-        </tr>
-        <tr>
-            <td>Campaña informativa para viajeros</td>
-            <td>6 semanas</td>
-            <td>Desarrollo completo</td>
-            <td>Especialistas en comunicación, Diseñadores gráficos</td>
-        </tr>
-        <tr>
-            <td>Monitoreo continuo y ajustes</td>
-            <td>12 semanas</td>
-            <td>Despliegue inicial</td>
-            <td>Analistas de calidad, Desarrolladores</td>
-        </tr>
-        <tr>
-            <td rowspan="4">Fase 4: Evaluación</td>
-            <td>Análisis comparativo de tiempos</td>
-            <td>3 semanas</td>
-            <td>Piloto completo</td>
-            <td>Analistas de datos, Especialistas en procesos</td>
-        </tr>
-        <tr>
-            <td>Encuestas de satisfacción</td>
-            <td>4 semanas</td>
-            <td>Piloto completo</td>
-            <td>Especialistas en experiencia de usuario</td>
-        </tr>
-        <tr>
-            <td>Identificación de cuellos de botella</td>
-            <td>2 semanas</td>
-            <td>Análisis comparativo</td>
-            <td>Analistas de procesos, Expertos en optimización</td>
-        </tr>
-        <tr>
-            <td>Implementación de mejoras</td>
-            <td>3 semanas</td>
-            <td>Identificación de cuellos de botella</td>
-            <td>Desarrolladores, Equipo de implementación</td>
-        </tr>
-        <tr>
-            <td rowspan="4">Fase 5: Despliegue</td>
-            <td>Implementación a tiempo completo</td>
-            <td>4 semanas</td>
-            <td>Evaluación completa</td>
-            <td>Equipo de implementación, Personal de aduanas</td>
-        </tr>
-        <tr>
-            <td>Extensión a otros pasos fronterizos</td>
-            <td>8 semanas</td>
-            <td>Implementación completa en Los Libertadores</td>
-            <td>Equipo de implementación, Coordinadores regionales</td>
-        </tr>
-        <tr>
-            <td>Integración completa con sistemas argentinos</td>
-            <td>6 semanas</td>
-            <td>Implementación completa en Los Libertadores</td>
-            <td>Especialistas en integración, Coordinadores internacionales</td>
-        </tr>
-        <tr>
-            <td>Establecimiento de protocolos permanentes</td>
-            <td>4 semanas</td>
-            <td>Extensión a otros pasos</td>
-            <td>Especialistas en procesos, Expertos aduaneros</td>
-        </tr>
-    </table>
-
-    <h3>7.3 Indicadores Clave de Desempeño (KPIs)</h3>
-    <table>
-        <tr>
-            <th>Categoría</th>
-            <th>Indicador</th>
-            <th>Línea Base</th>
-            <th>Meta</th>
-            <th>Método de Medición</th>
-        </tr>
-        <tr>
-            <td rowspan="3">Reducción de tiempos</td>
-            <td>Tiempo promedio de procesamiento por vehículo</td>
-            <td>45 minutos</td>
-            <td>15 minutos</td>
-            <td>Medición automática por sistema</td>
+</body>
+</html>
