@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificación Fiesta de Cumpleaños</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.css">
+    <script src="https://cdn.dhtmlx.com/gantt/edge/dhtmlxgantt.js"></script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #6B73FF 0%, #000DFF 100%);
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 2.8em;
+            margin-bottom: 40px;
+            position: relative;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        h1::after {
+            content: '';
+            display: block;
+            width: 150px;
+            height: 5px;
+            background: linear-gradient(to right, #6B73FF, #000DFF);
+            margin: 15px auto;
+            border-radius: 3px;
+        }
+        .gantt-container {
+            height: 550px;
+            width: 100%;
+            margin: 30px 0;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .gantt_task_content {
+            color: white;
+            font-weight: 500;
+            padding: 0 10px;
+            font-size: 13px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: calc(100% - 20px);
+            text-align: center;
+        }
+        .gantt_task_line {
+            background: linear-gradient(45deg, #6B73FF, #000DFF);
+            border: none;
+            height: 45px !important;
+            line-height: 45px !important;
+            border-radius: 25px;
+            box-shadow: 0 5px 15px rgba(107, 115, 255, 0.3);
+            padding: 0 15px;
+        }
+        .gantt_task_progress {
+            background: linear-gradient(45deg, #000DFF, #6B73FF);
+            border-radius: 25px;
+        }
+        .gantt_grid_head_cell {
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 16px;
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+        .gantt_grid_data {
+            font-size: 15px;
+            color: #444;
+        }
+        .gantt_scale_cell {
+            font-weight: 500;
+            font-size: 14px;
+            color: #666;
+        }
+        .gantt_row {
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .gantt_grid {
+            border-right: 2px solid #e9ecef;
+        }
+        .gantt_task_link {
+            border: 2px solid #6B73FF;
+        }
+        .gantt_scale_line {
+            border-top: none;
+            background: #f8f9fa;
+        }
+        .gantt_grid_scale {
+            background: #f8f9fa;
+            border-bottom: 2px solid #e9ecef;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎉 Planificación de mi Fiesta de Cumpleaños 🎂</h1>
+        <div id="gantt_here" class="gantt-container"></div>
+    </div>
+
+    <script>
+        gantt.config.date_format = "%Y-%m-%d";
+        gantt.config.scale_height = 60;
+        gantt.config.row_height = 60;
+        gantt.config.task_height = 45;
+        gantt.config.scale_unit = "day";
+        gantt.config.date_scale = "%d %M";
+        gantt.config.min_column_width = 120;
+        gantt.config.link_line_width = 2;
+        gantt.config.link_arrow_size = 6;
+        gantt.config.drag_links = false;
+        gantt.config.drag_progress = true;
+        gantt.config.drag_resize = true;
+        gantt.config.drag_move = true;
+
+        gantt.templates.task_text = function(start, end, task){
+            return task.text;
+        };
+
+        gantt.config.columns = [
+            {name: "text", label: "Tarea", tree: true, width: 350, resize: true},
+            {name: "start_date", label: "Fecha Inicio", align: "center", width: 120, resize: true},
+            {name: "duration", label: "Duración (días)", align: "center", width: 120, resize: true}
+        ];
+
+        gantt.init("gantt_here");
+
+        const tasks = {
+            data: [
+                {id: 1, text: "Preparar lista de invitados", start_date: "2024-01-15", duration: 2, progress: 0.6},
+                {id: 2, text: "Reservar local y decoración", start_date: "2024-01-18", duration: 1, progress: 0},
+                {id: 3, text: "Contratar servicio de catering", start_date: "2024-01-20", duration: 1, progress: 0},
+                {id: 4, text: "Organizar música", start_date: "2024-01-22", duration: 1, progress: 0},
+                {id: 5, text: "Confirmar asistencia", start_date: "2024-01-24", duration: 1, progress: 0}
+            ],
+            links: [
+                {id: 1, source: 1, target: 2, type: "0"},
+                {id: 2, source: 2, target: 3, type: "0"},
+                {id: 3, source: 3, target: 4, type: "0"},
+                {id: 4, source: 4, target: 5, type: "0"}
+            ]
+        };
+
+        gantt.parse(tasks);
+    </script>
+</body>
+</html>
