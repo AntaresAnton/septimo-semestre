@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Riesgos - Servicio Nacional de Aduanas</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        header {
+            background-color: #0056b3;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1, h2, h3, h4 {
+            color: #0056b3;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        h2 {
+            border-bottom: 2px solid #0056b3;
+            padding-bottom: 10px;
+            margin-top: 40px;
+        }
+        h3 {
+            margin-top: 30px;
+        }
+        section {
+            margin-bottom: 40px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #0056b3;
+            color: white;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .chart-container {
+            margin: 30px 0;
+            text-align: center;
+        }
+        .risk-matrix {
+            width: 100%;
+            margin: 20px 0;
+        }
+        .risk-matrix th, .risk-matrix td {
+            text-align: center;
+        }
+        .risk-low {
+            background-color: #92d050;
+            color: black;
+        }
+        .risk-medium {
+            background-color: #ffff00;
+            color: black;
+        }
+        .risk-high {
+            background-color: #ffc000;
+            color: black;
+        }
+        .risk-extreme {
+            background-color: #ff0000;
+            color: white;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #0056b3;
+            color: white;
+        }
+        .logo {
+            max-width: 150px;
+            margin: 0 auto;
+            display: block;
+        }
+        .executive-summary {
+            background-color: #f0f7ff;
+            padding: 20px;
+            border-left: 5px solid #0056b3;
+            margin: 20px 0;
+        }
+        .mermaid {
+            margin: 30px 0;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true
+            }
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Análisis de Riesgos y Estructura de Desglose de Trabajo</h1>
+            <h2>Proyecto de Modernización del Servicio Nacional de Aduanas</h2>
+            <p>Caso: Optimización del Paso Fronterizo Los Libertadores</p>
+        </header>
+
+        <section id="resumen-ejecutivo">
+            <h2>Resumen Ejecutivo</h2>
+            <div class="executive-summary">
+                <p>El presente informe detalla un análisis exhaustivo de la Estructura de Desglose de Trabajo (EDT/WBS) y la Estructura de Desglose de Riesgos (RBS) para el proyecto de modernización del Servicio Nacional de Aduanas, con énfasis en la optimización del paso fronterizo Los Libertadores. Este paso, que conecta Chile con Argentina, ha experimentado demoras significativas (entre 8 y 20 horas) que afectan negativamente el comercio internacional y el turismo.</p>
+                <p>El proyecto propone implementar un sistema de automatización que permita agilizar los procesos de documentación para menores, vehículos y control de productos agrícolas, integrando los sistemas entre ambos países y reduciendo significativamente los tiempos de espera.</p>
+                <p>Este análisis proporciona una visión estructurada de los componentes del proyecto y sus riesgos asociados, facilitando la planificación, ejecución y control efectivos del proyecto de modernización.</p>
+            </div>
+        </section>
+
+        <section id="antecedentes">
+            <h2>1. Antecedentes</h2>
+            
+            <h3>1.1 Contexto Institucional</h3>
+            <p>El Servicio Nacional de Aduanas es un organismo del Estado de administración autónoma que se relaciona con el poder ejecutivo a través del Ministerio de Hacienda. Sus funciones principales incluyen:</p>
+            <ul>
+                <li>Facilitación y agilización de operaciones de importación y exportación</li>
+                <li>Fiscalización de operaciones de comercio exterior</li>
+                <li>Recaudación de derechos e impuestos</li>
+                <li>Generación de estadísticas del intercambio comercial</li>
+            </ul>
+
+            <h3>1.2 Misión y Visión</h3>
+            <table>
+                <tr>
+                    <th>Misión</th>
+                    <th>Visión</th>
+                </tr>
+                <tr>
+                    <td>"Fiscalizar y facilitar el comercio exterior, para contribuir a la recaudación fiscal, al desarrollo económico, a la competitividad y a la protección del país y las personas, promoviendo el cumplimiento voluntario de la normativa, entregando un servicio de calidad e innovador, con funcionarios probos y competentes."</td>
+                    <td>"Ser reconocidos nacional e internacionalmente como un Servicio con una gestión pública de excelencia, líderes en la protección y desarrollo del comercio internacional de Chile, con funcionarios altamente especializados y que observen los principios de probidad y transparencia."</td>
+                </tr>
+            </table>
+
+            <h3>1.3 Problemática Actual</h3>
+            <p>El paso fronterizo Los Libertadores, que conecta Chile con Argentina, enfrenta serios problemas de congestión con tiempos de espera que oscilan entre 8 y 20 horas. Esta situación se debe a múltiples factores:</p>
+            <ul>
+                <li>Aumento significativo del flujo de personas (180% en temporadas altas)</li>
+                <li>Limitaciones de infraestructura existente</li>
+                <li>Procesos manuales y burocráticos</li>
+                <li>Falta de información previa a los viajeros sobre documentación requerida</li>
+                <li>Coordinación insuficiente entre servicios (Aduanas, PDI, SAG)</li>
+            </ul>
+
+            <div class="chart-container">
+                <canvas id="flujoPasajeros"></canvas>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('flujoPasajeros').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                            datasets: [{
+                                label: 'Flujo de Pasajeros 2022',
+                                data: [85000, 126000, 78000, 45000, 32000, 38000, 65000, 42000, 38000, 52000, 68000, 95000],
+                                borderColor: '#0056b3',
+                                backgroundColor: 'rgba(0, 86, 179, 0.1)',
+                                tension: 0.4
+                            }, {
+                                label: 'Capacidad Óptima',
+                                data: [70000, 70000, 70000, 70000, 70000, 70000, 70000, 70000, 70000, 70000, 70000, 70000],
+                                borderColor: '#ff0000',
+                                borderDash: [5, 5],
+                                fill: false
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Flujo Mensual de Pasajeros vs. Capacidad Óptima'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Número de Personas'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+        </section>
+
+        <section id="solucion-propuesta">
+            <h2>2. Solución Propuesta</h2>
+            
+            <h3>2.1 Descripción General</h3>
+            <p>Se propone desarrollar un sistema integral de automatización que permita agilizar los procesos en el paso fronterizo Los Libertadores, con las siguientes funcionalidades clave:</p>
+            <ul>
+                <li>Automatización de documentación para entrada y salida de menores</li>
+                <li>Automatización de procesos para vehículos motorizados</li>
+                <li>Integración de sistemas entre aduanas de países limítrofes</li>
+                <li>Automatización y control de procesos de revisión del SAG y PDI</li>
+                <li>Generación de informes estadísticos automatizados</li>
+                <li>Sistema seguro con control de acceso y confidencialidad</li>
+            </ul>
+
+            <h3>2.2 Beneficios Esperados</h3>
+            <table>
+                <tr>
+                    <th>Beneficio</th>
+                    <th>Impacto</th>
+                    <th>Medición</th>
+                </tr>
+                <tr>
+                    <td>Reducción de tiempos de espera</td>
+                    <td>Alto</td>
+                    <td>Disminución de 8-20 horas a menos de 2 horas</td>
+                </tr>
+                <tr>
+                    <td>Mejora en experiencia de usuario</td>
+                    <td>Alto</td>
+                    <td>Aumento en satisfacción de viajeros (encuestas)</td>
+                </tr>
+                <tr>
+                    <td>Optimización de recursos humanos</td>
+                    <td>Medio</td>
+                    <td>Redistribución de personal a tareas de mayor valor</td>
+                </tr>
+                <tr>
+                    <td>Mejora en la fiscalización</td>
+                    <td>Alto</td>
+                    <td>Aumento en efectividad de controles</td>
+                </tr>
+                <tr>
+                    <td>Generación de estadísticas precisas</td>
+                    <td>Medio</td>
+                    <td>Disponibilidad de datos en tiempo real</td>
+                </tr>
+            </table>
+
+            <div class="chart-container">
+                <canvas id="tiemposEspera"></canvas>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('tiemposEspera').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: ['Situación Actual', 'Con Sistema (Estimado)'],
+                            datasets: [{
+                                label: 'Tiempo Promedio de Espera (horas)',
+                                data: [12, 1.5],
+                                backgroundColor: [
+                                    'rgba(255, 99, 132, 0.7)',
+                                    'rgba(75, 192, 192, 0.7)'
+                                ],
+                                borderColor: [
+                                    'rgb(255, 99, 132)',
+                                    'rgb(75, 192, 192)'
+                                ],
+                                borderWidth: 1
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Comparativa de Tiempos de Espera'
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    title: {
+                                        display: true,
+                                        text: 'Horas'
+                                    }
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+        </section>
+
+        <section id="estructura-desglose-trabajo">
+            <h2>3. Estructura de Desglose de Trabajo (EDT/WBS)</h2>
+            
+            <h3>3.1 Diagrama EDT/WBS</h3>
+            <div class="mermaid">
+                graph TD
+                    A[Proyecto de Sistema de Automatización de Aduanas] --> B[1. Análisis y Diseño]
+                    A --> C[2. Desarrollo de Módulos Funcionales]
+                    A --> D[3. Integración y Pruebas]
+                    A --> E[4. Implementación y Despliegue]
+                    A --> F[5. Capacitación y Soporte]
+                    
+                    B --> B1[1.1 Levantamiento de requerimientos]
+                    B --> B2[1.2 Diseño de arquitectura]
+                    B --> B3[1.3 Diseño de interfaces]
+                    B --> B4[1.4 Diseño de base de datos]
+                    B --> B5[1.5 Protocolos de seguridad]
+                    
+                    B1 --> B11[1.1.1 Doc. menores]
+                    B1 --> B12[1.1.2 Doc. vehículos]
+                    B1 --> B13[1.1.3 Doc. mascotas/SAG]
+                    B1 --> B14[1.1.4 Integración sistemas]
+                    
+                    C --> C1[2.1 Módulo doc. menores]
+                    C --> C2[2.2 Módulo vehículos]
+                    C --> C3[2.3 Módulo integración aduanas]
+                    C --> C4[2.4 Módulo control SAG/PDI]
+                    C --> C5[2.5 Módulo reportes]
+                    C --> C6[2.6 Módulo usuarios/seguridad]
+                    
+                    C2 --> C21[2.2.1 Formulario digital]
+                    C2 --> C22[2.2.2 Gestión de plazos]
+                    C2 --> C23[2.2.3 Sistema impresión]
+                    
+                    C4 --> C41[2.4.1 Declaración alimentos]
+                    C4 --> C42[2.4.2 Registro mascotas]
+                    C4 --> C43[2.4.3 Integración SAG]
+                    
+                    D --> D1[3.1 Integración sistemas existentes]
+                    D --> D2[3.2 Pruebas unitarias]
+                    D --> D3[3.3 Pruebas integración]
+                    D --> D4[3.4 Pruebas rendimiento]
+                    D --> D5[3.5 Pruebas seguridad]
+                    D --> D6[3.6 Pruebas aceptación]
+                    
+                    E --> E1[4.1 Preparación infraestructura]
+                    E --> E2[4.2 Migración datos]
+                    E --> E3[4.3 Implementación piloto]
+                    E --> E4[4.4 Despliegue completo]
+                    E --> E5[4.5 Documentación]
+                    
+                    F --> F1[5.1 Materiales capacitación]
+                    F --> F2[5.2 Capacitación administradores]
+                    F --> F3[5.3 Capacitación usuarios]
+                    F --> F4[5.4 Mesa de ayuda]
+                    F --> F5[5.5 Plan mejora continua]
+            </div>
+
+            <h3>3.2 Descripción de Componentes Principales</h3>
+            <table>
+                <tr>
+                    <th>Componente</th>
+                    <th>Descripción</th>
+                    <th>Entregables Principales</th>
+                </tr>
+                <tr>
+                    <td>1. Análisis y Diseño</td>
+                    <td>Fase inicial que establece las bases del proyecto, definiendo requerimientos, arquitectura y diseños.</td>
+                    <td>
+                        <ul>
+                            <li>Documento de requerimientos</li>
+                            <li>Diseño de arquitectura</li>
+                            <li>Prototipos de interfaces</li>
+                            <li>Modelo de datos</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>2. Desarrollo de Módulos Funcionales</td>
+                    <td>Construcción de los componentes de software que conforman el sistema.</td>
+                    <td>
+                        <ul>
+                            <li>Código fuente de módulos</li>
+                            <li>Documentación técnica</li>
+                            <li>Manuales de referencia API</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3. Integración y Pruebas</td>
+                    <td>Verificación del funcionamiento correcto del sistema y sus integraciones.</td>
+                    <td>
+                        <ul>
+                            <li>Plan de pruebas</li>
+                            <li>Informes de resultados</li>
+                            <li>Registro de incidencias</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>4. Implementación y Despliegue</td>
+                    <td>Puesta en marcha del sistema en el entorno de producción.</td>
+                    <td>
+                        <ul>
+                            <li>Plan de implementación</li>
+                            <li>Informe de migración</li>
+                            <li>Sistema en producción</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>5. Capacitación y Soporte</td>
+                    <td>Preparación de usuarios y establecimiento de mecanismos de apoyo.</td>
+                    <td>
+                        <ul>
+                            <li>Materiales de capacitación</li>
+                            <li>Registros de capacitación</li>
+                            <li>Procedimientos de soporte</li>
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+
+            <h3>3.3 Cronograma de Alto Nivel</h3>
+            <div class="mermaid">
+                gantt
+                    title Cronograma del Proyecto
+                    dateFormat  YYYY-MM-DD
+                    section Análisis y Diseño
+                    Levantamiento de requerimientos    :a1, 2023-01-01, 30d
+                    Diseño de arquitectura             :a2, after a1, 20d
+                    Diseño de interfaces               :a3, after a2, 15d
+                    Diseño de base de datos            :a4, after a2, 15d
+                    Protocolos de seguridad            :a5, after a2, 15d
+                    
+                    section Desarrollo
+                    Módulo documentación menores       :d1, after a3, 30d
+                    Módulo vehículos                   :d2, after a3, 45d
+                    Módulo integración aduanas         :d3, after a3, 60d
+                    Módulo control SAG/PDI             :d4, after a3, 45d
+                    Módulo reportes                    :d5, after a3, 30d
+                    Módulo usuarios/seguridad          :d6, after a5, 30d
+                    
+                    section Integración y Pruebas
+                    Integración sistemas               :t1, after d3, 30d
+                    Pruebas unitarias                  :t2, after d1, 90d
+                    Pruebas integración                :t3, after t1, 20d
+                    Pruebas rendimiento                :t4, after t3, 10d
+                    Pruebas seguridad                  :t5, after t3, 15d
+                    Pruebas aceptación                 :t6, after t4, 15d
+                    
+                    section Implementación
+                    Preparación infraestructura        :i1, after t6, 15d
+                    Migración datos                    :i2, after i1, 10d
+                    Implementación piloto              :i3, after i2, 30d
+                    Despliegue completo                :i4, after i3, 45d
+                    
+                    section Capacitación
+                    Materiales capacitación            :c1, after t6, 20d
+                    Capacitación administradores       :c2, after c1, 10d
+                    Capacitación usuarios              :c3, after i3, 30d
+                    Mesa de ayuda                      :c4, after i4, 15d
+            </div>
+        </section>
+
+        <section id="estructura-desglose-riesgos">
+            <h2>4. Estructura de Desglose de Riesgos (RBS)</h2>
+            
+            <h3>4.1 Diagrama RBS</h3>
+            <div class="mermaid">
+                graph TD
+                    R[Riesgos del Proyecto] --> R1[1. Riesgos Técnicos]
+                    R --> R2[2. Riesgos de Implementación]
+                    R --> R3[3. Riesgos Operativos]
+                    R --> R4[4. Riesgos de Gestión]
+                    R --> R5[5. Riesgos Externos]
+                    
+                    R1 --> R11[1.1 Integración sistema vehículos]
+                    R1 --> R12[1.2 Integración sistema SAG]
+                    R1 --> R13[1.3 Compatibilidad sistema argentino]
+                    R1 --> R14[1.4 Vulnerabilidades documentos digitales]
+                    R1 --> R15[1.5 Limitaciones impresión documentos]
+                    
+                    R2 --> R21[2.1 Resistencia a sistema digital]
+                    R2 --> R22[2.2 Dificultades usuarios no tecnológicos]
+                    R2 --> R23[2.3 Errores migración datos]
+                    R2 --> R24[2.4 Problemas validación documentos]
+                    R2 --> R25[2.5 Confusión plazos diferentes]
+                    
+                    R3 --> R31[3.1 Errores cálculo plazos]
+                    R3 --> R32[3.2 Fallas sincronización Chile-Argentina]
+                    R3 --> R33[3.3 Problemas declaración SAG]
+                    R3 --> R34[3.4 Verificación documentos digitales]
+                    R3 --> R35[3.5 Gestión casos especiales]
+                    
+                    R4 --> R41[4.1 Cambios en requisitos]
+                    R4 --> R42[4.2 Coordinación deficiente]
+                    R4 --> R43[4.3 Expectativas irreales]
+                    R4 --> R44[4.4 Falta compromiso autoridades]
+                    R4 --> R45[4.5 Presiones implementación rápida]
+                    
+                    R5 --> R51[5.1 Cambios normativas vehículos]
+                    R5 --> R52[5.2 Cambios requisitos mascotas]
+                    R5 --> R53[5.3 Restricciones presupuestarias]
+                    R5 --> R54[5.4 Problemas conectividad]
+                    R5 --> R55[5.5 Aumento inesperado flujo]
+            </div>
+
+            <h3>4.2 Matriz de Probabilidad e Impacto</h3>
+            <table class="risk-matrix">
+                <tr>
+                    <th colspan="2" rowspan="2"></th>
+                    <th colspan="5">Impacto</th>
+                </tr>
+                <tr>
+                    <th>Muy Bajo<br>0.05</th>
+                    <th>Bajo<br>0.1</th>
+                    <th>Moderado<br>0.2</th>
+                    <th>Alto<br>0.4</th>
+                    <th>Muy Alto<br>0.8</th>
+                </tr>
+                <tr>
+                    <th rowspan="5">Probabilidad</th>
+                    <th>Muy Alta<br>0.9</th>
+                    <td class="risk-medium">0.045</td>
+                    <td class="risk-medium">0.09</td>
+                    <td class="risk-high">0.18<br>R22, R42</td>
+                    <td class="risk-extreme">0.36<br>R13, R32</td>
+                    <td class="risk-extreme">0.72<br>R55</td>
+                </tr>
+                <tr>
+                    <th>Alta<br>0.7</th>
+                    <td class="risk-low">0.035</td>
+                    <td class="risk-medium">0.07</td>
+                    <td class="risk-high">0.14<br>R21, R25</td>
+                    <td class="risk-high">0.28<br>R11, R45</td>
+                    <td class="risk-extreme">0.56<br>R54</td>
+                </tr>
+                <tr>
+                    <th>Media<br>0.5</th>
+                    <td class="risk-low">0.025</td>
+                    <td class="risk-medium">0.05<br>R35</td>
+                    <td class="risk-medium">0.10<br>R15, R41</td>
+                    <td class="risk-high">0.20<br>R12, R23, R33</td>
+                    <td class="risk-high">0.40<br>R14, R44</td>
+                </tr>
+                <tr>
+                    <th>Baja<br>0.3</th>
+                    <td class="risk-low">0.015</td>
+                    <td class="risk-low">0.03<br>R52</td>
+                    <td class="risk-medium">0.06<br>R24, R31</td>
+                    <td class="risk-medium">0.12<br>R34, R43</td>
+                    <td class="risk-high">0.24<br>R53</td>
+                </tr>
+                <tr>
+                    <th>Muy Baja<br>0.1</th>
+                    <td class="risk-low">0.005</td>
+                    <td class="risk-low">0.01</td>
+                    <td class="risk-low">0.02<br>R51</td>
+                    <td class="risk-low">0.04</td>
+                    <td class="risk-medium">0.08</td>
+                </tr>
+            </table>
+
+            <h3>4.3 Análisis de Riesgos Críticos</h3>
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Riesgo</th>
+                    <th>Probabilidad</th>
+                    <th>Impacto</th>
+                    <th>Valor</th>
+                    <th>Estrategia de Mitigación</th>
+                </tr>
+                <tr>
+                    <td>R55</td>
+                    <td>Aumento inesperado del flujo de viajeros durante implementación</td>
+                    <td>0.9</td>
+                    <td>0.8</td>
+                    <td>0.72</td>
+                    <td>Implementar plan de contingencia con refuerzo de personal. Establecer sistema de turnos para regular flujo. Realizar implementación en temporada baja.</td>
+                </tr>
+                <tr>
+                    <td>R54</td>
+                    <td>Problemas de conectividad en zonas fronterizas remotas</td>
+                    <td>0.7</td>
+                    <td>0.8</td>
+                    <td>0.56</td>
+                    <td>Implementar sistema con capacidad de operación offline. Establecer enlaces redundantes de comunicación. Desarrollar procedimientos manuales de respaldo.</t
+                    </tr>
+                    <tr>
+                        <td>R13</td>
+                        <td>Problemas de compatibilidad con el sistema argentino</td>
+                        <td>0.9</td>
+                        <td>0.4</td>
+                        <td>0.36</td>
+                        <td>Establecer protocolos de intercambio de datos estandarizados. Realizar pruebas de integración tempranas. Mantener comunicación constante con autoridades argentinas.</td>
+                    </tr>
+                    <tr>
+                        <td>R32</td>
+                        <td>Fallas en la sincronización de datos entre Chile y Argentina</td>
+                        <td>0.9</td>
+                        <td>0.4</td>
+                        <td>0.36</td>
+                        <td>Implementar mecanismos de reconciliación de datos. Establecer alertas automáticas para inconsistencias. Desarrollar procedimientos de verificación manual.</td>
+                    </tr>
+                    <tr>
+                        <td>R11</td>
+                        <td>Complejidad en la integración con sistema existente de vehículos</td>
+                        <td>0.7</td>
+                        <td>0.4</td>
+                        <td>0.28</td>
+                        <td>Realizar análisis detallado del sistema actual. Desarrollar interfaces de integración robustas. Implementar período de operación paralela.</td>
+                    </tr>
+                </table>
+    
+                <div class="chart-container">
+                    <canvas id="riesgosChart"></canvas>
+                </div>
+    
+                <script>
+                    document.addEventListener('DOMContentLoaded', function() {
+                        var ctx = document.getElementById('riesgosChart').getContext('2d');
+                        var chart = new Chart(ctx, {
+                            type: 'bubble',
+                            data: {
+                                datasets: [{
+                                    label: 'Riesgos Técnicos',
+                                    data: [
+                                        {x: 0.4, y: 0.7, r: 14, id: 'R11'},
+                                        {x: 0.4, y: 0.5, r: 10, id: 'R12'},
+                                        {x: 0.4, y: 0.9, r: 18, id: 'R13'},
+                                        {x: 0.8, y: 0.5, r: 20, id: 'R14'},
+                                        {x: 0.2, y: 0.5, r: 5, id: 'R15'}
+                                    ],
+                                    backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                                    borderColor: 'rgb(255, 99, 132)'
+                                }, {
+                                    label: 'Riesgos de Implementación',
+                                    data: [
+                                        {x: 0.2, y: 0.7, r: 7, id: 'R21'},
+                                        {x: 0.2, y: 0.9, r: 9, id: 'R22'},
+                                        {x: 0.4, y: 0.5, r: 10, id: 'R23'},
+                                        {x: 0.2, y: 0.3, r: 3, id: 'R24'},
+                                        {x: 0.2, y: 0.7, r: 7, id: 'R25'}
+                                    ],
+                                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                                    borderColor: 'rgb(54, 162, 235)'
+                                }, {
+                                    label: 'Riesgos Operativos',
+                                    data: [
+                                        {x: 0.2, y: 0.3, r: 3, id: 'R31'},
+                                        {x: 0.4, y: 0.9, r: 18, id: 'R32'},
+                                        {x: 0.4, y: 0.5, r: 10, id: 'R33'},
+                                        {x: 0.4, y: 0.3, r: 6, id: 'R34'},
+                                        {x: 0.1, y: 0.5, r: 2.5, id: 'R35'}
+                                    ],
+                                    backgroundColor: 'rgba(255, 206, 86, 0.5)',
+                                    borderColor: 'rgb(255, 206, 86)'
+                                }, {
+                                    label: 'Riesgos de Gestión',
+                                    data: [
+                                        {x: 0.2, y: 0.5, r: 5, id: 'R41'},
+                                        {x: 0.2, y: 0.9, r: 9, id: 'R42'},
+                                        {x: 0.4, y: 0.3, r: 6, id: 'R43'},
+                                        {x: 0.8, y: 0.5, r: 20, id: 'R44'},
+                                        {x: 0.4, y: 0.7, r: 14, id: 'R45'}
+                                    ],
+                                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                                    borderColor: 'rgb(75, 192, 192)'
+                                }, {
+                                    label: 'Riesgos Externos',
+                                    data: [
+                                        {x: 0.2, y: 0.1, r: 1, id: 'R51'},
+                                        {x: 0.1, y: 0.3, r: 1.5, id: 'R52'},
+                                        {x: 0.8, y: 0.3, r: 12, id: 'R53'},
+                                        {x: 0.8, y: 0.7, r: 28, id: 'R54'},
+                                        {x: 0.8, y: 0.9, r: 36, id: 'R55'}
+                                    ],
+                                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
+                                    borderColor: 'rgb(153, 102, 255)'
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: 'Mapa de Riesgos del Proyecto'
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            label: function(context) {
+                                                var label = context.dataset.label || '';
+                                                var dataPoint = context.dataset.data[context.dataIndex];
+                                                return dataPoint.id + ' - P: ' + dataPoint.y + ', I: ' + dataPoint.x;
+                                            }
+                                        }
+                                    }
+                                },
+                                scales: {
+                                    x: {
+                                        title: {
+                                            display: true,
+                                            text: 'Impacto'
+                                        },
+                                        min: 0,
+                                        max: 1
+                                    },
+                                    y: {
+                                        title: {
+                                            display: true,
+                                            text: 'Probabilidad'
+                                        },
+                                        min: 0,
+                                        max: 1
+                                    }
+                                }
+                            }
+                        });
+                    });
+                </script>
+            </section>
+    
+            <section id="interrelacion-riesgos">
+                <h2>5. Análisis de Interrelación entre Categorías de Riesgos</h2>
+                
+                <h3>5.1 Mapa de Interrelaciones</h3>
+                <div class="mermaid">
+                    flowchart TD
+                        R1[Riesgos Técnicos] -->|Afecta| R3[Riesgos Operativos]
+                        R2[Riesgos de Implementación] -->|Afecta| R3
+                        R1 -->|Afecta| R2
+                        R4[Riesgos de Gestión] -->|Afecta| R1
+                        R4 -->|Afecta| R2
+                        R5[Riesgos Externos] -->|Afecta| R1
+                        R5 -->|Afecta| R3
+                        R4 -->|Afecta| R5
+                </div>
+    
+                <h3>5.2 Descripción de Interrelaciones Clave</h3>
+                <table>
+                    <tr>
+                        <th>Interrelación</th>
+                        <th>Descripción</th>
+                        <th>Impacto Potencial</th>
+                    </tr>
+                    <tr>
+                        <td>Riesgos Técnicos → Operativos</td>
+                        <td>La complejidad en la integración con sistemas existentes (R11) puede provocar errores en la validación de documentos (R34) y fallas en la sincronización de datos (R32).</td>
+                        <td>Alto - Podría comprometer la integridad de los datos y la confiabilidad del sistema.</td>
+                    </tr>
+                    <tr>
+                        <td>Riesgos de Implementación → Operativos</td>
+                        <td>La resistencia al cambio (R21) y una curva de aprendizaje prolongada (R22) pueden aumentar los errores operativos durante la fase inicial.</td>
+                        <td>Medio - Podría generar retrasos y errores en la operación inicial.</td>
+                    </tr>
+                    <tr>
+                        <td>Riesgos Técnicos → Implementación</td>
+                        <td>Las limitaciones técnicas pueden dificultar la adopción por parte de los usuarios y complicar la implementación.</td>
+                        <td>Medio - Podría generar resistencia adicional y problemas de adopción.</td>
+                    </tr>
+                    <tr>
+                        <td>Riesgos de Gestión → Técnicos</td>
+                        <td>Los cambios en los requerimientos (R41) pueden afectar el diseño técnico y generar complejidades adicionales.</td>
+                        <td>Alto - Podría requerir rediseños significativos y generar retrasos.</td>
+                    </tr>
+                    <tr>
+                        <td>Riesgos Externos → Técnicos</td>
+                        <td>Los problemas de conectividad (R54) pueden afectar la arquitectura técnica y requerir soluciones alternativas.</td>
+                        <td>Alto - Podría requerir cambios fundamentales en la arquitectura del sistema.</td>
+                    </tr>
+                </table>
+            </section>
+    
+            <section id="estrategias-mitigacion">
+                <h2>6. Estrategias de Mitigación para Riesgos Críticos</h2>
+                
+                <h3>6.1 Estrategias para Riesgos Técnicos</h3>
+                <table>
+                    <tr>
+                        <th>Riesgo</th>
+                        <th>Estrategia</th>
+                        <th>Acciones Específicas</th>
+                        <th>Responsable</th>
+                    </tr>
+                    <tr>
+                        <td>R13 - Problemas de compatibilidad con sistema argentino</td>
+                        <td>Mitigar</td>
+                        <td>
+                            <ul>
+                                <li>Establecer protocolos de intercambio de datos estandarizados</li>
+                                <li>Realizar pruebas de integración tempranas</li>
+                                <li>Desarrollar adaptadores de compatibilidad</li>
+                                <li>Establecer acuerdos formales de cooperación técnica</li>
+                            </ul>
+                        </td>
+                        <td>Arquitecto de Sistemas / Coordinador Internacional</td>
+                    </tr>
+                    <tr>
+                        <td>R11 - Complejidad en integración con sistema de vehículos</td>
+                        <td>Mitigar</td>
+                        <td>
+                            <ul>
+                                <li>Realizar análisis detallado del sistema actual</li>
+                                <li>Desarrollar interfaces de integración robustas</li>
+                                <li>Implementar período de operación paralela</li>
+                                <li>Crear plan de contingencia para fallos de integración</li>
+                            </ul>
+                        </td>
+                        <td>Líder Técnico / Especialista en Integración</td>
+                    </tr>
+                    <tr>
+                        <td>R14 - Vulnerabilidades en documentos digitales</td>
+                        <td>Mitigar</td>
+                        <td>
+                            <ul>
+                                <li>Implementar cifrado de extremo a extremo</li>
+                                <li>Utilizar firmas digitales avanzadas</li>
+                                <li>Realizar auditorías de seguridad periódicas</li>
+                                <li>Implementar sistema de detección de fraudes</li>
+                            </ul>
+                        </td>
+                        <td>Especialista en Seguridad / Oficial de Seguridad de la Información</td>
+                    </tr>
+                </table>
+    
+                <h3>6.2 Estrategias para Riesgos de Implementación y Operativos</h3>
+                <table>
+                    <tr>
+                        <th>Riesgo</th>
+                        <th>Estrategia</th>
+                        <th>Acciones Específicas</th>
+                        <th>Responsable</th>
+                    </tr>
+                    <tr>
+                        <td>R32 - Fallas en sincronización Chile-Argentina</td>
+                        <td>Mitigar</td>
+                        <td>
+                            <ul>
+                                <li>Implementar mecanismos de reconciliación de datos</li>
+                                <li>Establecer alertas automáticas para inconsistencias</li>
+                                <li>Desarrollar procedimientos de verificación manual</li>
+                                <li>Crear logs detallados de transacciones</li>
+                            </ul>
+                        </td>
+                        <td>Arquitecto de Datos / Líder de Operaciones</td>
+                    </tr>
+                    <tr>
+                        <td>R22 - Dificultades para usuarios no tecnológicos</td>
+                        <td>Mitigar</td>
+                        <td>
+                            <ul>
+                                <li>Diseñar interfaces extremadamente intuitivas</li>
+                                <li>Desarrollar tutoriales interactivos</li>
+                                <li>Proporcionar asistencia presencial</li>
+                                <li>Implementar sistema de ayuda contextual</li>
+                            </ul>
+                        </td>
+                        <td>Diseñador UX / Especialista en Capacitación</td>
+                    </tr>
+                    <tr>
+                        <td>R33 - Problemas con declaración SAG</td>
+                        <td>Mitigar</td>
+                        <td>
+                            <ul>
+                                <li>Desarrollar validaciones automáticas</li>
+                                <li>Implementar sistema de preregistro</li>
+                            <li>Crear flujos simplificados para casos comunes</li>
+                            <li>Establecer canal directo con especialistas SAG</li>
+                        </ul>
+                    </td>
+                    <td>Analista de Procesos / Coordinador SAG</td>
+                </tr>
+            </table>
+
+            <h3>6.3 Estrategias para Riesgos Externos</h3>
+            <table>
+                <tr>
+                    <th>Riesgo</th>
+                    <th>Estrategia</th>
+                    <th>Acciones Específicas</th>
+                    <th>Responsable</th>
+                </tr>
+                <tr>
+                    <td>R55 - Aumento inesperado del flujo de viajeros</td>
+                    <td>Mitigar / Aceptar</td>
+                    <td>
+                        <ul>
+                            <li>Implementar plan de contingencia con refuerzo de personal</li>
+                            <li>Establecer sistema de turnos para regular flujo</li>
+                            <li>Realizar implementación en temporada baja</li>
+                            <li>Desarrollar sistema de escalabilidad automática</li>
+                        </ul>
+                    </td>
+                    <td>Gerente de Proyecto / Coordinador de Operaciones</td>
+                </tr>
+                <tr>
+                    <td>R54 - Problemas de conectividad en zonas fronterizas</td>
+                    <td>Mitigar</td>
+                    <td>
+                        <ul>
+                            <li>Implementar sistema con capacidad de operación offline</li>
+                            <li>Establecer enlaces redundantes de comunicación</li>
+                            <li>Desarrollar procedimientos manuales de respaldo</li>
+                            <li>Implementar sincronización diferida</li>
+                        </ul>
+                    </td>
+                    <td>Arquitecto de Infraestructura / Especialista en Redes</td>
+                </tr>
+                <tr>
+                    <td>R53 - Restricciones presupuestarias</td>
+                    <td>Mitigar / Transferir</td>
+                    <td>
+                        <ul>
+                            <li>Desarrollar plan de implementación por fases</li>
+                            <li>Identificar componentes críticos vs. opcionales</li>
+                            <li>Buscar financiamiento internacional</li>
+                            <li>Establecer alianzas público-privadas</li>
+                        </ul>
+                    </td>
+                    <td>Director de Proyecto / Gerente Financiero</td>
+                </tr>
+            </table>
+
+            <div class="chart-container">
+                <canvas id="estrategiasChart"></canvas>
+            </div>
+
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    var ctx = document.getElementById('estrategiasChart').getContext('2d');
+                    var chart = new Chart(ctx, {
+                        type: 'radar',
+                        data: {
+                            labels: ['Mitigar', 'Transferir', 'Evitar', 'Aceptar', 'Explotar'],
+                            datasets: [{
+                                label: 'Riesgos Técnicos',
+                                data: [80, 10, 5, 5, 0],
+                                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                                borderColor: 'rgb(255, 99, 132)',
+                                pointBackgroundColor: 'rgb(255, 99, 132)'
+                            }, {
+                                label: 'Riesgos de Implementación',
+                                data: [70, 5, 15, 10, 0],
+                                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                                borderColor: 'rgb(54, 162, 235)',
+                                pointBackgroundColor: 'rgb(54, 162, 235)'
+                            }, {
+                                label: 'Riesgos Operativos',
+                                data: [75, 5, 10, 10, 0],
+                                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                                borderColor: 'rgb(255, 206, 86)',
+                                pointBackgroundColor: 'rgb(255, 206, 86)'
+                            }, {
+                                label: 'Riesgos de Gestión',
+                                data: [60, 15, 20, 5, 0],
+                                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                                borderColor: 'rgb(75, 192, 192)',
+                                pointBackgroundColor: 'rgb(75, 192, 192)'
+                            }, {
+                                label: 'Riesgos Externos',
+                                data: [50, 20, 5, 25, 0],
+                                backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                                borderColor: 'rgb(153, 102, 255)',
+                                pointBackgroundColor: 'rgb(153, 102, 255)'
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: 'Distribución de Estrategias por Categoría de Riesgo (%)'
+                                }
+                            },
+                            scales: {
+                                r: {
+                                    angleLines: {
+                                        display: true
+                                    },
+                                    suggestedMin: 0,
+                                    suggestedMax: 100
+                                }
+                            }
+                        }
+                    });
+                });
+            </script>
+        </section>
+
+        <section id="plan-implementacion">
+            <h2>7. Plan de Implementación Detallado</h2>
+            
+            <h3>7.1 Fases de Implementación</h3>
+            <div class="mermaid">
+                flowchart LR
+                    subgraph F1["Fase 1: Preparación (2 meses)"]
+                        A1[Análisis detallado]
+                        A2[Estadísticas de flujo]
+                        A3[Evaluación infraestructura]
+                        A4[Diseño de soluciones]
+                    end
+                    
+                    subgraph F2["Fase 2: Desarrollo (4 meses)"]
+                        B1[Módulo vehículos]
+                        B2[Módulo menores]
+                        B3[Módulo SAG]
+                        B4[Integraciones]
+                    end
+                    
+                    subgraph F3["Fase 3: Piloto (3 meses)"]
+                        C1[Despliegue inicial]
+                        C2[Capacitación intensiva]
+                        C3[Campaña informativa]
+                        C4[Monitoreo y ajustes]
+                    end
+                    
+                    subgraph F4["Fase 4: Evaluación (2 meses)"]
+                        D1[Análisis comparativo]
+                        D2[Encuestas satisfacción]
+                        D3[Identificación cuellos botella]
+                        D4[Implementación mejoras]
+                    end
+                    
+                    subgraph F5["Fase 5: Despliegue (3 meses)"]
+                        E1[Implementación completa]
+                        E2[Extensión otros pasos]
+                        E3[Integración completa]
+                        E4[Protocolos permanentes]
+                    end
+                    
+                    F1 --> F2
+                    F2 --> F3
+                    F3 --> F4
+                    F4 --> F5
+            </div>
+
+            <h3>7.2 Cronograma Detallado de Implementación</h3>
+            <table>
+                <tr>
+                    <th>Fase</th>
+                    <th>Actividad</th>
+                    <th>Duración</th>
+                    <th>Dependencias</th>
+                    <th>Recursos Clave</th>
+                </tr>
+                <tr>
+                    <td rowspan="4">Fase 1: Preparación</td>
+                    <td>Análisis detallado de procesos actuales</td>
+                    <td>3 semanas</td>
+                    <td>-</td>
+                    <td>Analistas de procesos, Expertos aduaneros</td>
+                </tr>
+                <tr>
+                    <td>Levantamiento de estadísticas de flujo</td>
+                    <td>2 semanas</td>
+                    <td>-</td>
+                    <td>Analistas de datos, Personal de aduanas</td>
+                </tr>
+                <tr>
+                    <td>Evaluación de infraestructura tecnológica</td>
+                    <td>2 semanas</td>
+                    <td>-</td>
+                    <td>Arquitectos de TI, Especialistas en redes</td>
+                </tr>
+                <tr>
+                    <td>Diseño de soluciones específicas</td>
+                    <td>3 semanas</td>
+                    <td>Análisis detallado</td>
+                    <td>Arquitectos de soluciones, Diseñadores UX</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">Fase 2: Desarrollo</td>
+                    <td>Desarrollo del módulo de vehículos</td>
+                    <td>8 semanas</td>
+                    <td>Diseño de soluciones</td>
+                    <td>Desarrolladores, Expertos en normativa vehicular</td>
+                </tr>
+                <tr>
+                    <td>Desarrollo del módulo de menores</td>
+                    <td>6 semanas</td>
+                    <td>Diseño de soluciones</td>
+                    <td>Desarrolladores, Expertos legales</td>
+                </tr>
+                <tr>
+                    <td>Desarrollo del módulo SAG</td>
+                    <td>7 semanas</td>
+                    <td>Diseño de soluciones</td>
+                    <td>Desarrolladores, Especialistas SAG</td>
+                </tr>
+                <tr>
+                    <td>Desarrollo de integraciones</td>
+                    <td>10 semanas</td>
+                    <td>Diseño de soluciones</td>
+                    <td>Especialistas en integración, Coordinadores internacionales</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">Fase 3: Piloto</td>
+                    <td>Despliegue inicial en horarios de bajo flujo</td>
+                    <td>3 semanas</td>
+                    <td>Desarrollo completo</td>
+                    <td>Equipo de implementación, Personal de aduanas</td>
+                </tr>
+                <tr>
+                    <td>Capacitación intensiva a funcionarios</td>
+                    <td>4 semanas</td>
+                    <td>Desarrollo completo</td>
+                    <td>Capacitadores, Especialistas en cambio organizacional</td>
+                </tr>
+                <tr>
+                    <td>Campaña informativa para viajeros</td>
+                    <td>6 semanas</td>
+                    <td>Desarrollo completo</td>
+                    <td>Especialistas en comunicación, Diseñadores gráficos</td>
+                </tr>
+                <tr>
+                    <td>Monitoreo continuo y ajustes</td>
+                    <td>12 semanas</td>
+                    <td>Despliegue inicial</td>
+                    <td>Analistas de calidad, Desarrolladores</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">Fase 4: Evaluación</td>
+                    <td>Análisis comparativo de tiempos</td>
+                    <td>3 semanas</td>
+                    <td>Piloto completo</td>
+                    <td>Analistas de datos, Especialistas en procesos</td>
+                </tr>
+                <tr>
+                    <td>Encuestas de satisfacción</td>
+                    <td>4 semanas</td>
+                    <td>Piloto completo</td>
+                    <td>Especialistas en experiencia de usuario</td>
+                </tr>
+                <tr>
+                    <td>Identificación de cuellos de botella</td>
+                    <td>2 semanas</td>
+                    <td>Análisis comparativo</td>
+                    <td>Analistas de procesos, Expertos en optimización</td>
+                </tr>
+                <tr>
+                    <td>Implementación de mejoras</td>
+                    <td>3 semanas</td>
+                    <td>Identificación de cuellos de botella</td>
+                    <td>Desarrolladores, Equipo de implementación</td>
+                </tr>
+                <tr>
+                    <td rowspan="4">Fase 5: Despliegue</td>
+                    <td>Implementación a tiempo completo</td>
+                    <td>4 semanas</td>
+                    <td>Evaluación completa</td>
+                    <td>Equipo de implementación, Personal de aduanas</td>
+                </tr>
+                <tr>
+                    <td>Extensión a otros pasos fronterizos</td>
+                    <td>8 semanas</td>
+                    <td>Implementación completa en Los Libertadores</td>
+                    <td>Equipo de implementación, Coordinadores regionales</td>
+                </tr>
+                <tr>
+                    <td>Integración completa con sistemas argentinos</td>
+                    <td>6 semanas</td>
+                    <td>Implementación completa en Los Libertadores</td>
+                    <td>Especialistas en integración, Coordinadores internacionales</td>
+                </tr>
+                <tr>
+                    <td>Establecimiento de protocolos permanentes</td>
+                    <td>4 semanas</td>
+                    <td>Extensión a otros pasos</td>
+                    <td>Especialistas en procesos, Expertos aduaneros</td>
+                </tr>
+            </table>
+
+            <h3>7.3 Indicadores Clave de Desempeño (KPIs)</h3>
+            <table>
+                <tr>
+                    <th>Categoría</th>
+                    <th>Indicador</th>
+                    <th>Línea Base</th>
+                    <th>Meta</th>
+                    <th>Método de Medición</th>
+                </tr>
+                <tr>
+                    <td rowspan="3">Reducción de tiempos</td>
+                    <td>Tiempo promedio de procesamiento por vehículo</td>
+                    <td>45 minutos</td>
+                    <td>15 minutos</td>
+                    <td>Medición automática por sistema</td>
+                    <li>Implementar sistema de preregistro</li>
+                    <li>Crear flujos simplificados para casos comunes</li>
+                    <li>Establecer canal directo con especialistas SAG</li>
+                </ul>
+            </td>
+            <td>Analista de Procesos / Coordinador SAG</td>
+        </tr>
+    </table>
+
+    <h3>6.3 Estrategias para Riesgos Externos</h3>
+    <table>
+        <tr>
+            <th>Riesgo</th>
+            <th>Estrategia</th>
+            <th>Acciones Específicas</th>
+            <th>Responsable</th>
+        </tr>
+        <tr>
+            <td>R55 - Aumento inesperado del flujo de viajeros</td>
+            <td>Mitigar / Aceptar</td>
+            <td>
+                <ul>
+                    <li>Implementar plan de contingencia con refuerzo de personal</li>
+                    <li>Establecer sistema de turnos para regular flujo</li>
+                    <li>Realizar implementación en temporada baja</li>
+                    <li>Desarrollar sistema de escalabilidad automática</li>
+                </ul>
+            </td>
+            <td>Gerente de Proyecto / Coordinador de Operaciones</td>
+        </tr>
+        <tr>
+            <td>R54 - Problemas de conectividad en zonas fronterizas</td>
+            <td>Mitigar</td>
+            <td>
+                <ul>
+                    <li>Implementar sistema con capacidad de operación offline</li>
+                    <li>Establecer enlaces redundantes de comunicación</li>
+                    <li>Desarrollar procedimientos manuales de respaldo</li>
+                    <li>Implementar sincronización diferida</li>
+                </ul>
+            </td>
+            <td>Arquitecto de Infraestructura / Especialista en Redes</td>
+        </tr>
+        <tr>
+            <td>R53 - Restricciones presupuestarias</td>
+            <td>Mitigar / Transferir</td>
+            <td>
+                <ul>
+                    <li>Desarrollar plan de implementación por fases</li>
+                    <li>Identificar componentes críticos vs. opcionales</li>
+                    <li>Buscar financiamiento internacional</li>
+                    <li>Establecer alianzas público-privadas</li>
+                </ul>
+            </td>
+            <td>Director de Proyecto / Gerente Financiero</td>
+        </tr>
+    </table>
+
+    <div class="chart-container">
+        <canvas id="estrategiasChart"></canvas>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var ctx = document.getElementById('estrategiasChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Mitigar', 'Transferir', 'Evitar', 'Aceptar', 'Explotar'],
+                    datasets: [{
+                        label: 'Riesgos Técnicos',
+                        data: [80, 10, 5, 5, 0],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgb(255, 99, 132)',
+                        pointBackgroundColor: 'rgb(255, 99, 132)'
+                    }, {
+                        label: 'Riesgos de Implementación',
+                        data: [70, 5, 15, 10, 0],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgb(54, 162, 235)',
+                        pointBackgroundColor: 'rgb(54, 162, 235)'
+                    }, {
+                        label: 'Riesgos Operativos',
+                        data: [75, 5, 10, 10, 0],
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgb(255, 206, 86)',
+                        pointBackgroundColor: 'rgb(255, 206, 86)'
+                    }, {
+                        label: 'Riesgos de Gestión',
+                        data: [60, 15, 20, 5, 0],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgb(75, 192, 192)',
+                        pointBackgroundColor: 'rgb(75, 192, 192)'
+                    }, {
+                        label: 'Riesgos Externos',
+                        data: [50, 20, 5, 25, 0],
+                        backgroundColor: 'rgba(153, 102, 255, 0.2)',
+                        borderColor: 'rgb(153, 102, 255)',
+                        pointBackgroundColor: 'rgb(153, 102, 255)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Distribución de Estrategias por Categoría de Riesgo (%)'
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                display: true
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</section>
+
+<section id="plan-implementacion">
+    <h2>7. Plan de Implementación Detallado</h2>
+    
+    <h3>7.1 Fases de Implementación</h3>
+    <div class="mermaid">
+        flowchart LR
+            subgraph F1["Fase 1: Preparación (2 meses)"]
+                A1[Análisis detallado]
+                A2[Estadísticas de flujo]
+                A3[Evaluación infraestructura]
+                A4[Diseño de soluciones]
+            end
+            
+            subgraph F2["Fase 2: Desarrollo (4 meses)"]
+                B1[Módulo vehículos]
+                B2[Módulo menores]
+                B3[Módulo SAG]
+                B4[Integraciones]
+            end
+            
+            subgraph F3["Fase 3: Piloto (3 meses)"]
+                C1[Despliegue inicial]
+                C2[Capacitación intensiva]
+                C3[Campaña informativa]
+                C4[Monitoreo y ajustes]
+            end
+            
+            subgraph F4["Fase 4: Evaluación (2 meses)"]
+                D1[Análisis comparativo]
+                D2[Encuestas satisfacción]
+                D3[Identificación cuellos botella]
+                D4[Implementación mejoras]
+            end
+            
+            subgraph F5["Fase 5: Despliegue (3 meses)"]
+                E1[Implementación completa]
+                E2[Extensión otros pasos]
+                E3[Integración completa]
+                E4[Protocolos permanentes]
+            end
+            
+            F1 --> F2
+            F2 --> F3
+            F3 --> F4
+            F4 --> F5
+    </div>
+
+    <h3>7.2 Cronograma Detallado de Implementación</h3>
+    <table>
+        <tr>
+            <th>Fase</th>
+            <th>Actividad</th>
+            <th>Duración</th>
+            <th>Dependencias</th>
+            <th>Recursos Clave</th>
+        </tr>
+        <tr>
+            <td rowspan="4">Fase 1: Preparación</td>
+            <td>Análisis detallado de procesos actuales</td>
+            <td>3 semanas</td>
+            <td>-</td>
+            <td>Analistas de procesos, Expertos aduaneros</td>
+        </tr>
+        <tr>
+            <td>Levantamiento de estadísticas de flujo</td>
+            <td>2 semanas</td>
+            <td>-</td>
+            <td>Analistas de datos, Personal de aduanas</td>
+        </tr>
+        <tr>
+            <td>Evaluación de infraestructura tecnológica</td>
+            <td>2 semanas</td>
+            <td>-</td>
+            <td>Arquitectos de TI, Especialistas en redes</td>
+        </tr>
+        <tr>
+            <td>Diseño de soluciones específicas</td>
+            <td>3 semanas</td>
+            <td>Análisis detallado</td>
+            <td>Arquitectos de soluciones, Diseñadores UX</td>
+        </tr>
+        <tr>
+            <td rowspan="4">Fase 2: Desarrollo</td>
+            <td>Desarrollo del módulo de vehículos</td>
+            <td>8 semanas</td>
+            <td>Diseño de soluciones</td>
+            <td>Desarrolladores, Expertos en normativa vehicular</td>
+        </tr>
+        <tr>
+            <td>Desarrollo del módulo de menores</td>
+            <td>6 semanas</td>
+            <td>Diseño de soluciones</td>
+            <td>Desarrolladores, Expertos legales</td>
+        </tr>
+        <tr>
+            <td>Desarrollo del módulo SAG</td>
+            <td>7 semanas</td>
+            <td>Diseño de soluciones</td>
+            <td>Desarrolladores, Especialistas SAG</td>
+        </tr>
+        <tr>
+            <td>Desarrollo de integraciones</td>
+            <td>10 semanas</td>
+            <td>Diseño de soluciones</td>
+            <td>Especialistas en integración, Coordinadores internacionales</td>
+        </tr>
+        <tr>
+            <td rowspan="4">Fase 3: Piloto</td>
+            <td>Despliegue inicial en horarios de bajo flujo</td>
+            <td>3 semanas</td>
+            <td>Desarrollo completo</td>
+            <td>Equipo de implementación, Personal de aduanas</td>
+        </tr>
+        <tr>
+            <td>Capacitación intensiva a funcionarios</td>
+            <td>4 semanas</td>
+            <td>Desarrollo completo</td>
+            <td>Capacitadores, Especialistas en cambio organizacional</td>
+        </tr>
+        <tr>
+            <td>Campaña informativa para viajeros</td>
+            <td>6 semanas</td>
+            <td>Desarrollo completo</td>
+            <td>Especialistas en comunicación, Diseñadores gráficos</td>
+        </tr>
+        <tr>
+            <td>Monitoreo continuo y ajustes</td>
+            <td>12 semanas</td>
+            <td>Despliegue inicial</td>
+            <td>Analistas de calidad, Desarrolladores</td>
+        </tr>
+        <tr>
+            <td rowspan="4">Fase 4: Evaluación</td>
+            <td>Análisis comparativo de tiempos</td>
+            <td>3 semanas</td>
+            <td>Piloto completo</td>
+            <td>Analistas de datos, Especialistas en procesos</td>
+        </tr>
+        <tr>
+            <td>Encuestas de satisfacción</td>
+            <td>4 semanas</td>
+            <td>Piloto completo</td>
+            <td>Especialistas en experiencia de usuario</td>
+        </tr>
+        <tr>
+            <td>Identificación de cuellos de botella</td>
+            <td>2 semanas</td>
+            <td>Análisis comparativo</td>
+            <td>Analistas de procesos, Expertos en optimización</td>
+        </tr>
+        <tr>
+            <td>Implementación de mejoras</td>
+            <td>3 semanas</td>
+            <td>Identificación de cuellos de botella</td>
+            <td>Desarrolladores, Equipo de implementación</td>
+        </tr>
+        <tr>
+            <td rowspan="4">Fase 5: Despliegue</td>
+            <td>Implementación a tiempo completo</td>
+            <td>4 semanas</td>
+            <td>Evaluación completa</td>
+            <td>Equipo de implementación, Personal de aduanas</td>
+        </tr>
+        <tr>
+            <td>Extensión a otros pasos fronterizos</td>
+            <td>8 semanas</td>
+            <td>Implementación completa en Los Libertadores</td>
+            <td>Equipo de implementación, Coordinadores regionales</td>
+        </tr>
+        <tr>
+            <td>Integración completa con sistemas argentinos</td>
+            <td>6 semanas</td>
+            <td>Implementación completa en Los Libertadores</td>
+            <td>Especialistas en integración, Coordinadores internacionales</td>
+        </tr>
+        <tr>
+            <td>Establecimiento de protocolos permanentes</td>
+            <td>4 semanas</td>
+            <td>Extensión a otros pasos</td>
+            <td>Especialistas en procesos, Expertos aduaneros</td>
+        </tr>
+    </table>
+
+    <h3>7.3 Indicadores Clave de Desempeño (KPIs)</h3>
+    <table>
+        <tr>
+            <th>Categoría</th>
+            <th>Indicador</th>
+            <th>Línea Base</th>
+            <th>Meta</th>
+            <th>Método de Medición</th>
+        </tr>
+        <tr>
+            <td rowspan="3">Reducción de tiempos</td>
+            <td>Tiempo promedio de procesamiento por vehículo</td>
+            <td>45 minutos</td>
+            <td>15 minutos</td>
+            <td>Medición automática por sistema</td>
