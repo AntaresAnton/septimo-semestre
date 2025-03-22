@@ -125,11 +125,122 @@
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Análisis de Riesgos y Estructura de Desglose de Trabajo</h1>
-            <h2>Proyecto de Modernización del Servicio Nacional de Aduanas</h2>
-            <p>Caso: Optimización del Paso Fronterizo Los Libertadores</p>
+        <header class="corporate-header">
+            <div class="header-container">
+                <div class="logo-container">
+                    <img src="https://www.aduana.cl/aduana/site/docs/images/logos/logo_aduana.png" alt="Logo Servicio Nacional de Aduanas" class="corporate-logo">
+                </div>
+                <div class="header-content">
+                    <h1 class="project-title">INFORME EJECUTIVO</h1>
+                    <h2 class="project-subtitle">Proyecto Estratégico de Transformación Digital</h2>
+                    <h3 class="project-name">"LIBERTADORES DIGITAL"</h3>
+                    <p class="project-description">Modernización Integral del Sistema de Control Fronterizo - Paso Los Libertadores</p>
+                    <p class="project-reference">Documento: EDT-RBS-001 | Versión: 1.2 | Fecha: Marzo 2025</p>
+                </div>
+            </div>
         </header>
+        
+        <style>
+            /* Estilos para el encabezado corporativo */
+            .corporate-header {
+                background: linear-gradient(135deg, #003366 0%, #0056b3 100%);
+                color: white;
+                padding: 2rem 0;
+                margin-bottom: 2.5rem;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                border-bottom: 5px solid #ffc107;
+            }
+            
+            .header-container {
+                display: flex;
+                align-items: center;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 0 2rem;
+            }
+            
+            .logo-container {
+                flex: 0 0 150px;
+                margin-right: 2rem;
+                border-right: 1px solid rgba(255, 255, 255, 0.3);
+                padding-right: 2rem;
+            }
+            
+            .corporate-logo {
+                max-width: 100%;
+                height: auto;
+                filter: brightness(0) invert(1); /* Convierte el logo a blanco */
+            }
+            
+            .header-content {
+                flex: 1;
+            }
+            
+            .project-title {
+                font-size: 2.2rem;
+                font-weight: 700;
+                margin: 0 0 0.5rem 0;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+            }
+            
+            .project-subtitle {
+                font-size: 1.4rem;
+                font-weight: 500;
+                margin: 0 0 1rem 0;
+                opacity: 0.9;
+            }
+            
+            .project-name {
+                font-size: 1.8rem;
+                font-weight: 600;
+                margin: 0 0 1rem 0;
+                color: #ffc107;
+                text-transform: uppercase;
+                letter-spacing: 1px;
+            }
+            
+            .project-description {
+                font-size: 1.1rem;
+                margin: 0 0 0.5rem 0;
+                opacity: 0.9;
+            }
+            
+            .project-reference {
+                font-size: 0.9rem;
+                margin: 0.5rem 0 0 0;
+                opacity: 0.7;
+                font-style: italic;
+            }
+            
+            /* Ajustes para impresión */
+            @media print {
+                .corporate-header {
+                    background: white !important;
+                    color: #003366 !important;
+                    border-bottom: 2px solid #003366 !important;
+                    padding: 1rem 0 !important;
+                    box-shadow: none !important;
+                }
+                
+                .logo-container {
+                    border-right: 1px solid #003366 !important;
+                }
+                
+                .corporate-logo {
+                    filter: none !important; /* Restaura el color original del logo */
+                }
+                
+                .project-name {
+                    color: #003366 !important;
+                }
+                
+                .project-reference {
+                    color: #666 !important;
+                }
+            }
+        </style>
+        
 
         <section id="resumen-ejecutivo">
             <h2>Resumen Ejecutivo</h2>
@@ -1387,6 +1498,7 @@
                 <li><strong>Técnica Delphi:</strong> Se aplicó para la identificación y evaluación de riesgos, consultando a expertos en aduanas, sistemas y gestión fronteriza.</li>
             </ul>
         </section>
+
 
     </div>
 </body>
