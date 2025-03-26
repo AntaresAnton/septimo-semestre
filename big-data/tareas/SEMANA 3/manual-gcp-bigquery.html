@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual de Google Cloud Platform y BigQuery</title>
+    <style>
+        :root {
+            --google-blue: #4285F4;
+            --google-red: #EA4335;
+            --google-yellow: #FBBC05;
+            --google-green: #34A853;
+            --google-grey: #5F6368;
+            --google-light-grey: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Google Sans', 'Roboto', Arial, sans-serif;
+            line-height: 1.6;
+            color: #202124;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .header-container {
+            display: flex;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo img {
+            height: 40px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 500;
+            margin: 0;
+            color: var(--google-grey);
+        }
+        
+        nav {
+            margin-left: auto;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        
+        nav li {
+            margin-left: 24px;
+        }
+        
+        nav a {
+            color: var(--google-grey);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        nav a:hover {
+            color: var(--google-blue);
+        }
+        
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+        
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .hero h2 {
+            font-size: 44px;
+            font-weight: 400;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        
+        .hero p {
+            font-size: 18px;
+            color: var(--google-grey);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        section {
+            margin-bottom: 60px;
+        }
+        
+        h2 {
+            font-size: 32px;
+            font-weight: 400;
+            margin-bottom: 24px;
+            color: #202124;
+        }
+        
+        h3 {
+            font-size: 24px;
+            font-weight: 400;
+            margin-top: 40px;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        
+        h4 {
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: 24px;
+            margin-bottom: 12px;
+            color: #202124;
+        }
+        
+        p, li {
+            font-size: 16px;
+            color: #5F6368;
+            margin-bottom: 16px;
+        }
+        
+        code {
+            background-color: var(--google-light-grey);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+        }
+        
+        pre {
+            background-color: var(--google-light-grey);
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 24px 0;
+        }
+        
+        pre code {
+            background-color: transparent;
+            padding: 0;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 16px;
+            color: #202124;
+        }
+        
+        .card-content {
+            color: #5F6368;
+        }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin: 40px 0;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: var(--google-blue);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 16px;
+        }
+        
+        .button:hover {
+            background-color: #3367d6;
+        }
+        
+        .note {
+            background-color: #e8f0fe;
+            border-left: 4px solid var(--google-blue);
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        
+        .warning {
+            background-color: #fef7e0;
+            border-left: 4px solid var(--google-yellow);
+            padding: 16px;
+            margin: 24px 0;
+            border-radius: 4px;
+        }
+        
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+            margin: 24px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 24px 0;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        th {
+            background-color: var(--google-light-grey);
+            font-weight: 500;
+        }
+        
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        footer {
+            background-color: var(--google-light-grey);
+            padding: 40px 20px;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 24px;
+        }
+        
+        .footer-links a {
+            color: var(--google-grey);
+            text-decoration: none;
+            margin: 0 16px;
+            font-size: 14px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--google-blue);
+        }
+        
+        .copyright {
+            font-size: 14px;
+            color: var(--google-grey);
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            nav {
+                margin-left: 0;
+                margin-top: 16px;
+                width: 100%;
+            }
+            
+            nav ul {
+                flex-direction: column;
+            }
+            
+            nav li {
+                margin-left: 0;
+                margin-bottom: 8px;
+            }
+            
+            .hero h2 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://www.gstatic.com/devrel-devsite/prod/v2210deb8920cd4a55bd580441aa58e7853afc04b39a9d9ac4198e1cd7fbe04ef/cloud/images/cloud-logo.svg" alt="Google Cloud Logo">
+                <h1>Manual de BigQuery</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#introduccion">Introducción</a></li>
+                    <li><a href="#gcp">Google Cloud Platform</a></li>
+                    <li><a href="#bigquery">BigQuery</a></li>
+                    <li><a href="#primeros-pasos">Primeros Pasos</a></li>
+                    <li><a href="#consultas">Consultas SQL</a></li>
+                    <li><a href="#casos-uso">Casos de Uso</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <main>
+        <section class="hero">
+            <h2>Google Cloud Platform y BigQuery</h2>
+            <p>Una guía completa para comenzar a utilizar BigQuery en Google Cloud Platform para análisis de datos a gran escala.</p>
+        </section>
+        
+        <section id="introduccion">
+            <h2>Introducción</h2>
+            <p>En la era del Big Data, las organizaciones necesitan herramientas potentes para almacenar, procesar y analizar grandes volúmenes de datos. Google Cloud Platform (GCP) ofrece BigQuery, un almacén de datos empresarial totalmente administrado que permite realizar análisis a gran escala con una velocidad y flexibilidad impresionantes.</p>
+            
+            <p>Este manual te guiará a través de los conceptos fundamentales de GCP y BigQuery, desde la configuración inicial hasta la ejecución de consultas complejas y la optimización del rendimiento.</p>
+            
+            <div class="note">
+                <p><strong>Nota:</strong> Este manual está diseñado tanto para principiantes como para usuarios con experiencia en análisis de datos que desean aprovechar las capacidades de BigQuery.</p>
+            </div>
+        </section>
+        
+        <section id="gcp">
+            <h2>Google Cloud Platform (GCP)</h2>
+            
+            <h3>¿Qué es Google Cloud Platform?</h3>
+            <p>Google Cloud Platform es un conjunto de servicios de computación en la nube que se ejecuta en la misma infraestructura que Google utiliza para sus productos, como Google Search y YouTube. GCP ofrece una amplia gama de servicios, incluyendo computación, almacenamiento, redes, machine learning, y herramientas de big data.</p>
+            
+            <h3>Principales servicios de GCP</h3>
+            <div class="grid">
+                <div class="card">
+                    <h4 class="card-title">Compute Engine</h4>
+                    <div class="card-content">
+                        <p>Máquinas virtuales (VMs) que se ejecutan en la infraestructura de Google.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Cloud Storage</h4>
+                    <div class="card-content">
+                        <p>Almacenamiento de objetos duradero y altamente disponible.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">BigQuery</h4>
+                    <div class="card-content">
+                        <p>Almacén de datos empresarial sin servidor para análisis a gran escala.</p>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Cloud AI</h4>
+                    <div class="card-content">
+                        <p>Conjunto de servicios de machine learning y AI.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Configuración de una cuenta de GCP</h3>
+            <ol>
+                <li>Visita <a href="https://cloud.google.com/">cloud.google.com</a> y haz clic en "Comenzar gratis".</li>
+                <li>Inicia sesión con tu cuenta de Google o crea una nueva.</li>
+                <li>Completa la información de facturación (se requiere una tarjeta de crédito, pero Google ofrece $300 en créditos gratuitos para nuevos usuarios).</li>
+                <li>Acepta los términos de servicio.</li>
+                <li>Crea tu primer proyecto desde la consola de GCP.</li>
+            </ol>
+            
+            <h3>Proyectos en GCP</h3>
+            <p>En GCP, los proyectos son la base para crear, habilitar y usar todos los servicios de Google Cloud. Un proyecto está compuesto por la configuración, permisos y otros metadatos que describen tus aplicaciones. Los recursos que creas en Google Cloud deben pertenecer a un proyecto.</p>
+            
+            <h4>Crear un nuevo proyecto</h4>
+            <ol>
+                <li>En la consola de GCP, haz clic en el selector de proyectos en la parte superior de la página.</li>
+                <li>Haz clic en "Nuevo proyecto".</li>
+                <li>Asigna un nombre al proyecto y, opcionalmente, edita el ID del proyecto.</li>
+                <li>Selecciona una organización (si aplica).</li>
+                <li>Haz clic en "Crear".</li>
+            </ol>
+            
+            <div class="note">
+                <p><strong>Consejo:</strong> Organiza tus recursos en proyectos según su función o equipo responsable para facilitar la administración y el seguimiento de costos.</p>
+            </div>
+        </section>
+        
+        <section id="bigquery">
+            <h2>BigQuery</h2>
+            
+            <h3>¿Qué es BigQuery?</h3>
+            <p>BigQuery es un almacén de datos empresarial totalmente administrado que permite realizar análisis de datos a gran escala. Con BigQuery, puedes consultar terabytes de datos en segundos y petabytes en minutos utilizando SQL estándar, sin necesidad de administrar infraestructura.</p>
+            
+            <h3>Características principales</h3>
+            <ul>
+                <li><strong>Sin servidor:</strong> No hay infraestructura que administrar.</li>
+                <li><strong>Escalabilidad:</strong> Procesa petabytes de datos sin problemas de rendimiento.</li>
+                <li><strong>Alta disponibilidad:</strong> Replicación automática de datos para garantizar la durabilidad.</li>
+                <li><strong>Integración:</strong> Se conecta fácilmente con herramientas de BI como Looker, Tableau y Power BI.</li>
+                <li><strong>Seguridad:</strong> Control de acceso detallado y encriptación de datos en reposo y en tránsito.</li>
+                <li><strong>Precios flexibles:</strong> Paga solo por lo que usas, con opciones de precios por consulta o por capacidad.</li>
+            </ul>
+            
+            <h3>Arquitectura de BigQuery</h3>
+            <p>BigQuery separa el almacenamiento y el procesamiento, lo que permite escalar cada uno de manera independiente:</p>
+            
+            <div class="card">
+                <h4 class="card-title">Capa de almacenamiento</h4>
+                <div class="card-content">
+                    <p>Almacena los datos en un formato columnar optimizado para consultas analíticas. Los datos se distribuyen automáticamente en múltiples ubicaciones para garantizar la durabilidad.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h4 class="card-title">Capa de procesamiento</h4>
+                <div class="card-content">
+                    <p>Ejecuta consultas SQL en paralelo a través de miles de servidores, lo que permite un rendimiento extremadamente rápido incluso en conjuntos de datos masivos.</p>
+                </div>
+            </div>
+            
+            <h3>Conceptos clave</h3>
+            <ul>
+                <li><strong>Conjuntos de datos (Datasets):</strong> Contenedores de nivel superior que organizan y controlan el acceso a tus tablas y vistas.</li>
+                <li><strong>Tablas:</strong> Datos estructurados organizados en filas y columnas.</li>
+                <li><strong>Vistas:</strong> Consultas SQL virtuales almacenadas que puedes consultar como tablas.</li>
+                <li><strong>Particiones:</strong> Divisiones de una tabla basadas en una columna específica para mejorar el rendimiento y reducir costos.</li>
+                <li><strong>Clústeres:</strong> Organización de datos dentro de particiones según columnas específicas para optimizar consultas.</li>
+            </ul>
+        </section>
+        
+        <section id="primeros-pasos">
+            <h2>Primeros pasos con BigQuery</h2>
+            
+            <h3>Habilitar la API de BigQuery</h3>
+            <ol>
+                <li>En la consola de GCP, navega a "APIs y servicios" > "Biblioteca".</li>
+                <li>Busca "BigQuery API" y selecciónala.</li>
+                <li>Haz clic en "Habilitar" si aún no está habilitada.</li>
+            </ol>
+            
+            <h3>Acceder a BigQuery</h3>
+            <p>Puedes acceder a BigQuery de varias maneras:</p>
+            <ul>
+                <li><strong>Consola de Google Cloud:</strong> Interfaz web para administrar y consultar datos.</li>
+                <li><strong>bq command-line tool:</strong> Herramienta de línea de comandos para operaciones de BigQuery.</li>
+                <li><strong>Cliente de API:</strong> Bibliotecas cliente disponibles en varios lenguajes (Python, Java, Node.js, etc.).</li>
+                <li><strong>BigQuery Studio:</strong> Entorno integrado para análisis de datos con notebooks.</li>
+            </ul>
+            
+            <h3>Crear un conjunto de datos</h3>
+            <p>Antes de poder cargar datos, necesitas crear un conjunto de datos:</p>
+            
+            <ol>
+                <li>En la consola de Google Cloud, navega a BigQuery.</li>
+                <li>En el panel de navegación, selecciona tu proyecto.</li>
+                <li>Haz clic en "Crear conjunto de datos".</li>
+                <li>Proporciona un ID para el conjunto de datos (por ejemplo, "mi_primer_dataset").</li>
+                <li>Selecciona una ubicación para los datos (región).</li>
+                <li>Configura la fecha de vencimiento de los datos (opcional).</li>
+                <li>Haz clic en "Crear conjunto de datos".</li>
+            </ol>
+            
+            <div class="note">
+                <p><strong>Importante:</strong> La ubicación de los datos no se puede cambiar después de crear el conjunto de datos. Elige una ubicación que cumpla con tus requisitos de residencia de datos y latencia.</p>
+            </div>
+            
+            <h3>Cargar datos en BigQuery</h3>
+            <p>Existen varias formas de cargar datos en BigQuery:</p>
+            
+            <h4>Cargar desde un archivo local</h4>
+            <ol>
+                <li>En la consola de BigQuery, selecciona tu conjunto de datos.</li>
+                <li>Haz clic en "Crear tabla".</li>
+                <li>En "Crear tabla desde", selecciona "Subir" y elige un archivo (CSV, JSON, Avro, Parquet, ORC).</li>
+                <li>Especifica un nombre para la tabla.</li>
+                <li>Define el esquema (automáticamente o manualmente).</li>
+                <li>Configura las opciones avanzadas según sea necesario.</li>
+                <li>Haz clic en "Crear tabla".</li>
+            </ol>
+            
+            <h4>Cargar desde Cloud Storage</h4>
+            <ol>
+                <li>Sube tus archivos a un bucket de Cloud Storage.</li>
+                <li>En la consola de BigQuery, selecciona tu conjunto de datos.</li>
+                <li>Haz clic en "Crear tabla".</li>
+                <li>En "Crear tabla desde", selecciona "Google Cloud Storage" y proporciona la ruta del bucket.</li>
+                <li>Completa el resto de la configuración como se describió anteriormente.</li>
+                <li>Haz clic en "Crear tabla".</li>
+            </ol>
+            
+            <h4>Importar datos desde otras fuentes</h4>
+            <p>BigQuery admite la importación de datos desde varias fuentes, incluyendo:</p>
+            <ul>
+                <li>Google Drive</li>
+                <li>Hojas de cálculo de Google</li>
+                <li>Bases de datos externas (mediante transferencias programadas)</li>
+                <li>Servicios de Google (Analytics, Ads, etc.)</li>
+            </ul>
+            
+            <h3>Streaming de datos</h3>
+            <p>Para datos en tiempo real, puedes utilizar la API de inserción de streaming de BigQuery:</p>
+            
+            <pre><code>// Ejemplo en Python
+from google.cloud import bigquery
+
+client = bigquery.Client()
+table_id = "proyecto.dataset.tabla"
+
+rows_to_insert = [
+    {"nombre": "Juan", "edad": 25, "ciudad": "Madrid"},
+    {"nombre": "Ana", "edad": 30, "ciudad": "Barcelona"},
+]
+
+errors = client.insert_rows_json(table_id, rows_to_insert)
+if errors == []:
+    print("Datos insertados correctamente")
+else:
+    print(f"Se encontraron errores: {errors}")</code></pre>
+        </section>
+        
+        <section id="consultas">
+            <h2>Consultas SQL en BigQuery</h2>
+            
+            <h3>Sintaxis básica de SQL</h3>
+            <p>BigQuery utiliza SQL estándar (GoogleSQL) para consultar datos. Aquí hay algunos ejemplos básicos:</p>
+            
+            <h4>Consulta simple</h4>
+            <pre><code>SELECT 
+  nombre, 
+  edad, 
+  ciudad
+FROM 
+  `proyecto.dataset.tabla`
+WHERE 
+  edad > 25
+ORDER BY 
+  edad DESC
+LIMIT 
+  100;</code></pre>
+            
+            <h4>Agregaciones</h4>
+            <pre><code>SELECT 
+  ciudad, 
+  COUNT(*) as total_personas,
+  AVG(edad) as edad_promedio
+FROM 
+  `proyecto.dataset.tabla`
+GROUP BY 
+  ciudad
+HAVING 
+  COUNT(*) > 10
+ORDER BY 
+  total_personas DESC;</code></pre>
+            
+            <h4>Uniones (JOINs)</h4>
+            <pre><code>SELECT 
+  u.nombre, 
+  u.email, 
+  p.producto, 
+  p.precio
+FROM 
+  `proyecto.dataset.usuarios` u
+JOIN 
+  `proyecto.dataset.compras` p
+ON 
+  u.id = p.usuario_id
+WHERE 
+  p.fecha > '2023-01-01';</code></pre>
+            
+            <h3>Funciones avanzadas</h3>
+            
+            <h4>Funciones de ventana (Window Functions)</h4>
+            <pre><code>SELECT 
+  nombre,
+  departamento,
+  salario,
+  RANK() OVER (PARTITION BY departamento ORDER BY salario DESC) as ranking
+FROM 
+  `proyecto.dataset.empleados`;</code></pre>
+            
+            <h4>Funciones de fecha y hora</h4>
+            <pre><code>SELECT 
+  EXTRACT(YEAR FROM fecha) as año,
+  EXTRACT(MONTH FROM fecha) as mes,
+  COUNT(*) as total_ventas
+FROM 
+  `proyecto.dataset.ventas`
+GROUP BY 
+  año, mes
+ORDER BY 
+  año, mes;</code></pre>
+            
+            <h4>Funciones JSON</h4>
+            <pre><code>SELECT 
+  id,
+  JSON_EXTRACT(propiedades, '$.color') as color,
+  JSON_EXTRACT_SCALAR(propiedades, '$.tamaño') as tamaño
+FROM 
+  `proyecto.dataset.productos`
+WHERE 
+  JSON_EXTRACT_SCALAR(propiedades, '$.disponible') = 'true';</code></pre>
+            
+            <h3>Optimización de consultas</h3>
+            
+            <h4>Mejores prácticas</h4>
+            <ul>
+                <li><strong>Selecciona solo las columnas necesarias:</strong> Evita usar <code>SELECT *</code> para reducir la cantidad de datos procesados.</li>
+                <li><strong>Filtra temprano:</strong> Aplica filtros (<code>WHERE</code>) lo antes posible para reducir el volumen de datos.</li>
+                <li><strong>Usa particiones:</strong> Consulta solo las particiones relevantes para tu análisis.</li>
+                <li><strong>Evita JOINs innecesarios:</strong> Cada JOIN aumenta la complejidad y el costo de la consulta.</li>
+                <li><strong>Precalcula resultados comunes:</strong> Utiliza tablas materializadas o vistas para consultas frecuentes.</li>
+            </ul>
+            
+            <h4>Visualizar el plan de consulta</h4>
+            <p>BigQuery proporciona un plan de ejecución que muestra cómo se procesa tu consulta:</p>
+            <ol>
+                <li>Ejecuta tu consulta en la consola de BigQuery.</li>
+                <li>Haz clic en "Plan de ejecución" debajo de los resultados.</li>
+                <li>Analiza las etapas, el tiempo y los bytes procesados para identificar cuellos de botella.</li>
+            </ol>
+            
+            <div class="warning">
+                <p><strong>Atención:</strong> BigQuery cobra por la cantidad de datos procesados en cada consulta. Optimizar tus consultas no solo mejora el rendimiento, sino que también reduce los costos.</p>
+            </div>
+        </section>
+        
+        <section id="casos-uso">
+            <h2>Casos de uso comunes</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4 class="card-title">Análisis de datos de marketing</h4>
+                    <div class="card-content">
+                        <p>Combina datos de diferentes canales de marketing para analizar el rendimiento de campañas, calcular ROI y optimizar la asignación de presupuesto.</p>
+                        <pre><code>SELECT 
+  canal,
+  SUM(costo) as costo_total,
+  SUM(ingresos) as ingresos_totales,
+  SUM(ingresos) / SUM(costo) as roi
+FROM 
+  `proyecto.dataset.marketing`
+GROUP BY 
+  canal
+ORDER BY 
+  roi DESC;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Análisis de comportamiento de usuarios</h4>
+                    <div class="card-content">
+                        <p>Analiza patrones de comportamiento de usuarios para mejorar la experiencia y aumentar la retención.</p>
+                        <pre><code>SELECT 
+  usuario_id,
+  COUNT(DISTINCT fecha) as dias_activos,
+  AVG(tiempo_sesion) as tiempo_promedio,
+  SUM(acciones) as total_acciones
+FROM 
+  `proyecto.dataset.actividad_usuarios`
+WHERE 
+  fecha BETWEEN '2023-01-01' AND '2023-01-31'
+GROUP BY 
+  usuario_id
+HAVING 
+  dias_activos > 5;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Análisis de IoT y datos de sensores</h4>
+                    <div class="card-content">
+                        <p>Procesa y analiza grandes volúmenes de datos de dispositivos IoT para identificar patrones y anomalías.</p>
+                        <pre><code>SELECT 
+  dispositivo_id,
+  TIMESTAMP_TRUNC(tiempo, HOUR) as hora,
+  AVG(temperatura) as temp_promedio,
+  MAX(temperatura) as temp_maxima,
+  MIN(temperatura) as temp_minima
+FROM 
+  `proyecto.dataset.sensores`
+WHERE 
+  DATE(tiempo) = '2023-03-15'
+GROUP BY 
+  dispositivo_id, hora
+ORDER BY 
+  dispositivo_id, hora;</code></pre>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Análisis financiero</h4>
+                    <div class="card-content">
+                        <p>Analiza datos financieros para identificar tendencias, riesgos y oportunidades.</p>
+                        <pre><code>SELECT 
+  EXTRACT(YEAR FROM fecha) as año,
+  EXTRACT(QUARTER FROM fecha) as trimestre,
+  categoria,
+  SUM(ingresos) as ingresos_totales,
+  SUM(gastos) as gastos_totales,
+  SUM(ingresos - gastos) as beneficio
+FROM 
+  `proyecto.dataset.finanzas`
+GROUP BY 
+  año, trimestre, categoria
+ORDER BY 
+  año, trimestre, beneficio DESC;</code></pre>
+                    </div>
+                </div>
+            </div>
+            
+            <h3>Integración con herramientas de visualización</h3>
+            <p>BigQuery se integra fácilmente con varias herramientas de visualización para crear dashboards interactivos:</p>
+            
+            <ul>
+                <li><strong>Looker Studio (anteriormente Data Studio):</strong> Herramienta gratuita de Google para crear informes y dashboards interactivos.</li>
+                <li><strong>Tableau:</strong> Se conecta directamente a BigQuery para análisis visual avanzado.</li>
+                <li><strong>Power BI:</strong> Utiliza el conector de BigQuery para importar y visualizar datos.</li>
+                <li><strong>Looker:</strong> Plataforma empresarial de BI que se integra profundamente con BigQuery.</li>
+            </ul>
+            
+            <h3>Machine Learning en BigQuery</h3>
+            <p>BigQuery ML permite crear y ejecutar modelos de machine learning utilizando SQL estándar, sin necesidad de exportar datos:</p>
+            
+            <h4>Crear un modelo de regresión</h4>
+            <pre><code>CREATE OR REPLACE MODEL `proyecto.dataset.modelo_prediccion_ventas`
+OPTIONS(
+  model_type='linear_reg',
+  input_label_cols=['ventas']
+) AS
+SELECT
+  fecha,
+  temporada,
+  precio,
+  campaña_marketing,
+  ventas
+FROM
+  `proyecto.dataset.datos_ventas`
+WHERE
+  fecha < '2023-01-01';</code></pre>
+            
+            <h4>Hacer predicciones con el modelo</h4>
+            <pre><code>SELECT
+  *
+FROM
+  ML.PREDICT(MODEL `proyecto.dataset.modelo_prediccion_ventas`,
+    (
+    SELECT
+      fecha,
+      temporada,
+      precio,
+      campaña_marketing
+    FROM
+      `proyecto.dataset.datos_ventas`
+    WHERE
+      fecha >= '2023-01-01'
+    )
+  );</code></pre>
+            
+            <p>BigQuery ML soporta varios tipos de modelos, incluyendo:</p>
+            <ul>
+                <li>Regresión lineal y logística</li>
+                <li>Árboles de decisión y bosques aleatorios</li>
+                <li>K-means para clustering</li>
+                <li>Redes neuronales</li>
+                <li>Series temporales</li>
+                <li>Modelos de recomendación</li>
+            </ul>
+        </section>
+        
+        <section id="seguridad">
+            <h2>Seguridad y gobernanza de datos</h2>
+            
+            <h3>Control de acceso</h3>
+            <p>BigQuery utiliza el sistema de Identity and Access Management (IAM) de Google Cloud para controlar quién puede acceder a tus datos:</p>
+            
+            <h4>Roles predefinidos</h4>
+            <ul>
+                <li><strong>bigquery.admin:</strong> Control total sobre todos los recursos de BigQuery.</li>
+                <li><strong>bigquery.dataEditor:</strong> Puede leer y escribir datos, pero no puede crear nuevos conjuntos de datos.</li>
+                <li><strong>bigquery.dataViewer:</strong> Solo puede leer datos.</li>
+                <li><strong>bigquery.user:</strong> Puede ejecutar consultas y crear conjuntos de datos personales.</li>
+                <li><strong>bigquery.jobUser:</strong> Puede ejecutar trabajos, incluidas consultas.</li>
+            </ul>
+            
+            <h4>Asignar permisos</h4>
+            <ol>
+                <li>En la consola de BigQuery, selecciona el conjunto de datos o tabla.</li>
+                <li>Haz clic en "Compartir" o en la pestaña "Permisos".</li>
+                <li>Haz clic en "Agregar principal" e ingresa la dirección de correo electrónico o grupo.</li>
+                <li>Selecciona el rol apropiado.</li>
+                <li>Haz clic en "Guardar".</li>
+            </ol>
+            
+            <h3>Encriptación de datos</h3>
+            <p>BigQuery encripta automáticamente todos los datos en reposo y en tránsito. Además, ofrece opciones para mayor control:</p>
+            
+            <ul>
+                <li><strong>Claves de encriptación administradas por Google (predeterminado):</strong> Google administra las claves de encriptación.</li>
+                <li><strong>Claves de encriptación administradas por el cliente (CMEK):</strong> Utiliza tus propias claves almacenadas en Cloud KMS.</li>
+                <li><strong>Claves de encriptación proporcionadas por el cliente (CSEK):</strong> Proporciona tus propias claves para cada operación.</li>
+            </ul>
+            
+            <h3>Auditoría y registro</h3>
+            <p>BigQuery registra automáticamente todas las actividades para auditoría y solución de problemas:</p>
+            
+            <ul>
+                <li><strong>Registros de auditoría de Cloud:</strong> Registran quién hizo qué, dónde y cuándo.</li>
+                <li><strong>Historial de consultas:</strong> Muestra todas las consultas ejecutadas, incluyendo detalles como bytes procesados y duración.</li>
+                <li><strong>Información de trabajos:</strong> Proporciona detalles sobre todos los trabajos de BigQuery, incluidas cargas y exportaciones.</li>
+            </ul>
+            
+            <h3>Enmascaramiento y clasificación de datos</h3>
+            <p>Para datos sensibles, BigQuery ofrece:</p>
+            
+            <ul>
+                <li><strong>Vistas autorizadas:</strong> Proporciona acceso a un subconjunto de datos sin exponer la tabla completa.</li>
+                <li><strong>Políticas de columnas:</strong> Aplica diferentes niveles de acceso a columnas específicas.</li>
+                <li><strong>Data Catalog:</strong> Clasifica y etiqueta tus datos para facilitar la gobernanza.</li>
+                <li><strong>Sensitive Data Protection:</strong> Identifica y enmascara automáticamente información sensible.</li>
+            </ul>
+        </section>
+        
+        <section id="optimizacion-costos">
+            <h2>Optimización de costos</h2>
+            
+            <h3>Modelo de precios</h3>
+            <p>BigQuery ofrece dos modelos de precios:</p>
+            
+            <div class="card">
+                <h4 class="card-title">Precios por consulta (on-demand)</h4>
+                <div class="card-content">
+                    <p>Pagas por la cantidad de datos procesados en cada consulta. Los primeros 1 TB por mes son gratuitos.</p>
+                    <p>Ideal para cargas de trabajo variables o impredecibles.</p>
+                </div>
+            </div>
+            
+            <div class="card">
+                <h4 class="card-title">Precios por capacidad</h4>
+                <div class="card-content">
+                    <p>Compras slots (unidades de capacidad de procesamiento) dedicados por un precio fijo mensual.</p>
+                    <p>Ideal para cargas de trabajo predecibles y de alto volumen.</p>
+                </div>
+            </div>
+            
+            <h3>Estrategias de optimización de costos</h3>
+            
+            <h4>Particionamiento y clustering</h4>
+            <p>Organiza tus datos para reducir la cantidad de datos escaneados en cada consulta:</p>
+            
+            <pre><code>-- Crear una tabla particionada por fecha
+CREATE OR REPLACE TABLE `proyecto.dataset.ventas_particionadas`
+PARTITION BY DATE(fecha_venta)
+AS SELECT * FROM `proyecto.dataset.ventas`;
+
+-- Crear una tabla particionada y agrupada
+CREATE OR REPLACE TABLE `proyecto.dataset.ventas_optimizadas`
+PARTITION BY DATE(fecha_venta)
+CLUSTER BY region, producto
+AS SELECT * FROM `proyecto.dataset.ventas`;</code></pre>
+            
+            <h4>Materializar resultados frecuentes</h4>
+            <p>Guarda los resultados de consultas complejas que se ejecutan con frecuencia:</p>
+            
+            <pre><code>-- Crear una tabla materializada
+CREATE OR REPLACE TABLE `proyecto.dataset.resumen_ventas_diarias`
+AS
+SELECT 
+  DATE(fecha_venta) as dia,
+  region,
+  SUM(monto) as ventas_totales,
+  COUNT(DISTINCT cliente_id) as clientes_unicos
+FROM 
+  `proyecto.dataset.ventas`
+GROUP BY 
+  dia, region;</code></pre>
+            
+            <h4>Usar vistas para limitar datos expuestos</h4>
+            <pre><code>-- Crear una vista que filtra datos
+CREATE OR REPLACE VIEW `proyecto.dataset.ventas_2023`
+AS
+SELECT * FROM `proyecto.dataset.ventas`
+WHERE DATE(fecha_venta) BETWEEN '2023-01-01' AND '2023-12-31';</code></pre>
+            
+            <h4>Monitoreo de costos</h4>
+            <ul>
+                <li>Configura presupuestos y alertas en la sección de Facturación de GCP.</li>
+                <li>Revisa regularmente el historial de consultas para identificar consultas costosas.</li>
+                <li>Utiliza etiquetas (labels) para realizar un seguimiento de los costos por proyecto, equipo o caso de uso.</li>
+            </ul>
+            
+            <div class="note">
+                <p><strong>Consejo:</strong> Ejecuta <code>SELECT 1</code> para probar la conectividad sin incurrir en costos de procesamiento de datos.</p>
+            </div>
+        </section>
+        
+        <section id="recursos-adicionales">
+            <h2>Recursos adicionales</h2>
+            
+            <div class="grid">
+                <div class="card">
+                    <h4 class="card-title">Documentación oficial</h4>
+                    <div class="card-content">
+                        <p>La documentación completa de BigQuery con tutoriales, guías y referencias.</p>
+                        <a href="https://cloud.google.com/bigquery/docs" class="button">Ver documentación</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Conjuntos de datos públicos</h4>
+                    <div class="card-content">
+                        <p>Accede a más de 200 conjuntos de datos públicos alojados en BigQuery para practicar y aprender.</p>
+                        <a href="https://cloud.google.com/bigquery/public-data" class="button">Explorar datos</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Cursos y certificaciones</h4>
+                    <div class="card-content">
+                        <p>Mejora tus habilidades con cursos oficiales de Google Cloud y prepárate para certificaciones.</p>
+                        <a href="https://cloud.google.com/training/data-engineering-and-analytics" class="button">Ver cursos</a>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h4 class="card-title">Comunidad y soporte</h4>
+                    <div class="card-content">
+                        <p>Conecta con otros usuarios de BigQuery, haz preguntas y comparte conocimientos.</p>
+                        <a href="https://stackoverflow.com/questions/tagged/google-bigquery" class="button">Stack Overflow</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#introduccion">Introducción</a>
+                <a href="#gcp">Google Cloud Platform</a>
+                <a href="#bigquery">BigQuery</a>
+                <a href="#primeros-pasos">Primeros Pasos</a>
+                <a href="#consultas">Consultas SQL</a>
+                <a href="#casos-uso">Casos de Uso</a>
+                <a href="#seguridad">Seguridad</a>
+                <a href="#optimizacion-costos">Optimización de Costos</a>
+            </div>
+            <p class="copyright">© 2023 Manual de Google Cloud Platform y BigQuery. Este documento es solo para fines educativos.</p>
+        </div>
+    </footer>
+</body>
+</html>
