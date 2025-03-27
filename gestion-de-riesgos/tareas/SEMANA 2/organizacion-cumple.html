@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificación Fiesta de Cumpleaños</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- Google Charts -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .header-banner {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 2.5rem 0;
+            border-radius: 0 0 20px 20px;
+        }
+        .task-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .task-card:hover {
+            transform: translateY(-5px);
+        }
+        .task-header {
+            padding: 15px 20px;
+            color: white;
+        }
+        .bg-1 { background-color: #FF6B6B; }
+        .bg-2 { background-color: #4ECDC4; }
+        .bg-3 { background-color: #FFD166; }
+        .bg-4 { background-color: #6A0572; }
+        .bg-5 { background-color: #1A936F; }
+        .chart-container {
+            background-color: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        .section-title {
+            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+        }
+        .section-title:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+        }
+        /* Mejora: Asegurar tamaños adecuados para los contenedores de gráficos */
+        #budgetChart, #ganttChart, #pertChart {
+            width: 100%;
+            min-height: 300px;
+        }
+        /* Mejoras para el header banner */
+.header-banner {
+    background: linear-gradient(135deg, #8E2DE2 0%, #4A00E0 100%);
+    padding: 4rem 0;
+    border-radius: 0 0 40px 40px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 1;
+}
+
+.text-white-75 {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.divider {
+    height: 3px;
+    width: 70px;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 3px;
+}
+
+.title-animation {
+    display: inline-block;
+    animation: fadeInUp 1s ease-out;
+}
+
+.stats-container {
+    margin-top: 2rem;
+    animation: fadeIn 1.5s ease-out;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(5px);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    min-width: 140px;
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.stat-icon {
+    font-size: 1.8rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-right: 1rem;
+}
+
+.stat-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Elementos decorativos */
+.decorative-elements {
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
+
+.balloon {
+    position: absolute;
+    width: 40px;
+    height: 50px;
+    border-radius: 50%;
+    animation: float 8s infinite ease-in-out;
+}
+
+.balloon-1 {
+    background: rgba(255, 255, 255, 0.1);
+    top: 20%;
+    left: 10%;
+    animation-delay: 0s;
+}
+
+.balloon-2 {
+    background: rgba(255, 255, 255, 0.1);
+    top: 35%;
+    right: 15%;
+    animation-delay: 2s;
+}
+
+.balloon-3 {
+    background: rgba(255, 255, 255, 0.1);
+    bottom: 15%;
+    left: 30%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+    </style>
+</head>
+<body>
+    <!-- Header Banner -->
+    <div class="header-banner position-relative overflow-hidden mb-5">
+        <!-- Elementos decorativos de fondo -->
+        <div class="position-absolute decorative-elements">
+            <div class="balloon balloon-1"></div>
+            <div class="balloon balloon-2"></div>
+            <div class="balloon balloon-3"></div>
+            <div class="confetti-container"></div>
+        </div>
+        
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center">
+                    <div class="banner-content">
+                        <span class="badge bg-light text-primary mb-3 fw-semibold px-3 py-2 rounded-pill">
+                            <i class="bi bi-calendar-event me-1"></i> Próximo fin de semana
+                        </span>
+                        <h1 class="display-3 fw-bold text-white mb-3">
+                            <span class="title-animation"><i class=""></i>Mi Fiesta de Cumpleaños</span>
+                        </h1>
+                        <div class="divider mx-auto my-3"></div>
+                        <p class="lead text-white-75 mb-4">Una celebración especial con amigos y seres queridos</p>
+                        
+                        <div class="d-flex justify-content-center gap-3 flex-wrap stats-container">
+                            <div class="stat-item">
+                                <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+                                <div class="stat-text">
+                                    <span class="stat-value">7</span>
+                                    <span class="stat-label">Invitados</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon"><i class="bi bi-wallet2"></i></div>
+                                <div class="stat-text">
+                                    <span class="stat-value">$50.000</span>
+                                    <span class="stat-label">Presupuesto</span>
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-icon"><i class="bi bi-calendar3"></i></div>
+                                <div class="stat-text">
+                                    <span class="stat-value" id="countdown">5</span>
+                                    <span class="stat-label">Días restantes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    <div class="container mb-5">
+        <h2 class="section-title">Tareas principales</h2>
+        <div class="row g-4">
+            <!-- Tarea 1 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="task-card">
+                    <div class="task-header bg-1">
+                        <h4><i class="bi bi-list-check"></i> Planificación y Presupuesto</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="bi bi-calendar-event"></i> <strong>Duración:</strong> 2 días</p>
+                        <p><i class="bi bi-wallet2"></i> <strong>Presupuesto:</strong> $0</p>
+                        <ul>
+                            <li>Definir fecha y hora</li>
+                            <li>Establecer lista de invitados</li>
+                            <li>Planificar menú considerando preferencias</li>
+                            <li>Distribuir presupuesto</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarea 2 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="task-card">
+                    <div class="task-header bg-2">
+                        <h4><i class="bi bi-envelope-heart"></i> Invitaciones</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="bi bi-calendar-event"></i> <strong>Duración:</strong> 3 días</p>
+                        <p><i class="bi bi-wallet2"></i> <strong>Presupuesto:</strong> $2.000</p>
+                        <ul>
+                            <li>Diseñar invitaciones digitales</li>
+                            <li>Enviar invitaciones</li>
+                            <li>Confirmar asistencia</li>
+                            <li>Coordinar qué llevará cada invitado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarea 3 -->
+            <div class="col-md-6 col-lg-4">
+                <div class="task-card">
+                    <div class="task-header bg-3">
+                        <h4><i class="bi bi-cart4"></i> Compras</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="bi bi-calendar-event"></i> <strong>Duración:</strong> 1 día</p>
+                        <p><i class="bi bi-wallet2"></i> <strong>Presupuesto:</strong> $30.000</p>
+                        <ul>
+                            <li>Comprar ingredientes para comida</li>
+                            <li>Comprar bebidas</li>
+                            <li>Comprar pastel o ingredientes</li>
+                            <li>Comprar platos/vasos desechables</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarea 4 -->
+            <div class="col-md-6 col-lg-6">
+                <div class="task-card">
+                    <div class="task-header bg-4">
+                        <h4><i class="bi bi-stars"></i> Decoración</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="bi bi-calendar-event"></i> <strong>Duración:</strong> 1 día</p>
+                        <p><i class="bi bi-wallet2"></i> <strong>Presupuesto:</strong> $10.000</p>
+                        <ul>
+                            <li>Comprar globos y serpentinas</li>
+                            <li>Preparar el espacio</li>
+                            <li>Decorar la mesa principal</li>
+                            <li>Armar zona de fotos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Tarea 5 -->
+            <div class="col-md-6 col-lg-6">
+                <div class="task-card">
+                    <div class="task-header bg-5">
+                        <h4><i class="bi bi-music-note-beamed"></i> Preparación Final</h4>
+                    </div>
+                    <div class="card-body">
+                        <p><i class="bi bi-calendar-event"></i> <strong>Duración:</strong> 1 día</p>
+                        <p><i class="bi bi-wallet2"></i> <strong>Presupuesto:</strong> $8.000</p>
+                        <ul>
+                            <li>Preparar comida</li>
+                            <li>Crear playlist</li>
+                            <li>Preparar juegos o actividades</li>
+                            <li>Organizar área de regalos</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Presupuesto -->
+    <div class="container mb-5">
+        <h2 class="section-title">Desglose de Presupuesto</h2>
+        <div class="chart-container">
+            <div id="budgetChart" style="height: 300px;"></div>
+            <div class="table-responsive mt-4">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Monto (CLP)</th>
+                            <th>Porcentaje</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Planificación y Presupuesto</td>
+                            <td>$0</td>
+                            <td>0%</td>
+                        </tr>
+                        <tr>
+                            <td>Invitaciones</td>
+                            <td>$2.000</td>
+                            <td>4%</td>
+                        </tr>
+                        <tr>
+                            <td>Compras (Comida y Bebida)</td>
+                            <td>$30.000</td>
+                            <td>60%</td>
+                        </tr>
+                        <tr>
+                            <td>Decoración</td>
+                            <td>$10.000</td>
+                            <td>20%</td>
+                        </tr>
+                        <tr>
+                            <td>Preparación Final</td>
+                            <td>$8.000</td>
+                            <td>16%</td>
+                        </tr>
+                        <tr class="table-primary">
+                            <td><strong>Total</strong></td>
+                            <td><strong>$50.000</strong></td>
+                            <td><strong>100%</strong></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Diagrama de Gantt -->
+    <div class="container mb-5">
+        <h2 class="section-title">Diagrama de Gantt</h2>
+        <div class="chart-container">
+            <div id="ganttChart" style="height: 300px;"></div>
+        </div>
+    </div>
+
+    <!-- Diagrama PERT -->
+    <div class="container mb-5">
+        <h2 class="section-title">Diagrama PERT</h2>
+        <div class="chart-container">
+            <div id="pertChart" style="height: 400px;"></div>
+        </div>
+    </div>
+
+    <!-- Información Adicional -->
+    <div class="container mb-5">
+        <h2 class="section-title">Aportes de los Invitados</h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card task-card">
+                    <div class="card-body">
+                        <h4 class="card-title"><i class="bi bi-gift"></i> ¿Qué traerán los invitados?</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="bi bi-music-note"></i> Altavoz Bluetooth para música</li>
+                            <li class="list-group-item"><i class="bi bi-cup-straw"></i> Bebidas adicionales</li>
+                            <li class="list-group-item"><i class="bi bi-camera"></i> Cámara para fotos grupales</li>
+                            <li class="list-group-item"><i class="bi bi-controller"></i> Juegos de mesa</li>
+                            <li class="list-group-item"><i class="bi bi-cup-hot"></i> Snacks adicionales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card task-card">
+                    <div class="card-body">
+                        <h4 class="card-title"><i class="bi bi-check2-square"></i> Consejos finales</h4>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Confirma la asistencia 2 días antes</li>
+                            <li class="list-group-item">Compra con anticipación para aprovechar ofertas</li>
+                            <li class="list-group-item">Prepara una lista de música variada</li>
+                            <li class="list-group-item">Ten un plan B para actividades en caso de imprevistos</li>
+                            <li class="list-group-item">Toma fotos para recordar el momento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <!-- <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">Planificación de Fiesta de Cumpleaños | Presupuesto: $50.000 CLP | 7 Invitados</p>
+            <p class="small mt-2">© 2023 Planificador de Cumpleaños</p>
+        </div>
+    </footer> -->
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Scripts para los gráficos -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    // Calcula días hasta el próximo sábado
+    const today = new Date();
+    const daysToSaturday = (6 - today.getDay() + 7) % 7 || 7;
+    document.getElementById('countdown').textContent = daysToSaturday;
+});
+        // Cargar las librerías de Google Charts - Mejora: Añadido paquete 'sankey'
+        google.charts.load('current', {'packages':['corechart', 'gantt', 'sankey']});
+        google.charts.setOnLoadCallback(drawCharts);
+        
+        // Mejora: Manejo de errores para la carga de gráficos
+        function drawCharts() {
+            try {
+                drawBudgetChart();
+                console.log("Budget chart drawn successfully");
+            } catch(e) {
+                console.error("Error drawing budget chart:", e);
+            }
+            
+            try {
+                drawGanttChart();
+                console.log("Gantt chart drawn successfully");
+            } catch(e) {
+                console.error("Error drawing Gantt chart:", e);
+            }
+            
+            try {
+                drawPertChart();
+                console.log("PERT chart drawn successfully");
+            } catch(e) {
+                console.error("Error drawing PERT chart:", e);
+            }
+        }
+        
+        // Gráfico de presupuesto
+        function drawBudgetChart() {
+            var data = google.visualization.arrayToDataTable([
+                ['Categoría', 'Monto (CLP)'],
+                ['Invitaciones', 2000],
+                ['Compras (Comida y Bebida)', 30000],
+                ['Decoración', 10000],
+                ['Preparación Final', 8000]
+            ]);
+            
+            var options = {
+                title: 'Distribución del Presupuesto',
+                pieHole: 0.4,
+                colors: ['#4ECDC4', '#FFD166', '#6A0572', '#1A936F'],
+                legend: {position: 'right'},
+                chartArea: {width: '80%', height: '80%'},
+                is3D: false
+            };
+            
+            var chart = new google.visualization.PieChart(document.getElementById('budgetChart'));
+            chart.draw(data, options);
+        }
+        
+        // Diagrama de Gantt
+        function drawGanttChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'Task ID');
+            data.addColumn('string', 'Task Name');
+            data.addColumn('date', 'Start Date');
+            data.addColumn('date', 'End Date');
+            data.addColumn('number', 'Duration');
+            data.addColumn('number', 'Percent Complete');
+            data.addColumn('string', 'Dependencies');
+            
+            // Supongamos que la fiesta es el próximo sábado (ajustar fechas según sea necesario)
+            var today = new Date();
+            var daysToSaturday = (6 - today.getDay() + 7) % 7;
+            if (daysToSaturday === 0) daysToSaturday = 7; // Si hoy es sábado, vamos al próximo
+            
+            var partyDate = new Date(today);
+            partyDate.setDate(today.getDate() + daysToSaturday);
+            
+            // Calcular fechas hacia atrás desde la fecha de la fiesta
+            var planning_start = new Date(partyDate);
+            planning_start.setDate(partyDate.getDate() - 7);
+            var planning_end = new Date(planning_start);
+            planning_end.setDate(planning_start.getDate() + 2);
+            
+            var invitations_start = new Date(planning_end);
+            var invitations_end = new Date(invitations_start);
+            invitations_end.setDate(invitations_start.getDate() + 3);
+            
+            var shopping_start = new Date(partyDate);
+            shopping_start.setDate(partyDate.getDate() - 2);
+            var shopping_end = new Date(shopping_start);
+            shopping_end.setDate(shopping_start.getDate() + 1);
+            
+            var decoration_start = new Date(partyDate);
+            decoration_start.setDate(partyDate.getDate() - 1);
+            var decoration_end = new Date(decoration_start);
+            decoration_end.setDate(decoration_start.getDate() + 1);
+            
+            var finalPrep_start = new Date(partyDate);
+            var finalPrep_end = new Date(finalPrep_start);
+            
+            data.addRows([
+                ['1', 'Planificación y Presupuesto', planning_start, planning_end, null, 100, null],
+                ['2', 'Invitaciones', invitations_start, invitations_end, null, 100, '1'],
+                ['3', 'Compras', shopping_start, shopping_end, null, 100, '2'],
+                ['4', 'Decoración', decoration_start, decoration_end, null, 100, '3'],
+                ['5', 'Preparación Final', finalPrep_start, finalPrep_end, null, 100, '4']
+            ]);
+            
+            var options = {
+                height: 275,
+                gantt: {
+                    trackHeight: 30,
+                    criticalPathEnabled: true,
+                    criticalPathStyle: {
+                        stroke: '#e64a19',
+                        strokeWidth: 2
+                    },
+                    palette: [
+                        {
+                            "color": "#FF6B6B",
+                            "dark": "#FF6B6B",
+                            "light": "#FF6B6B"
+                        },
+                        {
+                            "color": "#4ECDC4",
+                            "dark": "#4ECDC4",
+                            "light": "#4ECDC4"
+                        },
+                        {
+                            "color": "#FFD166",
+                            "dark": "#FFD166",
+                            "light": "#FFD166"
+                        },
+                        {
+                            "color": "#6A0572",
+                            "dark": "#6A0572",
+                            "light": "#6A0572"
+                        },
+                        {
+                            "color": "#1A936F",
+                            "dark": "#1A936F",
+                            "light": "#1A936F"
+                        }
+                    ]
+                },
+                backgroundColor: {
+                    fill: '#FFFFFF'  // Cambiado de 'transparent' a blanco
+                }
+            };
+            
+            var chart = new google.visualization.Gantt(document.getElementById('ganttChart'));
+            chart.draw(data, options);
+        }        
+        // Diagrama PERT
+        function drawPertChart() {
+            var data = new google.visualization.DataTable();
+            data.addColumn('string', 'From');
+            data.addColumn('string', 'To');
+            data.addColumn('number', 'Weight');
+            
+            data.addRows([
+                // Conexiones principales del flujo de trabajo
+                ['Inicio', 'Planificación', 1],
+                ['Planificación', 'Invitaciones', 1],
+                ['Invitaciones', 'Compras', 1],
+                ['Compras', 'Decoración', 1],
+                ['Decoración', 'Preparación Final', 1],
+                ['Preparación Final', 'Fiesta!', 1],
+                
+                // Algunas conexiones adicionales que muestran dependencias
+                ['Planificación', 'Compras', 0.5], // La planificación influye directamente en las compras
+                ['Invitaciones', 'Preparación Final', 0.2], // Saber cuántos vienen afecta la preparación final
+            ]);
+            
+            var options = {
+                width: '100%',
+                height: 400,
+                sankey: {
+                    node: {
+                        colors: ['#FF6B6B', '#FF6B6B', '#4ECDC4', '#FFD166', '#6A0572', '#1A936F', '#FF6B6B'],
+                        label: {
+                            fontSize: 14,
+                            color: '#000',
+                            bold: true
+                        }
+                    },
+                    link: {
+                        colorMode: 'gradient',
+                        colors: ['#FF6B6B', '#4ECDC4', '#FFD166', '#6A0572', '#1A936F']
+                    }
+                }
+            };
+            
+            var chart = new google.visualization.Sankey(document.getElementById('pertChart'));
+            chart.draw(data, options);
+        }
+    </script>
+    <script>
+        // Contador de días restantes
+
+
+    </script>
+</body>
+</html>

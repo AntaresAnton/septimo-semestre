@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Detallado de Riesgos - Poder Judicial</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --success-color: #27ae60;
+            --danger-color: #c0392b;
+            --info-color: #2980b9;
+            --light-bg: #f5f6fa;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: white;
+            color: var(--primary-color);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background: var(--primary-color);
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: 600;
+            font-size: 1.5rem;
+        }
+
+        .main-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem;
+        }
+
+        .card {
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 25px;
+            background: white;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+
+        .card-header {
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .positive-header {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .negative-header {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .mitigation-header {
+            background-color: var(--info-color);
+            color: white;
+        }
+
+        .context-header {
+            background-color: #8e44ad;
+            color: white;
+        }
+
+        .detail-section {
+            padding: 1.5rem;
+        }
+
+        .detail-item {
+            background: #ffffff;
+            border-radius: 8px;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            border-left: 5px solid;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+
+        .positive-item {
+            border-left-color: var(--success-color);
+        }
+
+        .negative-item {
+            border-left-color: var(--danger-color);
+        }
+
+        .mitigation-item {
+            border-left-color: var(--info-color);
+        }
+
+        .detail-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+
+        .detail-content {
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.2rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        .stat-label {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+
+        .list-group-item {
+            border: none;
+            padding: 0.8rem;
+            margin-bottom: 0.4rem;
+            border-radius: 6px;
+            background: #f8f9fa;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .page-subtitle {
+            font-size: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.8rem;
+            color: #777;
+        }
+
+        /* Estilos específicos para impresión */
+        @media print {
+            body {
+                background: white;
+                font-size: 12pt;
+                color: black;
+            }
+
+            .navbar {
+                display: none;
+            }
+
+            .main-container {
+                width: 100%;
+                max-width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+
+            .card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+                box-shadow: none;
+                border: 1px solid #ddd;
+                margin-bottom: 20px;
+            }
+
+            .card-header {
+                background-color: #f1f1f1 !important;
+                color: black !important;
+                border-bottom: 1px solid #ddd;
+            }
+
+            .positive-header, .negative-header, .mitigation-header, .context-header {
+                background-color: #f1f1f1 !important;
+                color: black !important;
+            }
+
+            .detail-item {
+                box-shadow: none;
+                border: 1px solid #eee;
+                border-left: 5px solid;
+            }
+
+            .stat-card {
+                box-shadow: none;
+                border: 1px solid #eee;
+            }
+
+            .list-group-item {
+                background: white;
+                border: 1px solid #eee;
+            }
+
+            a {
+                text-decoration: none;
+                color: black;
+            }
+
+            .page-break {
+                page-break-after: always;
+            }
+
+            /* Asegura que los iconos se muestren en negro para impresión */
+            .fa, .fas, .far, .fal, .fab {
+                color: black !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar (solo visible en pantalla) -->
+    <nav class="navbar navbar-expand-lg navbar-dark d-print-none">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-shield-alt me-2"></i>
+                Análisis de Riesgos - Poder Judicial
+            </a>
+        </div>
+    </nav>
+
+    <div class="main-container">
+        <!-- Encabezado de página para impresión -->
+        <div class="page-header">
+            <div class="page-title">Análisis Detallado de Riesgos</div>
+            <div class="page-subtitle">Poder Judicial de Chile - Informe de Ciberseguridad</div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="stats-container">
+            <div class="stat-card">
+                <i class="fas fa-plus-circle fa-2x mb-3" style="color: var(--success-color)"></i>
+                <div class="stat-number">5</div>
+                <div class="stat-label">Riesgos Positivos Identificados</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-exclamation-triangle fa-2x mb-3" style="color: var(--danger-color)"></i>
+                <div class="stat-number">5</div>
+                <div class="stat-label">Riesgos Negativos Identificados</div>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-tasks fa-2x mb-3" style="color: var(--info-color)"></i>
+                <div class="stat-number">5</div>
+                <div class="stat-label">Planes de Mitigación</div>
+            </div>
+        </div>
+
+        <!-- Contexto -->
+        <div class="card">
+            <div class="card-header context-header">
+                <i class="fas fa-info-circle me-2"></i>Contexto del Incidente
+            </div>
+            <div class="card-body">
+                <p class="lead">
+                    El Poder Judicial de Chile experimentó un ataque informático significativo que afectó sus sistemas operativos,
+                    particularmente aquellos que ejecutaban Windows 7. Este incidente provocó interrupciones en servicios judiciales
+                    y expuso vulnerabilidades críticas en la infraestructura tecnológica.
+                </p>
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-calendar-alt me-2"></i><strong>Fecha del Incidente:</strong> 2023
+                    <br>
+                    <i class="fas fa-building me-2"></i><strong>Institución Afectada:</strong> Poder Judicial de Chile
+                </div>
+            </div>
+        </div>
+
+        <!-- Riesgos Positivos -->
+        <div class="card">
+            <div class="card-header positive-header">
+                <i class="fas fa-plus-circle me-2"></i>Riesgos Positivos (Oportunidades)
+            </div>
+            <div class="detail-section">
+                <div class="detail-item positive-item">
+                    <div class="detail-title">1. Actualización Tecnológica</div>
+                    <div class="detail-content">
+                        Oportunidad para modernizar los sistemas operativos obsoletos (Windows 7) y actualizar la infraestructura tecnológica existente.
+                    </div>
+                </div>
+                <div class="detail-item positive-item">
+                    <div class="detail-title">2. Mejora de Seguridad</div>
+                    <div class="detail-content">
+                        Fortalecimiento de protocolos y prácticas de seguridad informática a nivel institucional.
+                    </div>
+                </div>
+                <div class="detail-item positive-item">
+                    <div class="detail-title">3. Desarrollo Profesional</div>
+                    <div class="detail-content">
+                        Implementación de programas especializados de capacitación en ciberseguridad para todo el personal.
+                    </div>
+                </div>
+                <div class="detail-item positive-item">
+                    <div class="detail-title">4. Sistemas Alternativos</div>
+                    <div class="detail-content">
+                        Desarrollo e implementación de sistemas de respaldo para garantizar la continuidad operacional.
+                    </div>
+                </div>
+                <div class="detail-item positive-item">
+                    <div class="detail-title">5. Infraestructura Mejorada</div>
+                    <div class="detail-content">
+                        Identificación y mejora de vulnerabilidades en la infraestructura tecnológica existente.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Salto de página para impresión -->
+        <div class="page-break"></div>
+
+        <!-- Riesgos Negativos -->
+        <div class="card">
+            <div class="card-header negative-header">
+                <i class="fas fa-exclamation-triangle me-2"></i>Riesgos Negativos (Amenazas)
+            </div>
+            <div class="detail-section">
+                <div class="detail-item negative-item">
+                    <div class="detail-title">1. Pérdida de Datos</div>
+                    <div class="detail-content">
+                        Posible pérdida de información judicial crítica debido al ransomware y cifrado de datos sensibles.
+                    </div>
+                </div>
+                <div class="detail-item negative-item">
+                    <div class="detail-title">2. Interrupción Operativa</div>
+                    <div class="detail-content">
+                        Retrasos significativos en audiencias y procedimientos judiciales que afectan el servicio público.
+                    </div>
+                </div>
+                <div class="detail-item negative-item">
+                    <div class="detail-title">3. Compromiso de Datos</div>
+                    <div class="detail-content">
+                        Riesgo de filtración de información confidencial de casos judiciales sensibles.
+                    </div>
+                </div>
+                <div class="detail-item negative-item">
+                    <div class="detail-title">4. Impacto Reputacional</div>
+                    <div class="detail-content">
+                        Daño potencial a la credibilidad y confianza pública en el Poder Judicial.
+                    </div>
+                </div>
+                <div class="detail-item negative-item">
+                    <div class="detail-title">5. Expansión de Amenaza</div>
+                    <div class="detail-content">
+                        Posible propagación del malware a otros sistemas críticos de la institución.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan de Mitigación -->
+        <div class="card">
+            <div class="card-header mitigation-header">
+                <i class="fas fa-shield-alt me-2"></i>Plan de Mitigación
+            </div>
+            <div class="detail-section">
+                <div class="detail-item mitigation-item">
+                    <div class="detail-title">1. Actualización Inmediata</div>
+                    <div class="detail-content">
+                        <ul class="list-group">
+                            <li class="list-group-item">Reemplazo urgente de Windows 7</li>
+                            <li class="list-group-item">Establecimiento de cronograma de actualizaciones periódicas</li>
+                            <li class="list-group-item">Implementación de políticas de actualización automática</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="detail-item mitigation-item">
+                    <div class="detail-title">2. Seguridad Reforzada</div>
+                    <div class="detail-content">
+                        <ul class="list-group">
+                            <li class="list-group-item">Implementación de nuevas soluciones antivirus</li>
+                            <li class="list-group-item">Sistemas de detección de intrusiones</li>
+                            <li class="list-group-item">Protección específica contra ransomware</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="detail-item mitigation-item">
+                    <div class="detail-title">3. Capacitación del Personal</div>
+                    <div class="detail-content">
+                        <ul class="list-group">
+                            <li class="list-group-item">Programas obligatorios de ciberseguridad</li>
+                            <li class="list-group-item">Simulacros de phishing y ataques</li>
+                            <li class="list-group-item">Protocolos de manejo de información sensible</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Salto de página para impresión -->
+                <div class="page-break"></div>
+                
+                <div class="detail-item mitigation-item">
+                    <div class="detail-title">4. Respaldo y Recuperación</div>
+                    <div class="detail-content">
+                        <ul class="list-group">
+                            <li class="list-group-item">Sistema de copias de seguridad aisladas</li>
+                            <li class="list-group-item">Plan de recuperación ante desastres</li>
+                            <li class="list-group-item">Procedimientos de continuidad operacional</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="detail-item mitigation-item">
+                    <div class="detail-title">5. Monitoreo y Respuesta</div>
+                    <div class="detail-content">
+                        <ul class="list-group">
+                            <li class="list-group-item">Vigilancia 24/7 de sistemas críticos</li>
+                            <li class="list-group-item">Equipo dedicado CSIRT</li>
+                            <li class="list-group-item">Protocolos de comunicación en crisis</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Conclusiones y Recomendaciones -->
+        <div class="card">
+            <div class="card-header" style="background-color: #3498db; color: white;">
+                <i class="fas fa-clipboard-check me-2"></i>Conclusiones y Recomendaciones
+            </div>
+            <div class="card-body">
+                <p>
+                    El incidente de seguridad en el Poder Judicial de Chile revela la importancia crítica de mantener 
+                    actualizados los sistemas operativos y la infraestructura tecnológica. La presencia de sistemas 
+                    obsoletos como Windows 7 constituyó un factor determinante en la vulnerabilidad institucional.
+                </p>
+                
+                <h5 class="mt-4">Recomendaciones Prioritarias:</h5>
+                <ol>
+                    <li class="mb-2">Implementar un programa de actualización tecnológica inmediata para eliminar sistemas obsoletos.</li>
+                    <li class="mb-2">Establecer un protocolo de seguridad con revisiones periódicas y actualizaciones programadas.</li>
+                    <li class="mb-2">Desarrollar un plan de capacitación continua en ciberseguridad para todo el personal.</li>
+                    <li class="mb-2">Implementar sistemas redundantes para garantizar la continuidad operacional.</li>
+                    <li class="mb-2">Establecer alianzas con entidades especializadas en ciberseguridad para auditorías periódicas.</li>
+                </ol>
+                
+                <div class="alert alert-warning mt-4">
+                    <i class="fas fa-lightbulb me-2"></i><strong>Nota importante:</strong> 
+                    La implementación de estas medidas debe ser considerada como una inversión estratégica 
+                    en la seguridad y continuidad operacional del Poder Judicial, no como un gasto.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pie de página con información del documento -->
+        <div class="footer">
+            <p>
+                <strong>Análisis de Riesgos - Poder Judicial de Chile</strong><br>
+                Documento preparado para fines de evaluación y planificación estratégica<br>
+                Fecha de elaboración: <span id="currentDate">Mayo 2024</span>
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts mínimos necesarios -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Establecer la fecha actual en el pie de página
+        document.addEventListener('DOMContentLoaded', function() {
+            const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const now = new Date();
+            const month = months[now.getMonth()];
+            const year = now.getFullYear();
+            document.getElementById('currentDate').textContent = `${month} ${year}`;
+        });
+    </script>
+</body>
+</html>
