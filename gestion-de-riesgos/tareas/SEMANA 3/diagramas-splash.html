@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planificación Proyecto Piscinas Splash</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Frappe Gantt CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.css">
+    
+    <!-- vis.js CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/vis-network@9.1.2/dist/dist/vis-network.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        .header-section {
+            background-color: #343a40;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .gantt-section {
+            border-left: 5px solid #0d6efd;
+            background-color: #f8f9ff;
+        }
+        .pert-section {
+            border-left: 5px solid #198754;
+            background-color: #f8fff9;
+        }
+        .info-section {
+            border-left: 5px solid #ffc107;
+            background-color: #fffdf8;
+        }
+        .gantt-container {
+            height: 500px;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+        #pert-diagram {
+            height: 500px;
+            border: 1px solid #ccc;
+            background-color: #f8f8f8;
+            margin-top: 20px;
+        }
+        .node-critical {
+            background-color: #dc3545 !important;
+            color: white !important;
+        }
+        .node-normal {
+            background-color: #6c757d !important;
+        }
+        .task-info {
+            font-size: 0.85rem;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+        .risk-badge {
+            background-color: #dc3545;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+        .table-hover tbody tr:hover {
+            background-color: rgba(13, 110, 253, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section text-center">
+            <h1><i class="fas fa-water"></i> Planificación Proyecto Piscinas Splash</h1>
+            <p class="lead">Carta Gantt y Diagrama PERT para implementación de sistema de gestión</p>
+        </div>
+
+        <!-- Información del Proyecto -->
+        <div class="section info-section mb-4">
+            <h2><i class="fas fa-info-circle"></i> Información del Proyecto</h2>
+            <div class="row">
+                <div class="col-md-8">
+                    <p>El proyecto consiste en desarrollar e implementar un sistema de gestión para Piscinas Splash, un emprendimiento familiar que ha experimentado un crecimiento exponencial y necesita mejorar la gestión de sus operaciones.</p>
+                    <p>El sistema se enfocará en tres áreas principales:</p>
+                    <ul>
+                        <li>Gestión de las mantenciones de piscinas</li>
+                        <li>Ventas de productos</li>
+                        <li>Distribución del personal</li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <h5 class="card-title">Datos del proyecto</h5>
+                            <p class="card-text"><i class="far fa-calendar-alt"></i> <strong>Inicio:</strong> 01/05/2025</p>
+                            <p class="card-text"><i class="far fa-calendar-check"></i> <strong>Fin estimado:</strong> 12/08/2025</p>
+                            <p class="card-text"><i class="fas fa-users"></i> <strong>Equipo:</strong> 6 personas</p>
+                            <p class="card-text"><i class="fas fa-exclamation-triangle text-warning"></i> <strong>Riesgo general:</strong> Medio</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Actividades del Proyecto -->
+        <div class="section mb-4">
+            <h2><i class="fas fa-tasks"></i> Actividades del Proyecto</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Actividad</th>
+                            <th>Duración (días)</th>
+                            <th>Inicio</th>
+                            <th>Fin</th>
+                            <th>Predecesoras</th>
+                            <th>Ruta crítica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-danger">
+                            <td>1</td>
+                            <td>Levantamiento inicial de requerimientos</td>
+                            <td>5</td>
+                            <td>01/05/2025</td>
+                            <td>07/05/2025</td>
+                            <td>-</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>2</td>
+                            <td>Diseño de la arquitectura del sistema</td>
+                            <td>7</td>
+                            <td>08/05/2025</td>
+                            <td>16/05/2025</td>
+                            <td>1</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>3</td>
+                            <td>Modelado de base de datos</td>
+                            <td>6</td>
+                            <td>17/05/2025</td>
+                            <td>24/05/2025</td>
+                            <td>2</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Desarrollo del módulo de gestión de clientes</td>
+                            <td>8</td>
+                            <td>25/05/2025</td>
+                            <td>03/06/2025</td>
+                            <td>3</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Desarrollo del módulo de venta de productos</td>
+                            <td>10</td>
+                            <td>25/05/2025</td>
+                            <td>05/06/2025</td>
+                            <td>3</td>
+                            <td></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>6</td>
+                            <td>Desarrollo del módulo de mantención de piscinas</td>
+                            <td>12</td>
+                            <td>25/05/2025</td>
+                            <td>07/06/2025</td>
+                            <td>3</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Desarrollo del módulo de gestión de turnos y personal</td>
+                            <td>9</td>
+                            <td>25/05/2025</td>
+                            <td>04/06/2025</td>
+                            <td>3</td>
+                            <td></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>8</td>
+                            <td>Integración de módulos</td>
+                            <td>5</td>
+                            <td>08/06/2025</td>
+                            <td>13/06/2025</td>
+                            <td>4, 5, 6, 7</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>9</td>
+                            <td>Pruebas unitarias y de integración</td>
+                            <td>6</td>
+                            <td>14/06/2025</td>
+                            <td>20/06/2025</td>
+                            <td>8</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>10</td>
+                            <td>Corrección de errores</td>
+                            <td>4</td>
+                            <td>21/06/2025</td>
+                            <td>25/06/2025</td>
+                            <td>9</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Desarrollo del plan de contingencia</td>
+                            <td>3</td>
+                            <td>14/06/2025</td>
+                            <td>17/06/2025</td>
+                            <td>8</td>
+                            <td></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>12</td>
+                            <td>Capacitación al personal</td>
+                            <td>5</td>
+                            <td>26/06/2025</td>
+                            <td>01/07/2025</td>
+                            <td>10, 11</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>13</td>
+                            <td>Implementación en producción</td>
+                            <td>2</td>
+                            <td>02/07/2025</td>
+                            <td>03/07/2025</td>
+                            <td>12</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                        <tr class="table-danger">
+                            <td>14</td>
+                            <td>Seguimiento y ajustes post-implementación</td>
+                            <td>10</td>
+                            <td>04/07/2025</td>
+                            <td>14/07/2025</td>
+                            <td>13</td>
+                            <td><i class="fas fa-check text-danger"></i></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="alert alert-danger mt-2">
+                <i class="fas fa-info-circle"></i> Las filas resaltadas en rojo indican actividades que forman parte de la ruta crítica.
+            </div>
+        </div>
+
+        <!-- Carta Gantt -->
+        <div class="section gantt-section mb-4">
+            <h2><i class="fas fa-chart-bar"></i> Carta Gantt</h2>
+            <p>La siguiente carta Gantt muestra la distribución temporal de las actividades del proyecto, permitiendo visualizar la secuencia y duración de cada tarea, así como sus dependencias:</p>
+            <div class="gantt-container" id="gantt"></div>
+            <div class="mt-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <i class="fas fa-info-circle"></i> Información sobre la Carta Gantt
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>Las barras azules representan la duración de cada tarea</li>
+                                    <li>Las barras rojas indican tareas en la ruta crítica</li>
+                                    <li>Las líneas conectoras muestran las dependencias entre tareas</li>
+                                    <li>El proyecto tiene una duración total estimada de 75 días</li>
+                                    <li>Se considera una semana laboral de 5 días (lunes a viernes)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-danger text-white">
+                                <i class="fas fa-exclamation-triangle"></i> Consideraciones de Riesgo
+                            </div>
+                            <div class="card-body">
+                                <p>Actividades con mayor riesgo:</p>
+                                <ul>
+                                    <li>Integración de módulos - <span class="badge bg-danger">Alto Riesgo</span></li>
+                                    <li>Pruebas unitarias y de integración - <span class="badge bg-warning text-dark">Riesgo Medio</span></li>
+                                    <li>Implementación en producción - <span class="badge bg-danger">Alto Riesgo</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Diagrama PERT -->
+        <div class="section pert-section mb-4">
+            <h2><i class="fas fa-project-diagram"></i> Diagrama PERT</h2>
+            <p>El siguiente diagrama PERT muestra las relaciones entre actividades y la ruta crítica del proyecto:</p>
+            <div id="pert-diagram"></div>
+            <div class="mt-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-success text-white">
+                                <i class="fas fa-route"></i> Ruta Crítica
+                            </div>
+                            <div class="card-body">
+                                <p>La ruta crítica del proyecto está formada por las siguientes actividades:</p>
+                                <code>1 → 2 → 3 → 6 → 8 → 9 → 10 → 12 → 13 → 14</code>
+                                <p class="mt-2">Estas actividades determinan la duración total del proyecto. Cualquier retraso en alguna de ellas afectará la fecha de finalización del proyecto completo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-info text-white">
+                                <i class="fas fa-info-circle"></i> Leyenda del Diagrama
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li><span class="badge bg-danger">Rojo</span> - Actividades en la ruta crítica</li>
+                                    <li><span class="badge bg-secondary">Gris</span> - Actividades con holgura</li>
+                                    <li>Los números en los nodos representan el ID de la actividad</li>
+                                    <li>Las flechas indican las dependencias entre actividades</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Análisis de Riesgos -->
+        <div class="section mb-4">
+            <h2><i class="fas fa-shield-alt"></i> Análisis de Riesgos del Proyecto</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-header bg-danger text-white">
+                            <i class="fas fa-exclamation-triangle"></i> Riesgos Principales
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Cambios en los requerimientos durante el desarrollo
+                                <span class="badge bg-danger rounded-pill">Alto</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Resistencia al cambio por parte del personal
+                                <span class="badge bg-warning text-dark rounded-pill">Medio</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Dificultades en la integración de módulos
+                                <span class="badge bg-danger rounded-pill">Alto</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Problemas de rendimiento en la implementación
+                                <span class="badge bg-warning text-dark rounded-pill">Medio</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Limitaciones técnicas no previstas
+                                <span class="badge bg-warning text-dark rounded-pill">Medio</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <i class="fas fa-shield-alt"></i> Estrategias de Mitigación
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex mb-2">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-success fs-4"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="mt-0">Gestión de cambios</h5>
+                                    <p>Implementar un proceso formal de control de cambios para evaluar el impacto de cualquier modificación en los requerimientos.</p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-2">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-success fs-4"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="mt-0">Capacitación temprana</h5>
+                                    <p>Iniciar la capacitación desde las etapas intermedias del proyecto para facilitar la transición y reducir la resistencia al cambio.</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-success fs-4"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h5 class="mt-0">Pruebas continuas</h5>
+                                    <p>Realizar pruebas incrementales durante todo el desarrollo para identificar problemas de integración y rendimiento tempranamente.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Planificación Proyecto Piscinas Splash</h5>
+                    <p>Gestión de Riesgos - 2025</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p>
+                        <i class="fas fa-shield-alt"></i> "La planificación adecuada reduce los riesgos y aumenta la probabilidad de éxito"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bibliotecas JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/frappe-gantt@0.6.1/dist/frappe-gantt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vis-network@9.1.2/dist/vis-network.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Datos para el diagrama Gantt
+            const tasks = [
+                {
+                    id: '1',
+                    name: 'Levantamiento inicial de requerimientos',
+                    start: '2025-05-01',
+                    end: '2025-05-07',
+                    progress: 100,
+                    dependencies: '',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '2',
+                    name: 'Diseño de la arquitectura del sistema',
+                    start: '2025-05-08',
+                    end: '2025-05-16',
+                    progress: 100,
+                    dependencies: '1',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '3',
+                    name: 'Modelado de base de datos',
+                    start: '2025-05-17',
+                    end: '2025-05-24',
+                    progress: 100,
+                    dependencies: '2',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '4',
+                    name: 'Desarrollo del módulo de gestión de clientes',
+                    start: '2025-05-25',
+                    end: '2025-06-03',
+                    progress: 100,
+                    dependencies: '3'
+                },
+                {
+                    id: '5',
+                    name: 'Desarrollo del módulo de venta de productos',
+                    start: '2025-05-25',
+                    end: '2025-06-05',
+                    progress: 100,
+                    dependencies: '3'
+                },
+                {
+                    id: '6',
+                    name: 'Desarrollo del módulo de mantención de piscinas',
+                    start: '2025-05-25',
+                    end: '2025-06-07',
+                    progress: 100,
+                    dependencies: '3',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '7',
+                    name: 'Desarrollo del módulo de gestión de turnos y personal',
+                    start: '2025-05-25',
+                    end: '2025-06-04',
+                    progress: 100,
+                    dependencies: '3'
+                },
+                {
+                    id: '8',
+                    name: 'Integración de módulos',
+                    start: '2025-06-08',
+                    end: '2025-06-13',
+                    progress: 100,
+                    dependencies: '6',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '9',
+                    name: 'Pruebas unitarias y de integración',
+                    start: '2025-06-14',
+                    end: '2025-06-20',
+                    progress: 100,
+                    dependencies: '8',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '10',
+                    name: 'Corrección de errores',
+                    start: '2025-06-21',
+                    end: '2025-06-25',
+                    progress: 100,
+                    dependencies: '9',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '11',
+                    name: 'Desarrollo del plan de contingencia',
+                    start: '2025-06-14',
+                    end: '2025-06-17',
+                    progress: 100,
+                    dependencies: '8'
+                },
+                {
+                    id: '12',
+                    name: 'Capacitación al personal',
+                    start: '2025-06-26',
+                    end: '2025-07-01',
+                    progress: 100,
+                    dependencies: '10,11',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '13',
+                    name: 'Implementación en producción',
+                    start: '2025-07-02',
+                    end: '2025-07-03',
+                    progress: 100,
+                    dependencies: '12',
+                    custom_class: 'bar-critical'
+                },
+                {
+                    id: '14',
+                    name: 'Seguimiento y ajustes post-implementación',
+                    start: '2025-07-04',
+                    end: '2025-07-14',
+                    progress: 100,
+                    dependencies: '13',
+                    custom_class: 'bar-critical'
+                }
+            ];
+
+            // Inicializar diagrama Gantt
+            const gantt = new Gantt("#gantt", tasks, {
+                header_height: 50,
+                column_width: 30,
+                step: 24,
+                view_modes: ['Day', 'Week', 'Month'],
+                bar_height: 20,
+                bar_corner_radius: 3,
+                arrow_curve: 5,
+                padding: 18,
+                view_mode: 'Week',
+                date_format: 'YYYY-MM-DD',
+                custom_popup_html: function(task) {
+                    // Personalizar el popup que aparece al hacer clic en una tarea
+                    return `
+                        <div class="card">
+                            <div class="card-header bg-primary text-white">
+                                <h5>${task.name}</h5>
+                            </div>
+                            <div class="card-body">
+                                <p><strong>Inicio:</strong> ${task.start}</p>
+                                <p><strong>Fin:</strong> ${task.end}</p>
+                                <p><strong>Duración:</strong> ${moment(task.end).diff(moment(task.start), 'days')} días</p>
+                                <p><strong>Dependencias:</strong> ${task.dependencies || 'Ninguna'}</p>
+                                <p><strong>Dependencias:</strong> ${task.dependencies || 'Ninguna'}</p>
+                                <p><strong>Ruta crítica:</strong> ${task.custom_class === 'bar-critical' ? 'Sí' : 'No'}</p>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            // Añadir un estilo personalizado para las barras en la ruta crítica
+            document.querySelector('style').textContent += `
+                .bar-critical .bar {
+                    fill: #dc3545 !important;
+                }
+            `;
+
+            // Datos para el diagrama PERT
+            const nodes = new vis.DataSet([
+                { id: 1, label: '1', title: 'Levantamiento inicial de requerimientos', group: 'critical', shape: 'box' },
+                { id: 2, label: '2', title: 'Diseño de la arquitectura del sistema', group: 'critical', shape: 'box' },
+                { id: 3, label: '3', title: 'Modelado de base de datos', group: 'critical', shape: 'box' },
+                { id: 4, label: '4', title: 'Desarrollo del módulo de gestión de clientes', group: 'normal', shape: 'box' },
+                { id: 5, label: '5', title: 'Desarrollo del módulo de venta de productos', group: 'normal', shape: 'box' },
+                { id: 6, label: '6', title: 'Desarrollo del módulo de mantención de piscinas', group: 'critical', shape: 'box' },
+                { id: 7, label: '7', title: 'Desarrollo del módulo de gestión de turnos y personal', group: 'normal', shape: 'box' },
+                { id: 8, label: '8', title: 'Integración de módulos', group: 'critical', shape: 'box' },
+                { id: 9, label: '9', title: 'Pruebas unitarias y de integración', group: 'critical', shape: 'box' },
+                { id: 10, label: '10', title: 'Corrección de errores', group: 'critical', shape: 'box' },
+                { id: 11, label: '11', title: 'Desarrollo del plan de contingencia', group: 'normal', shape: 'box' },
+                { id: 12, label: '12', title: 'Capacitación al personal', group: 'critical', shape: 'box' },
+                { id: 13, label: '13', title: 'Implementación en producción', group: 'critical', shape: 'box' },
+                { id: 14, label: '14', title: 'Seguimiento y ajustes post-implementación', group: 'critical', shape: 'box' }
+            ]);
+
+            const edges = new vis.DataSet([
+                { from: 1, to: 2, arrows: 'to' },
+                { from: 2, to: 3, arrows: 'to' },
+                { from: 3, to: 4, arrows: 'to' },
+                { from: 3, to: 5, arrows: 'to' },
+                { from: 3, to: 6, arrows: 'to' },
+                { from: 3, to: 7, arrows: 'to' },
+                { from: 4, to: 8, arrows: 'to' },
+                { from: 5, to: 8, arrows: 'to' },
+                { from: 6, to: 8, arrows: 'to', color: {color: '#dc3545'} },
+                { from: 7, to: 8, arrows: 'to' },
+                { from: 8, to: 9, arrows: 'to', color: {color: '#dc3545'} },
+                { from: 8, to: 11, arrows: 'to' },
+                { from: 9, to: 10, arrows: 'to', color: {color: '#dc3545'} },
+                { from: 10, to: 12, arrows: 'to', color: {color: '#dc3545'} },
+                { from: 11, to: 12, arrows: 'to' },
+                { from: 12, to: 13, arrows: 'to', color: {color: '#dc3545'} },
+                { from: 13, to: 14, arrows: 'to', color: {color: '#dc3545'} }
+            ]);
+
+            // Configuración para el diagrama PERT
+            const data = {
+                nodes: nodes,
+                edges: edges
+            };
+            
+            const options = {
+                groups: {
+                    critical: {
+                        color: {
+                            background: '#dc3545',
+                            border: '#b02a37',
+                            highlight: {
+                                background: '#bb2d3b',
+                                border: '#a52834'
+                            }
+                        },
+                        font: {
+                            color: 'white'
+                        }
+                    },
+                    normal: {
+                        color: {
+                            background: '#6c757d',
+                            border: '#5c636a',
+                            highlight: {
+                                background: '#5c636a',
+                                border: '#565e64'
+                            }
+                        },
+                        font: {
+                            color: 'white'
+                        }
+                    }
+                },
+                layout: {
+                    hierarchical: {
+                        direction: 'LR',
+                        sortMethod: 'directed',
+                        shakeTowards: 'leaves',
+                        nodeSpacing: 150
+                    }
+                },
+                physics: false,
+                interaction: {
+                    navigationButtons: true,
+                    keyboard: true
+                },
+                nodes: {
+                    margin: 10,
+                    shape: 'box',
+                    shadow: true
+                },
+                edges: {
+                    width: 2,
+                    shadow: true
+                }
+            };
+
+            // Inicializar el diagrama PERT
+            const container = document.getElementById('pert-diagram');
+            const network = new vis.Network(container, data, options);
+            
+            // Añadir un evento para mostrar información sobre el nodo al hacer clic
+            network.on("click", function (params) {
+                if (params.nodes.length > 0) {
+                    const nodeId = params.nodes[0];
+                    const node = nodes.get(nodeId);
+                    
+                    // Crear un tooltip con Bootstrap
+                    const tooltip = document.createElement('div');
+                    tooltip.className = 'toast show position-fixed top-50 start-50 translate-middle';
+                    tooltip.style.zIndex = '1000';
+                    tooltip.innerHTML = `
+                        <div class="toast-header ${node.group === 'critical' ? 'bg-danger text-white' : 'bg-secondary text-white'}">
+                            <strong class="me-auto">Actividad ${node.label}</strong>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                        <div class="toast-body">
+                            <p>${node.title}</p>
+                            <p><strong>Ruta crítica:</strong> ${node.group === 'critical' ? 'Sí' : 'No'}</p>
+                        </div>
+                    `;
+                    
+                    document.body.appendChild(tooltip);
+                    
+                    // Eliminar el tooltip después de un tiempo
+                    setTimeout(() => {
+                        if (tooltip && tooltip.parentNode) {
+                            tooltip.parentNode.removeChild(tooltip);
+                        }
+                    }, 3000);
+                    
+                    // O eliminar al hacer clic en el botón de cerrar
+                    const closeButton = tooltip.querySelector('.btn-close');
+                    if (closeButton) {
+                        closeButton.addEventListener('click', () => {
+                            if (tooltip && tooltip.parentNode) {
+                                tooltip.parentNode.removeChild(tooltip);
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

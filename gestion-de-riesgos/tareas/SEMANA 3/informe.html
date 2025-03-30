@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Respuestas Gestión de Riesgos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            background-color: white;
+        }
+        .risk-section {
+            border-left: 5px solid #dc3545;
+            background-color: #fff8f8;
+        }
+        .header-section {
+            background-color: #343a40;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .question {
+            font-weight: bold;
+            color: #0d6efd;
+            margin-bottom: 15px;
+            font-size: 1.25rem;
+        }
+        .answer {
+            padding-left: 15px;
+            border-left: 3px solid #6c757d;
+            margin-bottom: 20px;
+        }
+        .table-section {
+            border-left: 5px solid #0d6efd;
+            background-color: #f8f9ff;
+        }
+        .multiple-choice {
+            border-left: 5px solid #198754;
+            background-color: #f8fff9;
+        }
+        .option {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .correct-option {
+            background-color: #d4edda;
+            border-left: 3px solid #198754;
+        }
+        .case-section {
+            border-left: 5px solid #ffc107;
+            background-color: #fffdf8;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+        h2 {
+            color: #343a40;
+            border-bottom: 2px solid #dee2e6;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        .risk-badge {
+            background-color: #dc3545;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section text-center">
+            <h1><i class="fas fa-shield-alt"></i> Respuestas Gestión de Riesgos</h1>
+            <p class="lead">Evaluación de conocimientos sobre gestión de riesgos en proyectos</p>
+        </div>
+
+        <!-- Pregunta 1 -->
+        <div class="section risk-section">
+            <h2><i class="fas fa-question-circle"></i> Pregunta 1</h2>
+            <div class="question">
+                La gestión de los riesgos, ¿Se realiza solo para los proyectos de gran tamaño o muy complejos?
+            </div>
+            <div class="answer">
+                <p>No. Según el material proporcionado, la gestión de riesgos <strong>"es útil para cualquier tipo de proyecto. Sea pequeño, mediano, grande, complejo o simple."</strong></p>
+                
+                <p>Independiente del tamaño del proyecto, siempre se desea cumplir con él de manera satisfactoria, por lo que conocer con antelación y en base a una gestión los riesgos involucrados en el proyecto, aumentará las posibilidades de éxito.</p>
+                
+                <div class="alert alert-info mt-3">
+                    <i class="fas fa-info-circle"></i> Los beneficios de gestionar los riesgos de manera correcta superan de gran manera el tiempo y esfuerzo invertido, y el proceso es acorde a la magnitud y complejidad del proyecto.
+                </div>
+            </div>
+        </div>
+
+        <!-- Pregunta 2 -->
+        <div class="section risk-section">
+            <h2><i class="fas fa-question-circle"></i> Pregunta 2</h2>
+            <div class="question">
+                ¿Porqué Gestionar los Riesgos? Argumente al menos 5 razones
+            </div>
+            <div class="answer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-check-circle text-success"></i> Aumenta la posibilidad de éxito</h5>
+                                <p class="card-text">La gestión de riesgos incrementa significativamente las probabilidades de que el proyecto alcance sus objetivos al anticipar y controlar factores que podrían afectarlo.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-check-circle text-success"></i> Permite ser proactivos y no reactivos</h5>
+                                <p class="card-text">Se pueden tomar medidas preventivas antes de que los problemas ocurran, evitando situaciones de crisis y medidas correctivas urgentes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-check-circle text-success"></i> Mejora la predicción de los resultados</h5>
+                                <p class="card-text">Permite anticipar escenarios posibles y sus impactos, mejorando la capacidad de estimar los resultados finales del proyecto.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-check-circle text-success"></i> Hace más realista los planes</h5>
+                                <p class="card-text">Al considerar la incertidumbre dentro de la planificación, los planes se vuelven más realistas y adaptables a las situaciones que puedan surgir.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-check-circle text-success"></i> Descubre potenciales problemas temprano</h5>
+                                <p class="card-text">Permite identificar problemas potenciales en etapas iniciales del proyecto cuando son más fáciles y menos costosos de resolver.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-check-circle text-success"></i> Fomenta la gestión de oportunidades</h5>
+                                <p class="card-text">No solo identifica amenazas sino también oportunidades que pueden ser aprovechadas para mejorar el proyecto.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-check-circle text-success"></i> Permite gestionar reservas</h5>
+                                <p class="card-text">Ayuda a planificar y administrar las reservas de contingencia y de gestión de manera eficiente basándose en riesgos reales.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><i class="fas fa-check-circle text-success"></i> Facilita la toma de decisiones</h5>
+                                <p class="card-text">Permite tomar decisiones basadas en información más completa, considerando los posibles escenarios y consecuencias.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pregunta 3 -->
+        <div class="section risk-section">
+            <h2><i class="fas fa-question-circle"></i> Pregunta 3</h2>
+            <div class="question">
+                Describa y enumere los pasos principales para la administración de riesgos
+            </div>
+            <div class="answer">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <img src="https://via.placeholder.com/500x300?text=Diagrama+de+Administración+de+Riesgos" alt="Diagrama de Administración de Riesgos" class="img-fluid rounded">
+                    </div>
+                    <div class="col-md-6">
+                        <p>La administración de riesgos sigue un proceso estructurado que permite identificar, analizar y responder a los riesgos de un proyecto. Durante todo el proceso, es fundamental mantener dos actividades transversales: <strong>Comunicar y Consultar</strong> con todos los interesados, y <strong>Revisar y Monitorear</strong> constantemente el proceso.</p>
+                    </div>
+                </div>
+
+                <div class="accordion" id="accordionRisks">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                <strong>1. Establecer el contexto</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionRisks">
+                            <div class="accordion-body">
+                                <p>Identificar el contexto en el cual se encuentra el proyecto, estableciendo criterios de evaluación y la estructura de análisis con la cual se hará la identificación de los riesgos.</p>
+                                <p>Este paso permite comprender el entorno, los objetivos del proyecto y las restricciones existentes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                <strong>2. Identificar Riesgos</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionRisks">
+                            <div class="accordion-body">
+                                <p>Permite conocer todos aquellos riesgos que puedan impactar de manera positiva o negativa al proyecto y/o a la organización.</p>
+                                <p>Si en este paso existe un riesgo que no es identificado y pudiese presentarse en el proyecto, será muy complejo evaluarlo y gestionarlo de manera adecuada en el futuro.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                <strong>3. Analizar Riesgos</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionRisks">
+                            <div class="accordion-body">
+                                <p>En base a los riesgos detectados en la etapa de identificación, se debe generar un análisis de cada uno de ellos con la finalidad de conocer el nivel de afectación que tendría en el proyecto, de hacerse presente.</p>
+                                <p>Este análisis puede ser cualitativo (basado en probabilidad e impacto) o cuantitativo (usando métodos como Monte Carlo, PERT, etc.).</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                <strong>4. Evaluar Riesgos</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionRisks">
+                            <div class="accordion-body">
+                                <p>Consiste en comparar el riesgo estimado contra criterios predeterminados, niveles de riesgo deseable u otros criterios, estableciendo un ranking de priorización.</p>
+                                <p>Esta evaluación permite clasificar los riesgos según su importancia y prioridad para la planificación de respuestas.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                <strong>5. Tratar Riesgos</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionRisks">
+                            <div class="accordion-body">
+                                <p>Corresponde a la selección e implementación de opciones apropiadas para manejar el riesgo. Las medidas de tratamiento de los riesgos pueden incluir evitar, reducir, compartir o aceptar el riesgo.</p>
+                                <p>Para las oportunidades (riesgos positivos), las estrategias incluyen explotar, mejorar, compartir o aceptar.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingSix">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                                <strong>Procesos Transversales</strong>
+                            </button>
+                        </h2>
+                        <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionRisks">
+                            <div class="accordion-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-header bg-info text-white">
+                                                <i class="fas fa-comments"></i> Comunicar y Consultar
+                                            </div>
+                                            <div class="card-body">
+                                                <p>Se encuentra presente en todas las fases de la gestión de riesgos y consiste en comunicar, informar y consultar a los interesados internos y externos, según resulte apropiado en cada etapa del Proceso de Gestión de Riesgos, interpretando un proceso como un todo.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="card mb-3">
+                                            <div class="card-header bg-warning text-dark">
+                                                <i class="fas fa-sync-alt"></i> Revisar y Monitorear
+                                            </div>
+                                            <div class="card-body">
+                                                <p>Se encuentra presente en todas las fases de la gestión de riesgos y en ella se definen y utilizan mecanismos para monitorear y revisar el desempeño del Proceso de Gestión de Riesgos y dar cuenta de la evolución del nivel del riesgo en proceso críticos para la administración.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pregunta 4 -->
+        <div class="section table-section">
+            <h2><i class="fas fa-question-circle"></i> Pregunta 4</h2>
+            <div class="question">
+                Realice un cuadro comparativo entre WBS y RBS
+            </div>
+            <div class="answer">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead class="table-primary">
+                            <tr>
+                                <th scope="col" style="width: 50%">WBS (Estructura de Desglose de Trabajo)</th>
+                                <th scope="col" style="width: 50%">RBS (Estructura de Desglose de Riesgos)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Consiste en la descomposición del producto resultante del proyecto, en paquetes de trabajo individuales de manera jerárquica.</td>
+                                <td>Agrupa u organiza distintas fuentes de riesgos, generando una categorización de ellas.</td>
+                            </tr>
+                            <tr>
+                                <td>Es un documento que se realiza dentro del proceso de planificación.</td>
+                                <td>Se realiza para identificar y clasificar las fuentes de riesgos en base a categorías.</td>
+                            </tr>
+                            <tr>
+                                <td>Sirve para conocer de manera más específica las tareas y subtareas a desarrollar en un proyecto.</td>
+                                <td>Sirve para identificar y clasificar las fuentes de riesgos con el objetivo de establecer un orden en la identificación de los riesgos.</td>
+                            </tr>
+                            <tr>
+                                <td>Ayuda a identificar el alcance del proyecto y los entregables en cada etapa.</td>
+                                <td>Organiza los riesgos por categorías, simplificando su gestión y seguimiento.</td>
+                            </tr>
+                            <tr>
+                                <td>Es creada por el equipo del proyecto, debido a que habitualmente son ellos quienes conocen de mejor manera como efectuarán el trabajo.</td>
+                                <td>Para cada proyecto se debe crear su propio RBS, debido a que no todos tienen las mismas características o poseen los mismos recursos.</td>
+                            </tr>
+                            <tr>
+                                <td>Sirve como insumo para la identificación de riesgos, permitiendo generar una identificación de manera más detallada.</td>
+                                <td>Luego de crear el RBS, el equipo puede realizar una lluvia de ideas para revisar si falta algo por analizar.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pregunta 5 - Multiple Choice -->
+        <div class="section multiple-choice">
+            <h2><i class="fas fa-question-circle"></i> Preguntas de Opción Múltiple</h2>
+            
+            <div class="mb-4">
+                <div class="question">
+                    "Consiste en comparar el riesgo estimado contra criterios predeterminados, niveles de riesgo deseable u otros criterios, estableciendo un ranking de priorización."
+                </div>
+                <div class="option">A) Tratar el riesgo</div>
+                <div class="option">B) Identificar el Riesgo</div>
+                <div class="option">C) Establecer el contexto</div>
+                <div class="option correct-option">
+                    <strong>D) Evaluar el riesgo</strong> <i class="fas fa-check-circle text-success"></i>
+                    <p class="mt-2">Esta es la definición de la evaluación del riesgo, que implica comparar el riesgo estimado contra criterios establecidos para determinar su prioridad.</p>
+                </div>
+            </div>
+            
+            <div class="mb-4">
+                <div class="question">
+                    "Son útiles para obtener el apoyo y compromiso de las personas involucradas en el proyecto"
+                </div>
+                <div class="option">A) Análisis de la EDT</div>
+                <div class="option">B) Checklist</div>
+                <div class="option correct-option">
+                    <strong>C) Entrevistas y/o encuestas</strong> <i class="fas fa-check-circle text-success"></i>
+                    <p class="mt-2">Las entrevistas y encuestas son herramientas que permiten involucrar directamente a los interesados, obteniendo su apoyo y compromiso con el proyecto.</p>
+                </div>
+                <div class="option">D) Diagramas de flujo</div>
+            </div>
+            
+            <div class="mb-4">
+                <div class="question">
+                    "Si el impacto del riesgo es positivo se le denomina"
+                </div>
+                <div class="option">A) Impacto positivo</div>
+                <div class="option">B) Amenaza</div>
+                <div class="option correct-option">
+                    <strong>C) Oportunidad</strong> <i class="fas fa-check-circle text-success"></i>
+                    <p class="mt-2">A los riesgos positivos se les denomina oportunidades, porque si estos ocurren podrían impactar de manera positiva algún objetivo del proyecto.</p>
+                </div>
+                <div class="option">D) Mejoramiento</div>
+            </div>
+            
+            <div class="mb-4">
+                <div class="question">
+                    "Un riesgo que no es reconocido en el proceso de identificación"
+                </div>
+                <div class="option">A) Se debe asumir en cualquier momento.</div>
+                <div class="option">B) Se adapta un plan de acción predefinido para otro riesgo</div>
+                <div class="option correct-option">
+                    <strong>C) Se puede incorporar en cualquier momento en la lista de riesgos.</strong> <i class="fas fa-check-circle text-success"></i>
+                    <p class="mt-2">La identificación de riesgos es un proceso continuo. Si se identifica un nuevo riesgo durante el proyecto, debe ser incorporado en la lista de riesgos para su análisis y gestión.</p>
+                </div>
+                <div class="option">D) Se debe desechar</div>
+            </div>
+        </div>
+
+        <!-- Caso Práctico -->
+        <div class="section case-section">
+            <h2><i class="fas fa-briefcase"></i> Caso Práctico - Piscinas Splash</h2>
+            
+            <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Instrucción:</strong> Del caso práctico adjunto realice una carta Gantt y un diagrama de PERT con los requerimientos detectados.
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-light">
+                    <strong>Contexto del Caso</strong>
+                </div>
+                <div class="card-body">
+                    <p>Piscinas Splash es un emprendimiento familiar creado a principios del año 2023 dedicado a la mantención y venta de productos de piscinas. Con un crecimiento exponencial en 2025, han enfrentado desafíos para gestionar eficientemente el negocio, recibiendo reclamos por demoras en mantenciones, trabajos incompletos, pedidos erróneos, etc.</p>
+                    
+                    <p>Su plan estratégico incluye incorporar tecnología para agilizar procesos y expandirse en las principales regiones del país, con foco en: Gestión de mantenciones, ventas de productos y distribución del personal.</p>
+                </div>
+            </div>
+            
+            <h4 class="mb-3">Análisis de Requerimientos para Carta Gantt y PERT</h4>
+            
+            <p>Para desarrollar la carta Gantt y el diagrama PERT, es necesario identificar las principales actividades requeridas para implementar el sistema que solucionará los problemas detectados en Piscinas Splash. A continuación se presenta una propuesta de actividades basadas en los requerimientos:</p>
+            
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>ID</th>
+                            <th>Actividad</th>
+                            <th>Duración estimada (días)</th>
+                            <th>Predecesoras</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td>1</td>
+                            <td>Levantamiento inicial de requerimientos</td>
+                            <td>5</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Diseño de la arquitectura del sistema</td>
+                            <td>7</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Modelado de base de datos (clientes, productos, piscinas)</td>
+                            <td>6</td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Desarrollo del módulo de gestión de clientes</td>
+                            <td>8</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Desarrollo del módulo de venta de productos</td>
+                            <td>10</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Desarrollo del módulo de mantención de piscinas</td>
+                            <td>12</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Desarrollo del módulo de gestión de turnos y personal</td>
+                            <td>9</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td>Integración de módulos</td>
+                            <td>5</td>
+                            <td>4, 5, 6, 7</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td>Pruebas unitarias y de integración</td>
+                            <td>6</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Corrección de errores</td>
+                            <td>4</td>
+                            <td>9</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td>Desarrollo del plan de contingencia</td>
+                            <td>3</td>
+                            <td>8</td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td>Capacitación al personal</td>
+                            <td>5</td>
+                            <td>10, 11</td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td>Implementación en producción</td>
+                            <td>2</td>
+                            <td>12</td>
+                        </tr>
+                        <tr>
+                            <td>14</td>
+                            <td>Seguimiento y ajustes post-implementación</td>
+                            <td>10</td>
+                            <td>13</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6 mb-4">
+                    <h4>Carta Gantt</h4>
+                    <div class="border p-3 bg-white">
+                        <p class="text-center text-muted">Aquí iría la representación gráfica de la Carta Gantt</p>
+                        <img src="https://via.placeholder.com/600x300?text=Carta+Gantt+Piscinas+Splash" alt="Carta Gantt" class="img-fluid">
+                        <p class="mt-2"><small>La carta Gantt muestra la distribución temporal de las actividades, permitiendo visualizar la secuencia y duración de cada tarea del proyecto.</small></p>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <h4>Diagrama PERT</h4>
+                    <div class="border p-3 bg-white">
+                        <p class="text-center text-muted">Aquí iría la representación gráfica del Diagrama PERT</p>
+                        <img src="https://via.placeholder.com/600x300?text=Diagrama+PERT+Piscinas+Splash" alt="Diagrama PERT" class="img-fluid">
+                        <p class="mt-2"><small>El diagrama PERT muestra las relaciones entre las actividades y permite identificar la ruta crítica del proyecto, resaltando las actividades que no pueden retrasarse sin afectar la duración total.</small></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="alert alert-info mt-2">
+                <i class="fas fa-info-circle"></i> <strong>Nota importante:</strong> En un entorno real, tanto la Carta Gantt como el Diagrama PERT se desarrollarían con herramientas especializadas como Microsoft Project, GanttProject, o aplicaciones similares que permiten una gestión detallada del cronograma y las dependencias entre actividades.
+            </div>
+
+            <h4 class="mt-4">Análisis de la Ruta Crítica</h4>
+            <p>Basado en las actividades y dependencias identificadas, la ruta crítica del proyecto estaría compuesta por las siguientes actividades: 1 → 2 → 3 → 6 → 8 → 9 → 10 → 12 → 13 → 14.</p>
+            <p>Estas actividades representan el camino más largo a través del proyecto y determinan la duración mínima del mismo. Cualquier retraso en alguna de estas actividades retrasará todo el proyecto, por lo que requieren un seguimiento más estricto y posiblemente la asignación de recursos adicionales.</p>
+        </div>
+
+        <div class="section risk-section mt-4">
+            <h2><i class="fas fa-shield-alt"></i> Consideraciones sobre Gestión de Riesgos</h2>
+            
+            <p>Para el caso de Piscinas Splash, algunos riesgos potenciales que deberían considerarse son:</p>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-header bg-danger text-white">
+                            <i class="fas fa-exclamation-triangle"></i> Riesgos Negativos (Amenazas)
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Resistencia al cambio por parte del personal</li>
+                            <li class="list-group-item">Incompatibilidad con sistemas o procesos existentes</li>
+                            <li class="list-group-item">Estimación incorrecta de tiempos y recursos</li>
+                            <li class="list-group-item">Requerimientos mal definidos o incompletos</li>
+                            <li class="list-group-item">Problemas de conectividad en diferentes sucursales</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-3">
+                        <div class="card-header bg-success text-white">
+                            <i class="fas fa-star"></i> Riesgos Positivos (Oportunidades)
+                        </div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">Mayor eficiencia operativa de lo esperado</li>
+                            <li class="list-group-item">Posibilidad de expandir la solución a otros servicios</li>
+                            <li class="list-group-item">Mejora en la imagen corporativa por innovación tecnológica</li>
+                            <li class="list-group-item">Reducción de costos operativos</li>
+                            <li class="list-group-item">Generación de datos para toma de decisiones estratégicas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mt-3">Estos riesgos deberían ser evaluados mediante análisis cualitativo y cuantitativo, y establecer planes de respuesta adecuados para cada uno de ellos, siguiendo los principios de gestión de riesgos estudiados.</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Respuestas Gestión de Riesgos</h5>
+                    <p>Basado en materiales de estudio sobre Gestión de Riesgos en proyectos</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p>
+                        <i class="fas fa-shield-alt"></i> La gestión de riesgos es clave para el éxito de cualquier proyecto
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome JS (opcional, si se requiere funcionalidad adicional) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>

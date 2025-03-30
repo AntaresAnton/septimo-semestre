@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historias de Usuario - Piscinas Splash</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            padding-top: 20px;
+            background-color: #f8f9fa;
+        }
+        .header-section {
+            background-color: #0d6efd;
+            color: white;
+            padding: 30px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+        }
+        .criteria-list {
+            padding-left: 20px;
+        }
+        .story-card {
+            margin-bottom: 20px;
+            transition: transform 0.3s;
+        }
+        .story-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .priority-high {
+            background-color: #dc3545;
+            color: white;
+        }
+        .priority-medium {
+            background-color: #fd7e14;
+            color: white;
+        }
+        .priority-low {
+            background-color: #6c757d;
+            color: white;
+        }
+        .status-pending {
+            background-color: #6c757d;
+            color: white;
+        }
+        .status-inprogress {
+            background-color: #0d6efd;
+            color: white;
+        }
+        .status-completed {
+            background-color: #198754;
+            color: white;
+        }
+        .card-header-custom {
+            background-color: #e9ecef;
+            font-weight: bold;
+        }
+        footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header-section text-center">
+            <h1><i class="fas fa-water"></i> Historias de Usuario - Piscinas Splash</h1>
+            <p class="lead">Requerimientos funcionales para el desarrollo del sistema de gestión</p>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4><i class="fas fa-info-circle"></i> Acerca de las Historias de Usuario</h4>
+                    </div>
+                    <div class="card-body">
+                        <p>Las historias de usuario describen funcionalidades que serán valiosas para un usuario del sistema. Están escritas desde la perspectiva del usuario y siguen el formato:</p>
+                        <p class="bg-light p-3 border rounded"><strong>"Como [rol], quiero [funcionalidad] para [beneficio]"</strong></p>
+                        <p>Estas historias ayudan al equipo de desarrollo a entender las necesidades de los usuarios finales y a planificar el trabajo de manera efectiva.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Historias de Usuario -->
+        <div class="row">
+            <!-- Historia de Usuario 1 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-001</span>
+                        <div>
+                            <span class="badge priority-high">Prioridad Alta</span>
+                            <span class="badge status-inprogress">En Progreso</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Programación de Mantenciones</h5>
+                        <p class="card-text"><strong>Como</strong> administrador de servicios, <strong>quiero</strong> programar mantenciones de piscinas en un calendario visual <strong>para</strong> organizar eficientemente al personal técnico y mejorar la planificación de servicios.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Debe permitir visualizar las mantenciones en formato de calendario mensual, semanal y diario</li>
+                            <li>Se debe poder asignar técnicos específicos a cada mantención</li>
+                            <li>El sistema debe evitar conflictos de horarios entre técnicos</li>
+                            <li>Debe permitir reprogramar arrastrando y soltando en el calendario</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 2 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-002</span>
+                        <div>
+                            <span class="badge priority-high">Prioridad Alta</span>
+                            <span class="badge status-pending">Pendiente</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Clientes</h5>
+                        <p class="card-text"><strong>Como</strong> vendedor, <strong>quiero</strong> registrar y consultar información detallada de los clientes <strong>para</strong> brindar un servicio personalizado y realizar seguimiento de sus compras y mantenciones.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>El registro debe incluir datos de contacto, dirección y detalles de la piscina</li>
+                            <li>Debe incluir un historial de mantenciones y compras por cliente</li>
+                            <li>Permitir búsquedas por nombre, dirección o teléfono</li>
+                            <li>Debe incluir la opción de adjuntar fotos de la piscina del cliente</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 3 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-003</span>
+                        <div>
+                            <span class="badge priority-medium">Prioridad Media</span>
+                            <span class="badge status-pending">Pendiente</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Inventario de Productos</h5>
+                        <p class="card-text"><strong>Como</strong> encargado de bodega, <strong>quiero</strong> gestionar el inventario de productos para piscinas <strong>para</strong> controlar el stock disponible y recibir alertas cuando los productos estén por agotarse.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Debe mostrar el stock actual de cada producto en tiempo real</li>
+                            <li>Generar alertas automáticas cuando un producto llegue a su nivel mínimo</li>
+                            <li>Registrar entradas y salidas de inventario con fecha y responsable</li>
+                            <li>Permitir categorizar los productos (químicos, equipos, accesorios, etc.)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 4 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-004</span>
+                        <div>
+                            <span class="badge priority-high">Prioridad Alta</span>
+                            <span class="badge status-inprogress">En Progreso</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Sistema de Facturación</h5>
+                        <p class="card-text"><strong>Como</strong> contador, <strong>quiero</strong> generar facturas para servicios y productos vendidos <strong>para</strong> mantener un control financiero adecuado y facilitar el proceso de cobro a los clientes.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Generar facturas en formato PDF descargable</li>
+                            <li>Integrar con el sistema de inventario para actualizar el stock automáticamente</li>
+                            <li>Registrar el estado de pago de cada factura (pendiente, pagada, vencida)</li>
+                            <li>Permitir aplicar descuentos por cliente o tipo de servicio</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 5 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-005</span>
+                        <div>
+                            <span class="badge priority-medium">Prioridad Media</span>
+                            <span class="badge status-pending">Pendiente</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Reportes de Servicios Realizados</h5>
+                        <p class="card-text"><strong>Como</strong> técnico de mantención, <strong>quiero</strong> registrar los detalles de los servicios realizados <strong>para</strong> documentar el trabajo hecho en cada piscina y mantener un historial de intervenciones.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Formulario para ingresar parámetros químicos del agua (pH, cloro, etc.)</li>
+                            <li>Opción para incluir fotos del antes y después del servicio</li>
+                            <li>Lista de tareas completadas con observaciones</li>
+                            <li>Firma digital del cliente para confirmar el servicio</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 6 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-006</span>
+                        <div>
+                            <span class="badge priority-low">Prioridad Baja</span>
+                            <span class="badge status-pending">Pendiente</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Notificaciones a Clientes</h5>
+                        <p class="card-text"><strong>Como</strong> asistente administrativo, <strong>quiero</strong> enviar notificaciones automáticas a los clientes <strong>para</strong> recordarles sus citas de mantención y confirmar su disponibilidad.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Enviar recordatorios por email y/o SMS 24 horas antes de la mantención</li>
+                            <li>Permitir al cliente confirmar, reprogramar o cancelar desde el mensaje</li>
+                            <li>Notificar al técnico asignado sobre la respuesta del cliente</li>
+                            <li>Mantener un registro de las notificaciones enviadas y respuestas recibidas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 7 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-007</span>
+                        <div>
+                            <span class="badge priority-medium">Prioridad Media</span>
+                            <span class="badge status-completed">Completada</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Gestión de Proveedores</h5>
+                        <p class="card-text"><strong>Como</strong> gerente de compras, <strong>quiero</strong> gestionar información de proveedores y sus catálogos <strong>para</strong> optimizar el proceso de adquisición de productos y obtener mejores condiciones de compra.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Registrar datos de contacto y condiciones comerciales de cada proveedor</li>
+                            <li>Almacenar catálogos de productos con precios y tiempos de entrega</li>
+                            <li>Permitir comparar precios entre diferentes proveedores</li>
+                            <li>Registrar historial de compras por proveedor</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 8 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-008</span>
+                        <div>
+                            <span class="badge priority-high">Prioridad Alta</span>
+                            <span class="badge status-inprogress">En Progreso</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Dashboard de Análisis</h5>
+                        <p class="card-text"><strong>Como</strong> gerente general, <strong>quiero</strong> visualizar indicadores clave de desempeño en un dashboard <strong>para</strong> tomar decisiones informadas sobre la operación del negocio.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Mostrar gráficos de ingresos por servicios y ventas de productos</li>
+                            <li>Visualizar la distribución de clientes por zona geográfica</li>
+                            <li>Presentar indicadores de eficiencia del personal técnico</li>
+                            <li>Permitir filtrar la información por período, sucursal y tipo de servicio</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 9 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-009</span>
+                        <div>
+                            <span class="badge priority-low">Prioridad Baja</span>
+                            <span class="badge status-pending">Pendiente</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">App Móvil para Técnicos</h5>
+                        <p class="card-text"><strong>Como</strong> técnico de mantención, <strong>quiero</strong> acceder a mi agenda y datos de clientes desde mi teléfono móvil <strong>para</strong> consultar la información necesaria mientras estoy en terreno.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Visualizar la agenda diaria con direcciones y horarios</li>
+                            <li>Acceder a la información histórica de cada piscina</li>
+                            <li>Registrar parámetros y fotos directamente desde la app</li>
+                            <li>Funcionar en modo offline cuando no hay conexión a internet</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia de Usuario 10 -->
+            <div class="col-md-6">
+                <div class="card story-card">
+                    <div class="card-header card-header-custom d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-bookmark"></i> HU-010</span>
+                        <div>
+                            <span class="badge priority-medium">Prioridad Media</span>
+                            <span class="badge status-pending">Pendiente</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Portal Web para Clientes</h5>
+                        <p class="card-text"><strong>Como</strong> cliente, <strong>quiero</strong> acceder a un portal web donde pueda ver el historial de mis mantenciones y compras <strong>para</strong> tener control sobre los servicios contratados y solicitar nuevos servicios fácilmente.</p>
+                        <h6>Criterios de Aceptación:</h6>
+                        <ul class="criteria-list">
+                            <li>Acceso seguro con usuario y contraseña</li>
+                            <li>Visualización del historial de servicios con los parámetros registrados</li>
+                            <li>Posibilidad de solicitar nuevas mantenciones o productos</li>
+                            <li>Consultar y descargar facturas emitidas</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h4><i class="fas fa-chart-pie"></i> Resumen de Historias de Usuario</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h5>Distribución por Prioridad</h5>
+                                <div class="progress mb-3" style="height: 25px;">
+                                    <div class="progress-bar bg-danger" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Alta (4)</div>
+                                    <div class="progress-bar bg-warning" role="progressbar" style="width: 40%;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Media (4)</div>
+                                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Baja (2)</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <h5>Distribución por Estado</h5>
+                                <div class="progress mb-3" style="height: 25px;">
+                                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">Pendiente (6)</div>
+                                    <div class="progress-bar bg-primary" role="progressbar" style="width: 30%;" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100">En Progreso (3)</div>
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 10%;" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100">Completada (1)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Historias de Usuario - Proyecto Piscinas Splash</h5>
+                    <p>Documento de requerimientos funcionales - 2025</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p>
+                        <i class="fas fa-tasks"></i> "Las historias de usuario son la base para un desarrollo centrado en el cliente"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Font Awesome JS (opcional, si se requiere funcionalidad adicional) -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
+</body>
+</html>
