@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitecturas de Big Data en GCP</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Animate.css para animaciones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .hero-section {
+            background: linear-gradient(135deg, #4285F4, #34A853);
+            color: white;
+            padding: 60px 0;
+            margin-bottom: 40px;
+        }
+        .card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            margin-bottom: 30px;
+            border: none;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        .card-header {
+            background: linear-gradient(45deg, #4285F4, #0F9D58);
+            color: white;
+            font-weight: bold;
+            padding: 15px 20px;
+            border-bottom: none;
+        }
+        .card-body {
+            padding: 25px;
+        }
+        .btn-primary {
+            background-color: #4285F4;
+            border-color: #4285F4;
+        }
+        .btn-primary:hover {
+            background-color: #3367D6;
+            border-color: #3367D6;
+        }
+        .modal-header {
+            background: linear-gradient(45deg, #4285F4, #0F9D58);
+            color: white;
+        }
+        .modal-body {
+            padding: 25px;
+        }
+        .architecture-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #4285F4;
+        }
+        .badge-gcp {
+            background-color: #4285F4;
+            color: white;
+            font-weight: normal;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        .code-block {
+            background-color: #272822;
+            color: #f8f8f2;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: auto;
+        }
+        .footer {
+            background-color: #202124;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        .component-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .component-list li {
+            margin-bottom: 10px;
+            padding-left: 25px;
+            position: relative;
+        }
+        .component-list li:before {
+            content: "\f0c8";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            color: #4285F4;
+        }
+        .modal-dialog {
+            max-width: 800px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <div class="hero-section animate__animated animate__fadeIn">
+        <div class="container text-center">
+            <h1 class="display-4"><i class="fab fa-google me-3"></i>Arquitecturas de Big Data en GCP</h1>
+            <p class="lead">Soluciones escalables para el procesamiento y análisis de grandes volúmenes de datos</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="row">
+            <!-- Lambda Architecture -->
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Arquitectura Lambda</h5>
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <i class="fas fa-stream architecture-icon"></i>
+                        </div>
+                        <p>Combina procesamiento por lotes y en tiempo real para manejar grandes volúmenes de datos.</p>
+                        <div class="d-flex flex-wrap mb-3">
+                            <span class="badge badge-gcp">Cloud Storage</span>
+                            <span class="badge badge-gcp">BigQuery</span>
+                            <span class="badge badge-gcp">Dataproc</span>
+                            <span class="badge badge-gcp">Pub/Sub</span>
+                            <span class="badge badge-gcp">Dataflow</span>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#lambdaModal">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kappa Architecture -->
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Arquitectura Kappa</h5>
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <i class="fas fa-wind architecture-icon"></i>
+                        </div>
+                        <p>Simplificación de Lambda que trata todo como streaming, eliminando sistemas paralelos.</p>
+                        <div class="d-flex flex-wrap mb-3">
+                            <span class="badge badge-gcp">Pub/Sub</span>
+                            <span class="badge badge-gcp">Dataflow</span>
+                            <span class="badge badge-gcp">BigQuery</span>
+                            <span class="badge badge-gcp">Bigtable</span>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#kappaModal">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Lake Architecture -->
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Arquitectura Data Lake</h5>
+                        <i class="fas fa-water"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <i class="fas fa-database architecture-icon"></i>
+                        </div>
+                        <p>Almacena datos estructurados y no estructurados en su formato nativo para análisis flexible.</p>
+                        <div class="d-flex flex-wrap mb-3">
+                            <span class="badge badge-gcp">Cloud Storage</span>
+                            <span class="badge badge-gcp">Dataproc</span>
+                            <span class="badge badge-gcp">Data Catalog</span>
+                            <span class="badge badge-gcp">Cloud Composer</span>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#datalakeModal">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Warehouse Architecture -->
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Arquitectura Data Warehouse</h5>
+                        <i class="fas fa-warehouse"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <i class="fas fa-chart-bar architecture-icon"></i>
+                        </div>
+                        <p>Centraliza datos estructurados para análisis empresarial y business intelligence.</p>
+                        <div class="d-flex flex-wrap mb-3">
+                            <span class="badge badge-gcp">BigQuery</span>
+                            <span class="badge badge-gcp">Dataflow</span>
+                            <span class="badge badge-gcp">Dataprep</span>
+                            <span class="badge badge-gcp">Looker</span>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#warehouseModal">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IoT Architecture -->
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Arquitectura IoT</h5>
+                        <i class="fas fa-microchip"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <i class="fas fa-network-wired architecture-icon"></i>
+                        </div>
+                        <p>Captura, procesa y analiza datos de dispositivos IoT a escala masiva.</p>
+                        <div class="d-flex flex-wrap mb-3">
+                            <span class="badge badge-gcp">IoT Core</span>
+                            <span class="badge badge-gcp">Pub/Sub</span>
+                            <span class="badge badge-gcp">Dataflow</span>
+                            <span class="badge badge-gcp">Bigtable</span>
+                            <span class="badge badge-gcp">BigQuery</span>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#iotModal">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ML + Big Data Architecture -->
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp" style="animation-delay: 0.5s;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">ML + Big Data</h5>
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <i class="fas fa-robot architecture-icon"></i>
+                        </div>
+                        <p>Integra procesamiento de big data con capacidades de machine learning a escala.</p>
+                        <div class="d-flex flex-wrap mb-3">
+                            <span class="badge badge-gcp">Vertex AI</span>
+                            <span class="badge badge-gcp">Dataproc</span>
+                            <span class="badge badge-gcp">BigQuery ML</span>
+                            <span class="badge badge-gcp">Kubeflow</span>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#mlModal">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hybrid Architecture -->
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Arquitectura Híbrida</h5>
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <i class="fas fa-project-diagram architecture-icon"></i>
+                        </div>
+                        <p>Combina múltiples enfoques para aprovechar lo mejor de cada arquitectura.</p>
+                        <div class="d-flex flex-wrap mb-3">
+                            <span class="badge badge-gcp">Anthos</span>
+                            <span class="badge badge-gcp">Data Fusion</span>
+                            <span class="badge badge-gcp">BigQuery</span>
+                            <span class="badge badge-gcp">Dataproc</span>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#hybridModal">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Processing Architecture -->
+            <div class="col-md-6 col-lg-4 animate__animated animate__fadeInUp" style="animation-delay: 0.7s;">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0">Procesamiento de Eventos</h5>
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <i class="fas fa-exchange-alt architecture-icon"></i>
+                        </div>
+                        <p>Procesa eventos en tiempo real para respuestas inmediatas y análisis de flujos de datos.</p>
+                        <div class="d-flex flex-wrap mb-3">
+                            <span class="badge badge-gcp">Pub/Sub</span>
+                            <span class="badge badge-gcp">Cloud Functions</span>
+                            <span class="badge badge-gcp">Dataflow</span>
+                            <span class="badge badge-gcp">BigQuery</span>
+                        </div>
+                        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#eventModal">
+                            Ver detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <!-- Lambda Architecture Modal -->
+    <div class="modal fade" id="lambdaModal" tabindex="-1" aria-labelledby="lambdaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="lambdaModalLabel"><i class="fas fa-stream me-2"></i>Arquitectura Lambda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5>Descripción</h5>
+                        <p>La arquitectura Lambda es un paradigma de procesamiento de datos que combina procesamiento por lotes (batch) y en tiempo real (streaming) para manejar grandes volúmenes de datos. Esta arquitectura permite procesar datos históricos completos mientras también proporciona vistas en tiempo real.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Componentes en GCP</h5>
+                        <ul class="component-list">
+                            <li><strong>Cloud Storage</strong>: Almacenamiento de datos sin procesar</li>
+                            <li><strong>BigQuery</strong>: Análisis de datos históricos y capa de serving</li>
+                            <li><strong>Dataproc</strong>: Procesamiento por lotes con Hadoop/Spark</li>
+                            <li><strong>Pub/Sub</strong>: Ingesta de datos en tiempo real</li>
+                            <li><strong>Dataflow</strong>: Procesamiento de streaming</li>
+                            <li><strong>Bigtable</strong>: Almacenamiento de datos de alta velocidad</li>
+                            <li><strong>Data Studio/Looker</strong>: Visualización de datos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Diagrama</h5>
+                        <div class="text-center">
+                            <img src="https://storage.googleapis.com/gweb-cloudblog-publish/images/lambda_architecture.max-1000x1000.png" alt="Diagrama de Arquitectura Lambda" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Implementación</h5>
+                        <p>Comandos para implementar una arquitectura Lambda en GCP:</p>
+                        
+                        <div class="code-block">
+                            # Crear bucket para datos sin procesar<br>
+                            gsutil mb gs://mi-proyecto-lambda-raw-data
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear un tema en Pub/Sub para datos en tiempo real<br>
+                            gcloud pubsub topics create datos-tiempo-real
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear un cluster de Dataproc para procesamiento por lotes<br>
+                            gcloud dataproc clusters create cluster-lambda \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--region=us-central1 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--master-machine-type=n1-standard-4 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--worker-machine-type=n1-standard-4 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--num-workers=2
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear conjunto de datos en BigQuery<br>
+                            bq mk mi_proyecto_lambda
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Casos de uso</h5>
+                        <ul>
+                            <li>Análisis de comportamiento de usuarios en tiempo real y histórico</li>
+                            <li>Monitoreo de infraestructura con alertas inmediatas y análisis de tendencias</li>
+                            <li>Procesamiento de transacciones financieras</li>
+                            <li>Análisis de redes sociales</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kappa Architecture Modal -->
+    <div class="modal fade" id="kappaModal" tabindex="-1" aria-labelledby="kappaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="kappaModalLabel"><i class="fas fa-wind me-2"></i>Arquitectura Kappa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5>Descripción</h5>
+                        <p>La arquitectura Kappa es una simplificación de Lambda que trata todo como streaming, eliminando la necesidad de mantener dos sistemas paralelos. Utiliza un único flujo de procesamiento para todos los datos.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Componentes en GCP</h5>
+                        <ul class="component-list">
+                            <li><strong>Pub/Sub</strong>: Ingesta de datos en tiempo real</li>
+                            <li><strong>Dataflow</strong>: Procesamiento unificado de datos</li>
+                            <li><strong>BigQuery</strong>: Almacenamiento y análisis de datos</li>
+                            <li><strong>Bigtable</strong>: Almacenamiento de datos de alta velocidad</li>
+                            <li><strong>Cloud Storage</strong>: Almacenamiento de datos históricos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Diagrama</h5>
+                        <div class="text-center">
+                            <img src="https://miro.medium.com/max/1400/1*XikztM_lIJHUMdDxRDI1VA.png" alt="Diagrama de Arquitectura Kappa" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Implementación</h5>
+                        <p>Comandos para implementar una arquitectura Kappa en GCP:</p>
+                        
+                        <div class="code-block">
+                            # Crear un tema en Pub/Sub para todos los datos<br>
+                            gcloud pubsub topics create kappa-data-stream
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear conjunto de datos en BigQuery<br>
+                            bq mk kappa_dataset
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear una instancia de Bigtable<br>
+                            gcloud bigtable instances create kappa-instance \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--cluster=kappa-cluster \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--cluster-zone=us-central1-a \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--display-name="Kappa Architecture" \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--instance-type=PRODUCTION
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Casos de uso</h5>
+                        <ul>
+                            <li>Aplicaciones donde la latencia es crítica</li>
+                            <li>Sistemas que requieren una arquitectura más simple</li>
+                            <li>Procesamiento de logs en tiempo real</li>
+                            <li>Monitoreo continuo de aplicaciones</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Lake Architecture Modal -->
+    <div class="modal fade" id="datalakeModal" tabindex="-1" aria-labelledby="datalakeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="datalakeModalLabel"><i class="fas fa-database me-2"></i>Arquitectura Data Lake</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5>Descripción</h5>
+                        <p>Un data lake en GCP permite almacenar datos estructurados y no estructurados en su formato nativo. Proporciona flexibilidad para análisis exploratorio y procesamiento de datos a gran escala.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Componentes en GCP</h5>
+                        <ul class="component-list">
+                            <li><strong>Cloud Storage</strong>: Almacenamiento central del data lake</li>
+                            <li><strong>Cloud Composer (Apache Airflow)</strong>: Orquestación de flujos de trabajo</li>
+                            <li><strong>Dataproc</strong>: Procesamiento con Spark/Hadoop</li>
+                            <li><strong>Dataflow</strong>: Procesamiento de datos en batch y streaming</li>
+                            <li><strong>Data Catalog</strong>: Descubrimiento y gestión de metadatos</li>
+                            <li><strong>BigQuery</strong>: Análisis de datos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Diagrama</h5>
+                        <div class="text-center">
+                            <img src="https://cloud.google.com/architecture/images/data-lake-architecture.svg" alt="Diagrama de Arquitectura Data Lake" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Implementación</h5>
+                        <p>Comandos para implementar un Data Lake en GCP:</p>
+                        
+                        <div class="code-block">
+                            # Crear buckets para las diferentes zonas del data lake<br>
+                            gsutil mb gs://mi-datalake-landing-zone<br>
+                            gsutil mb gs://mi-datalake-raw-zone<br>
+                            gsutil mb gs://mi-datalake-curated-zone<br>
+                            gsutil mb gs://mi-datalake-consumption-zone
+                        </div>
+                        
+                        <div class="code-block">
+                            # Configurar Data Catalog para indexar los datos<br>
+                            gcloud data-catalog tag-templates create datos_raw \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--location=us-central1 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--field=id=source_system,type=string \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--field=id=ingestion_date,type=datetime \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--field=id=data_owner,type=string
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear un entorno de Cloud Composer para orquestación<br>
+                            gcloud composer environments create datalake-orchestrator \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--location us-central1 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--zone us-central1-a \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--machine-type n1-standard-2
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Casos de uso</h5>
+                        <ul>
+                            <li>Almacenamiento centralizado de datos empresariales</li>
+                            <li>Análisis exploratorio de datos</li>
+                            <li>Ciencia de datos y machine learning</li>
+                            <li>Almacenamiento de datos históricos a largo plazo</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Data Warehouse Modal -->
+    <div class="modal fade" id="warehouseModal" tabindex="-1" aria-labelledby="warehouseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="warehouseModalLabel"><i class="fas fa-warehouse me-2"></i>Arquitectura Data Warehouse</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5>Descripción</h5>
+                        <p>Un data warehouse en GCP centraliza datos estructurados para análisis empresarial, reportes y business intelligence. Proporciona un modelo de datos optimizado para consultas analíticas.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Componentes en GCP</h5>
+                        <ul class="component-list">
+                            <li><strong>BigQuery</strong>: Almacén de datos central serverless</li>
+                            <li><strong>Dataflow</strong>: Procesamiento ETL/ELT</li>
+                            <li><strong>Dataprep</strong>: Preparación de datos sin código</li>
+                            <li><strong>Cloud Storage</strong>: Almacenamiento de datos intermedios</li>
+                            <li><strong>Looker/Data Studio</strong>: Visualización y BI</li>
+                            <li><strong>Cloud Scheduler</strong>: Programación de cargas de datos</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Diagrama</h5>
+                        <div class="text-center">
+                            <img src="https://cloud.google.com/architecture/images/bigquery-data-warehouse-architecture.svg" alt="Diagrama de Arquitectura Data Warehouse" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Implementación</h5>
+                        <p>Comandos para implementar un Data Warehouse en GCP:</p>
+                        
+                        <div class="code-block">
+                            # Crear conjunto de datos en BigQuery<br>
+                            bq mk --dataset --location=US mi_proyecto:datawarehouse
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear tabla particionada en BigQuery<br>
+                            bq mk --table \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--time_partitioning_field=fecha \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--schema=id:STRING,fecha:TIMESTAMP,valor:FLOAT \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;mi_proyecto:datawarehouse.tabla_hechos
+                        </div>
+                        
+                        <div class="code-block">
+                            # Configurar una transferencia programada desde Cloud Storage<br>
+                            bq mk --transfer_config \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--project_id=mi_proyecto \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--data_source=google_cloud_storage \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--target_dataset=datawarehouse \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--display_name="Carga diaria" \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--params='{"data_path":"gs://mi-bucket/datos/*.csv","destination_table_name_template":"datos_diarios","file_format":"CSV","max_bad_records":"0","ignore_unknown_values":"true"}'
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Casos de uso</h5>
+                        <ul>
+                            <li>Reportes empresariales y dashboards</li>
+                            <li>Análisis de ventas y marketing</li>
+                            <li>Consolidación de datos de múltiples fuentes</li>
+                            <li>Business Intelligence</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- IoT Architecture Modal -->
+    <div class="modal fade" id="iotModal" tabindex="-1" aria-labelledby="iotModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="iotModalLabel"><i class="fas fa-microchip me-2"></i>Arquitectura IoT</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5>Descripción</h5>
+                        <p>La arquitectura IoT en GCP está diseñada para capturar, procesar y analizar datos de dispositivos IoT a escala. Permite la gestión segura de dispositivos, procesamiento en tiempo real y análisis histórico.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Componentes en GCP</h5>
+                        <ul class="component-list">
+                            <li><strong>Cloud IoT Core</strong>: Gestión de dispositivos y conexiones seguras</li>
+                            <li><strong>Pub/Sub</strong>: Ingesta de mensajes de dispositivos</li>
+                            <li><strong>Dataflow</strong>: Procesamiento de datos en tiempo real</li>
+                            <li><strong>BigQuery</strong>: Análisis de datos históricos</li>
+                            <li><strong>Bigtable</strong>: Almacenamiento de series temporales de alta velocidad</li>
+                            <li><strong>Cloud Functions</strong>: Respuestas en tiempo real a eventos</li>
+                            <li><strong>Looker/Data Studio</strong>: Visualización y dashboards</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Diagrama</h5>
+                        <div class="text-center">
+                            <img src="https://cloud.google.com/architecture/images/stream-analytics-pipeline-architecture.svg" alt="Diagrama de Arquitectura IoT" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Implementación</h5>
+                        <p>Comandos para implementar una arquitectura IoT en GCP:</p>
+                        
+                        <div class="code-block">
+                            # Crear un registro de dispositivos IoT<br>
+                            gcloud iot registries create mi-registro-iot \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--project=mi-proyecto \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--region=us-central1 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--event-notification-config=topic=projects/mi-proyecto/topics/telemetria-iot
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear un tema Pub/Sub para telemetría<br>
+                            gcloud pubsub topics create telemetria-iot
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear una tabla en BigQuery para datos de telemetría<br>
+                            bq mk --table \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;mi-proyecto:iot_dataset.telemetria \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;device_id:STRING,timestamp:TIMESTAMP,temperatura:FLOAT,humedad:FLOAT
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear una instancia de Bigtable para datos de alta frecuencia<br>
+                            gcloud bigtable instances create iot-timeseries \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--cluster=iot-cluster \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--cluster-zone=us-central1-a \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--display-name="IoT Time Series Data" \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--instance-type=PRODUCTION
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Casos de uso</h5>
+                        <ul>
+                            <li>Smart Cities y monitoreo urbano</li>
+                            <li>Monitoreo industrial y mantenimiento predictivo</li>
+                            <li>Agricultura inteligente</li>
+                            <li>Gestión de flotas y logística</li>
+                            <li>Domótica y edificios inteligentes</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ML + Big Data Architecture Modal -->
+    <div class="modal fade" id="mlModal" tabindex="-1" aria-labelledby="mlModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="mlModalLabel"><i class="fas fa-brain me-2"></i>Arquitectura ML + Big Data</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5>Descripción</h5>
+                        <p>Esta arquitectura integra el procesamiento de big data con capacidades de machine learning para crear sistemas inteligentes a escala. Permite entrenar modelos con grandes volúmenes de datos y desplegarlos en producción.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Componentes en GCP</h5>
+                        <ul class="component-list">
+                            <li><strong>Dataproc</strong>: Procesamiento distribuido con Spark ML</li>
+                            <li><strong>Vertex AI</strong>: Entrenamiento y despliegue de modelos ML</li>
+                            <li><strong>BigQuery ML</strong>: ML directamente en el data warehouse</li>
+                            <li><strong>Cloud Storage</strong>: Almacenamiento de datasets y modelos</li>
+                            <li><strong>Dataflow</strong>: Preprocesamiento de datos y feature engineering</li>
+                            <li><strong>Kubeflow</strong>: Orquestación de flujos de trabajo ML</li>
+                            <li><strong>TensorFlow Enterprise</strong>: Framework optimizado para GCP</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Diagrama</h5>
+                        <div class="text-center">
+                            <img src="https://cloud.google.com/architecture/images/mlops-continuous-delivery-and-automation-pipelines-in-machine-learning-1-ml-automation-ci.svg" alt="Diagrama de Arquitectura ML + Big Data" class="img-fluid rounded">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Implementación</h5>
+                        <p>Comandos para implementar una arquitectura ML + Big Data en GCP:</p>
+                        
+                        <div class="code-block">
+                            # Crear un bucket para datasets y modelos<br>
+                            gsutil mb gs://mi-proyecto-ml-assets
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear un conjunto de datos en BigQuery para entrenamiento<br>
+                            bq mk ml_dataset
+                        </div>
+                        
+                        <div class="code-block">
+                            # Crear un cluster de Dataproc con componentes ML<br>
+                            gcloud dataproc clusters create ml-cluster \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--region=us-central1 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--master-machine-type=n1-standard-8 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--worker-machine-type=n1-standard-8 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--image-version=2.0-debian10 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--optional-components=ANACONDA,JUPYTER \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--num-workers=4
+                        </div>
+                        
+                        <div class="code-block">
+                            # Configurar un notebook en AI Platform<br>
+                            gcloud ai-platform notebooks instances create ml-notebook \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--vm-image-project=deeplearning-platform-release \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--vm-image-family=tf-2-3-cpu \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--machine-type=n1-standard-8 \<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;--location=us-central1-a
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Casos de uso</h5>
+                        <ul>
+                            <li>Sistemas de recomendación a gran escala</li>
+                            <li>Detección de fraude en tiempo real</li>
+                            <li>Análisis predictivo de mantenimiento</li>
+                            <li>Segmentación de clientes y personalización</li>
+                            <li>Procesamiento de lenguaje natural a gran escala</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hybrid Architecture Modal -->
+    <div class="modal fade" id="hybridModal" tabindex="-1" aria-labelledby="hybridModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="hybridModalLabel"><i class="fas fa-code-branch me-2"></i>Arquitectura Híbrida</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <h5>Descripción</h5>
+                        <p>La arquitectura híbrida combina múltiples enfoques para aprovechar lo mejor de cada arquitectura. Permite integrar sistemas on-premise con la nube y utilizar diferentes patrones según las necesidades específicas.</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Componentes en GCP</h5>
+                        <ul class="component-list">
+                            <li><strong>Anthos</strong>: Para gestionar cargas de trabajo híbridas y multi-cloud</li
+                                <li><strong>Anthos</strong>: Para gestionar cargas de trabajo híbridas y multi-cloud</li>
+                                <li><strong>Cloud Storage + Dataproc</strong>: Para data lake</li>
+                                <li><strong>BigQuery</strong>: Para data warehouse</li>
+                                <li><strong>Pub/Sub + Dataflow</strong>: Para procesamiento en tiempo real</li>
+                                <li><strong>Vertex AI</strong>: Para capacidades de ML</li>
+                                <li><strong>Data Fusion</strong>: Para integración de datos sin código</li>
+                                <li><strong>Cloud Interconnect/VPN</strong>: Para conectividad híbrida</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Diagrama</h5>
+                            <div class="text-center">
+                                <img src="https://cloud.google.com/architecture/images/hybrid-and-multi-cloud-patterns-and-practices.svg" alt="Diagrama de Arquitectura Híbrida" class="img-fluid rounded">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Implementación</h5>
+                            <p>Comandos para implementar una arquitectura híbrida en GCP:</p>
+                            
+                            <div class="code-block">
+                                # Crear un proyecto de Anthos para gestión híbrida<br>
+                                gcloud beta container hub memberships register hybrid-cluster \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--context=hybrid-cluster-context \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--service-account-key-file=key.json
+                            </div>
+                            
+                            <div class="code-block">
+                                # Configurar Data Fusion para integración de datos<br>
+                                gcloud data-fusion instances create hybrid-integration \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--location=us-central1 \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--edition=ENTERPRISE
+                            </div>
+                            
+                            <div class="code-block">
+                                # Configurar Cloud VPN para conectividad híbrida<br>
+                                gcloud compute vpn-gateways create hybrid-gateway \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--network=default \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--region=us-central1
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Casos de uso</h5>
+                            <ul>
+                                <li>Empresas con infraestructura on-premise existente</li>
+                                <li>Migración gradual a la nube</li>
+                                <li>Cumplimiento de requisitos de residencia de datos</li>
+                                <li>Procesamiento distribuido entre entornos</li>
+                                <li>Estrategias multi-cloud</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Event Processing Architecture Modal -->
+        <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="eventModalLabel"><i class="fas fa-bolt me-2"></i>Arquitectura de Procesamiento de Eventos</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-4">
+                            <h5>Descripción</h5>
+                            <p>La arquitectura de procesamiento de eventos está diseñada para capturar, procesar y responder a eventos en tiempo real. Permite reaccionar rápidamente a cambios y generar insights inmediatos.</p>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Componentes en GCP</h5>
+                            <ul class="component-list">
+                                <li><strong>Pub/Sub</strong>: Sistema de mensajería para eventos</li>
+                                <li><strong>Cloud Functions</strong>: Procesamiento sin servidor basado en eventos</li>
+                                <li><strong>Dataflow</strong>: Procesamiento de eventos complejos</li>
+                                <li><strong>BigQuery</strong>: Análisis de eventos históricos</li>
+                                <li><strong>Cloud Run</strong>: Servicios containerizados para procesamiento de eventos</li>
+                                <li><strong>Firestore</strong>: Almacenamiento de estado de eventos</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Diagrama</h5>
+                            <div class="text-center">
+                                <img src="https://cloud.google.com/architecture/images/event-driven-microservice-patterns-gcp.svg" alt="Diagrama de Arquitectura de Procesamiento de Eventos" class="img-fluid rounded">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Implementación</h5>
+                            <p>Comandos para implementar una arquitectura de procesamiento de eventos en GCP:</p>
+                            
+                            <div class="code-block">
+                                # Crear un tema Pub/Sub para eventos<br>
+                                gcloud pubsub topics create eventos-sistema
+                            </div>
+                            
+                            <div class="code-block">
+                                # Crear una suscripción para procesar eventos<br>
+                                gcloud pubsub subscriptions create procesar-eventos \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--topic=eventos-sistema
+                            </div>
+                            
+                            <div class="code-block">
+                                # Desplegar una Cloud Function que responda a eventos<br>
+                                gcloud functions deploy procesador-eventos \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--runtime=nodejs14 \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--trigger-topic=eventos-sistema \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--entry-point=procesarEvento
+                            </div>
+                            
+                            <div class="code-block">
+                                # Crear una base de datos Firestore para estado<br>
+                                gcloud firestore databases create \<br>
+                                &nbsp;&nbsp;&nbsp;&nbsp;--region=us-central
+                            </div>
+                        </div>
+                        
+                        <div class="mb-4">
+                            <h5>Casos de uso</h5>
+                            <ul>
+                                <li>Monitoreo de aplicaciones en tiempo real</li>
+                                <li>Procesamiento de transacciones financieras</li>
+                                <li>Sistemas de notificación</li>
+                                <li>Automatización de flujos de trabajo</li>
+                                <li>Detección de anomalías en tiempo real</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Comparativa Section -->
+        <div class="container mt-5">
+            <h2 class="text-center mb-4 animate__animated animate__fadeIn">Comparativa de Arquitecturas</h2>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Arquitectura</th>
+                            <th>Complejidad</th>
+                            <th>Latencia</th>
+                            <th>Escalabilidad</th>
+                            <th>Casos de uso ideales</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Lambda</strong></td>
+                            <td>Alta</td>
+                            <td>Baja-Media</td>
+                            <td>Muy alta</td>
+                            <td>Análisis en tiempo real con histórico completo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kappa</strong></td>
+                            <td>Media</td>
+                            <td>Baja</td>
+                            <td>Alta</td>
+                            <td>Procesamiento de streams simplificado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Lake</strong></td>
+                            <td>Media-Alta</td>
+                            <td>Media-Alta</td>
+                            <td>Muy alta</td>
+                            <td>Almacenamiento flexible y análisis exploratorio</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data Warehouse</strong></td>
+                            <td>Media</td>
+                            <td>Media</td>
+                            <td>Alta</td>
+                            <td>Análisis estructurado y reportes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>IoT</strong></td>
+                            <td>Alta</td>
+                            <td>Muy baja</td>
+                            <td>Muy alta</td>
+                            <td>Procesamiento de datos de dispositivos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>ML + Big Data</strong></td>
+                            <td>Muy alta</td>
+                            <td>Variable</td>
+                            <td>Alta</td>
+                            <td>Análisis predictivo y sistemas inteligentes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Híbrida</strong></td>
+                            <td>Muy alta</td>
+                            <td>Variable</td>
+                            <td>Alta</td>
+                            <td>Entornos mixtos on-premise y cloud</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Procesamiento de Eventos</strong></td>
+                            <td>Media</td>
+                            <td>Muy baja</td>
+                            <td>Alta</td>
+                            <td>Sistemas reactivos y tiempo real</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <!-- Decision Tree Section -->
+        <div class="container mt-5 mb-5">
+            <h2 class="text-center mb-4 animate__animated animate__fadeIn">¿Cómo elegir la arquitectura adecuada?</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Factores a considerar</h5>
+                            <ul>
+                                <li><strong>Volumen de datos</strong>: ¿Cuántos datos necesitas procesar?</li>
+                                <li><strong>Velocidad</strong>: ¿Necesitas procesamiento en tiempo real?</li>
+                                <li><strong>Variedad</strong>: ¿Qué tipos de datos manejarás?</li>
+                                <li><strong>Requisitos de latencia</strong>: ¿Qué tan rápido necesitas los resultados?</li>
+                                <li><strong>Presupuesto</strong>: Las diferentes arquitecturas tienen diferentes costos</li>
+                                <li><strong>Infraestructura existente</strong>: ¿Necesitas integración con sistemas on-premise?</li>
+                                <li><strong>Capacidades analíticas</strong>: ¿Necesitas ML, análisis en tiempo real, o ambos?</li>
+                            </ul>
+                            
+                            <div class="text-center mt-4">
+                                <img src="https://cloud.google.com/architecture/images/choose-storage-for-analytics-decision-tree.svg" alt="Árbol de decisión para arquitecturas de Big Data" class="img-fluid rounded">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Arquitecturas de Big Data en GCP</h5>
+                        <p>Una guía completa para implementar soluciones de Big Data en Google Cloud Platform.</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Enlaces útiles</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="https://cloud.google.com/architecture" class="text-white">Arquitecturas de referencia GCP</a></li>
+                            <li><a href="https://cloud.google.com/products/big-data" class="text-white">Productos Big Data GCP</a></li>
+                            <li><a href="https://cloud.google.com/docs" class="text-white">Documentación GCP</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3">
+                        <h5>Recursos</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="https://cloud.google.com/training" class="text-white">Formación en GCP</a></li>
+                            <li><a href="https://cloud.google.com/blog/topics/big-data" class="text-white">Blog de Big Data</a></li>
+                            <li><a href="https://cloud.google.com/certification" class="text-white">Certificaciones</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <hr class="bg-light">
+                <div class="text-center">
+                    <p>&copy; 2023 Arquitecturas de Big Data en GCP</p>
+                </div>
+            </div>
+        </footer>
+    
+        <!-- Bootstrap Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script>
+            // Inicializar tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+                return new bootstrap.Tooltip(tooltipTriggerEl)
+            });
+                    // Animación para cards al hacer scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            // Función para verificar si un elemento está en el viewport
+            function isInViewport(element) {
+                const rect = element.getBoundingClientRect();
+                return (
+                    rect.top >= 0 &&
+                    rect.left >= 0 &&
+                    rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                    rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                );
+            }
+            
+            // Función para animar elementos cuando aparecen en la pantalla
+            function animateOnScroll() {
+                const cards = document.querySelectorAll('.card');
+                cards.forEach(card => {
+                    if (isInViewport(card) && !card.classList.contains('animate__animated')) {
+                        card.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            }
+            
+            // Ejecutar al cargar y al hacer scroll
+            animateOnScroll();
+            window.addEventListener('scroll', animateOnScroll);
+        });
+    </script>
+</body>
+</html>
+
+    

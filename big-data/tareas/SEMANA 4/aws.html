@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Análisis Detallado de Arquitectura AWS - DiosPablo S.A.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .service-section {
+            margin-bottom: 40px;
+            padding: 25px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .service-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .service-icon {
+            width: 48px;
+            height: 48px;
+        }
+        .use-case {
+            background-color: #e1f5fe;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .benefits {
+            background-color: #e8f5e9;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .implementation {
+            background-color: #fff3e0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        h3 {
+            color: #232F3E;
+            border-bottom: 2px solid #FF9900;
+            padding-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Análisis Detallado de Arquitectura AWS para DiosPablo S.A.</h1>
+
+        <!-- Capa de Seguridad y Distribución Global -->
+        <div class="service-section">
+            <h2>1. Capa de Seguridad y Distribución Global</h2>
+
+            <div class="service-header">
+                <img src="https://icons.terrastruct.com/aws%2FNetworking%20&%20Content%20Delivery%2FAmazon-Route-53_light-bg.svg" class="service-icon" alt="Route 53">
+                <h3>Amazon Route 53</h3>
+            </div>
+
+            <div class="use-case">
+                <h4>Uso en DiosPablo S.A.:</h4>
+                <p>Route 53 gestionará el dominio "diospablo.com" y dirigirá el tráfico de manera inteligente:</p>
+                <ul>
+                    <li>Durante eventos de ventas especiales, distribuirá automáticamente las solicitudes entre las regiones us-east-1 y us-west-2</li>
+                    <li>Monitoreará constantemente la salud de los servidores web</li>
+                    <li>Redirigirá el tráfico a la región secundaria en caso de fallos</li>
+                </ul>
+            </div>
+
+            <div class="implementation">
+                <h4>Implementación Específica:</h4>
+                <ul>
+                    <li>Configuración de políticas de failover:
+                        <ul>
+                            <li>Primario: Región us-east-1</li>
+                            <li>Secundario: Región us-west-2</li>
+                            <li>Tiempo de verificación: cada 30 segundos</li>
+                        </ul>
+                    </li>
+                    <li>Registros DNS:
+                        <ul>
+                            <li>www.diospablo.com → CloudFront</li>
+                            <li>api.diospablo.com → API Gateway</li>
+                            <li>admin.diospablo.com → Panel administrativo</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="service-header">
+                <img src="https://icons.terrastruct.com/aws%2FNetworking%20&%20Content%20Delivery%2FAmazon-CloudFront_light-bg.svg" class="service-icon" alt="CloudFront">
+                <h3>Amazon CloudFront</h3>
+            </div>
+
+            <div class="use-case">
+                <h4>Uso en DiosPablo S.A.:</h4>
+                <p>CloudFront actuará como la primera línea de defensa y optimización:</p>
+                <ul>
+                    <li>Almacenará en caché las imágenes de productos, CSS, JavaScript y otros recursos estáticos</li>
+                    <li>Reducirá la latencia para clientes en diferentes ubicaciones geográficas</li>
+                    <li>Protegerá contra ataques DDoS en conjunto con AWS Shield</li>
+                </ul>
+            </div>
+
+            <div class="implementation">
+                <h4>Configuración Específica:</h4>
+                <ul>
+                    <li>Distribución principal:
+                        <ul>
+                            <li>Origen: S3 bucket para contenido estático</li>
+                            <li>Tiempo de caché: 24 horas para imágenes, 1 hora para CSS/JS</li>
+                            <li>SSL/TLS: Certificado ACM con renovación automática</li>
+                        </ul>
+                    </li>
+                    <li>Optimizaciones:
+                        <ul>
+                            <li>Compresión Gzip/Brotli habilitada</li>
+                            <li>HTTP/2 y HTTP/3 activados</li>
+                            <li>Origin Shield en us-east-1</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Región Primaria -->
+        <div class="service-section">
+            <h2>2. Región Primaria (us-east-1)</h2>
+
+            <div class="service-header">
+                <img src="https://icons.terrastruct.com/aws%2FCompute%2FAmazon-EC2_light-bg.svg" class="service-icon" alt="EC2">
+                <h3>Auto Scaling Groups con EC2</h3>
+            </div>
+
+            <div class="use-case">
+                <h4>Aplicación en DiosPablo:</h4>
+                <p>Los servidores web y de aplicación se ejecutarán en instancias EC2:</p>
+                <ul>
+                    <li>Servidor Web: Nginx para servir la aplicación de e-commerce</li>
+                    <li>Servidor de Aplicación: Node.js/Java para la lógica de negocio</li>
+                    <li>Procesamiento de Pagos: Servidor dedicado PCI-compliant</li>
+                </ul>
+            </div>
+
+            <div class="implementation">
+                <h4>Configuración del Auto Scaling:</h4>
+                <ul>
+                    <li>Grupos de Auto Scaling:
+                        <ul>
+                            <li>Mínimo: 4 instancias</li>
+                            <li>Deseado: 6 instancias</li>
+                            <li>Máximo: 12 instancias</li>
+                        </ul>
+                    </li>
+                    <li>Políticas de escalado:
+                        <ul>
+                            <li>CPU > 70% por 5 minutos: añadir 2 instancias</li>
+                            <li>CPU < 30% por 15 minutos: remover 1 instancia</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="service-header">
+                <img src="https://icons.terrastruct.com/aws%2FDatabase%2FAmazon-RDS_light-bg.svg" class="service-icon" alt="RDS">
+                <h3>Amazon RDS Multi-AZ</h3>
+            </div>
+
+            <div class="use-case">
+                <h4>Base de Datos para DiosPablo:</h4>
+                <p>RDS gestionará todas las bases de datos críticas:</p>
+                <ul>
+                    <li>Catálogo de productos</li>
+                    <li>Información de clientes</li>
+                    <li>Historial de pedidos</li>
+                    <li>Inventario en tiempo real</li>
+                </ul>
+            </div>
+
+            <div class="implementation">
+                <h4>Especificaciones de RDS:</h4>
+                <ul>
+                    <li>Instancia principal:
+                        <ul>
+                            <li>Clase: db.r5.2xlarge</li>
+                            <li>Motor: PostgreSQL 13</li>
+                            <li>Storage: 1TB gp3</li>
+                        </ul>
+                    </li>
+                    <li>Configuración Multi-AZ:
+                        <ul>
+                            <li>Réplica síncrona en AZ diferente</li>
+                            <li>Backup automático cada 6 horas</li>
+                            <li>Retención de backups: 35 días</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Continúa con más servicios... -->
+         <!-- Servicios de Caché y Rendimiento -->
+        <div class="service-section">
+            <h2>3. Servicios de Caché y Rendimiento</h2>
+
+            <div class="service-header">
+                <img src="https://icons.terrastruct.com/aws%2FDatabase%2FAmazon-ElastiCache_light-bg.svg" class="service-icon" alt="ElastiCache">
+                <h3>Amazon ElastiCache</h3>
+            </div>
+
+            <div class="use-case">
+                <h4>Implementación en DiosPablo:</h4>
+                <p>ElastiCache mejorará el rendimiento de:</p>
+                <ul>
+                    <li>Sesiones de usuario</li>
+                    <li>Caché de productos más vistos</li>
+                    <li>Resultados de búsqueda frecuentes</li>
+                    <li>Carrito de compras temporal</li>
+                </ul>
+            </div>
+
+            <div class="implementation">
+                <h4>Configuración de ElastiCache:</h4>
+                <ul>
+                    <li>Cluster Redis:
+                        <ul>
+                            <li>Nodo principal: cache.r6g.xlarge</li>
+                            <li>2 réplicas de lectura</li>
+                            <li>Encryption at-rest activado</li>
+                            <li>Backup automático diario</li>
+                        </ul>
+                    </li>
+                    <li>Políticas de caché:
+                        <ul>
+                            <li>TTL productos: 1 hora</li>
+                            <li>TTL sesiones: 24 horas</li>
+                            <li>TTL búsquedas: 15 minutos</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Región Secundaria -->
+            <div class="service-section">
+                <h2>4. Región Secundaria (us-west-2)</h2>
+
+                <div class="service-header">
+                    <img src="https://icons.terrastruct.com/aws%2FDatabase%2FAmazon-RDS_light-bg.svg" class="service-icon" alt="RDS Read Replicas">
+                    <h3>RDS Read Replicas</h3>
+                </div>
+
+                <div class="use-case">
+                    <h4>Estrategia de Replicación:</h4>
+                    <p>Réplicas de lectura para:</p>
+                    <ul>
+                        <li>Consultas del catálogo de productos</li>
+                        <li>Reportes y análisis</li>
+                        <li>Backup geográfico</li>
+                        <li>Failover regional</li>
+                    </ul>
+                </div>
+
+                <div class="implementation">
+                    <h4>Configuración de Réplicas:</h4>
+                    <ul>
+                        <li>Especificaciones:
+                            <ul>
+                                <li>2 réplicas de lectura</li>
+                                <li>Clase: db.r5.xlarge</li>
+                                <li>Lag máximo permitido: 100ms</li>
+                            </ul>
+                        </li>
+                        <li>Monitoreo:
+                            <ul>
+                                <li>Métricas de replicación</li>
+                                <li>Alertas de lag</li>
+                                <li>Estado de sincronización</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Servicios de Monitoreo -->
+                <div class="service-section">
+                    <h2>5. Servicios de Monitoreo y Observabilidad</h2>
+
+                    <div class="service-header">
+                        <img src="https://icons.terrastruct.com/aws%2FManagement%20&%20Governance%2FAWS-CloudWatch_light-bg.svg" class="service-icon" alt="CloudWatch">
+                        <h3>Amazon CloudWatch</h3>
+                    </div>
+
+                    <div class="use-case">
+                        <h4>Monitoreo para DiosPablo:</h4>
+                        <p>Sistema integral de monitoreo para:</p>
+                        <ul>
+                            <li>Rendimiento de la plataforma e-commerce</li>
+                            <li>Métricas de transacciones</li>
+                            <li>Disponibilidad de servicios</li>
+                            <li>Experiencia del usuario</li>
+                        </ul>
+                    </div>
+
+                    <div class="implementation">
+                        <h4>Configuración de Monitoreo:</h4>
+                        <ul>
+                            <li>Dashboards personalizados:
+                                <ul>
+                                    <li>Panel de ventas en tiempo real</li>
+                                    <li>Métricas de rendimiento</li>
+                                    <li>Estado de servicios</li>
+                                </ul>
+                            </li>
+                            <li>Alertas configuradas:
+                                <ul>
+                                    <li>Error rate > 1%</li>
+                                    <li>Latencia > 500ms</li>
+                                    <li>CPU > 80%</li>
+                                    <li>Memory > 85%</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Seguridad y Cumplimiento -->
+                    <div class="service-section">
+                        <h2>6. Seguridad y Cumplimiento</h2>
+
+                        <div class="service-header">
+                            <img src="https://icons.terrastruct.com/aws%2FSecurity%2FAWS-KMS_light-bg.svg" class="service-icon" alt="KMS">
+                            <h3>AWS KMS y Servicios de Seguridad</h3>
+                        </div>
+
+                        <div class="use-case">
+                            <h4>Seguridad para DiosPablo:</h4>
+                            <p>Protección integral de datos sensibles:</p>
+                            <ul>
+                                <li>Datos de tarjetas de crédito</li>
+                                <li>Información personal de clientes</li>
+                                <li>Credenciales del sistema</li>
+                                <li>Datos de transacciones</li>
+                            </ul>
+                        </div>
+
+                        <div class="implementation">
+                            <h4>Implementación de Seguridad:</h4>
+                            <ul>
+                                <li>KMS:
+                                    <ul>
+                                        <li>Rotación automática de claves</li>
+                                        <li>Encriptación en reposo</li>
+                                        <li>Gestión de claves por servicio</li>
+                                    </ul>
+                                </li>
+                                <li>WAF:
+                                    <ul>
+                                        <li>Reglas anti-SQL injection</li>
+                                        <li>Protección contra XSS</li>
+                                        <li>Rate limiting</li>
+                                        <li>Geoblocking según necesidad</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
