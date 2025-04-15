@@ -1,0 +1,17 @@
+ID Tarea;ID Tarea Predecesora;Tipo;Retraso
+3;2;FC;0
+4;3;FC;0
+5;4;FC;0
+6;5;FC;0
+8;6;FC;0
+9;8;FC;0
+10;9;FC;0
+12;10;FC;0
+13;12;FC;0
+15;13;FC;0
+16;15;FC;0
+18;16;FC;0
+19;18;FC;0
+21;19;FC;0
+22;21;FC;0
+23;22;FC;0
