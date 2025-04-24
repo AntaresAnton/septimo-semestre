@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resumen de Gestión de Riesgos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@300;400;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #fff;
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .document-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            background-color: #fff;
+        }
+        
+        .document-title {
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+        
+        .document-subtitle {
+            font-family: 'Open Sans', sans-serif;
+            font-weight: 300;
+            color: #7f8c8d;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+            page-break-inside: avoid;
+        }
+        
+        h2 {
+            font-family: 'Merriweather', serif;
+            color: #2c3e50;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+        
+        h3 {
+            font-family: 'Merriweather', serif;
+            color: #34495e;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+            page-break-inside: avoid;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #e0e0e0;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+        
+        .list-group-item {
+            border-color: #e0e0e0;
+        }
+        
+        .alert {
+            border-radius: 8px;
+            border: none;
+        }
+        
+        .alert-info {
+            background-color: #e8f4f8;
+            color: #0c5460;
+        }
+        
+        .alert-warning {
+            background-color: #fff8e6;
+            color: #856404;
+        }
+        
+        .icon-title {
+            color: #3498db;
+            margin-right: 0.5rem;
+        }
+        
+        footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e0e0e0;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        @media print {
+            body {
+                font-size: 12pt;
+            }
+            
+            .document-container {
+                padding: 0;
+                max-width: 100%;
+            }
+            
+            .card {
+                box-shadow: none;
+                border: 1px solid #e0e0e0;
+            }
+            
+            a {
+                text-decoration: none !important;
+                color: #333 !important;
+            }
+            
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <h1 class="document-title">Gestión de Riesgos en Proyectos</h1>
+        <p class="document-subtitle">Resumen de conceptos clave y metodologías para la identificación, análisis y control de riesgos</p>
+
+        <div class="section">
+            <h2><i class="fas fa-question-circle icon-title"></i>Definición de Riesgo</h2>
+            <p>Un riesgo, en el contexto de un proyecto, es un evento o condición incierta que, si se produce, tiene un efecto positivo o negativo en uno o más de los objetivos del proyecto.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Riesgos Negativos (Amenazas)</div>
+                        <div class="card-body">
+                            <p>Son aquellos que podrían impactar de manera negativa algún objetivo del proyecto. La acción principal es minimizarlos.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Riesgos Positivos (Oportunidades)</div>
+                        <div class="card-body">
+                            <p>Son aquellos que podrían impactar de manera positiva algún objetivo del proyecto. La acción principal es maximizarlos.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mt-4">
+                <i class="fas fa-info-circle me-2"></i> La causa del riesgo es la situación que lo introduce, es decir, lo que produce el riesgo o cuál es su fuente.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-tasks icon-title"></i>Proceso de Administración de Riesgos</h2>
+            <p>La gestión de riesgos sigue un proceso estructurado de siete pasos fundamentales:</p>
+            
+            <div class="card mt-3">
+                <div class="card-body p-0">
+                    <ol class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            <strong>Establecer el contexto</strong>
+                            <p class="mb-0">Identificar el contexto en el cual se encuentra el proyecto, estableciendo criterios de evaluación y la estructura de análisis.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Identificar Riesgos</strong>
+                            <p class="mb-0">Conocer todos aquellos riesgos que puedan impactar de manera positiva o negativa al proyecto y/o a la organización.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Analizar Riesgos</strong>
+                            <p class="mb-0">Generar un análisis de cada riesgo para conocer el nivel de afectación que tendría en el proyecto.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Evaluar Riesgos</strong>
+                            <p class="mb-0">Comparar el riesgo estimado contra criterios predeterminados, estableciendo un ranking de priorización.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Tratar Riesgos</strong>
+                            <p class="mb-0">Seleccionar e implementar opciones apropiadas para manejar el riesgo (evitar, reducir, compartir o aceptar).</p>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Comunicar y Consultar</strong>
+                            <p class="mb-0">Comunicar, informar y consultar a los interesados internos y externos en cada etapa del proceso.</p>
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Monitorear y Revisar</strong>
+                            <p class="mb-0">Definir y utilizar mecanismos para monitorear y revisar el desempeño del proceso de gestión de riesgos.</p>
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-sitemap icon-title"></i>Estructuras de Desglose</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <h3>Estructura de Desglose de Trabajo (EDT/WBS)</h3>
+                    <p>La Estructura de Desglose de Trabajo consiste en la descomposición del producto resultante del proyecto en paquetes de trabajo individuales. Esta descomposición se realiza de manera jerárquica.</p>
+                    
+                    <ul class="list-group mt-3">
+                        <li class="list-group-item">Es un documento del proceso de planificación</li>
+                        <li class="list-group-item">Es creado por el equipo del proyecto</li>
+                        <li class="list-group-item">Permite subdividir el trabajo en porciones más pequeñas</li>
+                        <li class="list-group-item">Ayuda a conocer los entregables en cada etapa</li>
+                        <li class="list-group-item">Facilita la identificación detallada de riesgos</li>
+                    </ul>
+                </div>
+                
+                <div class="col-md-6">
+                    <h3>Estructura de Desglose de Riesgos (RBS)</h3>
+                    <p>Es una estructura similar al WBS, pero su función es agrupar u organizar distintas fuentes de riesgos, generando una categorización de ellas.</p>
+                    
+                    <div class="alert alert-warning mt-3">
+                        <i class="fas fa-exclamation-triangle me-2"></i> Para cada proyecto se debe crear su propio RBS, debido a que no todos tienen las mismas características o recursos.
+                    </div>
+                    
+                    <ul class="list-group mt-3">
+                        <li class="list-group-item">Identifica y clasifica las fuentes de riesgos</li>
+                        <li class="list-group-item">Establece un orden en la identificación</li>
+                        <li class="list-group-item">Facilita la organización por categorías</li>
+                        <li class="list-group-item">Permite una visión estructurada de los riesgos</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-chart-bar icon-title"></i>Carta Gantt</h2>
+            <p>Un cronograma es el listado de tareas ordenadas de manera cronológica, necesarias para el logro de un objetivo o realización de un proyecto. La Carta Gantt es una representación gráfica de estas actividades que permite conocer lo que se deberá hacer y saber el estado actual de las actividades para hacer seguimiento de ellas.</p>
+            
+            <h3>Cómo realizar una Carta Gantt</h3>
+            <div class="card mt-3">
+                <div class="card-body p-0">
+                    <ol class="list-group list-group-flush">
+                        <li class="list-group-item">Identificar todas las tareas necesarias para completar el proyecto</li>
+                        <li class="list-group-item">Establecer la duración de cada tarea</li>
+                        <li class="list-group-item">Determinar las dependencias entre tareas (qué debe completarse antes de iniciar otra)</li>
+                        <li class="list-group-item">Asignar recursos a cada tarea</li>
+                        <li class="list-group-item">Establecer fechas de inicio y fin para cada tarea</li>
+                        <li class="list-group-item">Representar gráficamente las tareas en una línea de tiempo</li>
+                        <li class="list-group-item">Actualizar el diagrama a medida que avanza el proyecto</li>
+                    </ol>
+                </div>
+            </div>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Diagrama de Gantt</div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li>Diagrama de barras</li>
+                                <li>Muy conveniente para proyectos en curso</li>
+                                <li>Muestra la duración de las tareas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Diagrama PERT</div>
+                        <div class="card-body">
+                            <ul class="mb-0">
+                                <li>Diagrama de red</li>
+                                <li>Muy conveniente para la etapa de planificación</li>
+                                <li>Proporciona fechas límites para cada actividad</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-info mt-4">
+                <i class="fas fa-lightbulb me-2"></i> Herramientas para crear diagramas de Gantt: Microsoft Project, GanttProject (gratis) y otras aplicaciones en línea.
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-chart-line icon-title"></i>Análisis de Riesgos</h2>
+            <p>Después de identificar los riesgos, es importante realizar un análisis para conocer cómo será su impacto en el proyecto. Este análisis se puede realizar de dos maneras:</p>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">Análisis Cualitativo</div>
+                        <div class="card-body">
+                            <p>Implica analizar los riesgos evaluando la probabilidad de que ocurran y el impacto de ellos.</p>
+                            <ul class="mb-0">
+                                <li>Es subjetivo</li>
+                                <li>Prioriza los riesgos de manera individual</li>
+                                <li>Es rápido de desarrollar</li>
+                                <li>Se puede utilizar en todo tipo de proyectos</li>
+                                <li>Se evalúan en base a su probabilidad e impacto</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-header">Análisis Cuantitativo</div>
+                        <div class="card-body">
+                            <p>Se basa en modelos matemáticos, midiendo la manera en que un riesgo puede afectar los objetivos de un proyecto.</p>
+                            <h6>Métodos principales:</h6>
+                            <ul class="mb-0">
+                                <li><strong>Simulación de Monte Carlo:</strong> Genera valores de entrada al azar para simular posibles resultados</li>
+                                <li><strong>Estimación PERT:</strong> Utiliza tres valores (optimista, más probable y pesimista) para estimar duración o costo</li>
+                                <li><strong>Árbol de decisión:</strong> Representa situaciones con varios escenarios para elegir la mejor alternativa</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-reply icon-title"></i>Estrategias de Respuesta a Riesgos</h2>
+            <p>Una vez identificados y analizados los riesgos, se deben establecer estrategias para responder a ellos:</p>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Para Riesgos Negativos (Amenazas)</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Evitar:</strong>
+                                <p class="mb-0">Busca que el riesgo no suceda. Puede requerir inversión de recursos.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Transferir:</strong>
+                                <p class="mb-0">Transfiere la responsabilidad de la gestión a otro. No elimina el riesgo, solo lo transfiere.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Mitigar:</strong>
+                                <p class="mb-0">Busca bajar la probabilidad de que un riesgo ocurra y/o bajar su impacto.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Aceptar:</strong>
+                                <p class="mb-0">Se utiliza cuando no hay estrategia válida o el riesgo es muy bajo. Puede requerir reserva de contingencia.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Para Riesgos Positivos (Oportunidades)</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">
+                                <strong>Explotar:</strong>
+                                <p class="mb-0">Explotar las opciones para asegurar que se concrete la oportunidad.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Mejorar:</strong>
+                                <p class="mb-0">Busca mejorar las posibilidades de que ocurra una oportunidad.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Compartir:</strong>
+                                <p class="mb-0">Se usa cuando hay una oportunidad pero no se tiene la capacidad o experiencia para realizarlo solo.</p>
+                            </li>
+                            <li class="list-group-item">
+                                <strong>Aceptar:</strong>
+                                <p class="mb-0">Se acepta el impacto positivo que generará el riesgo si se hace presente.</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2><i class="fas fa-search icon-title"></i>Monitoreo de Riesgos</h2>
+            <p>Durante las diferentes fases de un proyecto, se monitorean los riesgos para ver si se producen o no. De activarse uno de ellos, se debe poner en acción los mecanismos de respuesta planificados.</p>
+            
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Métodos de Monitoreo</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Reuniones:</strong> Involucran al equipo y ayudan a actuar tempranamente</li>
+                            <li class="list-group-item"><strong>Revaluación de riesgos:</strong> Permite una actualización oportuna</li>
+                            <li class="list-group-item"><strong>Auditoría de riesgos:</strong> Evalúa si las respuestas han sido efectivas</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header">Más Métodos</div>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><strong>Análisis de tendencias:</strong> Muestra la evolución del proyecto</li>
+                            <li class="list-group-item"><strong>Medición del desempeño:</strong> Permite saber cómo se está desempeñando el proyecto</li>
+                            <li class="list-group-item"><strong>Análisis del uso de reservas:</strong> Sirve para conocer cuánta reserva queda</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert alert-warning mt-4">
+                <i class="fas fa-exclamation-triangle me-2"></i> Si no se realiza el monitoreo de los riesgos de manera efectiva, todos los pasos anteriores no servirán. Es importante formalizar el proceso con reportes periódicos.
+            </div>
+        </div>
+
+        <footer>
+            <p>Resumen de Gestión de Riesgos en Proyectos</p>
+            <p class="small">Basado en el documento original "Informe de Gestión de Riesgos"</p>
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
