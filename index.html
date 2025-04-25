@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía de Arquitecturas de Deep Learning - Enfoque Chileno</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #2c3e50;
+        }
+        .example {
+            background-color: #f8f9fa;
+            border-left: 4px solid #28a745;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .code {
+            background-color: #f1f1f1;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        .graph {
+            text-align: center;
+            margin: 30px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Guía para Elegir tu Arquitectura en Deep Learning</h1>
+        <p>La elección de una arquitectura adecuada en Deep Learning es fundamental para el éxito de tu proyecto. Esta guía te ayudará a entender los factores clave a considerar.</p>
+
+        <h2>Factores Clave en la Arquitectura de Deep Learning</h2>
+        
+        <h3>1. Capacidad del Modelo</h3>
+        <p>La <strong>capacidad</strong> se refiere a la habilidad del modelo para aprender patrones complejos. Está directamente relacionada con:</p>
+        <ul>
+            <li>Número de parámetros entrenables</li>
+            <li>Complejidad de las relaciones que puede modelar</li>
+        </ul>
+        
+        <div class="example">
+            <h4>Ejemplo Chileno:</h4>
+            <p>Imagina que estás desarrollando un modelo para predecir el consumo eléctrico en Santiago basado en temperatura, día de la semana y eventos especiales. Un modelo con baja capacidad podría capturar solo la relación con la temperatura, mientras que uno con alta capacidad podría detectar patrones complejos como "los días viernes con temperatura sobre 30°C previos a un feriado tienen un consumo eléctrico un 15% mayor".</p>
+        </div>
+
+        <h3>2. Número de Capas</h3>
+        <p>El <strong>número de capas</strong> determina la profundidad de tu red. Las redes más profundas pueden:</p>
+        <ul>
+            <li>Aprender representaciones jerárquicas más complejas</li>
+            <li>Capturar abstracciones de mayor nivel</li>
+        </ul>
+        
+        <div class="example">
+            <h4>Ejemplo Chileno:</h4>
+            <p>Para un sistema de reconocimiento de imágenes de la flora nativa chilena:</p>
+            <ul>
+                <li><strong>Pocas capas (2-3):</strong> Podría distinguir un copihue de un quillay, pero confundiría especies similares.</li>
+                <li><strong>Muchas capas (10+):</strong> Podría distinguir entre diferentes variedades de copihue (rojo, blanco, rosado) y reconocer la especie incluso con imágenes parciales o en diferentes condiciones de luz.</li>
+            </ul>
+        </div>
+
+        <h3>3. Número de Neuronas por Capa</h3>
+        <p>El <strong>número de neuronas</strong> en cada capa determina la "anchura" de tu red. Más neuronas permiten:</p>
+        <ul>
+            <li>Capturar más características en cada nivel de abstracción</li>
+            <li>Representar funciones más complejas</li>
+        </ul>
+        
+        <div class="example">
+            <h4>Ejemplo Chileno:</h4>
+            <p>En un modelo para clasificar vinos chilenos por región (Valle de Casablanca, Valle del Maipo, Valle de Colchagua):</p>
+            <ul>
+                <li><strong>Pocas neuronas (10-20 por capa):</strong> Podría distinguir entre vinos tintos y blancos, pero no entre regiones con características similares.</li>
+                <li><strong>Muchas neuronas (100+ por capa):</strong> Podría detectar sutiles diferencias en sabor, aroma y color que caracterizan a cada región vinícola.</li>
+            </ul>
+        </div>
+
+        <h3>4. Arquitectura de la Red</h3>
+        <p>La <strong>arquitectura</strong> se refiere al tipo específico de red y cómo están conectadas sus capas:</p>
+        <ul>
+            <li><strong>Redes Convolucionales (CNN):</strong> Ideales para imágenes</li>
+            <li><strong>Redes Recurrentes (RNN/LSTM/GRU):</strong> Para datos secuenciales</li>
+            <li><strong>Redes Transformer:</strong> Excelentes para procesamiento de lenguaje y secuencias</li>
+            <li><strong>Redes Fully Connected:</strong> Para datos tabulares</li>
+        </ul>
+        
+        <div class="example">
+            <h4>Ejemplo Chileno:</h4>
+            <p>Para diferentes problemas en Chile:</p>
+            <ul>
+                <li><strong>CNN:</strong> Detección de grietas en estructuras post-terremoto en edificios de Santiago</li>
+                <li><strong>LSTM:</strong> Predicción de mareas en la costa de Valparaíso</li>
+                <li><strong>Transformer:</strong> Análisis de opiniones en redes sociales sobre el transporte público Transantiago</li>
+                <li><strong>Fully Connected:</strong> Predicción de precios de departamentos en Las Condes basado en características como tamaño, ubicación, antigüedad</li>
+            </ul>
+        </div>
+
+        <h3>5. Número de Épocas</h3>
+        <p>El <strong>número de épocas</strong> determina cuántas veces el algoritmo procesará todo el conjunto de datos durante el entrenamiento:</p>
+        <ul>
+            <li>Pocas épocas pueden llevar a underfitting (el modelo no aprende lo suficiente)</li>
+            <li>Demasiadas épocas pueden causar overfitting (el modelo memoriza los datos de entrenamiento)</li>
+        </ul>
+        
+        <div class="example">
+            <h4>Ejemplo Chileno:</h4>
+            <p>En un modelo para predecir la demanda de pasajeros del Metro de Santiago:</p>
+            <ul>
+                <li><strong>Pocas épocas (5-10):</strong> El modelo podría capturar patrones básicos como "hay más pasajeros en hora punta", pero no detectaría patrones más sutiles.</li>
+                <li><strong>Épocas óptimas (50-100):</strong> El modelo capturaría patrones como variaciones por día de la semana, eventos especiales, o clima.</li>
+                <li><strong>Demasiadas épocas (500+):</strong> El modelo podría "memorizar" datos específicos del conjunto de entrenamiento, como "el 23 de marzo hubo una manifestación que redujo los pasajeros", sin poder generalizar.</li>
+            </ul>
+        </div>
+
+        <h2>Relación entre Loss y Capacidad</h2>
+        
+        <div class="graph">
+            <img src="https://via.placeholder.com/800x400" alt="Gráfico de Loss vs Capacidad">
+            <p><strong>Figura 1:</strong> Relación entre Loss y Capacidad del modelo</p>
+        </div>
+        
+        <p>El gráfico anterior muestra una relación típica entre la capacidad del modelo (eje Y) y el error o loss (eje X):</p>
+        <ul>
+            <li><strong>Zona de Underfitting (izquierda):</strong> Modelos con baja capacidad tienen alto error tanto en entrenamiento como en validación.</li>
+            <li><strong>Zona Óptima (centro):</strong> El modelo tiene suficiente capacidad para aprender patrones relevantes sin memorizar.</li>
+            <li><strong>Zona de Overfitting (derecha):</strong> Modelos con excesiva capacidad tienen bajo error en entrenamiento pero alto en validación.</li>
+        </ul>
+
+        <div class="warning">
+            <h4>Nota importante:</h4>
+            <p>El gráfico muestra que aumentar la capacidad no siempre mejora el rendimiento. Existe un punto óptimo después del cual aumentar la capacidad solo lleva a overfitting.</p>
+        </div>
+
+        <h2>Ensambles para Competencias de Deep Learning</h2>
+        
+        <p>Los <strong>ensambles</strong> son una técnica poderosa para mejorar el rendimiento en competencias de machine learning, muy utilizados en plataformas como Kaggle.</p>
+        
+        <h3>Tipos de Ensambles:</h3>
+        <ul>
+            <li><strong>Bagging:</strong> Entrena múltiples modelos con diferentes subconjuntos de datos</li>
+            <li><strong>Boosting:</strong> Entrena modelos secuencialmente, enfocándose en los errores de los anteriores</li>
+            <li><strong>Stacking:</strong> Combina predicciones de diferentes modelos usando otro modelo</li>
+        </ul>
+        
+        <div class="example">
+            <h4>Ejemplo Chileno:</h4>
+            <p>En una competencia para predecir la calidad del aire en Santiago:</p>
+            <p>Podrías crear un ensamble que combine:</p>
+            <ul>
+                <li>Una CNN que procese imágenes satelitales de la ciudad</li>
+                <li>Una LSTM que analice series temporales de mediciones previas</li>
+                <li>Una red fully connected que procese datos meteorológicos</li>
+                <li>Un modelo XGBoost que use variables categóricas como día de la semana, festivos, etc.</li>
+            </ul>
+            <p>El ensamble final podría mejorar la precisión en un 5-10% comparado con el mejor modelo individual.</p>
+        </div>
+
+        <h2>Regularización L2</h2>
+        
+        <p>La <strong>regularización L2</strong> (también llamada weight decay) es una técnica para prevenir el overfitting añadiendo un término de penalización a la función de pérdida:</p>
+        
+        <div class="code">
+            Loss_regularizada = Loss_original + λ * suma(w²)
+        </div>
+        
+        <p>Donde:</p>
+        <ul>
+            <li><strong>λ</strong> es el hiperparámetro que controla la fuerza de la regularización</li>
+            <li><strong>suma(w²)</strong> es la suma de los cuadrados de todos los pesos del modelo</li>
+        </ul>
+        
+        <h3>Beneficios de la Regularización L2:</h3>
+        <ul>
+            <li>Previene que los pesos tomen valores extremadamente grandes</li>
+            <li>Hace que el modelo prefiera soluciones más simples (con pesos más pequeños)</li>
+            <li>Mejora la generalización a datos nuevos</li>
+        </ul>
+        
+        <div class="example">
+            <h4>Ejemplo Chileno:</h4>
+            <p>En un modelo para predecir el rendimiento académico de estudiantes chilenos basado en factores socioeconómicos:</p>
+            <ul>
+                <li><strong>Sin regularización L2:</strong> El modelo podría dar un peso excesivo a factores como "comuna de residencia", memorizando patrones específicos del conjunto de entrenamiento.</li>
+                <li><strong>Con regularización L2:</strong> El modelo distribuiría mejor la importancia entre diferentes factores (nivel educativo de padres, ingresos familiares, acceso a internet, etc.), generalizando mejor a nuevos estudiantes.</li>
+            </ul>
+            <p>Código de ejemplo para implementar regularización L2 en Keras:</p>
+            <div class="code">
+                model = Sequential([
+                    Dense(128, activation='relu', kernel_regularizer=l2(0.001), input_shape=(num_features,)),
+                    Dense(64, activation='relu', kernel_regularizer=l2(0.001)),
+                    Dense(1, activation='linear')
+                ])
+            </div>
+        </div>
+
+        <h2>Tabla Comparativa de Arquitecturas</h2>
+        
+        <table>
+            <tr>
+                <th>Tipo de Problema</th>
+                <th>Arquitectura Recomendada</th>
+                <th>Ejemplo Chileno</th>
+            </tr>
+            <tr>
+                <td>Imágenes</td>
+                <td>CNN (ResNet, EfficientNet)</td>
+                <td>Clasificación de especies de la flora nativa chilena</td>
+            </tr>
+            <tr>
+                <td>Series Temporales</td>
+                <td>LSTM, GRU, Transformer</td>
+                <td>Predicción de demanda eléctrica en el Sistema Interconectado Central</td>
+            </tr>
+            <tr>
+                <td>Texto</td>
+                <td>Transformer (BERT, GPT)</td>
+                <td>Análisis de sentimiento en comentarios sobre el servicio de Fonasa</td>
+            </tr>
+            <tr>
+                <td>Datos Tabulares</td>
+                <td>Redes Fully Connected, Gradient Boosting</td>
+                <td>Predicción de riesgo crediticio para clientes bancarios chilenos</td>
+            </tr>
+            <tr>
+                <td>Recomendación</td>
+                <td>Factorización Matricial, Redes Neuronales Profundas</td>
+                <td>Sistema de recomendación para el catálogo de Falabella</td>
+            </tr>
+            <tr>
+                <td>Audio</td>
+                <td>CNN 1D, Transformer</td>
+                <td>Reconocimiento de dialectos chilenos (norte, centro, sur)</td>
+            </tr>
+            <tr>
+                <td>Detección de Objetos</td>
+                <td>YOLO, Faster R-CNN</td>
+                <td>Detección de vehículos en cámaras de tránsito de Santiago</td>
+            </tr>
+        </table>
+
+        <h2>Consejos Prácticos para Elegir tu Arquitectura</h2>
+        
+        <ol>
+            <li><strong>Comienza simple:</strong> Inicia con modelos más simples y aumenta la complejidad solo si es necesario.</li>
+            <li><strong>Usa validación cruzada:</strong> Evalúa diferentes arquitecturas con validación cruzada para seleccionar la mejor.</li>
+            <li><strong>Considera el tamaño del dataset:</strong> Datasets pequeños requieren modelos más simples para evitar overfitting.</li>
+            <li><strong>Aprovecha transfer learning:</strong> Usa modelos pre-entrenados cuando sea posible, especialmente para imágenes y texto.</li>
+            <li><strong>Monitorea el entrenamiento:</strong> Observa las curvas de pérdida en entrenamiento y validación para detectar underfitting/overfitting.</li>
+        </ol>
+
+        <div class="example">
+            <h4>Ejemplo de Proceso de Selección - Caso Chileno:</h4>
+            <p>Supongamos que estamos desarrollando un modelo para predecir la afluencia de turistas a diferentes destinos en Chile:</p>
+            <ol>
+                <li>Comenzamos con un modelo simple de regresión lineal (baseline)</li>
+                <li>Probamos una red neuronal simple con 2 capas y 64 neuronas por capa</li>
+                <li>Observamos que el error en validación sigue disminuyendo, por lo que aumentamos a 3 capas con 128 neuronas</li>
+                <li>Notamos que ahora hay overfitting, así que añadimos regularización L2 (λ=0.001)</li>
+                <li>Probamos diferentes valores de dropout (0.2, 0.3, 0.4) y seleccionamos 0.3 basado en validación</li>
+                <li>Finalmente, entrenamos 5 modelos con diferentes inicializaciones y creamos un ensamble</li>
+            </ol>
+            <p>El resultado final mejora en un 12% la precisión comparado con el baseline inicial.</p>
+        </div>
+
+        <h2>Implementación de Regularización L2 en Diferentes Frameworks</h2>
+        
+        <h3>TensorFlow/Keras</h3>
+        <div class="code">
+            from tensorflow.keras.regularizers import l2
+            from tensorflow.keras.models import Sequential
+            from tensorflow.keras.layers import Dense
+            
+            model = Sequential([
+                Dense(128, activation='relu', kernel_regularizer=l2(0.001), input_shape=(10,)),
+                Dense(64, activation='relu', kernel_regularizer=l2(0.001)),
+                Dense(1, activation='linear')
+            ])
+            
+            model.compile(optimizer='adam', loss='mse')
+        </div>
+        
+        <h3>PyTorch</h3>
+        <div class="code">
+            import torch
+            import torch.nn as nn
+            
+            class MyModel(nn.Module):
+                def __init__(self):
+                    super(MyModel, self).__init__()
+                    self.fc1 = nn.Linear(10, 128)
+                    self.fc2 = nn.Linear(128, 64)
+                    self.fc3 = nn.Linear(64, 1)
+                    self.relu = nn.ReLU()
+                
+                def forward(self, x):
+                    x = self.relu(self.fc1(x))
+                    x = self.relu(self.fc2(x))
+                    x = self.fc3(x)
+                    return x
+            
+            model = MyModel()
+            optimizer = torch.optim.Adam(model.parameters(), lr=0.001, weight_decay=0.001)  # weight_decay es L2
+        </div>
+
+        <h2>Técnicas de Ensamble para Competencias</h2>
+        
+        <h3>1. Promedio Simple</h3>
+        <div class="code">
+            # Promedio de predicciones de 3 modelos diferentes
+            final_prediction = (model1_pred + model2_pred + model3_pred) / 3
+        </div>
+        
+        <h3>2. Promedio Ponderado</h3>
+        <div class="code">
+            # Promedio ponderado basado en el rendimiento de cada modelo
+            final_prediction = 0.5*model1_pred + 0.3*model2_pred + 0.2*model3_pred
+        </div>
+        
+        <h3>3. Stacking</h3>
+        <div class="code">
+            # Usar predicciones de modelos base como features para un meta-modelo
+            X_meta = np.column_stack([model1_pred, model2_pred, model3_pred])
+            meta_model = RandomForestRegressor()
+            meta_model.fit(X_meta, y_true)
+            final_prediction = meta_model.predict(X_meta_test)
+        </div>
+        
+        <div class="example">
+            <h4>Ejemplo de Ensamble en Competencia Chilena:</h4>
+            <p>En una competencia para predecir el consumo energético de edificios en Santiago:</p>
+            <ol>
+                <li>Modelo 1: Red neuronal profunda con datos históricos de consumo (RMSE: 15.2)</li>
+                <li>Modelo 2: GBM con variables meteorológicas y calendario (RMSE: 14.8)</li>
+                <li>Modelo 3: LSTM con series temporales de consumo (RMSE: 14.5)</li>
+                <li>Modelo 4: CNN procesando imágenes térmicas de edificios (RMSE: 16.1)</li>
+                <li>Modelo 5: Transformer con datos secuenciales (RMSE: 14.3)</li>
+            </ol>
+            <p>Ensamble final (promedio ponderado por inverso del RMSE): RMSE 13.2</p>
+            <p>Este ensamble permitió ganar la competencia con una mejora del 7.7% sobre el mejor modelo individual.</p>
+        </div>
+
+        <h2>Conclusiones</h2>
+        
+        <p>La elección de la arquitectura adecuada en Deep Learning es un proceso iterativo que requiere experimentación y conocimiento del dominio. Recuerda:</p>
+        
+        <ul>
+            <li>No existe una arquitectura "perfecta" para todos los problemas</li>
+            <li>El balance entre capacidad y regularización es clave para evitar overfitting</li>
+            <li>Los ensambles son una herramienta poderosa para mejorar el rendimiento en competencias</li>
+            <li>La regularización L2 es esencial para controlar la complejidad del modelo</li>
+            <li>Monitorear las métricas de entrenamiento y validación te guiará en ajustes necesarios</li>
+        </ul>
+        
+        <div class="example">
+            <h4>Consejo Final - Contexto Chileno:</h4>
+            <p>Para problemas específicos de Chile, considera factores únicos como:</p>
+            <ul>
+                <li>La geografía diversa (desierto, cordillera, costa) que puede afectar patrones en datos ambientales</li>
+                <li>Estacionalidad invertida respecto al hemisferio norte</li>
+                <li>Eventos específicos como terremotos que pueden crear anomalías en datos históricos</li>
+                <li>Diferencias socioeconómicas marcadas entre comunas que pueden requerir modelos más complejos para capturar estas variaciones</li>
+            </ul>
+        </div>
+
+        <script>
+            // Código para generar el gráfico de Loss vs Capacidad
+            // En una implementación real, usaríamos bibliotecas como Chart.js o D3.js
+            document.addEventListener('DOMContentLoaded', function() {
+                // Aquí iría el código para generar el gráfico
+                console.log("Gráfico cargado");
+            });
+        </script>
+    </div>
+</body>
+</html>
