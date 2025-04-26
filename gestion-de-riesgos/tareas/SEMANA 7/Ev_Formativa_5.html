@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis de Proyecto - El Glotón</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconografía -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js para gráficos -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- D3.js para visualizaciones avanzadas -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            border-left: 5px solid var(--secondary-color);
+            padding-left: 15px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .table {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        
+        .table thead {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .critical-path {
+            background-color: rgba(231, 76, 60, 0.2);
+            font-weight: bold;
+        }
+        
+        .decision-node {
+            background-color: #f8f9fa;
+            border: 2px solid var(--primary-color);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            position: relative;
+        }
+        
+        .decision-branch {
+            margin-left: 30px;
+            border-left: 2px dashed var(--accent-color);
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .decision-branch::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 20px;
+            height: 2px;
+            background-color: var(--accent-color);
+        }
+        
+        .monte-carlo-container {
+            height: 400px;
+            margin: 20px 0;
+        }
+        
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .icon-box {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .icon-box i {
+            font-size: 24px;
+            margin-right: 15px;
+            color: var(--secondary-color);
+        }
+        
+        .badge-custom {
+            background-color: var(--accent-color);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+        }
+        
+        .risk-high {
+            background-color: #e74c3c;
+        }
+        
+        .risk-medium {
+            background-color: #f39c12;
+        }
+        
+        .risk-low {
+            background-color: #2ecc71;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-utensils me-3"></i>Proyecto "El Glotón"</h1>
+                    <p class="lead">Análisis de gestión de proyectos para implementación tecnológica</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="badge bg-light text-dark p-2">
+                        <i class="fas fa-calendar-alt me-2"></i>Mayo 2024
+                    </span>
+                </div>
+            </div>
+            
+            <!-- Agregar esta sección para los integrantes -->
+            <div class="row mt-3">
+                <div class="col-12">
+                    <div class="card bg-transparent border-light">
+                        <div class="card-body text-white">
+                            <h5><i class="fas fa-users me-2"></i>Integrantes del Equipo:</h5>
+                            <ul class="list-inline mb-0">
+                                <li class="list-inline-item me-4"><i class="fas fa-user-circle me-1"></i> Patricio Quintanilla</li>
+                                <li class="list-inline-item me-4"><i class="fas fa-user-circle me-1"></i> Italo Brignardello</li>
+                                <li class="list-inline-item me-4"><i class="fas fa-user-circle me-1"></i> Alexander Seydewitz</li>
+                                <li class="list-inline-item"><i class="fas fa-user-circle me-1"></i> Claudio Sanches</li>                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Fin de la sección de integrantes -->
+            
+        </div>
+    </div>
+    
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="icon-box">
+                            <i class="fas fa-info-circle"></i>
+                            <div>
+                                <h5 class="mb-0">Resumen del Proyecto</h5>
+                                <p>Implementación de un sistema tecnológico para el restaurante "El Glotón" que permita agilizar procesos, gestionar pedidos y expandir operaciones.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Análisis PERT -->
+        <h2 class="section-title"><i class="fas fa-network-wired me-2"></i>Análisis PERT</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Estimación de tiempos con PERT</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Actividad</th>
+                                        <th>Predecesoras</th>
+                                        <th>Tiempo Optimista (días)</th>
+                                        <th>Tiempo Más Probable (días)</th>
+                                        <th>Tiempo Pesimista (días)</th>
+                                        <th>Tiempo Esperado (días)</th>
+                                        <th>Varianza</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="critical-path">
+                                        <td>A</td>
+                                        <td>Análisis de requerimientos</td>
+                                        <td>-</td>
+                                        <td>5</td>
+                                        <td>7</td>
+                                        <td>10</td>
+                                        <td>7.17</td>
+                                        <td>0.69</td>
+                                    </tr>
+                                    <tr>
+                                        <td>B</td>
+                                        <td>Diseño de base de datos</td>
+                                        <td>A</td>
+                                        <td>3</td>
+                                        <td>5</td>
+                                        <td>8</td>
+                                        <td>5.17</td>
+                                        <td>0.69</td>
+                                    </tr>
+                                    <tr class="critical-path">
+                                        <td>C</td>
+                                        <td>Desarrollo de interfaz de usuario</td>
+                                        <td>A</td>
+                                        <td>8</td>
+                                        <td>10</td>
+                                        <td>15</td>
+                                        <td>10.5</td>
+                                        <td>1.36</td>
+                                    </tr>
+                                    <tr>
+                                        <td>D</td>
+                                        <td>Desarrollo de API</td>
+                                        <td>B</td>
+                                        <td>7</td>
+                                        <td>10</td>
+                                        <td>14</td>
+                                        <td>10.17</td>
+                                        <td>1.36</td>
+                                    </tr>
+                                    <tr class="critical-path">
+                                        <td>E</td>
+                                        <td>Integración de sistemas</td>
+                                        <td>C, D</td>
+                                        <td>4</td>
+                                        <td>6</td>
+                                        <td>9</td>
+                                        <td>6.17</td>
+                                        <td>0.69</td>
+                                    </tr>
+                                    <tr>
+                                        <td>F</td>
+                                        <td>Pruebas de sistema</td>
+                                        <td>E</td>
+                                        <td>3</td>
+                                        <td>5</td>
+                                        <td>7</td>
+                                        <td>5</td>
+                                        <td>0.44</td>
+                                    </tr>
+                                    <tr class="critical-path">
+                                        <td>G</td>
+                                        <td>Implementación en carros móviles</td>
+                                        <td>F</td>
+                                        <td>10</td>
+                                        <td>15</td>
+                                        <td>20</td>
+                                        <td>15</td>
+                                        <td>2.78</td>
+                                    </tr>
+                                    <tr>
+                                        <td>H</td>
+                                        <td>Capacitación de personal</td>
+                                        <td>F</td>
+                                        <td>5</td>
+                                        <td>7</td>
+                                        <td>10</td>
+                                        <td>7.17</td>
+                                        <td>0.69</td>
+                                    </tr>
+                                    <tr class="critical-path">
+                                        <td>I</td>
+                                        <td>Lanzamiento y monitoreo</td>
+                                        <td>G, H</td>
+                                        <td>3</td>
+                                        <td>5</td>
+                                        <td>8</td>
+                                        <td>5.17</td>
+                                        <td>0.69</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Ruta Crítica</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p><strong>Secuencia:</strong> A → C → E → F → G → I</p>
+                                        <p><strong>Duración total estimada:</strong> 49.01 días</p>
+                                        <p><strong>Varianza total:</strong> 6.21</p>
+                                        <p><strong>Desviación estándar:</strong> 2.49 días</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5 class="mb-0">Probabilidades</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Probabilidad de completar el proyecto en 45 días: <strong>55%</strong></p>
+                                        <p>Probabilidad de completar el proyecto en 50 días: <strong>65%</strong></p>
+                                        <p>Probabilidad de completar el proyecto en 55 días: <strong>99%</strong></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Árbol de Decisión -->
+        <h2 class="section-title"><i class="fas fa-sitemap me-2"></i>Árbol de Decisión</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Análisis de decisiones críticas</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Decisión 1 -->
+                        <div class="decision-node">
+                            <h5><i class="fas fa-code-branch me-2"></i>Decisión 1: Implementación del sistema de delivery</h5>
+                            <p>Evaluación de alternativas para la gestión de entregas a domicilio</p>
+                            
+                            <div class="decision-branch">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6>Opción A: Personal interno de delivery</h6>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo inicial: $5,000,000</span>
+                                            <span class="badge risk-high">Riesgo: Alto</span>
+                                        </div>
+                                        <p>Contratar y capacitar personal propio para realizar entregas</p>
+                                        <ul>
+                                            <li>Beneficio: Control total sobre la experiencia del cliente</li>
+                                            <li>Riesgo: Costos fijos elevados (salarios, seguros, vehículos)</li>
+                                            <li>Probabilidad de éxito: 65%</li>
+                                            <li>Valor esperado: $8,500,000</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6>Opción B: Servicio externo de delivery</h6>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo inicial: $1,500,000</span>
+                                            <span class="badge risk-medium">Riesgo: Medio</span>
+                                        </div>
+                                        <p>Contratar empresas especializadas en delivery (PedidosYa, Uber Eats, etc.)</p>
+                                        <ul>
+                                            <li>Beneficio: Menor inversión inicial, infraestructura existente</li>
+                                            <li>Riesgo: Comisiones por venta (20-30%), menor control</li>
+                                            <li>Probabilidad de éxito: 80%</li>
+                                            <li>Valor esperado: $7,200,000</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Opción C: Sistema híbrido</h6>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo inicial: $3,000,000</span>
+                                            <span class="badge risk-low">Riesgo: Bajo</span>
+                                        </div>
+                                        <p>Combinación de personal propio para zonas cercanas y servicios externos para mayor cobertura</p>
+                                        <ul>
+                                            <li>Beneficio: Flexibilidad operativa, control en zonas clave</li>
+                                            <li>Riesgo: Complejidad en la gestión de dos sistemas</li>
+                                            <li>Probabilidad de éxito: 85%</li>
+                                            <li>Valor esperado: $9,350,000</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Decisión 2 -->
+                        <div class="decision-node mt-4">
+                            <h5><i class="fas fa-code-branch me-2"></i>Decisión 2: Arquitectura del sistema</h5>
+                            <p>Selección de la arquitectura tecnológica para el sistema</p>
+                            
+                            <div class="decision-branch">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6>Opción A: Sistema en la nube (SaaS)</h6>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo inicial: $2,500,000</span>
+                                            <span class="badge risk-low">Riesgo: Bajo</span>
+                                        </div>
+                                        <p>Implementar una solución basada en la nube con suscripción mensual</p>
+                                        <ul>
+                                            <li>Beneficio: Rápida implementación, actualizaciones automáticas</li>
+                                            <li>Riesgo: Dependencia del proveedor, costos recurrentes</li>
+                                            <li>Probabilidad de éxito: 90%</li>
+                                            <li>Valor esperado: $6,750,000</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Opción B: Sistema a medida</h6>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo inicial: $7,500,000</span>
+                                            <span class="badge risk-high">Riesgo: Alto</span>
+                                        </div>
+                                        <p>Desarrollar un sistema personalizado específico para las necesidades del negocio</p>
+                                        <ul>
+                                            <li>Beneficio: Personalización total, adaptación perfecta al negocio</li>
+                                            <li>Riesgo: Mayor tiempo de desarrollo, costos de mantenimiento</li>
+                                            <li>Probabilidad de éxito: 70%</li>
+                                            <li>Valor esperado: $10,500,000</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Decisión 3 -->
+                        <div class="decision-node mt-4">
+                            <h5><i class="fas fa-code-branch me-2"></i>Decisión 3: Estrategia de implementación</h5>
+                            <p>Enfoque para la implementación del sistema en los carros móviles</p>
+                            
+                            <div class="decision-branch">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h6>Opción A: Implementación simultánea</h6>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo: $4,000,000</span>
+                                            <span class="badge risk-high">Riesgo: Alto</span>
+                                        </div>
+                                        <p>Implementar el sistema en todos los carros al mismo tiempo</p>
+                                        <ul>
+                                            <li>Beneficio: Transformación rápida, consistencia inmediata</li>
+                                            <li>Riesgo: Mayor impacto si hay problemas, resistencia al cambio</li>
+                                            <li>Probabilidad de éxito: 60%</li>
+                                            <li>Valor esperado: $5,400,000</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Opción B: Implementación gradual</h6>
+                                        <div class="d-flex justify-content-between align-items-center mb-2">
+                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo: $5,500,000</span>
+                                            <span class="badge risk-low">Riesgo: Bajo</span>
+                                        </div>
+                                        <p>Implementar el sistema en fases, comenzando con un carro piloto</p>
+                                        <ul>
+                                            <li>Beneficio: Aprendizaje iterativo, menor resistencia al cambio</li>
+                                            <li>Riesgo: Mayor tiempo de implementación, operación dual temporal</li>
+                                            <li>Probabilidad de éxito: 85%</li>
+                                            <li>Valor esperado: $7,650,000</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Conclusiones del Árbol de Decisión</h5>
+                            <p>Basado en el análisis de las tres decisiones críticas, se recomienda:</p>
+                            <ul>
+                                <li><strong>Sistema de delivery:</strong> Implementar un sistema híbrido (Opción C) que ofrece el mejor valor esperado con un riesgo bajo.</li>
+                                <li><strong>Arquitectura del sistema:</strong> Aunque el sistema a medida ofrece mayor valor esperado, el riesgo es significativamente mayor. Se recomienda iniciar con un sistema en la nube (Opción A) y evaluar migración a sistema propio en el futuro.</li>
+                                <li><strong>Estrategia de implementación:</strong> La implementación gradual (Opción B) ofrece mayor probabilidad de éxito y mejor valor esperado a largo plazo.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Simulación de Monte Carlo -->
+        <h2 class="section-title"><i class="fas fa-random me-2"></i>Simulación de Monte Carlo</h2>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Simulación para la actividad: Implementación en carros móviles</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Parámetros de la simulación</h6>
+                                        <ul>
+                                            <li><strong>Actividad:</strong> Implementación en carros móviles</li>
+                                            <li><strong>Número de simulaciones:</strong> 1,000</li>
+                                            <li><strong>Distribución:</strong> Triangular</li>
+                                            <li><strong>Tiempo optimista:</strong> 10 días</li>
+                                            <li><strong>Tiempo más probable:</strong> 15 días</li>
+                                            <li><strong>Tiempo pesimista:</strong> 20 días</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Resultados de la simulación</h6>
+                                        <div class="table-responsive">
+                                            <table class="table table-sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Estadística</th>
+                                                        <th>Valor (días)</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>Media</td>
+                                                        <td>15.03</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mediana</td>
+                                                        <td>15.12</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Desviación estándar</td>
+                                                        <td>1.87</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Mínimo</td>
+                                                        <td>10.21</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>Máximo</td>
+                                                        <td>19.87</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Distribución de probabilidad</h6>
+                                        <canvas id="distributionChart" height="250"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Probabilidad acumulada</h6>
+                                        <canvas id="cumulativeChart" height="250"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6>Análisis de confianza</h6>
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Duración (días)</th>
+                                                        <th>Probabilidad de completar en o antes de este tiempo</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>12 días</td>
+                                                        <td>10%</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>14 días</td>
+                                                        <td>35%</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>15 días</td>
+                                                        <td>50%</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>16 días</td>
+                                                        <td>65%</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>17 días</td>
+                                                        <td>80%</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>18 días</td>
+                                                        <td>90%</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>19 días</td>
+                                                        <td>95%</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Conclusiones de la Simulación de Monte Carlo</h5>
+                            <p>Basado en 1,000 simulaciones para la actividad "Implementación en carros móviles", podemos concluir:</p>
+                            <ul>
+                                <li>La duración esperada más probable es de aproximadamente 15 días, lo que coincide con nuestra estimación inicial.</li>
+                                <li>Existe un 80% de probabilidad de que la actividad se complete en 17 días o menos.</li>
+                                <li>Para tener un 95% de confianza en la finalización, debemos planificar 19 días para esta actividad.</li>
+                                <li>La variabilidad de esta actividad es moderada (desviación estándar de 1.87 días), lo que sugiere que debemos monitorear de cerca su progreso.</li>
+                            </ul>
+                            <p>Recomendación: Planificar 17 días para esta actividad en el cronograma del proyecto, lo que proporciona un 80% de confianza en su finalización a tiempo.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><i class="fas fa-chart-line me-2"></i>Análisis de Proyecto "El Glotón"</h4>
+                    <p>Herramientas de gestión de proyectos aplicadas al caso de estudio</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p><i class="far fa-calendar-alt me-2"></i>Mayo 2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Gráficos de Monte Carlo -->
+    <script>
+        // Datos simulados para la distribución de probabilidad
+        const distributionData = {
+            labels: ['10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20'],
+            datasets: [{
+                label: 'Frecuencia',
+                data: [15, 42, 85, 127, 198, 215, 145, 98, 55, 20],
+                backgroundColor: 'rgba(52, 152, 219, 0.5)',
+                borderColor: 'rgba(52, 152, 219, 1)',
+                borderWidth: 1
+            }]
+        };
+
+        // Datos simulados para la probabilidad acumulada
+        const cumulativeData = {
+            labels: ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
+            datasets: [{
+                label: 'Probabilidad acumulada',
+                data: [0, 0.015, 0.057, 0.142, 0.269, 0.467, 0.682, 0.827, 0.925, 0.980, 1.0],
+                backgroundColor: 'rgba(231, 76, 60, 0.1)',
+                borderColor: 'rgba(231, 76, 60, 1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }]
+        };
+
+        // Configuración del gráfico de distribución
+        const distributionConfig = {
+            type: 'bar',
+            data: distributionData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Distribución de duración (días)'
+                    }
+                }
+            }
+        };
+
+        // Configuración del gráfico de probabilidad acumulada
+        const cumulativeConfig = {
+            type: 'line',
+            data: cumulativeData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Probabilidad acumulada'
+                    }
+                },
+                scales: {
+                    y: {
+                        min: 0,
+                        max: 1,
+                        ticks: {
+                            callback: function(value) {
+                                return (value * 100) + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        // Renderizar los gráficos cuando el DOM esté listo
+        document.addEventListener('DOMContentLoaded', function() {
+            const distributionCtx = document.getElementById('distributionChart').getContext('2d');
+            const cumulativeCtx = document.getElementById('cumulativeChart').getContext('2d');
+            
+            new Chart(distributionCtx, distributionConfig);
+            new Chart(cumulativeCtx, cumulativeConfig);
+        });
+    </script>
+</body>
+</html>
+

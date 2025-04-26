@@ -1,0 +1,26 @@
+{
+    "titulo": "SEMANA 7 CASO PRACTICO",
+    "negocio": "El Glotón",
+    "descripcion": "El restaurante \"El Glotón\", se inició a fines del año 2024 y se han especializado en contundentes sándwiches tradicionales y completos (Carne Mechada, Chacarero, Lomitos, completo italiano, etc.), los cuales son vendidos en 5 carros móviles que están distribuidos en la región Metropolitana. La calidad, abundancia y excelente sabor de sus productos se ha ido extendiendo en los diversos sectores donde se encuentran ubicados sus carros.",
+    "plan_estrategico": "En su plan estratégico, está definido incorporar tecnología, que les permita agilizar sus procesos y poder consolidar su expansión en las principales comunas de la región Metropolitana y posteriormente poder expandir a regiones. En una primera instancia, su principal foco será la atención de los pedidos directo en los carros y la gestión de pedidos entregados por Delivery.",
+    "problemas": "Hace un tiempo, comenzaron a recibir un conjunto de reclamos por parte de sus clientes, relacionados con la demora en la recepción de los pedidos, contenido del pedido equivocado, valor de la cuenta erróneo, poco personal para atender en horas de gran afluencia de público.",
+    "causas_raiz": [
+      "Existe demasiada manualidad en los procesos.",
+      "El precio de los productos no está correctamente establecido.",
+      "Los roles de las personas del restaurante no están claros.",
+      "Varias veces falta personal, debido a la inexistencia de un turno formal para operar.",
+      "En la cocina las comandas llegan escritas sin un formato estándar, generando retrasos.",
+      "Las comandas son escritas a puño y letra de la persona que atiende, por lo cual, muchas veces no se entiende el pedido."
+    ],
+    "situaciones_a_administrar": [
+      "Actualmente el negocio, cuenta con 5 carros móviles distribuidos en diferentes lugares de la comuna de la Florida, sin embargo, a futuro se tiene planificado expandirse y poder contar con más carros móviles en diferentes comunas de la Región Metropolitana e incluso en otras regiones del país.",
+      "El local cuenta con personal que trabaja en turnos, de mañana, tarde y noche, respetando las horas legales. Las personas tienen diferentes roles: Atención en Carro, Entrega de Delivery, Gestión de Pedidos, etc.",
+      "Existe una carta de menú, donde se encuentran los diferentes productos y sus precios que cada carro ofrece a sus clientes.",
+      "Para los pedidos con entrega a domicilio (Delivery), los clientes actualmente envían un mensaje WhatsApp y la persona que gestiona los pedidos asigna a las personas que están en el rol de Entrega de Delivery estos pedidos para que realicen su entrega. ¿Tendrá sentido tener personal interno para este rol?... o se debiera pensar en utilizar empresas externas que proporcionen el servicio",
+      "Al momento de entregar el producto, es importante registrar la hora de entrega y registrar que el pedido está \"Entregado\", con el propósito de calcular los tiempos promedios de entrega.",
+      "Los productos entregados por Delivery, deben estar previamente pagados.",
+      "En un futuro, se desea implementar descuentos para los clientes que vienen frecuentemente al local o solicitan algún Delivery, por lo tanto, se deberá implementar un registro de ellos con datos básicos: Rut, Nombre, Apellidos, Número Teléfono, dirección, correo electrónico."
+    ],
+    "horarios_operacion": "Se debe mencionar que los carros operan de lunes a sábado y su horario es de 9:30 am a 12:00 pm y el domingo su horario de atención es de 11:00 a 15:00 horas. Por lo tanto, es importante que el producto esté operativo durante ese horario, y si por algún motivo no lo está exista un plan de contingencia, idealmente intermedio antes de pasar todo a proceso manual."
+  }
+  
