@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desvanecimiento y Explosión del Gradiente en Deep Learning - Enfoque Chileno</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- AOS CSS para animaciones de scroll -->
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Estilos personalizados -->
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            padding-top: 56px;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 100px 0;
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #6e8efb;
+        }
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 30px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: #f8f9fa;
+            border-bottom: none;
+            font-weight: bold;
+        }
+        
+        .example-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #6e8efb;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .code-box {
+            background-color: #272822;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .chart-container {
+            position: relative;
+            height: 400px;
+            margin: 30px 0;
+        }
+        
+        .formula {
+            background-color: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            font-family: 'Cambria Math', serif;
+            margin: 20px 0;
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: #6e8efb;
+        }
+        
+        .nav-pills .nav-link {
+            color: #6e8efb;
+        }
+        
+        .footer {
+            background-color: #343a40;
+            color: white;
+            padding: 30px 0;
+            margin-top: 50px;
+        }
+        
+        .chilean-example {
+            background-color: #e8f4f8;
+            border-left: 4px solid #3b83bd;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 5px 5px 0;
+        }
+        
+        .chilean-example h5 {
+            color: #3b83bd;
+        }
+        
+        .chilean-flag {
+            width: 24px;
+            height: auto;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-brain"></i> Deep Learning Chile
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#intro">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#vanishing">Desvanecimiento</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#exploding">Explosión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#solutions">Soluciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#implementations">Implementaciones</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section" id="intro">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6" data-aos="fade-right">
+                    <h1 class="display-4 fw-bold mb-4">Desvanecimiento y Explosión del Gradiente</h1>
+                    <p class="lead">Entendiendo los desafíos fundamentales en el entrenamiento de redes neuronales profundas con ejemplos aplicados a la realidad chilena</p>
+                    <a href="#vanishing" class="btn btn-light btn-lg mt-3">
+                        <i class="fas fa-arrow-down"></i> Explorar
+                    </a>
+                </div>
+                <div class="col-lg-6" data-aos="fade-left">
+                    <img src="https://via.placeholder.com/600x400?text=Gradient+Visualization" alt="Visualización de Gradientes" class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Introducción -->
+        <section class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">¿Por qué son importantes los gradientes?</h2>
+            <p class="lead">Los gradientes son el mecanismo fundamental que permite a las redes neuronales aprender. Son la brújula que guía el proceso de optimización.</p>
+            
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-cogs text-primary"></i> El papel del gradiente</h5>
+                            <p class="card-text">El gradiente indica la dirección y magnitud del cambio necesario en los pesos de la red para minimizar la función de pérdida. Es el corazón del algoritmo de retropropagación.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title"><i class="fas fa-exclamation-triangle text-warning"></i> Problemas con los gradientes</h5>
+                            <p class="card-text">En redes profundas, los gradientes pueden volverse extremadamente pequeños (desvanecimiento) o extremadamente grandes (explosión) a medida que se propagan hacia atrás a través de las capas.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chilean-example mt-4">
+                <h5><i class="fas fa-map-marker-alt"></i> Contexto Chileno: Analogía con la Cordillera de los Andes</h5>
+                <p>Imagina que estás escalando la Cordillera de los Andes desde Santiago hasta la cima del Aconcagua:</p>
+                <ul>
+                    <li><strong>El gradiente</strong> es como la brújula y el altímetro que te indican la dirección y qué tan empinado es el camino.</li>
+                    <li><strong>Desvanecimiento del gradiente:</strong> Es como estar en la Pampa del Leoncito (zona plana cerca del Aconcagua) donde apenas hay cambio de altitud y es difícil saber en qué dirección avanzar para llegar a la cima.</li>
+                    <li><strong>Explosión del gradiente:</strong> Es como encontrarse con un acantilado vertical en El Morado, donde el cambio de altitud es tan brusco que es imposible escalar directamente.</li>
+                </ul>
+                <p>Al igual que un montañista experimentado elige rutas adecuadas, los algoritmos de Deep Learning necesitan técnicas especiales para navegar estos desafíos.</p>
+            </div>
+            
+            <div class="chart-container mt-5">
+                <canvas id="gradientFlowChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Desvanecimiento del Gradiente -->
+        <section id="vanishing" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">Desvanecimiento del Gradiente</h2>
+            <p class="lead">El desvanecimiento del gradiente ocurre cuando los gradientes se vuelven extremadamente pequeños a medida que se propagan hacia atrás a través de las capas de la red.</p>
+            
+            <div class="row mt-4">
+                <div class="col-lg-6">
+                    <h4><i class="fas fa-question-circle text-primary"></i> ¿Por qué ocurre?</h4>
+                    <p>El desvanecimiento del gradiente ocurre principalmente debido a:</p>
+                    <ul>
+                        <li>Funciones de activación con derivadas que comprimen valores grandes en rangos pequeños (como sigmoid o tanh)</li>
+                        <li>Multiplicación repetida de números pequeños durante la retropropagación</li>
+                        <li>Arquitecturas muy profundas con muchas capas</li>
+                    </ul>
+                    
+                    <div class="formula">
+                        <p>Para la función sigmoid: σ(x) = 1/(1+e<sup>-x</sup>)</p>
+                        <p>Su derivada: σ'(x) = σ(x)(1-σ(x))</p>
+                        <p>Cuando |x| es grande, σ'(x) ≈ 0</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <canvas id="vanishingGradientChart"></canvas>
+                    </div>
+                    <div class="example-box">
+                        <h5>Ejemplo visual</h5>
+                        <p>En esta visualización, observe cómo la magnitud del gradiente (representada por el color) se desvanece a medida que retrocedemos desde la capa de salida hacia las primeras capas.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chilean-example mt-4">
+                <h5><i class="fas fa-mountain"></i> Contexto Chileno: Predicción de Nevadas en la Cordillera</h5>
+                <p>Imagina que estamos desarrollando un modelo de Deep Learning para predecir nevadas en centros de esquí chilenos como Valle Nevado, Portillo y La Parva:</p>
+                <ul>
+                    <li><strong>Problema:</strong> Queremos predecir con 7 días de anticipación la cantidad de nieve que caerá, usando datos históricos de temperatura, presión, humedad y patrones climáticos del Pacífico.</li>
+                    <li><strong>Arquitectura:</strong> Una red neuronal profunda con 15 capas para capturar patrones climáticos complejos.</li>
+                    <li><strong>Síntoma del desvanecimiento:</strong> El modelo aprende bien patrones recientes (últimos 2 días) pero ignora completamente patrones climáticos de largo plazo como El Niño/La Niña que son cruciales para predecir nevadas intensas.</li>
+                    <li><strong>Causa:</strong> Los gradientes que conectan las predicciones con los patrones climáticos de largo plazo se han desvanecido tanto que estas características apenas influyen en el aprendizaje.</li>
+                </ul>
+                <p>Este problema es particularmente relevante en Chile, donde los fenómenos climáticos de largo plazo como El Niño/La Niña tienen un impacto significativo en las precipitaciones cordilleranas.</p>
+            </div>
+            
+            <div class="warning-box mt-4">
+                <h5><i class="fas fa-exclamation-circle"></i> Consecuencias del desvanecimiento</h5>
+                <p>Cuando los gradientes se desvanecen:</p>
+                <ul>
+                    <li>Las capas iniciales de la red aprenden muy lentamente o dejan de aprender</li>
+                    <li>La red no puede capturar relaciones complejas en los datos</li>
+                    <li>El entrenamiento se estanca con un rendimiento subóptimo</li>
+                </ul>
+            </div>
+            
+            <div class="code-box mt-4">
+                <pre><code># Ejemplo de cálculo del gradiente en una red con sigmoid
+# Asumiendo una red de 10 capas con pesos inicializados aleatoriamente
+import numpy as np
+
+def sigmoid(x):
+    return 1 / (1 + np.exp(-x))
+
+def sigmoid_derivative(x):
+    return sigmoid(x) * (1 - sigmoid(x))
+
+# Simulación de propagación del gradiente a través de 10 capas
+x = np.random.randn(1)
+weights = np.random.randn(10) * 0.1  # Pesos pequeños inicializados
+activations = []
+derivatives = []
+
+# Forward pass
+for w in weights:
+    x = sigmoid(w * x)
+    activations.append(x)
+    derivatives.append(sigmoid_derivative(x))
+
+# Backward pass - calculando el gradiente
+gradient = 1.0  # Gradiente inicial desde la función de pérdida
+gradients = []
+
+for deriv in derivatives[::-1]:
+    gradient = gradient * deriv
+    gradients.append(gradient)
+
+print("Gradientes por capa (de última a primera):", gradients)</code></pre>
+            </div>
+        </section>
+
+        <!-- Explosión del Gradiente -->
+        <section id="exploding" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">Explosión del Gradiente</h2>
+            <p class="lead">La explosión del gradiente ocurre cuando los gradientes acumulan valores extremadamente grandes durante la retropropagación.</p>
+            
+            <div class="row mt-4">
+                <div class="col-lg-6">
+                    <h4><i class="fas fa-question-circle text-primary"></i> ¿Por qué ocurre?</h4>
+                    <p>La explosión del gradiente puede ocurrir debido a:</p>
+                    <ul>
+                        <li>Pesos inicializados con valores grandes</li>
+                        <li>Tasas de aprendizaje demasiado altas</li>
+                        <li>Arquitecturas recurrentes (RNN) con dependencias temporales largas</li>
+                        <li>Multiplicación repetida de números mayores que 1 durante la retropropagación</li>
+                    </ul>
+                    
+                    <div class="formula">
+                        <p>Si los pesos W<sub>i</sub> > 1, entonces:</p>
+                        <p>∏ W<sub>i</sub> puede crecer exponencialmente con la profundidad</p>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <canvas id="explodingGradientChart"></canvas>
+                    </div>
+                    <div class="example-box">
+                        <h5>Ejemplo visual</h5>
+                        <p>En esta visualización, observe cómo la magnitud del gradiente (representada por el color) crece exponencialmente a medida que retrocedemos a través de las capas.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chilean-example mt-4">
+                <h5><i class="fas fa-water"></i> Contexto Chileno: Predicción de Tsunamis en la Costa Chilena</h5>
+                <p>Consideremos un modelo de Deep Learning desarrollado por el SHOA (Servicio Hidrográfico y Oceanográfico de la Armada) para predecir la altura de tsunamis después de terremotos:</p>
+                <ul>
+                    <li><strong>Problema:</strong> Predecir la altura y tiempo de llegada de tsunamis en diferentes puntos de la costa chilena tras un terremoto submarino.</li>
+                    <li><strong>Datos:</strong> Series temporales de sensores sísmicos, boyas oceánicas y datos históricos de terremotos y tsunamis en Chile.</li>
+                    <li><strong>Arquitectura:</strong> Una red recurrente (LSTM) que procesa secuencias de datos sísmicos.</li>
+                    <li><strong>Síntoma de explosión:</strong> Durante el entrenamiento con datos del terremoto de 2010 (8.8 Mw), el modelo comienza a predecir alturas de tsunami absurdamente grandes (>100 metros) para pequeños temblores, y los pesos del modelo se vuelven numéricamente inestables (NaN).</li>
+                    <li><strong>Causa:</strong> Los gradientes explotan cuando la red intenta modelar la relación no lineal entre la magnitud del terremoto y la altura del tsunami, especialmente con eventos extremos como el de 2010.</li>
+                </ul>
+                <p>Este es un problema crítico en Chile, donde la predicción precisa de tsunamis puede salvar miles de vidas en una de las zonas sísmicas más activas del mundo.</p>
+            </div>
+            
+            <div class="warning-box mt-4">
+                <h5><i class="fas fa-exclamation-circle"></i> Consecuencias de la explosión</h5>
+                <p>Cuando los gradientes explotan:</p>
+                <ul>
+                    <li>Los pesos pueden actualizarse con valores extremadamente grandes</li>
+                    <li>La función de pérdida puede diverger, haciendo que el entrenamiento falle</li>
+                    <li>Pueden aparecer valores NaN (Not a Number) en los parámetros del modelo</li>
+                    <li>El modelo puede volverse numéricamente inestable</li>
+                </ul>
+            </div>
+            
+            <div class="code-box mt-4">
+                <pre><code># Ejemplo de explosión del gradiente en una RNN simple
+import numpy as np
+
+# Simulación de una RNN simple con una secuencia de 100 pasos temporales
+sequence_length = 100
+hidden_size = 10
+
+# Inicialización de pesos con valores ligeramente grandes
+W_h = np.random.randn(hidden_size, hidden_size) * 1.2  # Pesos recurrentes > 1
+
+# Estado inicial
+h_t = np.ones((hidden_size, 1)) * 0.1
+
+# Forward pass a través del tiempo
+hidden_states = [h_t]
+for t in range(sequence_length):
+    h_t = np.tanh(np.dot(W_h, h_t))
+    hidden_states.append(h_t)
+
+# Backward pass - simulando el cálculo del gradiente
+gradient = np.ones_like(h_t)  # Gradiente inicial
+gradients_magnitude = []
+
+for t in reversed(range(sequence_length)):
+    # Gradiente con respecto al estado oculto
+    gradient = gradient * (1 - hidden_states[t+1]**2)  # Derivada de tanh
+    gradient = np.dot(W_h.T, gradient)
+    gradients_magnitude.append(np.linalg.norm(gradient))
+
+print("Norma del gradiente en cada paso temporal (de último a primero):", gradients_magnitude)</code></pre>
+            </div>
+        </section>
+
+        <!-- Soluciones -->
+        <section id="solutions" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">Soluciones a los Problemas de Gradiente</h2>
+            
+            <ul class="nav nav-pills mb-4" id="solutions-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="vanishing-solutions-tab" data-bs-toggle="pill" data-bs-target="#vanishing-solutions" type="button" role="tab">Desvanecimiento</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="exploding-solutions-tab" data-bs-toggle="pill" data-bs-target="#exploding-solutions" type="button" role="tab">Explosión</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="general-solutions-tab" data-bs-toggle="pill" data-bs-target="#general-solutions" type="button" role="tab">Soluciones Generales</button>
+                </li>
+            </ul>
+
+            <!-- Sección Interactiva de Cálculo de Gradientes -->
+<section id="gradient-calculator" class="mb-5" data-aos="fade-up">
+    <h2 class="section-title">Calculadora Interactiva de Gradientes</h2>
+    <p class="lead">Experimenta con el cálculo de gradientes en el contexto de la Cordillera de los Andes.</p>
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-mountain"></i> Modelo de Elevación Andina
+                </div>
+                <div class="card-body">
+                    <p>La Cordillera de los Andes presenta variaciones de elevación que pueden modelarse como una función multivariable. En aprendizaje profundo, calculamos gradientes para encontrar la dirección de máximo descenso.</p>
+                    
+                    <div class="formula-container p-3 bg-light rounded mb-4">
+                        <h5>Modelo de Elevación:</h5>
+                        <p>$$f(x, y) = a \cdot e^{-\frac{(x-b)^2 + (y-c)^2}{2d^2}} + h$$</p>
+                        <p>Donde:</p>
+                        <ul>
+                            <li>\(a\) = Amplitud (altura máxima relativa)</li>
+                            <li>\(b, c\) = Coordenadas del pico central</li>
+                            <li>\(d\) = Dispersión (ancho de la montaña)</li>
+                            <li>\(h\) = Altura base (metros sobre el nivel del mar)</li>
+                        </ul>
+                        
+                        <h5>Gradiente:</h5>
+                        <p>$$\nabla f(x, y) = \begin{bmatrix} 
+                        \frac{\partial f}{\partial x} \\
+                        \frac{\partial f}{\partial y}
+                        \end{bmatrix} = \begin{bmatrix} 
+                        -a \cdot \frac{x-b}{d^2} \cdot e^{-\frac{(x-b)^2 + (y-c)^2}{2d^2}} \\
+                        -a \cdot \frac{y-c}{d^2} \cdot e^{-\frac{(x-b)^2 + (y-c)^2}{2d^2}}
+                        \end{bmatrix}$$</p>
+                    </div>
+                    
+                    <p>Este modelo simula la elevación de un sector de la Cordillera de los Andes. El gradiente indica la dirección de máxima pendiente en cada punto, crucial para:</p>
+                    <ul>
+                        <li>Predecir rutas de avalanchas</li>
+                        <li>Optimizar senderos de trekking</li>
+                        <li>Modelar el flujo de glaciares</li>
+                        <li>Simular escurrimientos de agua</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-6">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-calculator"></i> Calculadora de Gradientes
+                </div>
+                <div class="card-body">
+                    <p>Ingresa los parámetros del modelo y las coordenadas para calcular el gradiente en ese punto de la Cordillera:</p>
+                    
+                    <form id="gradient-form" class="mb-4">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="param-a" class="form-label">Amplitud (a):</label>
+                                <input type="number" class="form-control" id="param-a" value="3500" step="100">
+                                <small class="text-muted">Altura máxima relativa en metros</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="param-h" class="form-label">Altura base (h):</label>
+                                <input type="number" class="form-control" id="param-h" value="2000" step="100">
+                                <small class="text-muted">Metros sobre nivel del mar</small>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="param-b" class="form-label">Centro X (b):</label>
+                                <input type="number" class="form-control" id="param-b" value="0" step="0.5">
+                                <small class="text-muted">Coordenada X del pico central</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="param-c" class="form-label">Centro Y (c):</label>
+                                <input type="number" class="form-control" id="param-c" value="0" step="0.5">
+                                <small class="text-muted">Coordenada Y del pico central</small>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="param-d" class="form-label">Dispersión (d):</label>
+                                <input type="number" class="form-control" id="param-d" value="3" min="0.1" step="0.1">
+                                <small class="text-muted">Ancho de la montaña (km)</small>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="coord-x" class="form-label">Coordenada X:</label>
+                                <input type="number" class="form-control" id="coord-x" value="2" step="0.5">
+                                <small class="text-muted">Distancia Este-Oeste (km)</small>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="coord-y" class="form-label">Coordenada Y:</label>
+                                <input type="number" class="form-control" id="coord-y" value="1" step="0.5">
+                                <small class="text-muted">Distancia Norte-Sur (km)</small>
+                            </div>
+                        </div>
+                        
+                        <button type="button" id="calculate-btn" class="btn btn-primary">Calcular Gradiente</button>
+                    </form>
+                    
+                    <div id="result-container" class="p-3 bg-light rounded">
+                        <h5>Resultados:</h5>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p><strong>Elevación:</strong> <span id="elevation-result">-</span> metros</p>
+                                <p><strong>Pendiente:</strong> <span id="slope-result">-</span> grados</p>
+                            </div>
+                            <div class="col-md-6">
+                                <p><strong>Gradiente X:</strong> <span id="gradient-x-result">-</span> m/km</p>
+                                <p><strong>Gradiente Y:</strong> <span id="gradient-y-result">-</span> m/km</p>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p><strong>Interpretación:</strong> <span id="interpretation">-</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card mt-4">
+                <div class="card-header bg-info text-white">
+                    <i class="fas fa-info-circle"></i> Contexto Andino
+                </div>
+                <div class="card-body">
+                    <p>La Cordillera de los Andes presenta algunos de los gradientes más extremos del planeta:</p>
+                    <ul>
+                        <li><strong>Aconcagua (6962m):</strong> Gradientes de hasta 1500m/km en su cara sur</li>
+                        <li><strong>Valle del Cajón del Maipo:</strong> Cambios de elevación de 1000m en menos de 2km</li>
+                        <li><strong>Glaciar Universidad (Chile central):</strong> Fluye siguiendo gradientes de 300-500m/km</li>
+                    </ul>
+                    <p>En aprendizaje profundo, los gradientes funcionan de manera similar: indican la dirección y magnitud del cambio necesario para optimizar la función objetivo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <i class="fas fa-chart-area"></i> Visualización 3D
+                </div>
+                <div class="card-body">
+                    <div class="gradient-visualization" style="height: 400px;">
+                        <canvas id="mountain-3d-chart"></canvas>
+                    </div>
+                    <div class="text-center mt-3">
+                        <p class="text-muted">El gráfico muestra el modelo de elevación y los vectores de gradiente. Las flechas indican la dirección de máxima pendiente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Script para la calculadora de gradientes -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Referencias a elementos del DOM
+        const calculateBtn = document.getElementById('calculate-btn');
+        const elevationResult = document.getElementById('elevation-result');
+        const slopeResult = document.getElementById('slope-result');
+        const gradientXResult = document.getElementById('gradient-x-result');
+        const gradientYResult = document.getElementById('gradient-y-result');
+        const interpretation = document.getElementById('interpretation');
+        
+        // Función para calcular la elevación
+        function calculateElevation(x, y, a, b, c, d, h) {
+            return a * Math.exp(-((x-b)**2 + (y-c)**2)/(2*d**2)) + h;
+        }
+        
+        // Función para calcular el gradiente
+        function calculateGradient(x, y, a, b, c, d) {
+            const expTerm = Math.exp(-((x-b)**2 + (y-c)**2)/(2*d**2));
+            const dx = -a * ((x-b)/(d**2)) * expTerm;
+            const dy = -a * ((y-c)/(d**2)) * expTerm;
+            return [dx, dy];
+        }
+        
+        // Función para calcular la pendiente en grados
+        function calculateSlope(gradX, gradY) {
+            const gradientMagnitude = Math.sqrt(gradX**2 + gradY**2);
+            // Convertir a grados (arctan de la pendiente)
+            return Math.atan(gradientMagnitude/1000) * (180/Math.PI);
+        }
+        
+        // Función para interpretar el resultado
+        function getInterpretation(slope, elevation) {
+            if (slope < 5) {
+                return `Terreno suave con pendiente leve. Típico de altiplanos andinos como el Altiplano Boliviano-Chileno (${elevation.toFixed(0)}m).`;
+            } else if (slope < 15) {
+                return `Pendiente moderada. Similar a zonas de precordillera como el Valle de Elqui (${elevation.toFixed(0)}m).`;
+            } else if (slope < 30) {
+                return `Pendiente pronunciada. Comparable a laderas de cerros como Cerro Provincia en Santiago (${elevation.toFixed(0)}m).`;
+            } else if (slope < 45) {
+                return `Pendiente muy fuerte. Similar a sectores del Cajón del Maipo o Valle Nevado (${elevation.toFixed(0)}m).`;
+            } else {
+                return `Pendiente extrema. Comparable a caras norte de montañas como Cerro El Plomo o glaciares colgantes (${elevation.toFixed(0)}m).`;
+            }
+        }
+        
+        // Manejador del evento click en el botón calcular
+        calculateBtn.addEventListener('click', function() {
+            // Obtener valores de los inputs
+            const a = parseFloat(document.getElementById('param-a').value);
+            const b = parseFloat(document.getElementById('param-b').value);
+            const c = parseFloat(document.getElementById('param-c').value);
+            const d = parseFloat(document.getElementById('param-d').value);
+            const h = parseFloat(document.getElementById('param-h').value);
+            const x = parseFloat(document.getElementById('coord-x').value);
+            const y = parseFloat(document.getElementById('coord-y').value);
+            
+            // Calcular elevación y gradiente
+            const elevation = calculateElevation(x, y, a, b, c, d, h);
+            const [gradX, gradY] = calculateGradient(x, y, a, b, c, d);
+            const slope = calculateSlope(gradX, gradY);
+            
+            // Mostrar resultados
+            elevationResult.textContent = elevation.toFixed(2);
+            gradientXResult.textContent = gradX.toFixed(2);
+            gradientYResult.textContent = gradY.toFixed(2);
+            slopeResult.textContent = slope.toFixed(2);
+            interpretation.textContent = getInterpretation(slope, elevation);
+            
+            // Actualizar gráfico 3D (si estuviera implementado)
+            updateMountainChart(a, b, c, d, h, x, y, gradX, gradY);
+        });
+        
+        // Función para crear/actualizar el gráfico 3D
+        function updateMountainChart(a, b, c, d, h, pointX, pointY, gradX, gradY) {
+            // Crear datos para el gráfico
+            const xValues = Array.from({length: 21}, (_, i) => -5 + i * 0.5);
+            const yValues = Array.from({length: 21}, (_, i) => -5 + i * 0.5);
+            
+            // Calcular valores Z (elevación) para cada punto
+            const zValues = [];
+            for (let i = 0; i < yValues.length; i++) {
+                const row = [];
+                for (let j = 0; j < xValues.length; j++) {
+                    row.push(calculateElevation(xValues[j], yValues[i], a, b, c, d, h));
+                }
+                zValues.push(row);
+            }
+            
+            // Crear datos para el gráfico de superficie
+            const data = {
+                z: zValues,
+                x: xValues,
+                y: yValues,
+                type: 'surface',
+                colorscale: 'Earth',
+                contours: {
+                    z: {
+                        show: true,
+                        usecolormap: true,
+                        highlightcolor: "#42f462",
+                        project: {z: true}
+                    }
+                }
+            };
+            
+            // Crear un punto para mostrar la ubicación seleccionada
+            const pointData = {
+                x: [pointX],
+                y: [pointY],
+                z: [calculateElevation(pointX, pointY, a, b, c, d, h)],
+                mode: 'markers',
+                type: 'scatter3d',
+                marker: {
+                    size: 8,
+                    color: 'red'
+                },
+                name: 'Punto seleccionado'
+            };
+            
+            // Crear una flecha para mostrar el gradiente
+            const arrowLength = 0.5; // Longitud de la flecha
+            const gradientMagnitude = Math.sqrt(gradX**2 + gradY**2);
+            const normalizedGradX = gradX / gradientMagnitude * arrowLength;
+            const normalizedGradY = gradY / gradientMagnitude * arrowLength;
+            
+            const arrowData = {
+                x: [pointX, pointX - normalizedGradX],
+                y: [pointY, pointY - normalizedGradY],
+                z: [
+                    calculateElevation(pointX, pointY, a, b, c, d, h),
+                    calculateElevation(pointX - normalizedGradX, pointY - normalizedGradY, a, b, c, d, h)
+                ],
+                mode: 'lines',
+                type: 'scatter3d',
+                line: {
+                    width: 6,
+                    color: 'blue'
+                },
+                name: 'Dirección del gradiente'
+            };
+            
+            // Configuración del layout
+            const layout = {
+                title: 'Modelo de Elevación de la Cordillera',
+                autosize: true,
+                scene: {
+                    camera: {
+                        eye: {x: 1.5, y: 1.5, z: 1.2}
+                    },
+                    xaxis: {title: 'Este-Oeste (km)'},
+                    yaxis: {title: 'Norte-Sur (km)'},
+                    zaxis: {title: 'Elevación (m)'}
+                },
+                margin: {l: 0, r: 0, b: 0, t: 50}
+            };
+            
+            // Renderizar el gráfico
+            Plotly.newPlot('mountain-3d-chart', [data, pointData, arrowData], layout);
+        }
+        
+        // Inicializar el gráfico con valores predeterminados
+        updateMountainChart(3500, 0, 0, 3, 2000, 2, 1, -778.97, -389.49);
+    });
+</script>
+
+<!-- Incluir Plotly.js para gráficos 3D -->
+
+            
+            <div class="tab-content" id="solutions-tabContent">
+                <!-- Soluciones para el desvanecimiento -->
+                <div class="tab-pane fade show active" id="vanishing-solutions" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-bolt text-primary"></i> Funciones de Activación Alternativas
+                                </div>
+                                <div class="card-body">
+                                    <p>Usar funciones de activación que no saturen fácilmente:</p>
+                                    <ul>
+                                        <li><strong>ReLU:</strong> f(x) = max(0, x)</li>
+                                        <li><strong>Leaky ReLU:</strong> f(x) = max(0.01x, x)</li>
+                                        <li><strong>ELU:</strong> f(x) = x si x > 0, α(e<sup>x</sup>-1) si x ≤ 0</li>
+                                    </ul>
+                                    <div class="chart-container" style="height: 200px;">
+                                        <canvas id="activationFunctionsChart"></canvas>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-wine-glass-alt"></i> Aplicación en Viticultura Chilena</h5>
+                                        <p>En un modelo para predecir la calidad de vinos del Valle de Colchagua basado en datos climáticos:</p>
+                                        <ul>
+                                            <li><strong>Con Sigmoid:</strong> El modelo no detectaba la influencia de heladas tempranas (eventos raros pero críticos).</li>
+                                            <li><strong>Con ReLU:</strong> El modelo mejoró un 23% en la predicción de calidad para años con eventos climáticos extremos.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-random text-primary"></i> Inicialización de Pesos
+                                </div>
+                                <div class="card-body">
+                                    <p>Usar métodos de inicialización que mantengan la varianza de las activaciones:</p>
+                                    <ul>
+                                        <li><strong>Xavier/Glorot:</strong> Ideal para funciones tanh</li>
+                                        <li><strong>He:</strong> Optimizado para ReLU</li>
+                                    </ul>
+                                    <div class="code-box">
+                                        <pre><code># Keras - Inicialización He
+from tensorflow.keras.initializers import HeNormal
+
+model.add(Dense(64, 
+                kernel_initializer=HeNormal(), 
+                activation='relu'))</code></pre>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-subway"></i> Caso Metro de Santiago</h5>
+                                        <p>En un sistema de predicción de afluencia de pasajeros en el Metro de Santiago:</p>
+                                        <ul>
+                                            <li><strong>Con inicialización aleatoria:</strong> El modelo convergía lentamente y tenía dificultades para capturar patrones en líneas menos transitadas como la Línea 6.</li>
+                                            <li><strong>Con inicialización He:</strong> El tiempo de entrenamiento se redujo un 40% y mejoró la precisión en estaciones con patrones complejos como Tobalaba (intercambio entre Líneas 1 y 4).</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-project-diagram text-primary"></i> Conexiones Residuales
+                                </div>
+                                <div class="card-body">
+                                    <p>Crear atajos que permitan que el gradiente fluya directamente a capas anteriores:</p>
+                                    <img src="https://via.placeholder.com/400x200?text=Residual+Connection" alt="Conexión Residual" class="img-fluid rounded mb-3">
+                                    <div class="code-box">
+                                        <pre><code># TensorFlow - Bloque residual
+def residual_block(x, filters):
+    shortcut = x
+    
+    # Primera capa convolucional
+    x = Conv2D(filters, (3, 3), padding='same')(x)
+    x = BatchNormalization()(x)
+    x = Activation('relu')(x)
+    
+    # Segunda capa convolucional
+    x = Conv2D(filters, (3, 3), padding='same')(x)
+    x = BatchNormalization()(x)
+    
+    # Conexión residual
+    x = Add()([x, shortcut])
+    x = Activation('relu')(x)
+    
+    return x</code></pre>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-satellite"></i> Monitoreo de Glaciares Chilenos</h5>
+                                        <p>En un proyecto para detectar cambios en glaciares de la Patagonia usando imágenes satelitales:</p>
+                                        <ul>
+                                            <li><strong>Red CNN estándar:</strong> Detectaba cambios grandes pero fallaba en identificar retrocesos sutiles del hielo.</li>
+                                            <li><strong>Red ResNet:</strong> Mejoró la detección de cambios sutiles en un 35%, crucial para monitorear el impacto del cambio climático en el Campo de Hielo Sur.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-layer-group text-primary"></i> Batch Normalization
+                                </div>
+                                <div class="card-body">
+                                    <p>Normalizar las activaciones en cada capa para evitar la saturación:</p>
+                                    <div class="formula">
+                                        <p>y = γ * ((x - μ) / σ) + β</p>
+                                    </div>
+                                    <p>Donde μ y σ son la media y desviación estándar del batch, y γ y β son parámetros aprendibles.</p>
+                                    <div class="code-box">
+                                        <pre><code># Keras - Batch Normalization
+model.add(Dense(64))
+model.add(BatchNormalization())
+model.add(Activation('relu'))</code></pre>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-fish"></i> Acuicultura en Chiloé</h5>
+                                        <p>En un sistema de monitoreo de salud para salmones en centros de cultivo en Chiloé:</p>
+                                        <ul>
+                                            <li><strong>Sin Batch Normalization:</strong> El modelo tenía dificultades para generalizar entre diferentes centros de cultivo con distintas condiciones de agua.</li>
+                                            <li><strong>Con Batch Normalization:</strong> La precisión en la detección temprana de enfermedades mejoró un 28%, permitiendo intervenciones más rápidas y reduciendo el uso de antibióticos.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Soluciones para la explosión -->
+                <div class="tab-pane fade" id="exploding-solutions" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-cut text-primary"></i> Gradient Clipping
+                                </div>
+                                <div class="card-body">
+                                    <p>Limitar la norma del gradiente para evitar actualizaciones demasiado grandes:</p>
+                                    <div class="formula">
+                                        <p>Si ||g|| > c, entonces g = c * g / ||g||</p>
+                                    </div>
+                                    <p>Donde g es el gradiente, ||g|| es su norma y c es el umbral máximo.</p>
+                                    <div class="code-box">
+                                        <pre><code># TensorFlow - Gradient Clipping
+optimizer = tf.keras.optimizers.Adam(clipnorm=1.0)
+model.compile(optimizer=optimizer, loss='mse')</code></pre>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-chart-line"></i> Predicción del Precio del Cobre</h5>
+                                        <p>En un modelo para predecir el precio del cobre (crucial para la economía chilena):</p>
+                                        <ul>
+                                            <li><strong>Sin Gradient Clipping:</strong> El modelo era inestable durante eventos de alta volatilidad como la crisis financiera de 2008 o la pandemia de 2020.</li>
+                                            <li><strong>Con Gradient Clipping:</strong> El modelo mantuvo la estabilidad incluso durante periodos de alta volatilidad, mejorando la precisión en un 18% durante eventos extremos.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-weight-hanging text-primary"></i> Regularización de Pesos
+                                </div>
+                                <div class="card-body">
+                                    <p>Penaliza pesos grandes añadiendo un término a la función de pérdida:</p>
+                                    <div class="formula">
+                                        <p>L = L<sub>original</sub> + λ||W||<sup>2</sup></p>
+                                    </div>
+                                    <p>Donde λ controla la fuerza de la regularización.</p>
+                                    <div class="code-box">
+                                        <pre><code># Keras - Regularización L2
+from tensorflow.keras.regularizers import l2
+model.add(Dense(64, kernel_regularizer=l2(0.001)))</code></pre>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-house-damage"></i> Evaluación de Riesgo Sísmico</h5>
+                                        <p>En un modelo para evaluar el riesgo sísmico de edificios en Santiago:</p>
+                                        <ul>
+                                            <li><strong>Sin regularización:</strong> El modelo sobreestimaba el riesgo para edificios con características inusuales pero seguras.</li>
+                                            <li><strong>Con regularización L2:</strong> El modelo generalizó mejor entre diferentes tipos de estructuras, reduciendo las falsas alarmas en un 40% mientras mantenía alta sensibilidad para edificios realmente vulnerables.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-door-open text-primary"></i> Arquitecturas de Memoria Controlada
+                                </div>
+                                <div class="card-body">
+                                    <p>Para redes recurrentes, usar arquitecturas con mecanismos de puerta:</p>
+                                    <ul>
+                                        <li><strong>LSTM:</strong> Long Short-Term Memory</li>
+                                        <li><strong>GRU:</strong> Gated Recurrent Unit</li>
+                                    </ul>
+                                    <p>Estas arquitecturas controlan el flujo de información y gradientes, mitigando la explosión.</p>
+                                    <img src="https://via.placeholder.com/400x200?text=LSTM+Architecture" alt="Arquitectura LSTM" class="img-fluid rounded">
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-water"></i> Predicción de Marejadas en la Costa Chilena</h5>
+                                        <p>En un sistema para predecir marejadas peligrosas en la costa central:</p>
+                                        <ul>
+                                            <li><strong>Con RNN simple:</strong> El modelo fallaba al intentar relacionar patrones climáticos distantes en el Pacífico con marejadas en la costa chilena.</li>
+                                            <li><strong>Con LSTM:</strong> El modelo pudo capturar dependencias temporales de hasta 2 semanas, mejorando el tiempo de alerta para pescadores artesanales de Valparaíso y San Antonio en un 300%.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-tachometer-alt text-primary"></i> Tasas de Aprendizaje Adaptativas
+                                </div>
+                                <div class="card-body">
+                                    <p>Usar optimizadores que ajusten automáticamente la tasa de aprendizaje:</p>
+                                    <ul>
+                                        <li><strong>Adam:</strong> Combina RMSprop y momentum</li>
+                                        <li><strong>AdaGrad:</strong> Adapta tasas por parámetro</li>
+                                        <li><strong>RMSprop:</strong> Normaliza por la media de gradientes recientes</li>
+                                    </ul>
+                                    <div class="code-box">
+                                        <pre><code># Keras - Optimizador Adam
+optimizer = tf.keras.optimizers.Adam(
+    learning_rate=0.001,
+    beta_1=0.9,
+    beta_2=0.999
+)</code></pre>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-solar-panel"></i> Optimización de Plantas Solares en Atacama</h5>
+                                        <p>En un modelo para optimizar la producción de energía en plantas solares del desierto de Atacama:</p>
+                                        <ul>
+                                            <li><strong>Con SGD estándar:</strong> El entrenamiento era inestable debido a la alta variabilidad en los datos de radiación solar entre estaciones.</li>
+                                            <li><strong>Con Adam:</strong> El modelo convergió 5 veces más rápido y mejoró la predicción de producción energética en un 12%, permitiendo mejor planificación para el Sistema Eléctrico Nacional.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Soluciones generales -->
+                <div class="tab-pane fade" id="general-solutions" role="tabpanel">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-network-wired text-primary"></i> Arquitecturas Modernas
+                                </div>
+                                <div class="card-body">
+                                    <p>Las arquitecturas modernas están diseñadas para mitigar problemas de gradiente:</p>
+                                    <ul>
+                                        <li><strong>ResNet:</strong> Conexiones residuales</li>
+                                        <li><strong>DenseNet:</strong> Conexiones densas entre capas</li>
+                                        <li><strong>Transformer:</strong> Mecanismos de atención en lugar de recurrencia</li>
+                                    </ul>
+                                    <img src="https://via.placeholder.com/400x200?text=Modern+Architectures" alt="Arquitecturas Modernas" class="img-fluid rounded">
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-language"></i> Procesamiento del Español Chileno</h5>
+                                        <p>En un sistema para analizar el sentimiento en redes sociales sobre temas de contingencia nacional:</p>
+                                        <ul>
+                                            <li><strong>Con RNN/LSTM:</strong> El modelo tenía dificultades con modismos chilenos y contexto cultural local.</li>
+                                            <li><strong>Con Transformer:</strong> El modelo capturó mejor el contexto y los modismos chilenos ("bacán", "fome", "la raja"), mejorando la precisión en un 27% para análisis de opiniones sobre el estallido social de 2019.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-graduation-cap text-primary"></i> Entrenamiento por Etapas
+                                </div>
+                                <div class="card-body">
+                                    <p>Estrategias de entrenamiento progresivo:</p>
+                                    <ul>
+                                        <li><strong>Curriculum Learning:</strong> Entrenar con ejemplos de dificultad creciente</li>
+                                        <li><strong>Layer-wise Pretraining:</strong> Entrenar capas individualmente antes de ajustar toda la red</li>
+                                        <li><strong>Transfer Learning:</strong> Comenzar con pesos pre-entrenados</li>
+                                    </ul>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-hospital"></i> Diagnóstico Médico en Zonas Rurales</h5>
+                                        <p>En un proyecto para diagnosticar enfermedades respiratorias en zonas rurales de Chile:</p>
+                                        <ul>
+                                            <li><strong>Entrenamiento desde cero:</strong> El modelo requería miles de radiografías de tórax etiquetadas, imposibles de obtener en hospitales rurales.</li>
+                                            <li><strong>Transfer Learning:</strong> Usando un modelo pre-entrenado con ImageNet y ajustándolo con solo 200 radiografías de hospitales regionales, se logró una precisión del 92% en la detección de neumonía, beneficiando a comunidades en Aysén y La Araucanía.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-search text-primary"></i> Monitoreo y Diagnóstico
+                                </div>
+                                <div class="card-body">
+                                    <p>Herramientas para detectar problemas de gradiente:</p>
+                                    <ul>
+                                        <li>Visualizar histogramas de gradientes durante el entrenamiento</li>
+                                        <li>Monitorear la norma del gradiente por capa</li>
+                                        <li>Analizar la evolución de los pesos</li>
+                                    </ul>
+                                    <div class="code-box">
+                                        <pre><code># TensorFlow - Monitoreo de gradientes con TensorBoard
+import tensorflow as tf
+
+# Crear un callback para TensorBoard
+tensorboard_callback = tf.keras.callbacks.TensorBoard(
+    log_dir="./logs",
+    histogram_freq=1  # Registrar histogramas cada época
+)
+
+# Usar el callback durante el entrenamiento
+model.fit(
+    x_train, y_train,
+    epochs=50,
+    callbacks=[tensorboard_callback]
+)</code></pre>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-microscope"></i> Investigación en la Universidad de Chile</h5>
+                                        <p>En un proyecto de investigación del Departamento de Ciencias de la Computación:</p>
+                                        <ul>
+                                            <li>Los investigadores implementaron un sistema de monitoreo de gradientes que permitió identificar que el desvanecimiento ocurría específicamente en las capas que procesaban características geográficas en un modelo de predicción climática.</li>
+                                            <li>Este diagnóstico permitió rediseñar solo esa parte de la arquitectura, mejorando la precisión sin aumentar significativamente el costo computacional.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card mb-4">
+                                <div class="card-header">
+                                    <i class="fas fa-balance-scale text-primary"></i> Normalización de Datos
+                                </div>
+                                <div class="card-body">
+                                    <p>Preparación adecuada de los datos de entrada:</p>
+                                    <ul>
+                                        <li>Estandarización (media 0, desviación estándar 1)</li>
+                                        <li>Normalización min-max (escalar a [0,1] o [-1,1])</li>
+                                        <li>Whitening (decorrelación de características)</li>
+                                    </ul>
+                                    <div class="code-box">
+                                        <pre><code># Python - Normalización de datos con scikit-learn
+from sklearn.preprocessing import StandardScaler
+
+# Crear el scaler
+scaler = StandardScaler()
+
+# Ajustar y transformar los datos de entrenamiento
+X_train_scaled = scaler.fit_transform(X_train)
+
+# Transformar datos de prueba
+X_test_scaled = scaler.transform(X_test)</code></pre>
+                                    </div>
+                                    
+                                    <div class="chilean-example mt-3">
+                                        <h5><i class="fas fa-leaf"></i> Agricultura de Precisión en el Valle Central</h5>
+                                        <p>En un proyecto para optimizar el riego en viñedos del Valle Central:</p>
+                                        <ul>
+                                            <li><strong>Sin normalización:</strong> El modelo daba peso excesivo a variables con valores grandes (como radiación solar) e ignoraba variables importantes con valores pequeños (como concentraciones de minerales en el suelo).</li>
+                                            <li><strong>Con normalización:</strong> El modelo balanceó adecuadamente todas las variables, reduciendo el consumo de agua en un 27% mientras mantenía la calidad de la uva para vinos premium de exportación.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementaciones Prácticas -->
+        <section id="implementations" class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">Implementaciones Prácticas</h2>
+            <p class="lead">Ejemplos de código para implementar soluciones a problemas de gradiente en frameworks populares.</p>
+            
+            <ul class="nav nav-pills mb-4" id="implementations-tab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tensorflow-tab" data-bs-toggle="pill" data-bs-target="#tensorflow" type="button" role="tab">TensorFlow/Keras</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pytorch-tab" data-bs-toggle="pill" data-bs-target="#pytorch" type="button" role="tab">PyTorch</button>
+                </li>
+            </ul>
+            
+            <div class="tab-content" id="implementations-tabContent">
+                <!-- TensorFlow/Keras -->
+                <div class="tab-pane fade show active" id="tensorflow" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fab fa-python text-primary"></i> Modelo Resistente a Problemas de Gradiente en TensorFlow/Keras
+                        </div>
+                        <div class="card-body">
+                            <div class="code-box">
+                                <pre><code>import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, LSTM, BatchNormalization, Dropout
+from tensorflow.keras.initializers import HeNormal
+from tensorflow.keras.regularizers import l2
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
+
+# Crear un modelo resistente a problemas de gradiente
+def create_robust_model(input_shape, output_units):
+    model = Sequential([
+        # Capa de entrada con inicialización He y regularización L2
+        Dense(128, 
+              kernel_initializer=HeNormal(), 
+              kernel_regularizer=l2(0.001),
+              input_shape=input_shape),
+        BatchNormalization(),  # Normalización por lotes
+        tf.keras.layers.Activation('relu'),
+        Dropout(0.3),  # Dropout para regularización
+        
+        # Capa oculta con conexión residual
+        Dense(128, 
+              kernel_initializer=HeNormal(),
+              kernel_regularizer=l2(0.001)),
+        BatchNormalization(),
+        tf.keras.layers.Activation('relu'),
+        Dropout(0.3),
+        
+        # Capa de salida
+        Dense(output_units, activation='linear')
+    ])
+    
+    # Compilar con optimizador Adam y gradient clipping
+    optimizer = tf.keras.optimizers.Adam(
+        learning_rate=0.001,
+        clipnorm=1.0  # Gradient clipping por norma
+    )
+    
+    model.compile(
+        optimizer=optimizer,
+        loss='mse',
+        metrics=['mae']
+    )
+    
+    return model
+
+# Crear callbacks para mejorar el entrenamiento
+def create_callbacks():
+    return [
+        # Detener el entrenamiento si no hay mejora
+        EarlyStopping(
+            monitor='val_loss',
+            patience=10,
+            restore_best_weights=True
+        ),
+        
+        # Reducir la tasa de aprendizaje cuando el entrenamiento se estanca
+        ReduceLROnPlateau(
+            monitor='val_loss',
+            factor=0.5,
+            patience=5,
+            min_lr=1e-6
+        ),
+        
+        # Registrar histogramas de gradientes (opcional)
+        tf.keras.callbacks.TensorBoard(
+            log_dir='./logs',
+            histogram_freq=1
+        )
+    ]
+
+# Ejemplo de uso para un problema de series temporales chileno
+# (por ejemplo, predicción de demanda eléctrica)
+input_shape = (24, 10)  # 24 horas con 10 características
+output_units = 24  # Predicción para las próximas 24 horas
+
+model = create_robust_model(input_shape, output_units)
+callbacks = create_callbacks()
+
+# Entrenamiento (asumiendo que ya tenemos los datos preparados)
+# history = model.fit(
+#     X_train, y_train,
+#     validation_data=(X_val, y_val),
+#     epochs=100,
+#     batch_size=32,
+#     callbacks=callbacks,
+#     verbose=1
+# )</code></pre>
+                            </div>
+                            
+                            <div class="chilean-example mt-4">
+                                <h5><i class="fas fa-bolt"></i> Aplicación: Predicción de Demanda Eléctrica en Chile</h5>
+                                <p>Este modelo podría aplicarse para predecir la demanda eléctrica del Sistema Eléctrico Nacional de Chile, considerando:</p>
+                                <ul>
+                                    <li><strong>Características de entrada:</strong> Temperatura, humedad, día de la semana, hora del día, feriados, eventos especiales, demanda histórica.</li>
+                                    <li><strong>Desafío:</strong> Chile tiene patrones de consumo muy variables debido a su geografía extendida (desde el desierto de Atacama hasta la Patagonia).</li>
+                                    <li><strong>Beneficio:</strong> Una predicción precisa permite optimizar la generación de energía renovable (solar en el norte, hidroeléctrica en el sur), reduciendo costos y emisiones de CO2.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- PyTorch -->
+                <div class="tab-pane fade" id="pytorch" role="tabpanel">
+                    <div class="card">
+                        <div class="card-header">
+                            <i class="fab fa-python text-primary"></i> Modelo Resistente a Problemas de Gradiente en PyTorch
+                        </div>
+                        <div class="card-body">
+                            <div class="code-box">
+                                <pre><code>import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+import numpy as np
+
+# Bloque residual para evitar el desvanecimiento del gradiente
+class ResidualBlock(nn.Module):
+    def __init__(self, in_features, out_features):
+        super(ResidualBlock, self).__init__()
+        self.in_features = in_features
+        self.out_features = out_features
+        
+        self.block = nn.Sequential(
+            nn.Linear(in_features, out_features),
+            nn.BatchNorm1d(out_features),
+            nn.ReLU(),
+            nn.Dropout(0.3),
+            nn.Linear(out_features, out_features),
+            nn.BatchNorm1d(out_features)
+        )
+        
+        # Capa de proyección si las dimensiones no coinciden
+        self.shortcut = nn.Identity()
+        if in_features != out_features:
+            self.shortcut = nn.Linear(in_features, out_features)
+    
+    def forward(self, x):
+        identity = self.shortcut(x)
+        x = self.block(x)
+        x += identity  # Conexión residual
+        x = F.relu(x)
+        return x
+
+# Modelo completo resistente a problemas de gradiente
+class RobustModel(nn.Module):
+    def __init__(self, input_dim, hidden_dim, output_dim, num_layers=3):
+        super(RobustModel, self).__init__()
+        
+        # Capa de entrada
+        self.input_layer = nn.Linear(input_dim, hidden_dim)
+        self.bn_input = nn.BatchNorm1d(hidden_dim)
+        
+        # Bloques residuales
+        self.res_blocks = nn.ModuleList([
+            ResidualBlock(hidden_dim, hidden_dim) for _ in range(num_layers)
+        ])
+        
+        # Capa de salida
+        self.output_layer = nn.Linear(hidden_dim, output_dim)
+        
+        # Inicialización He para ReLU
+        self._init_weights()
+    
+    def _init_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Linear):
+                nn.init.kaiming_normal_(m.weight, mode='fan_in', nonlinearity='relu')
+                if m.bias is not None:
+                    nn.init.zeros_(m.bias)
+    
+    def forward(self, x):
+        # Capa de entrada
+        x = self.input_layer(x)
+        x = self.bn_input(x)
+        x = F.relu(x)
+        
+        # Bloques residuales
+        for block in self.res_blocks:
+            x = block(x)
+        
+        # Capa de salida
+        x = self.output_layer(x)
+        return x
+
+# Función de entrenamiento con gradient clipping
+def train_model(model, train_loader, val_loader, epochs=100, lr=0.001, weight_decay=0.001):
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model = model.to(device)
+    
+    # Optimizador con regularización L2 (weight_decay)
+    optimizer = optim.Adam(model.parameters(), lr=lr, weight_decay=weight_decay)
+    
+    # Learning rate scheduler
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(
+        optimizer, mode='min', factor=0.5, patience=5, verbose=True
+    )
+    
+    # Criterio de pérdida
+    criterion = nn.MSELoss()
+    
+    # Para early stopping
+    best_val_loss = float('inf')
+    patience = 10
+    patience_counter = 0
+    
+    for epoch in range(epochs):
+        # Modo entrenamiento
+        model.train()
+        train_loss = 0.0
+        
+        for inputs, targets in train_loader:
+            inputs, targets = inputs.to(device), targets.to(device)
+            
+            # Forward pass
+            outputs = model(inputs)
+            loss = criterion(outputs, targets)
+            
+            # Backward pass y optimización
+            optimizer.zero_grad()
+            loss.backward()
+            
+            # Gradient clipping para evitar explosión
+            torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
+            
+            optimizer.step()
+            train_loss += loss.item()
+        
+        # Modo evaluación
+        model.eval()
+        val_loss = 0.0
+        
+        with torch.no_grad():
+            for inputs, targets in val_loader:
+                inputs, targets = inputs.to(device), targets.to(device)
+                outputs = model(inputs)
+                loss = criterion(outputs, targets)
+                val_loss += loss.item()
+        
+        # Imprimir progreso
+        print(f'Epoch {epoch+1}/{epochs}, Train Loss: {train_loss/len(train_loader):.4f}, Val Loss: {val_loss/len(val_loader):.4f}')
+        
+        # Actualizar learning rate
+        scheduler.step(val_loss)
+        
+        # Early stopping
+        if val_loss < best_val_loss:
+            best_val_loss = val_loss
+            torch.save(model.state_dict(), 'best_model.pt')
+            patience_counter = 0
+        else:
+            patience_counter += 1
+            if patience_counter >= patience:
+                print(f'Early stopping at epoch {epoch+1}')
+                break
+    
+    # Cargar el mejor modelo
+    model.load_state_dict(torch.load('best_model.pt'))
+    return model
+
+# Ejemplo de uso para un problema chileno
+# (por ejemplo, predicción de calidad del aire en Santiago)
+input_dim = 15  # Características como PM2.5, PM10, temperatura, viento, etc.
+hidden_dim = 128
+output_dim = 24  # Predicción para las próximas 24 horas
+num_layers = 4
+
+model = RobustModel(input_dim, hidden_dim, output_dim, num_layers)
+
+# Entrenamiento (asumiendo que ya tenemos los dataloaders preparados)
+# model = train_model(model, train_loader, val_loader)</code></pre>
+                            </div>
+                            
+                            <div class="chilean-example mt-4">
+                                <h5><i class="fas fa-smog"></i> Aplicación: Predicción de Calidad del Aire en Santiago</h5>
+                                <p>Este modelo podría aplicarse para predecir los niveles de contaminación en Santiago, considerando:</p>
+                                <ul>
+                                    <li><strong>Características de entrada:</strong> Niveles históricos de PM2.5, PM10, O3, NO2, temperatura, humedad, velocidad del viento, dirección del viento, tráfico vehicular, día de la semana.</li>
+                                    <li><strong>Desafío:</strong> Santiago tiene una geografía de cuenca que atrapa la contaminación, con patrones complejos influenciados por la inversión térmica y el efecto de la cordillera.</li>
+                                    <li><strong>Beneficio:</strong> Una predicción precisa permite implementar medidas preventivas como restricción vehicular o suspensión de actividades al aire libre, protegiendo la salud de la población vulnerable.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resumen y Conclusiones -->
+        <section class="mb-5" data-aos="fade-up">
+            <h2 class="section-title">Resumen y Conclusiones</h2>
+            
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-check-circle text-success"></i> Puntos Clave
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li><strong>Desvanecimiento del gradiente:</strong> Ocurre cuando los gradientes se vuelven extremadamente pequeños, impidiendo que las capas iniciales aprendan.</li>
+                                <li><strong>Explosión del gradiente:</strong> Ocurre cuando los gradientes crecen exponencialmente, causando actualizaciones inestables.</li>
+                                <li><strong>Soluciones para el desvanecimiento:</strong> ReLU, inicialización adecuada, conexiones residuales, batch normalization.</li>
+                                <li><strong>Soluciones para la explosión:</strong> Gradient clipping, regularización, arquitecturas con puertas (LSTM/GRU).</li>
+                                <li><strong>Soluciones generales:</strong> Arquitecturas modernas, normalización de datos, monitoreo de gradientes.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-lightbulb text-warning"></i> Recomendaciones Prácticas
+                        </div>
+                        <div class="card-body">
+                            <ol>
+                                <li>Comienza con arquitecturas probadas (ResNet, LSTM) que ya incorporan soluciones a problemas de gradiente.</li>
+                                <li>Usa siempre inicialización adecuada para tus funciones de activación (He para ReLU, Xavier para tanh).</li>
+                                <li>Implementa batch normalization en redes profundas.</li>
+                                <li>Activa gradient clipping cuando trabajes con RNNs o redes muy profundas.</li>
+                                <li>Monitorea los gradientes durante el entrenamiento para detectar problemas temprano.</li>
+                                <li>Normaliza tus datos de entrada para evitar rangos muy dispares entre características.</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chilean-example mt-4">
+                <h5><i class="fas fa-graduation-cap"></i> Caso de Estudio: Laboratorio IA de la Universidad de Chile</h5>
+                <p>El Laboratorio de Inteligencia Artificial de la Universidad de Chile desarrolló un sistema de predicción sísmica que enfrentaba problemas severos de gradiente:</p>
+                <ul>
+                    <li><strong>Problema inicial:</strong> El modelo no podía capturar patrones sísmicos de baja frecuencia pero alta importancia, cruciales para detectar precursores de terremotos mayores.</li>
+                    <li><strong>Diagnóstico:</strong> Análisis de gradientes reveló desvanecimiento severo en las capas que procesaban señales de baja frecuencia.</li>
+                    <li><strong>Solución implementada:</strong> Combinación de arquitectura ResNet, inicialización He, batch normalization y conexiones de atención.</li>
+                    <li><strong>Resultado:</strong> El modelo mejoró su capacidad para detectar patrones precursores en un 47%, proporcionando minutos adicionales de alerta temprana que podrían salvar vidas en futuros terremotos.</li>
+                </ul>
+                <p>Este caso demuestra cómo el entendimiento y solución de problemas de gradiente tiene aplicaciones de alto impacto social en el contexto chileno.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>Deep Learning Chile</h5>
+                    <p>Recursos educativos para entender y aplicar técnicas avanzadas de Deep Learning en el contexto chileno.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Enlaces</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Inicio</a></li>
+                        <li><a href="#vanishing" class="text-white">Desvanecimiento</a></li>
+                        <li><a href="#exploding" class="text-white">Explosión</a></li>
+                        <li><a href="#solutions" class="text-white">Soluciones</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Recursos</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="https://www.tensorflow.org/" class="text-white" target="_blank">TensorFlow</a></li>
+                        <li><a href="https://pytorch.org/" class="text-white" target="_blank">PyTorch</a></li>
+                        <li><a href="https://www.deeplearningbook.org/" class="text-white" target="_blank">Deep Learning Book</a></li>
+                        <li><a href="https://www.uchile.cl/" class="text-white" target="_blank">Universidad de Chile</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="bg-light">
+            <div class="text-center">
+                <p>&copy; 2023 Deep Learning Chile. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AOS JS para animaciones de scroll -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    
+    <!-- Chart.js para visualizaciones -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+
+    
+    <!-- MathJax para fórmulas matemáticas -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <!-- Scripts personalizados -->
+    <script>
+        // Inicializar AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+        
+        // Inicializar gráficos cuando el DOM esté cargado
+        document.addEventListener('DOMContentLoaded', function() {
+            // Gráfico de flujo de gradiente
+            const gradientFlowCtx = document.getElementById('gradientFlowChart').getContext('2d');
+            const gradientFlowChart = new Chart(gradientFlowCtx, {
+                type: 'line',
+                data: {
+                    labels: ['Capa 1', 'Capa 2', 'Capa 3', 'Capa 4', 'Capa 5', 'Capa 6', 'Capa 7', 'Capa 8'],
+                    datasets: [
+                        {
+                            label: 'Gradiente Normal',
+                            data: [0.8, 0.78, 0.75, 0.73, 0.7, 0.68, 0.65, 0.63],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Gradiente Desvanecido',
+                            data: [0.8, 0.4, 0.2, 0.1, 0.05, 0.025, 0.0125, 0.00625],
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                            tension: 0.1
+                        },
+                        {
+                            label: 'Gradiente Explotado',
+                            data: [0.8, 1.6, 3.2, 6.4, 12.8, 25.6, 51.2, 102.4],
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                            tension: 0.1
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Propagación del Gradiente a través de las Capas'
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Magnitud del Gradiente'
+                            },
+                            type: 'logarithmic'
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Capas (de salida a entrada)'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico de desvanecimiento del gradiente
+            const vanishingCtx = document.getElementById('vanishingGradientChart').getContext('2d');
+            const vanishingChart = new Chart(vanishingCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 20}, (_, i) => i + 1),
+                    datasets: [
+                        {
+                            label: 'Sigmoid',
+                            data: Array.from({length: 20}, (_, i) => 1 / Math.pow(4, i)),
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        },
+                        {
+                            label: 'ReLU',
+                            data: Array.from({length: 20}, (_, i) => Math.max(0.5, 1 / Math.pow(1.5, i))),
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Desvanecimiento del Gradiente por Capa'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Magnitud del Gradiente'
+                            },
+                            type: 'logarithmic'
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Capa'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico de explosión del gradiente
+            const explodingCtx = document.getElementById('explodingGradientChart').getContext('2d');
+            const explodingChart = new Chart(explodingCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 10}, (_, i) => i + 1),
+                    datasets: [
+                        {
+                            label: 'Sin Clipping',
+                            data: Array.from({length: 10}, (_, i) => Math.pow(2, i)),
+                            borderColor: 'rgba(255, 159, 64, 1)',
+                            backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                        },
+                        {
+                            label: 'Con Clipping',
+                            data: Array.from({length: 10}, (_, i) => Math.min(5, Math.pow(2, i))),
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Explosión del Gradiente por Capa'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Magnitud del Gradiente'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Iteración'
+                            }
+                        }
+                    }
+                }
+            });
+            
+            // Gráfico de funciones de activación
+            const activationCtx = document.getElementById('activationFunctionsChart').getContext('2d');
+            const activationChart = new Chart(activationCtx, {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 41}, (_, i) => -4 + i * 0.2),
+                    datasets: [
+                        {
+                            label: 'Sigmoid',
+                            data: Array.from({length: 41}, (_, i) => 1 / (1 + Math.exp(-(-4 + i * 0.2)))),
+                            borderColor: 'rgba(255, 99, 132, 1)',
+                            backgroundColor: 'transparent',
+                        },
+                        {
+                            label: 'Tanh',
+                            data: Array.from({length: 41}, (_, i) => Math.tanh(-4 + i * 0.2)),
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            backgroundColor: 'transparent',
+                        },
+                        {
+                            label: 'ReLU',
+                            data: Array.from({length: 41}, (_, i) => Math.max(0, -4 + i * 0.2)),
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'transparent',
+                        },
+                        {
+                            label: 'Leaky ReLU',
+                            data: Array.from({length: 41}, (_, i) => Math.max(0.1 * (-4 + i * 0.2), -4 + i * 0.2)),
+                            borderColor: 'rgba(153, 102, 255, 1)',
+                            backgroundColor: 'transparent',
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Funciones de Activación'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'f(x)'
+                            }
+                        },
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'x'
+                            }
+                        }
+                    }
+                }
+            });
+        });
+        
+        // Smooth scrolling para navegación
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -294,6 +294,107 @@
             <p>El resultado final mejora en un 12% la precisión comparado con el baseline inicial.</p>
         </div>
 
+
+
+        <section>
+            <h2>Generalización en Deep Learning</h2>
+            
+            <p>La <strong>generalización</strong> es la capacidad de un modelo para desempeñarse bien en datos nuevos, no vistos durante el entrenamiento. Es el objetivo final de cualquier modelo de Deep Learning.</p>
+        
+            <h3>Factores que Afectan la Generalización</h3>
+            <ul>
+                <li><strong>Tamaño del dataset:</strong> Más datos generalmente conducen a mejor generalización</li>
+                <li><strong>Complejidad del modelo:</strong> Debe ser proporcional a la complejidad del problema</li>
+                <li><strong>Regularización:</strong> Técnicas como dropout, L1/L2 que previenen el overfitting</li>
+                <li><strong>Diversidad de los datos:</strong> Datos que cubren todo el espacio del problema</li>
+            </ul>
+            
+            <div class="example">
+                <h4>Ejemplo Chileno:</h4>
+                <p>Imagina un modelo para predecir deslizamientos de tierra en la zona central de Chile:</p>
+                <ul>
+                    <li><strong>Baja generalización:</strong> Un modelo entrenado solo con datos de la Región Metropolitana durante años sin lluvias intensas fallará al predecir deslizamientos en Valparaíso durante temporales.</li>
+                    <li><strong>Alta generalización:</strong> Un modelo entrenado con datos diversos (diferentes regiones, condiciones climáticas variadas, distintas estaciones) podrá predecir correctamente el riesgo incluso en zonas o condiciones no exactamente iguales a las del entrenamiento.</li>
+                </ul>
+            </div>
+        
+            <h3>La Brecha de Generalización</h3>
+            <p>La <strong>brecha de generalización</strong> es la diferencia entre el rendimiento en datos de entrenamiento y datos de prueba:</p>
+            
+            <div class="code">
+                Brecha de generalización = Error_prueba - Error_entrenamiento
+            </div>
+            
+            <div class="graph">
+                <img src="https://via.placeholder.com/800x400" alt="Gráfico de Brecha de Generalización">
+                <p><strong>Figura 2:</strong> Evolución de la brecha de generalización durante el entrenamiento</p>
+            </div>
+        
+            <h3>Técnicas para Mejorar la Generalización</h3>
+            <ol>
+                <li><strong>Data Augmentation:</strong> Crear variaciones artificiales de los datos de entrenamiento</li>
+                <li><strong>Early Stopping:</strong> Detener el entrenamiento cuando el rendimiento en validación comienza a deteriorarse</li>
+                <li><strong>Regularización:</strong> L1, L2, Dropout, Batch Normalization</li>
+                <li><strong>Validación Cruzada:</strong> Evaluar el modelo en diferentes subconjuntos de datos</li>
+                <li><strong>Ensambles:</strong> Combinar múltiples modelos para reducir la varianza</li>
+            </ol>
+            
+            <div class="example">
+                <h4>Ejemplo Chileno de Data Augmentation:</h4>
+                <p>Para un modelo de reconocimiento de señales de tránsito chilenas:</p>
+                <ul>
+                    <li><strong>Rotaciones:</strong> Simular señales vistas desde diferentes ángulos</li>
+                    <li><strong>Cambios de iluminación:</strong> Representar condiciones de luz del amanecer en Arica hasta atardeceres en Puerto Montt</li>
+                    <li><strong>Oclusiones parciales:</strong> Simular señales parcialmente tapadas por vegetación o graffiti</li>
+                    <li><strong>Ruido:</strong> Añadir efectos de lluvia o neblina típicos de zonas como Valdivia o Chiloé</li>
+                </ul>
+                <p>Esta técnica podría aumentar la precisión del modelo en un 15-20% en condiciones reales diversas.</p>
+            </div>
+        
+            <div class="warning">
+                <h4>Punto clave:</h4>
+                <p>Un modelo que memoriza los datos de entrenamiento puede tener un error de entrenamiento cercano a cero, pero fallará en nuevos datos. La verdadera medida del éxito es la generalización, no el rendimiento en entrenamiento.</p>
+            </div>
+        
+            <h3>El Dilema Sesgo-Varianza</h3>
+            <p>El <strong>dilema sesgo-varianza</strong> es fundamental para entender la generalización:</p>
+            <ul>
+                <li><strong>Alto sesgo (underfitting):</strong> El modelo es demasiado simple y no captura patrones importantes</li>
+                <li><strong>Alta varianza (overfitting):</strong> El modelo es demasiado complejo y captura ruido en los datos</li>
+                <li><strong>Punto óptimo:</strong> Balance entre sesgo y varianza que minimiza el error total</li>
+            </ul>
+            
+            <div class="example">
+                <h4>Ejemplo Chileno:</h4>
+                <p>En un modelo para predecir el rendimiento de cultivos en el Valle Central según condiciones climáticas:</p>
+                <ul>
+                    <li><strong>Alto sesgo:</strong> Un modelo lineal simple que solo considera temperatura promedio, ignorando factores como precipitaciones, humedad o tipo de suelo.</li>
+                    <li><strong>Alta varianza:</strong> Un modelo extremadamente complejo que considera hasta las fases lunares y termina "aprendiendo" que "los cultivos plantados en luna llena de abril con viento norte rinden un 3% más", cuando esto es solo coincidencia en los datos de entrenamiento.</li>
+                    <li><strong>Balance óptimo:</strong> Un modelo que considera los factores relevantes (temperatura, precipitaciones, tipo de suelo, técnicas de riego) sin sobreajustarse a patrones espurios.</li>
+                </ul>
+            </div>
+        
+            <h3>Código de Ejemplo: Implementando Early Stopping</h3>
+            <div class="code">
+                # TensorFlow/Keras
+                from tensorflow.keras.callbacks import EarlyStopping
+                
+                early_stopping = EarlyStopping(
+                    monitor='val_loss',  # Métrica a monitorear
+                    patience=10,         # Número de épocas sin mejora antes de parar
+                    restore_best_weights=True  # Restaurar los mejores pesos encontrados
+                )
+                
+                model.fit(
+                    X_train, y_train,
+                    validation_data=(X_val, y_val),
+                    epochs=1000,  # Número máximo de épocas
+                    callbacks=[early_stopping]  # Aplicar early stopping
+                )
+            </div>
+        </section>
+        
+
         <h2>Implementación de Regularización L2 en Diferentes Frameworks</h2>
         
         <h3>TensorFlow/Keras</h3>
