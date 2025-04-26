@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagrama de Simulación Monte Carlo - Proyecto El Glotón</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- GoJS -->
+    <script src="https://unpkg.com/gojs/release/go.js"></script>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: var(--dark-color);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .section-title {
+            border-left: 5px solid var(--secondary-color);
+            padding-left: 15px;
+            margin: 30px 0;
+        }
+        
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .card-header {
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        #myDiagramDiv {
+            background-color: white;
+            width: 100%;
+            height: 600px;
+            border: 1px solid #d3d3d3;
+            border-radius: 5px;
+        }
+        
+        .footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-radius: 15px 15px 0 0;
+        }
+        
+        .legend {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-8">
+                    <h1><i class="fas fa-random me-3"></i>Diagrama de Simulación Monte Carlo</h1>
+                    <p class="lead">Proyecto "El Glotón" - Implementación en carros móviles</p>
+                </div>
+                <div class="col-md-4 text-end">
+                    <span class="badge bg-light text-dark p-2">
+                        <i class="fas fa-calendar-alt me-2"></i>Mayo 2024
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Diagrama de Proceso de Simulación Monte Carlo (BPMN)</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="myDiagramDiv"></div>
+                        
+                        <div class="legend">
+                            <h6>Leyenda</h6>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #66CDAA;"></div>
+                                        <span>Evento de inicio/fin</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #87CEFA;"></div>
+                                        <span>Actividad de proceso</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #FFD700;"></div>
+                                        <span>Compuerta (decisión)</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #FFA07A;"></div>
+                                        <span>Subproceso</span>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #E6E6FA;"></div>
+                                        <span>Datos/Artefactos</span>
+                                    </div>
+                                    <div class="legend-item">
+                                        <div class="legend-color" style="background-color: #D3D3D3;"></div>
+                                        <span>Anotación</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Explicación del Proceso de Simulación Monte Carlo</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>El diagrama BPMN anterior ilustra el proceso completo de simulación Monte Carlo aplicado a la actividad "Implementación en carros móviles" del proyecto "El Glotón". A continuación se detalla cada fase del proceso:</p>
+                        
+                        <h6 class="mt-4">1. Definición de Parámetros</h6>
+                        <p>Se establecen los parámetros iniciales para la simulación:</p>
+                        <ul>
+                            <li><strong>Actividad a simular:</strong> Implementación en carros móviles</li>
+                            <li><strong>Distribución de probabilidad:</strong> Triangular</li>
+                            <li><strong>Parámetros de tiempo:</strong> Optimista (10 días), Más probable (15 días), Pesimista (20 días)</li>
+                            <li><strong>Número de iteraciones:</strong> 1,000 simulaciones</li>
+                        </ul>
+
+                        <h6 class="mt-4">2. Generación de Números Aleatorios</h6>
+                        <p>Se generan 1,000 números aleatorios uniformes entre 0 y 1 que servirán como base para la simulación.</p>
+
+                        <h6 class="mt-4">3. Transformación a Distribución Triangular</h6>
+                        <p>Cada número aleatorio se transforma según la fórmula de la distribución triangular para obtener una duración simulada:</p>
+                        <ul>
+                            <li>Si el número aleatorio es menor que (15-10)/(20-10), se aplica la fórmula para la parte ascendente de la distribución.</li>
+                            <li>Si es mayor, se aplica la fórmula para la parte descendente.</li>
+                        </ul>
+
+                        <h6 class="mt-4">4. Análisis Estadístico</h6>
+                        <p>Con los 1,000 valores de duración simulados, se calculan estadísticas descriptivas:</p>
+                        <ul>
+                            <li>Media: 15.03 días</li>
+                            <li>Mediana: 15.12 días</li>
+                            <li>Desviación estándar: 1.87 días</li>
+                            <li>Valores mínimo y máximo: 10.21 y 19.87 días</li>
+                        </ul>
+
+                        <h6 class="mt-4">5. Generación de Distribución de Probabilidad</h6>
+                        <p>Se agrupan los resultados en intervalos para crear un histograma que muestra la distribución de las duraciones simuladas.</p>
+
+                        <h6 class="mt-4">6. Cálculo de Probabilidad Acumulada</h6>
+                        <p>Se calcula la función de distribución acumulada que permite determinar la probabilidad de completar la actividad en un tiempo determinado o menor.</p>
+
+                        <h6 class="mt-4">7. Análisis de Confianza</h6>
+                        <p>Se identifican los percentiles clave para la toma de decisiones:</p>
+                        <ul>
+                            <li>P50 (mediana): 15 días (50% de confianza)</li>
+                            <li>P80: 17 días (80% de confianza)</li>
+                            <li>P95: 19 días (95% de confianza)</li>
+                        </ul>
+
+                        <h6 class="mt-4">8. Conclusiones y Recomendaciones</h6>
+                        <p>Basado en los resultados, se recomienda planificar 17 días para esta actividad, lo que proporciona un 80% de confianza en su finalización a tiempo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h4><i class="fas fa-random me-2"></i>Simulación Monte Carlo - Proyecto "El Glotón"</h4>
+                    <p>Análisis probabilístico para la planificación de proyectos</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p><i class="far fa-calendar-alt me-2"></i>Mayo 2024</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- GoJS Diagram -->
+    <script>
+        // Inicializar el diagrama inmediatamente
+        (function() {
+            var $ = go.GraphObject.make;
+
+            // Crear el diagrama
+            var myDiagram = $(go.Diagram, "myDiagramDiv", {
+                "undoManager.isEnabled": true,
+                layout: $(go.LayeredDigraphLayout, {
+                    direction: 90,
+                    layerSpacing: 35,
+                    columnSpacing: 30,
+                    setsPortSpots: false
+                }),
+                "animationManager.isEnabled": false
+            });
+
+            // Estilos BPMN para nodos
+            // Evento (círculo)
+            myDiagram.nodeTemplateMap.add("Event",
+                $(go.Node, "Auto", {
+                        width: 50, height: 50,
+                        locationSpot: go.Spot.Center
+                    },
+                    $(go.Shape, "Circle", {
+                        fill: "#66CDAA", stroke: "darkgreen",
+                        strokeWidth: 2
+                    }),
+                    $(go.TextBlock, {
+                        font: "bold 11pt sans-serif",
+                        textAlign: "center",
+                        margin: 5
+                    }, new go.Binding("text"))
+                )
+            );
+
+            // Actividad (rectángulo redondeado)
+            myDiagram.nodeTemplateMap.add("Activity",
+                $(go.Node, "Auto", {
+                        width: 180, height: 60,
+                        locationSpot: go.Spot.Center
+                    },
+                    $(go.Shape, "RoundedRectangle", {
+                        fill: "#87CEFA", stroke: "#4682B4",
+                        strokeWidth: 2,
+                        parameter1: 10 // radio de esquina
+                    }),
+                    $(go.TextBlock, {
+                        font: "bold 11pt sans-serif",
+                        textAlign: "center",
+                        margin: 10,
+                        wrap: go.TextBlock.WrapFit,
+                        editable: false
+                    }, new go.Binding("text"))
+                )
+            );
+
+            // Subproceso (rectángulo redondeado con signo +)
+            myDiagram.nodeTemplateMap.add("Subprocess",
+                $(go.Node, "Auto", {
+                        width: 180, height: 60,
+                        locationSpot: go.Spot.Center
+                    },
+                    $(go.Shape, "RoundedRectangle", {
+                        fill: "#FFA07A", stroke: "#CD5C5C",
+                        strokeWidth: 2,
+                        parameter1: 10
+                    }),
+                    $(go.TextBlock, {
+                        font: "bold 11pt sans-serif",
+                        textAlign: "center",
+                        margin: 10,
+                        wrap: go.TextBlock.WrapFit
+                    }, new go.Binding("text")),
+                    $(go.Shape, "PlusLine", {
+                        width: 12, height: 12,
+                        position: new go.Point(165, 45),
+                        strokeWidth: 2, stroke: "#CD5C5C"
+                    })
+                )
+            );
+
+            // Compuerta (diamante)
+            myDiagram.nodeTemplateMap.add("Gateway",
+                $(go.Node, "Auto", {
+                        width: 80, height: 80,
+                        locationSpot: go.Spot.Center
+                    },
+                    $(go.Shape, "Diamond", {
+                        fill: "#FFD700", stroke: "#DAA520",
+                        strokeWidth: 2
+                    }),
+                    $(go.TextBlock, {
+                        font: "bold 11pt sans-serif",
+                        textAlign: "center",
+                        margin: 15,
+                        wrap: go.TextBlock.WrapFit
+                    }, new go.Binding("text"))
+                )
+            );
+
+            // Datos (nota - cambiado de Document a Rectangle)
+            myDiagram.nodeTemplateMap.add("Data",
+                $(go.Node, "Auto", {
+                        width: 160, height: 60,
+                        locationSpot: go.Spot.Center
+                    },
+                    $(go.Shape, "Rectangle", {  // Cambiado de "Document" a "Rectangle"
+                        fill: "#E6E6FA", stroke: "#9370DB",
+                        strokeWidth: 2
+                    }),
+                    $(go.TextBlock, {
+                        font: "11pt sans-serif",
+                        textAlign: "center",
+                        margin: 10,
+                        wrap: go.TextBlock.WrapFit
+                    }, new go.Binding("text"))
+                )
+            );
+
+            // Anotación (rectángulo con línea punteada)
+            myDiagram.nodeTemplateMap.add("Annotation",
+                $(go.Node, "Auto", {
+                        width: 200, height: 60,
+                        locationSpot: go.Spot.Center
+                    },
+                    $(go.Shape, "Rectangle", {
+                        fill: "#D3D3D3", stroke: "#A9A9A9",
+                        strokeWidth: 2,
+                        strokeDashArray: [4, 2]
+                    }),
+                    $(go.TextBlock, {
+                        font: "italic 11pt sans-serif",
+                        textAlign: "center",
+                        margin: 10,
+                        wrap: go.TextBlock.WrapFit
+                    }, new go.Binding("text"))
+                )
+            );
+
+            // Enlace (flecha)
+            myDiagram.linkTemplate =
+                $(go.Link, {
+                        routing: go.Link.AvoidsNodes,
+                        curve: go.Link.JumpOver,
+                        corner: 10,
+                        toShortLength: 4
+                    },
+                    $(go.Shape, { strokeWidth: 2, stroke: "#333" }),
+                    $(go.Shape, { toArrow: "Standard", stroke: "#333", fill: "#333" }),
+                    $(go.TextBlock, {
+                        font: "10pt sans-serif",
+                        segmentIndex: 0,
+                        segmentOffset: new go.Point(0, -10),
+                        background: "white",
+                        padding: 2
+                    }, new go.Binding("text", "text"))
+                );
+
+            // Datos del diagrama (nodos y enlaces)
+            var nodeDataArray = [
+                // Eventos
+                { key: "start", category: "Event", text: "Inicio", loc: "0 0" },
+                { key: "end", category: "Event", text: "Fin", loc: "900 0" },
+                
+                // Actividades principales
+                { key: "defineParams", category: "Activity", text: "Definir parámetros de simulación", loc: "150 0" },
+                { key: "generateRandom", category: "Activity", text: "Generar números aleatorios (n=1,000)", loc: "350 0" },
+                { key: "transformDist", category: "Activity", text: "Transformar a distribución triangular", loc: "550 0" },
+                { key: "analyzeResults", category: "Activity", text: "Analizar resultados estadísticos", loc: "750 0" },
+                
+                // Subprocesos
+                { key: "subTransform", category: "Subprocess", text: "Proceso de transformación", loc: "550 100" },
+                { key: "subAnalysis", category: "Subprocess", text: "Análisis estadístico detallado", loc: "750 100" },
+                
+                // Compuertas
+                { key: "gw1", category: "Gateway", text: "¿n < 1000?", loc: "350 -100" },
+                { key: "gw2", category: "Gateway", text: "¿r < F?", loc: "550 -100" },
+                
+                // Datos
+                { key: "inputParams", category: "Data", text: "Parámetros: a=10, m=15, b=20", loc: "150 100" },
+                { key: "randomNums", category: "Data", text: "Conjunto de números aleatorios", loc: "350 100" },
+                { key: "simResults", category: "Data", text: "Resultados de simulación", loc: "650 -100" },
+                { key: "probDist", category: "Data", text: "Distribución de probabilidad", loc: "750 -100" },
+                
+                // Anotaciones
+                { key: "note1", category: "Annotation", text: "F = (m-a)/(b-a) = 0.5", loc: "550 -200" },
+                { key: "note2", category: "Annotation", text: "Fórmula parte ascendente: a + √(r(m-a)(b-a))", loc: "450 200" },
+                { key: "note3", category: "Annotation", text: "Fórmula parte descendente: b - √((1-r)(b-m)(b-a))", loc: "650 200" },
+                { key: "note4", category: "Annotation", text: "Confianza: P50=15d, P80=17d, P95=19d", loc: "850 100" }
+            ];
+
+            var linkDataArray = [
+                // Flujo principal
+                { from: "start", to: "defineParams" },
+                { from: "defineParams", to: "generateRandom" },
+                { from: "generateRandom", to: "transformDist" },
+                { from: "transformDist", to: "analyzeResults" },
+                { from: "analyzeResults", to: "end" },
+                
+                // Conexiones con datos
+                { from: "inputParams", to: "defineParams", text: "Entrada" },
+                { from: "defineParams", to: "inputParams", text: "Define" },
+                { from: "generateRandom", to: "randomNums", text: "Produce" },
+                { from: "randomNums", to: "transformDist", text: "Entrada" },
+                { from: "transformDist", to: "simResults", text: "Genera" },
+                { from: "simResults", to: "analyzeResults", text: "Entrada" },
+                { from: "analyzeResults", to: "probDist", text: "Produce" },
+                
+                                // Conexiones con subprocesos
+                                { from: "transformDist", to: "subTransform", text: "Detalle" },
+                { from: "analyzeResults", to: "subAnalysis", text: "Detalle" },
+                
+                // Conexiones con compuertas
+                { from: "generateRandom", to: "gw1", text: "Iteración" },
+                { from: "gw1", to: "generateRandom", text: "No" },
+                { from: "gw1", to: "transformDist", text: "Sí" },
+                { from: "transformDist", to: "gw2", text: "Para cada valor" },
+                { from: "gw2", to: "note2", text: "Sí" },
+                { from: "gw2", to: "note3", text: "No" },
+                
+                // Conexiones con anotaciones
+                { from: "gw2", to: "note1", text: "Usa" },
+                { from: "subTransform", to: "note2", text: "Aplica" },
+                { from: "subTransform", to: "note3", text: "Aplica" },
+                { from: "subAnalysis", to: "note4", text: "Produce" }
+            ];
+
+            // Cargar los datos en el diagrama
+            myDiagram.model = new go.GraphLinksModel(nodeDataArray, linkDataArray);
+            
+            // Ajustar el zoom para que se vea todo el diagrama
+            myDiagram.zoomToFit();
+        })();
+    </script>
+</body>
+</html>
