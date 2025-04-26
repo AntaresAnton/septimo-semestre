@@ -162,6 +162,7 @@
                 </div>
             </div>
             
+            <!-- Sección de integrantes -->
             <div class="row mt-3">
                 <div class="col-12">
                     <div class="card bg-transparent border-light">
@@ -171,16 +172,16 @@
                                 <li class="list-inline-item me-4"><i class="fas fa-user-circle me-1"></i> Patricio Quintanilla</li>
                                 <li class="list-inline-item me-4"><i class="fas fa-user-circle me-1"></i> Italo Brignardello</li>
                                 <li class="list-inline-item me-4"><i class="fas fa-user-circle me-1"></i> Alexander Seydewitz</li>
-                                <li class="list-inline-item"><i class="fas fa-user-circle me-1"></i> Claudio Sanchez</li>                                
+                                <li class="list-inline-item"><i class="fas fa-user-circle me-1"></i> Claudio Sanchez</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- Fin de la sección de integrantes -->
             
         </div>
     </div>
-    
 
     <div class="container">
         <div class="row">
@@ -474,10 +475,10 @@
                                         </div>
                                         <p>Implementar el sistema en todos los carros al mismo tiempo</p>
                                         <ul>
-                                            <li>Beneficio: Transformación rápida, consistencia inmediata</li>
-                                            <li>Riesgo: Mayor impacto si hay problemas, resistencia al cambio</li>
+                                            <li>Beneficio: Transición rápida, consistencia inmediata</li>
+                                            <li>Riesgo: Mayor resistencia al cambio, problemas simultáneos</li>
                                             <li>Probabilidad de éxito: 60%</li>
-                                            <li>Valor esperado: $5,400,000</li>
+                                            <li>Valor esperado: $6,000,000</li>
                                         </ul>
                                     </div>
                                 </div>
@@ -486,10 +487,10 @@
                                     <div class="card-body">
                                         <h6>Opción B: Implementación gradual</h6>
                                         <div class="d-flex justify-content-between align-items-center mb-2">
-                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo: $5,500,000</span>
-                                            <span class="badge risk-low">Riesgo: Bajo</span>
+                                            <span><i class="fas fa-money-bill-wave me-2"></i>Costo: $4,500,000</span>
+                                            <span class="badge risk-medium">Riesgo: Medio</span>
                                         </div>
-                                        <p>Implementar el sistema en fases, comenzando con un carro piloto</p>
+                                        <p>Implementar el sistema en fases, comenzando con un grupo piloto</p>
                                         <ul>
                                             <li>Beneficio: Aprendizaje iterativo, menor resistencia al cambio</li>
                                             <li>Riesgo: Mayor tiempo de implementación, operación dual temporal</li>
@@ -604,6 +605,18 @@
                             <div class="col-md-12">
                                 <div class="card">
                                     <div class="card-body">
+                                        <h6>Resultados de simulaciones individuales</h6>
+                                        <canvas id="scatterChart" height="250"></canvas>
+                                        <p class="mt-3 small text-muted">Este gráfico muestra los resultados de cada una de las 1,000 simulaciones individuales, permitiendo visualizar la distribución completa de los posibles tiempos de finalización.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-md-12">
+                                <div class="card">
+                                    <div class="card-body">
                                         <h6>Análisis de confianza</h6>
                                         <div class="table-responsive">
                                             <table class="table">
@@ -686,24 +699,103 @@
     
     <!-- Gráficos de Monte Carlo -->
     <script>
-        // Datos simulados para la distribución de probabilidad
+        // Función para generar datos de simulación de Monte Carlo
+        function generateMonteCarloData(optimistic, mostLikely, pessimistic, simulations) {
+            // Función para generar un número aleatorio con distribución triangular
+            function triangularDistribution(min, mode, max) {
+                const u = Math.random();
+                if (u <= (mode - min) / (max - min)) {
+                    return min + Math.sqrt(u * (max - min) * (mode - min));
+                } else {
+                    return max - Math.sqrt((1 - u) * (max - min) * (max - mode));
+                }
+            }
+            
+            // Generar simulaciones
+            const results = [];
+            for (let i = 0; i < simulations; i++) {
+                results.push(triangularDistribution(optimistic, mostLikely, pessimistic));
+            }
+            
+            // Ordenar resultados para análisis
+            results.sort((a, b) => a - b);
+            
+            // Calcular estadísticas
+            const sum = results.reduce((a, b) => a + b, 0);
+            const mean = sum / results.length;
+            const median = results[Math.floor(results.length / 2)];
+            const min = results[0];
+            const max = results[results.length - 1];
+            
+            // Calcular desviación estándar
+            const squaredDiffs = results.map(value => Math.pow(value - mean, 2));
+            const avgSquaredDiff = squaredDiffs.reduce((a, b) => a + b, 0) / results.length;
+            const stdDev = Math.sqrt(avgSquaredDiff);
+            
+            // Crear histograma
+            const binCount = 10;
+            const binWidth = (max - min) / binCount;
+            const bins = Array(binCount).fill(0);
+            
+            results.forEach(result => {
+                const binIndex = Math.min(Math.floor((result - min) / binWidth), binCount - 1);
+                bins[binIndex]++;
+            });
+            
+            // Normalizar bins para obtener densidad
+            const normalizedBins = bins.map(count => count / results.length);
+            
+            // Crear etiquetas para el histograma
+            const histLabels = [];
+            for (let i = 0; i < binCount; i++) {
+                const lowerBound = (min + i * binWidth).toFixed(1);
+                const upperBound = (min + (i + 1) * binWidth).toFixed(1);
+                histLabels.push(`${lowerBound}-${upperBound}`);
+            }
+            
+            // Calcular probabilidad acumulada
+            const cumulativeProb = [];
+            let cumulative = 0;
+            normalizedBins.forEach(prob => {
+                cumulative += prob;
+                cumulativeProb.push(cumulative);
+            });
+            
+            // Crear etiquetas para la curva acumulada
+            const cumLabels = [];
+            for (let i = 0; i <= binCount; i++) {
+                cumLabels.push((min + i * binWidth).toFixed(1));
+            }
+            
+            return {
+                results,
+                stats: { mean, median, stdDev, min, max },
+                histogram: { labels: histLabels, data: normalizedBins },
+                cumulative: { labels: cumLabels, data: [0, ...cumulativeProb] }
+            };
+        }
+        
+        // Generar datos de simulación
+        const monteCarloData = generateMonteCarloData(10, 15, 20, 1000);
+        
+        // Datos para la distribución de probabilidad
         const distributionData = {
-            labels: ['10-11', '11-12', '12-13', '13-14', '14-15', '15-16', '16-17', '17-18', '18-19', '19-20'],
+            labels: monteCarloData.histogram.labels,
             datasets: [{
-                label: 'Frecuencia',
-                data: [15, 42, 85, 127, 198, 215, 145, 98, 55, 20],
+                label: 'Frecuencia relativa',
+                data: monteCarloData.histogram.data.map(val => val * 100), // Convertir a porcentaje
                 backgroundColor: 'rgba(52, 152, 219, 0.5)',
                 borderColor: 'rgba(52, 152, 219, 1)',
                 borderWidth: 1
             }]
         };
 
-        // Datos simulados para la probabilidad acumulada
+        // Datos para la probabilidad acumulada
         const cumulativeData = {
-            labels: ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20'],
+            labels: monteCarloData.cumulative.labels,
             datasets: [{
                 label: 'Probabilidad acumulada',
-                data: [0, 0.015, 0.057, 0.142, 0.269, 0.467, 0.682, 0.827, 0.925, 0.980, 1.0],
+                data: monteCarloData.cumulative.data.map(val => val * 100), // Convertir a porcentaje
                 backgroundColor: 'rgba(231, 76, 60, 0.1)',
                 borderColor: 'rgba(231, 76, 60, 1)',
                 borderWidth: 2,
@@ -725,6 +817,27 @@
                     title: {
                         display: true,
                         text: 'Distribución de duración (días)'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Frecuencia: ${context.raw.toFixed(1)}%`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Frecuencia relativa (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Duración (días)'
+                        }
                     }
                 }
             }
@@ -743,16 +856,75 @@
                     title: {
                         display: true,
                         text: 'Probabilidad acumulada'
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `Probabilidad: ${context.raw.toFixed(1)}%`;
+                            }
+                        }
                     }
                 },
                 scales: {
                     y: {
                         min: 0,
-                        max: 1,
-                        ticks: {
-                            callback: function(value) {
-                                return (value * 100) + '%';
-                            }
+                        max: 100,
+                        title: {
+                            display: true,
+                            text: 'Probabilidad (%)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Duración (días)'
+                        }
+                    }
+                }
+            }
+        };
+
+        // Preparar datos para el diagrama de dispersión
+        const scatterData = {
+            datasets: [{
+                label: 'Simulaciones individuales',
+                data: monteCarloData.results.map((value, index) => ({
+                    x: index + 1,
+                    y: value
+                })),
+                backgroundColor: 'rgba(46, 204, 113, 0.5)',
+                borderColor: 'rgba(46, 204, 113, 1)',
+                borderWidth: 1,
+                pointRadius: 3
+            }]
+        };
+
+        // Configuración del diagrama de dispersión
+        const scatterConfig = {
+            type: 'scatter',
+            data: scatterData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Resultados de simulaciones individuales'
+                    }
+                },
+                scales: {
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Duración (días)'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Número de simulación'
                         }
                     }
                 }
@@ -763,11 +935,12 @@
         document.addEventListener('DOMContentLoaded', function() {
             const distributionCtx = document.getElementById('distributionChart').getContext('2d');
             const cumulativeCtx = document.getElementById('cumulativeChart').getContext('2d');
+            const scatterCtx = document.getElementById('scatterChart').getContext('2d');
             
             new Chart(distributionCtx, distributionConfig);
             new Chart(cumulativeCtx, cumulativeConfig);
+            new Chart(scatterCtx, scatterConfig);
         });
     </script>
 </body>
 </html>
-
