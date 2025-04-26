@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio Rápido de Dataproc (GSP103) - Guía Paso a Paso</title>
+    <style>
+        :root {
+            --gcp-blue: #1a73e8;
+            --gcp-blue-light: #e8f0fe;
+            --gcp-green: #0d904f;
+            --gcp-yellow: #fbbc04;
+            --gcp-red: #ea4335;
+            --gcp-gray: #f8f9fa;
+            --gcp-dark: #202124;
+        }
+        
+        body {
+            font-family: 'Google Sans', Roboto, Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #3c4043;
+            background-color: #fff;
+        }
+        
+        h1 {
+            color: var(--gcp-blue);
+            border-bottom: 2px solid var(--gcp-blue);
+            padding-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        h2 {
+            color: var(--gcp-blue);
+            margin-top: 30px;
+            border-left: 4px solid var(--gcp-blue);
+            padding-left: 10px;
+            font-weight: 500;
+        }
+        
+        .step {
+            background-color: var(--gcp-gray);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 1px 2px rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+        
+        .command {
+            background-color: var(--gcp-dark);
+            color: #fff;
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-family: 'Roboto Mono', monospace;
+            overflow-x: auto;
+            margin: 15px 0;
+            position: relative;
+        }
+        
+        .command::before {
+            content: "$";
+            color: #9aa0a6;
+            margin-right: 10px;
+        }
+        
+        .note {
+            background-color: var(--gcp-blue-light);
+            border-left: 4px solid var(--gcp-blue);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .warning {
+            background-color: #fef7e0;
+            border-left: 4px solid var(--gcp-yellow);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .error {
+            background-color: #fdeded;
+            border-left: 4px solid var(--gcp-red);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+        }
+        
+        .success {
+            color: var(--gcp-green);
+            font-weight: 500;
+        }
+        
+        .important {
+            color: var(--gcp-red);
+            font-weight: 500;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .task-number {
+            background-color: var(--gcp-blue);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        
+        .button {
+            display: inline-block;
+            background-color: var(--gcp-blue);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            margin: 10px 0;
+        }
+        
+        .button:hover {
+            background-color: #0b5cad;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox {
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        ul {
+            padding-left: 20px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .header-logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            width: 40px;
+            height: 40px;
+            margin-right: 15px;
+        }
+        
+        .completion-section {
+            background-color: #e6f4ea;
+            border-left: 4px solid var(--gcp-green);
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        
+        .troubleshooting {
+            background-color: #fff8e1;
+            border-left: 4px solid #ffb74d;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-logo">
+        <svg class="logo" viewBox="0 0 24 24">
+            <path fill="#1a73e8" d="M12 7V3H3v18h18V7H12zM6 19H5v-1h1v1zm0-2H5v-1h1v1zm0-2H5v-1h1v1zm0-2H5v-1h1v1zm0-2H5V9h1v1zm0-2H5V7h1v1zm0-2H5V5h1v1zm8 12h-1v-1h1v1zm0-2h-1v-1h1v1zm0-2h-1v-1h1v1zm0-2h-1v-1h1v1zm0-2h-1V9h1v1zm0-2h-1V7h1v1zm0-2h-1V5h1v1zm2 12h-1v-1h1v1zm0-2h-1v-1h1v1zm0-2h-1v-1h1v1zm0-2h-1v-1h1v1zm0-2h-1V9h1v1zm0-2h-1V7h1v1zm0-2h-1V5h1v1z"></path>
+        </svg>
+        <h1>Inicio Rápido de Dataproc (GSP103)</h1>
+    </div>
+    
+    <div class="note">
+        <p><strong>Descripción general:</strong> Dataproc es un servicio en la nube rápido, fácil de usar y totalmente administrado para ejecutar clústeres de Apache Spark y Apache Hadoop de manera más simple y rentable. Las operaciones que solían tomar horas o días ahora toman segundos o minutos. Crea clústeres de Dataproc rápidamente y redimensiónalos en cualquier momento, para que no tengas que preocuparte de que tus canales de datos superen la capacidad de tus clústeres.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">1</div>
+            <h2>Configurar el entorno</h2>
+        </div>
+        <p>Primero, vamos a configurar la región donde trabajaremos. Esto nos ayudará a mantener todos nuestros recursos en la misma ubicación geográfica.</p>
+        <div class="command">export REGION=us-central1</div>
+        <p>Este comando establece la variable de entorno REGION con el valor "us-central1", que corresponde a la región central de Estados Unidos.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">2</div>
+            <h2>Verificar permisos y habilitar APIs</h2>
+        </div>
+        <p>Antes de crear un clúster, debemos asegurarnos de que la API de Dataproc esté habilitada y que la cuenta de servicio tenga los permisos adecuados.</p>
+        <div class="command">gcloud services enable dataproc.googleapis.com</div>
+        <p>Este comando habilita la API de Dataproc en tu proyecto.</p>
+        
+        <p>Ahora, asignamos el rol de Storage Admin a la cuenta de servicio de Compute Engine:</p>
+        <div class="command">gcloud projects add-iam-policy-binding $DEVSHELL_PROJECT_ID --member=serviceAccount:$(gcloud iam service-accounts list --filter="displayName:Compute Engine default service account" --format="value(email)") --role=roles/storage.admin</div>
+        <p>Este comando otorga permisos de administrador de almacenamiento a la cuenta de servicio predeterminada de Compute Engine, lo que es necesario para que Dataproc funcione correctamente.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">3</div>
+            <h2>Crear un clúster de Dataproc</h2>
+        </div>
+        <p>Ahora crearemos un clúster de Dataproc que utilizaremos para procesar datos. Este clúster tendrá un nodo maestro y dos nodos trabajadores.</p>
+        
+        <div class="troubleshooting">
+            <p><strong>Nota importante sobre zonas:</strong> Si encuentras un error que indica que la zona no tiene suficientes recursos disponibles, puedes intentar con una zona diferente dentro de la misma región. Por ejemplo, puedes usar us-central1-b, us-central1-c o us-central1-f en lugar de us-central1-a.</p>
+        </div>
+        
+        <div class="command">gcloud dataproc clusters create example-cluster --region=${REGION} --zone=${REGION}-c --master-machine-type=n1-standard-2 --master-boot-disk-size=30 --num-workers=2 --worker-machine-type=n1-standard-2 --worker-boot-disk-size=30 --image-version=2.0-debian10</div>
+        <p>Este comando crea un clúster llamado "example-cluster" con las siguientes características:</p>
+        <ul>
+            <li>Ubicado en la región us-central1, zona us-central1-c (cambiada de us-central1-a para evitar problemas de disponibilidad)</li>
+            <li>Un nodo maestro con máquina tipo n1-standard-2 y disco de arranque de 30GB</li>
+            <li>Dos nodos trabajadores con máquinas tipo n1-standard-2 y discos de arranque de 30GB cada uno</li>
+            <li>Utilizando la versión 2.0 de la imagen de Dataproc basada en Debian 10</li>
+        </ul>
+        <div class="note">
+            <p>Este proceso puede tardar varios minutos en completarse. Verás que el estado del clúster cambia de "Aprovisionando" a "En ejecución" cuando esté listo.</p>
+        </div>
+        
+        <div class="warning">
+            <p><strong>Alternativa:</strong> Si continúas teniendo problemas con la línea de comandos, puedes crear el clúster a través de la consola de Google Cloud:</p>
+            <ol>
+                <li>Ve a Navigation menu > View all products > Dataproc > Clusters</li>
+                <li>Haz clic en "Create cluster"</li>
+                <li>Selecciona "Cluster on Compute Engine"</li>
+                <li>Configura el clúster con los siguientes valores:
+                    <ul>
+                        <li>Nombre: example-cluster</li>
+                        <li>Región: us-central1</li>
+                        <li>Zona: cualquier zona disponible en us-central1</li>
+                        <li>Tipo de disco primario (nodo maestro): Standard Persistent Disk</li>
+                        <li>Serie de máquina (nodo maestro): E2</li>
+                        <li>Tipo de máquina (nodo maestro): e2-standard-2</li>
+                        <li>Tamaño de disco primario (nodo maestro): 30 GB</li>
+                        <li>Número de nodos trabajadores: 2</li>
+                        <li>Tipo de disco primario (nodo trabajador): Standard Persistent Disk</li>
+                        <li>Serie de máquina (nodos trabajadores): E2</li>
+                        <li>Tipo de máquina (nodos trabajadores): e2-standard-2</li>
+                        <li>Tamaño de disco primario (nodos trabajadores): 30 GB</li>
+                    </ul>
+                </li>
+                <li>Haz clic en "Create" para crear el clúster</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">4</div>
+            <h2>Enviar un trabajo de Spark para calcular Pi</h2>
+        </div>
+        <p>Una vez que el clúster esté listo, enviaremos un trabajo de Spark para calcular el valor de Pi. Este es un ejemplo clásico para probar que el clúster funciona correctamente.</p>
+        <div class="command">gcloud dataproc jobs submit spark --cluster=example-cluster --region=${REGION} --class=org.apache.spark.examples.SparkPi --jars=file:///usr/lib/spark/examples/jars/spark-examples.jar -- 1000</div>
+        <p>Este comando envía un trabajo de Spark al clúster que acabamos de crear. El trabajo ejecuta la clase SparkPi, que calcula el valor de Pi utilizando un método de Monte Carlo con 1000 muestras.</p>
+        <p><strong>Nota:</strong> Cómo se calcula Pi: El trabajo de Spark estima un valor de Pi utilizando el método de Monte Carlo. Genera puntos x,y en un plano de coordenadas que modela un círculo encerrado por un cuadrado unitario. El argumento de entrada (1000) determina el número de pares x,y a generar; cuantos más pares se generen, mayor será la precisión de la estimación. Esta estimación aprovecha los nodos trabajadores de Cloud Dataproc para paralelizar el cálculo.</p>
+        <p>Deberías ver un resultado aproximado de Pi en la salida del comando.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">5</div>
+            <h2>Crear un bucket de Cloud Storage</h2>
+        </div>
+        <p>Ahora crearemos un bucket en Cloud Storage para almacenar nuestros datos de entrada y salida.</p>
+        <div class="command">gsutil mb -l ${REGION} gs://$DEVSHELL_PROJECT_ID</div>
+        <p>Este comando crea un bucket de Cloud Storage con el mismo nombre que tu ID de proyecto (automáticamente disponible en la variable $DEVSHELL_PROJECT_ID) en la región que configuramos anteriormente.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">6</div>
+            <h2>Copiar el archivo de ejemplo al bucket</h2>
+        </div>
+        <p>Descargaremos un conjunto de datos de ejemplo y lo subiremos a nuestro bucket de Cloud Storage.</p>
+        <div class="command">curl -O http://archive.ics.uci.edu/ml/machine-learning-databases/kddcup99-mld/kddcup.data_10_percent.gz</div>
+        <p>Este comando descarga un archivo comprimido que contiene datos de la KDD Cup de 1999, un conjunto de datos utilizado para detectar intrusiones en redes.</p>
+        
+        <div class="command">gsutil cp kddcup.data_10_percent.gz gs://$DEVSHELL_PROJECT_ID/</div>
+        <p>Este comando copia el archivo descargado a nuestro bucket de Cloud Storage.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">7</div>
+            <h2>Enviar un trabajo de Hadoop para contar palabras</h2>
+        </div>
+        <p>Ahora ejecutaremos un trabajo de MapReduce de Hadoop para contar palabras en el archivo que subimos.</p>
+        <div class="command">gcloud dataproc jobs submit hadoop --cluster=example-cluster --region=${REGION} --class=org.apache.hadoop.examples.WordCount --jars=file:///usr/lib/hadoop-mapreduce/hadoop-mapreduce-examples.jar -- gs://$DEVSHELL_PROJECT_ID/kddcup.data_10_percent.gz gs://$DEVSHELL_PROJECT_ID/wordcount</div>
+        <p>Este comando envía un trabajo de Hadoop al clúster para contar la frecuencia de cada palabra en el archivo de datos. El resultado se guardará en la carpeta "wordcount" en nuestro bucket.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">8</div>
+            <h2>Ver los resultados del conteo de palabras</h2>
+        </div>
+        <p>Veamos los primeros resultados del conteo de palabras que acabamos de realizar.</p>
+        <div class="command">gsutil cat gs://$DEVSHELL_PROJECT_ID/wordcount/part-r-00000 | head</div>
+        <p>Este comando muestra las primeras líneas del archivo de resultados. Cada línea contiene una palabra y el número de veces que aparece en el conjunto de datos.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">9</div>
+            <h2>Enviar un trabajo de PySpark</h2>
+        </div>
+        <p>Ahora ejecutaremos un trabajo de PySpark, que es la API de Python para Spark.</p>
+        <div class="command">gcloud dataproc jobs submit pyspark --cluster=example-cluster --region=${REGION} gs://dataproc-examples/pyspark/hello-world/hello-world.py</div>
+        <p>Este comando envía un trabajo de PySpark al clúster. El script hello-world.py es un ejemplo simple que imprime "Hello, World!" y muestra algunas capacidades básicas de PySpark.</p>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">10</div>
+            <h2>Actualizar el clúster para modificar el número de trabajadores</h2>
+        </div>
+        <p>Ahora vamos a modificar nuestro clúster para cambiar el número de nodos trabajadores. Esto demuestra la flexibilidad de Dataproc para escalar según las necesidades.</p>
+        <div class="command">gcloud dataproc clusters update example-cluster --region=${REGION} --num-workers=4</div>
+        <p>Este comando actualiza el clúster "example-cluster" para tener 4 nodos trabajadores en lugar de los 2 originales.</p>
+        <div class="note">
+            <p>Dataproc permite escalar clústeres sin tiempo de inactividad, lo que significa que puedes aumentar o disminuir la capacidad de procesamiento según sea necesario sin interrumpir los trabajos en ejecución.</p>
+        </div>
+    </div>
+
+    <div class="step">
+        <div class="task-header">
+            <div class="task-number">11</div>
+            <h2>Eliminar el clúster cuando hayas terminado</h2>
+        </div>
+        <p>Para evitar cargos innecesarios, eliminaremos el clúster una vez que hayamos terminado con él.</p>
+        <div class="command">gcloud dataproc clusters delete example-cluster --region=${REGION}</div>
+        <p>Este comando elimina el clúster de Dataproc que creamos. Se te pedirá confirmación antes de proceder con la eliminación. Escribe "Y" y presiona Enter para confirmar.</p>
+        <div class="warning">
+            <p><strong>¡Importante!</strong> No olvides este paso para evitar cargos continuos en tu cuenta.</p>
+        </div>
+    </div>
+
+    <div class="completion-section">
+        <h2>Prueba de conocimientos</h2>
+        <p>A continuación, hay preguntas de opción múltiple para reforzar tu comprensión de los conceptos de este laboratorio. Respóndelas según tus conocimientos.</p>
+        
+        <div class="checkbox-item">
+            <input type="checkbox" class="checkbox" id="q1">
+            <label for="q1"><strong>¿Qué tipo de trabajo de Dataproc se envía en el laboratorio?</strong><br>
+            Respuesta: Spark. El laboratorio envía un trabajo de Spark para calcular Pi, un trabajo de Hadoop para contar palabras y un trabajo de PySpark para ejecutar un script de Python.</label>
+        </div>
+        
+        <div class="checkbox-item">
+            <input type="checkbox" class="checkbox" id="q2">
+            <label for="q2"><strong>Dataproc ayuda a los usuarios a procesar, transformar y comprender grandes cantidades de datos.</strong><br>
+            Respuesta: Verdadero. Dataproc es un servicio administrado que facilita el procesamiento de grandes volúmenes de datos mediante tecnologías como Spark y Hadoop.</label>
