@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab GSP073: Cloud Storage - Quick Start Básico</title>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gcp-blue: #4285F4;
+            --gcp-red: #EA4335;
+            --gcp-yellow: #FBBC05;
+            --gcp-green: #34A853;
+            --gcp-grey: #5F6368;
+            --gcp-light-grey: #F8F9FA;
+            --gcp-border: #DADCE0;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.6;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #202124;
+            background-color: #F8F9FA;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Google Sans', sans-serif;
+            font-weight: 500;
+        }
+        
+        h1 {
+            color: var(--gcp-blue);
+            font-size: 32px;
+            border-bottom: 1px solid var(--gcp-border);
+            padding-bottom: 16px;
+            margin-top: 0;
+        }
+        
+        h2 {
+            color: var(--gcp-grey);
+            font-size: 24px;
+            margin-top: 40px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--gcp-border);
+        }
+        
+        h3 {
+            color: var(--gcp-blue);
+            font-size: 20px;
+            margin-top: 24px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+            margin-bottom: 24px;
+            padding: 24px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .card-header .material-icons {
+            margin-right: 16px;
+            color: var(--gcp-blue);
+            font-size: 24px;
+        }
+        
+        .card-title {
+            margin: 0;
+            font-size: 20px;
+            color: var(--gcp-grey);
+        }
+        
+        code {
+            font-family: 'Roboto Mono', monospace;
+            background-color: var(--gcp-light-grey);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--gcp-grey);
+        }
+        
+        pre {
+            background-color: #263238;
+            color: #FFFFFF;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 16px 0;
+        }
+        
+        .command {
+            background-color: #263238;
+            color: #FFFFFF;
+            border-left: 4px solid var(--gcp-blue);
+        }
+        
+        .explanation {
+            background-color: var(--gcp-light-grey);
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            border-left: 4px solid var(--gcp-green);
+        }
+        
+        .note {
+            background-color: #FFF8E1;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid var(--gcp-yellow);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .note .material-icons {
+            color: var(--gcp-yellow);
+            margin-right: 16px;
+            font-size: 24px;
+        }
+        
+        .warning {
+            background-color: #FFEBEE;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid var(--gcp-red);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .warning .material-icons {
+            color: var(--gcp-red);
+            margin-right: 16px;
+            font-size: 24px;
+        }
+        
+        .tip {
+            background-color: #E8F5E9;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 16px 0;
+            border-left: 4px solid var(--gcp-green);
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .tip .material-icons {
+            color: var(--gcp-green);
+            margin-right: 16px;
+            font-size: 24px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 24px 0;
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 16px;
+            border-bottom: 1px solid var(--gcp-border);
+        }
+        
+        th {
+            background-color: var(--gcp-light-grey);
+            color: var(--gcp-grey);
+            font-weight: 500;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--gcp-blue);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-family: 'Google Sans', sans-serif;
+            font-weight: 500;
+            margin-top: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #3367D6;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 24px;
+        }
+        
+        .step-number {
+            background-color: var(--gcp-blue);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            margin-right: 16px;
+            flex-shrink: 0;
+        }
+        
+        .step-content {
+            flex-grow: 1;
+        }
+        
+        .console-header {
+            background-color: #263238;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px 8px 0 0;
+            font-family: 'Google Sans', sans-serif;
+            display: flex;
+            align-items: center;
+        }
+        
+        .console-header .material-icons {
+            margin-right: 8px;
+        }
+        
+        .console-body {
+            margin-top: 0;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .task-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            background-color: var(--gcp-blue);
+            color: white;
+            padding: 16px;
+            border-radius: 8px;
+        }
+        
+        .task-header .material-icons {
+            margin-right: 16px;
+            font-size: 24px;
+        }
+        
+        .task-title {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 500;
+        }
+        
+        .diagram {
+            background-color: white;
+            border-radius: 8px;
+            padding: 24px;
+            margin: 24px 0;
+            text-align: center;
+            box-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+        }
+        
+        .diagram img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .footer {
+            margin-top: 48px;
+            padding-top: 24px;
+            border-top: 1px solid var(--gcp-border);
+            text-align: center;
+            color: var(--gcp-grey);
+            font-size: 14px;
+        }
+        
+        .gcp-logo {
+            height: 40px;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Lab GSP073: Cloud Storage - Quick Start Básico</h1>
+    </header>
+    
+    <div class="card">
+        <div class="card-header">
+            <span class="material-icons">info</span>
+            <h2 class="card-title">Descripción General</h2>
+        </div>
+        <p>
+            Cloud Storage es un servicio de almacenamiento de objetos de Google Cloud que permite almacenar y recuperar cualquier cantidad de datos en todo el mundo y en cualquier momento. Puedes usar Cloud Storage en varias situaciones, como la entrega de contenido de un sitio web, el almacenamiento de datos con fines de archivado y recuperación ante desastres, o la distribución de grandes objetos de datos a los usuarios mediante descarga directa.
+        </p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="material-icons">check_circle</span>
+            <h2 class="card-title">Objetivos del Laboratorio</h2>
+        </div>
+        <p>En este laboratorio aprenderás a:</p>
+        <ul>
+            <li>Crear un bucket de almacenamiento</li>
+            <li>Subir objetos al bucket</li>
+            <li>Crear carpetas y subcarpetas en el bucket</li>
+            <li>Hacer que los objetos en un bucket de almacenamiento tengan acceso público</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="material-icons">lightbulb</span>
+            <h2 class="card-title">Conceptos Clave de Cloud Storage</h2>
+        </div>
+        <table>
+            <tr>
+                <th>Concepto</th>
+                <th>Descripción</th>
+            </tr>
+            <tr>
+                <td><strong>Bucket</strong></td>
+                <td>Contenedor básico que almacena tus datos. Todo lo que almacenas en Cloud Storage debe estar contenido en un bucket.</td>
+            </tr>
+            <tr>
+                <td><strong>Objeto</strong></td>
+                <td>Pieza de datos almacenada en Cloud Storage. Los objetos son inmutables, lo que significa que su contenido no puede ser editado sin crear una nueva versión.</td>
+            </tr>
+            <tr>
+                <td><strong>Carpetas</strong></td>
+                <td>En Cloud Storage, las carpetas son en realidad prefijos en los nombres de los objetos, no son entidades reales como en un sistema de archivos tradicional.</td>
+            </tr>
+            <tr>
+                <td><strong>gsutil</strong></td>
+                <td>Herramienta de línea de comandos que te permite administrar buckets y objetos de Cloud Storage.</td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="diagram">
+        <h3>Arquitectura de Cloud Storage</h3>
+        <img src="https://storage.googleapis.com/gweb-cloudblog-publish/images/GCS_Architecture.max-2000x2000.jpg" alt="Arquitectura de Cloud Storage">
+    </div>
+
+    <div class="card">
+        <div class="task-header">
+            <span class="material-icons">assignment</span>
+            <h2 class="task-title">Tarea 1: Crear un Bucket</h2>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Crear un bucket en la región us-central1</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil mb -l us-central1 gs://$(gcloud config get-value project)</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li><code>gsutil</code>: Es la herramienta de línea de comandos para interactuar con Google Cloud Storage.</li>
+                        <li><code>mb</code>: Significa "make bucket" (crear bucket).</li>
+                        <li><code>-l us-central1</code>: Especifica la ubicación (location) donde se creará el bucket. En este caso, la región us-central1.</li>
+                        <li><code>gs://$(gcloud config get-value project)</code>: 
+                            <ul>
+                                <li><code>gs://</code> es el prefijo que identifica un recurso de Cloud Storage.</li>
+                                <li><code>$(gcloud config get-value project)</code> es un comando que obtiene el ID del proyecto actual y lo usa como nombre del bucket.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Verificar que el bucket se haya creado</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil ls</pre>
+                
+                <div class="explanation">
+                    <p>Este comando lista todos los buckets a los que tienes acceso en tu proyecto actual. Deberías ver el bucket que acabas de crear.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="note">
+            <span class="material-icons">info</span>
+            <div>
+                <p><strong>Nota:</strong> Los nombres de buckets deben ser globalmente únicos en todo Google Cloud. Usar el ID del proyecto como nombre del bucket garantiza esta unicidad.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="task-header">
+            <span class="material-icons">assignment</span>
+            <h2 class="task-title">Tarea 2: Subir un Objeto al Bucket</h2>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Descargar una imagen</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">curl -o kitten.png https://storage.googleapis.com/cloud-training/gcpfci/orchestration-images/kitten.png</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li><code>curl</code>: Herramienta para transferir datos desde o hacia un servidor.</li>
+                        <li><code>-o kitten.png</code>: Especifica el nombre del archivo de salida donde se guardará la imagen descargada.</li>
+                        <li>La URL es la ubicación de la imagen que queremos descargar.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Verificar que la imagen se haya descargado</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">ls -la kitten.png</pre>
+                
+                <div class="explanation">
+                    <p>Este comando muestra información detallada sobre el archivo, incluyendo su tamaño, permisos y fecha de modificación.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Subir la imagen al bucket</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil cp kitten.png gs://$(gcloud config get-value project)/</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li><code>gsutil cp</code>: Comando para copiar archivos, similar al comando "cp" de Unix/Linux.</li>
+                        <li><code>kitten.png</code>: El archivo local que queremos subir.</li>
+                        <li><code>gs://$(gcloud config get-value project)/</code>: La ruta de destino en Cloud Storage donde se subirá el archivo.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h3>Verificar que la imagen se haya subido</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil ls gs://$(gcloud config get-value project)/</pre>
+                
+                <div class="explanation">
+                    <p>Este comando lista todos los objetos en el nivel superior del bucket. Deberías ver el archivo kitten.png en la lista.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="task-header">
+            <span class="material-icons">assignment</span>
+            <h2 class="task-title">Tarea 3: Compartir un Bucket Públicamente</h2>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Hacer que el bucket sea accesible públicamente</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil iam ch allUsers:objectViewer gs://$(gcloud config get-value project)</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li><code>gsutil iam ch</code>: Comando para cambiar (change) los permisos IAM.</li>
+                        <li><code>allUsers</code>: Representa a todos los usuarios de Internet, haciendo el recurso público.</li>
+                        <li><code>objectViewer</code>: El rol que se otorga, que permite ver (pero no modificar) los objetos.</li>
+                        <li><code>gs://$(gcloud config get-value project)</code>: El bucket al que se aplican los permisos.</li>
+                    </ul>
+                    <p>Este comando otorga permisos de lectura a nivel de bucket, lo que significa que todos los objetos en el bucket serán accesibles públicamente.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Verificar los permisos IAM del bucket</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil iam get gs://$(gcloud config get-value project)</pre>
+                
+                <div class="explanation">
+                    <p>Este comando muestra la política de IAM actual del bucket. Deberías ver una entrada para "allUsers" con el rol "roles/storage.objectViewer".</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Obtener la URL pública del objeto</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">echo "https://storage.googleapis.com/$(gcloud config get-value project)/kitten.png"</pre>
+                
+                <div class="explanation">
+                    <p>Este comando construye y muestra la URL pública para acceder a la imagen. Puedes copiar esta URL y abrirla en una nueva pestaña del navegador para verificar que la imagen es accesible públicamente.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <span class="material-icons">warning</span>
+            <div>
+                <p><strong>Advertencia:</strong> Hacer que un bucket sea público significa que cualquier persona en Internet puede acceder a los objetos almacenados en él. En un entorno de producción, debes ser muy cuidadoso con esta configuración y asegurarte de que no estás exponiendo datos sensibles.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="task-header">
+            <span class="material-icons">assignment</span>
+            <h2 class="task-title">Tarea 4: Crear Carpetas en un Bucket</h2>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Crear una estructura de carpetas</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil cp kitten.png gs://$(gcloud config get-value project)/images/</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li>Este comando copia el archivo kitten.png a una "carpeta" llamada images en el bucket.</li>
+                        <li>En Cloud Storage, las carpetas son en realidad parte del nombre del objeto, no son entidades reales como en un sistema de archivos tradicional.</li>
+                        <li>Al incluir una barra diagonal (/) en el nombre del objeto, se crea la ilusión de una estructura de carpetas.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Verificar la estructura de carpetas</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil ls -r gs://$(gcloud config get-value project)/</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li><code>gsutil ls</code>: Comando para listar objetos.</li>
+                        <li><code>-r</code>: Opción para listar recursivamente, mostrando todos los objetos en todas las "carpetas".</li>
+                        <li>Deberías ver tanto el archivo kitten.png en el nivel superior como el archivo kitten.png en la "carpeta" images/.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Crear una subcarpeta</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil cp kitten.png gs://$(gcloud config get-value project)/images/pets/</pre>
+                
+                <div class="explanation">
+                    <p>Este comando crea una "subcarpeta" llamada pets dentro de la "carpeta" images y copia el archivo kitten.png en ella.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">4</div>
+            <div class="step-content">
+                <h3>Verificar la estructura completa</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil ls -r gs://$(gcloud config get-value project)/</pre>
+                
+                <div class="explanation">
+                    <p>Ahora deberías ver el archivo kitten.png en tres ubicaciones:</p>
+                    <ul>
+                        <li>En el nivel superior del bucket</li>
+                        <li>En la "carpeta" images/</li>
+                        <li>En la "subcarpeta" images/pets/</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tip">
+            <span class="material-icons">lightbulb</span>
+            <div>
+                <p><strong>Consejo:</strong> Aunque Cloud Storage no tiene un sistema de carpetas real, la interfaz de usuario de la consola de Google Cloud muestra los objetos organizados en carpetas para facilitar la navegación.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="task-header">
+            <span class="material-icons">assignment</span>
+            <h2 class="task-title">Tarea 5: Eliminar Objetos y Buckets</h2>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">1</div>
+            <div class="step-content">
+                <h3>Eliminar un objeto específico</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil rm gs://$(gcloud config get-value project)/images/pets/kitten.png</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li><code>gsutil rm</code>: Comando para eliminar (remove) objetos.</li>
+                        <li>Este comando elimina específicamente el archivo kitten.png de la "subcarpeta" images/pets/.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div class="step-content">
+                <h3>Eliminar todos los objetos en una "carpeta"</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil rm gs://$(gcloud config get-value project)/images/**</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li>El comodín <code>**</code> se utiliza para hacer coincidir con todos los objetos dentro de la "carpeta" images/ y todas sus subcarpetas.</li>
+                        <li>Este comando elimina todos los objetos dentro de la "carpeta" images/ y sus subcarpetas, pero no elimina la "carpeta" en sí (ya que las carpetas no son entidades reales en Cloud Storage).</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">3</div>
+            <div class="step-content">
+                <h3>Eliminar un bucket y todo su contenido</h3>
+                <div class="console-header">
+                    <span class="material-icons">terminal</span>
+                    <span>Cloud Shell</span>
+                </div>
+                <pre class="command console-body">gsutil rm -r gs://$(gcloud config get-value project)/</pre>
+                
+                <div class="explanation">
+                    <p><strong>Explicación detallada:</strong></p>
+                    <ul>
+                        <li><code>gsutil rm -r</code>: Comando para eliminar recursivamente.</li>
+                        <li>La opción <code>-r</code> indica que se deben eliminar todos los objetos en el bucket y luego el bucket mismo.</li>
+                        <li>Este comando es equivalente a <code>gsutil rb -f gs://$(gcloud config get-value project)</code> donde <code>rb</code> significa "remove bucket" y <code>-f</code> fuerza la eliminación incluso si el bucket no está vacío.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <div class="warning">
+            <span class="material-icons">warning</span>
+            <div>
+                <p><strong>Advertencia:</strong> La eliminación de buckets y objetos es permanente y no se puede deshacer. Asegúrate de tener copias de seguridad de cualquier dato importante antes de ejecutar estos comandos.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="material-icons">summarize</span>
+            <h2 class="card-title">Resumen</h2>
+        </div>
+        <p>En este laboratorio has aprendido a:</p>
+        <ul>
+            <li>Crear un bucket de Cloud Storage en una región específica</li>
+            <li>Subir objetos a un bucket</li>
+            <li>Hacer que un bucket sea accesible públicamente</li>
+            <li>Crear una estructura de "carpetas" en un bucket</li>
+            <li>Eliminar objetos y buckets</li>
+        </ul>
+        <p>Cloud Storage es un servicio fundamental en Google Cloud Platform que proporciona almacenamiento duradero y altamente disponible para una variedad de casos de uso, desde sitios web estáticos hasta copias de seguridad y archivado de datos.</p>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <span class="material-icons">school</span>
+            <h2 class="card-title">Recursos Adicionales</h2>
+        </div>
+        <ul>
+            <li><a href="https://cloud.google.com/storage/docs" target="_blank">Documentación oficial de Cloud Storage</a></li>
+            <li><a href="https://cloud.google.com/storage/docs/gsutil" target="_blank">Documentación de gsutil</a></li>
+            <li><a href="https://cloud.google.com/storage/docs/best-practices" target="_blank">Mejores prácticas para Cloud Storage</a></li>
+            <li><a href="https://cloud.google.com/storage/pricing" target="_blank">Precios de Cloud Storage</a></li>
+        </ul>
+    </div>
+
+    <div class="footer">
+        <img class="gcp-logo" src="https://www.gstatic.com/devrel-devsite/prod/v84e6f6a61298bbae5bb110" alt="Google Cloud">
+        <p>© 2023 Google LLC. Todos los derechos reservados.</p>
+    </div>
+</body>
+</html>
