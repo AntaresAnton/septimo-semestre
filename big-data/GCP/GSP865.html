@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GSP865 - Carga de datos en BigQuery</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        .gcp-header {
+            background-color: #4285F4;
+            color: white;
+            padding: 20px 0;
+        }
+        .task-card {
+            margin-bottom: 30px;
+            border-left: 5px solid #4285F4;
+        }
+        .command-block {
+            background-color: #f8f9fa;
+            border-left: 4px solid #34A853;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            font-family: monospace;
+            overflow-x: auto;
+        }
+        .task-icon {
+            background-color: #4285F4;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        .gcp-logo {
+            height: 40px;
+            margin-right: 15px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 25px;
+            height: 25px;
+            background-color: #4285F4;
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .note-block {
+            background-color: #FFF8E1;
+            border-left: 4px solid #FBBC04;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <header class="gcp-header">
+        <div class="container">
+            <div class="d-flex align-items-center">
+                <img src="https://www.gstatic.com/devrel-devsite/prod/v84e6f6a61298bbae5bb110" alt="Google Cloud" class="gcp-logo">
+                <h1>GSP865: Carga de datos en BigQuery</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <h2 class="card-title">Descripción General</h2>
+                        <p class="card-text">
+                            BigQuery es la base de datos analítica totalmente administrada de Google, sin operaciones y de bajo costo. 
+                            Te permite consultar terabytes de datos sin tener que administrar infraestructura ni necesitar un administrador de base de datos.
+                        </p>
+                        <p>En este laboratorio, ingresarás subconjuntos de datos de viajes de taxis de NYC en tablas dentro de BigQuery.</p>
+                        
+                        <h3 class="mt-4">Lo que aprenderás</h3>
+                        <ul>
+                            <li>Cargar datos en BigQuery desde varias fuentes</li>
+                            <li>Cargar datos usando CLI y Consola</li>
+                            <li>Usar DDL para crear tablas</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Tarea 1 -->
+                <div class="card task-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="task-icon">
+                                <span class="material-icons">dataset</span>
+                            </div>
+                            <h3 class="card-title mb-0">Tarea 1: Crear un nuevo conjunto de datos para almacenar tablas</h3>
+                        </div>
+                        
+                        <p>Para crear un nuevo conjunto de datos en BigQuery:</p>
+                        
+                        <h5><span class="step-number">1</span>Usando la línea de comandos:</h5>
+                        <div class="command-block">
+                            bq mk --dataset nyctaxi
+                        </div>
+                        
+                        <h5><span class="step-number">2</span>O usando la interfaz web:</h5>
+                        <ol>
+                            <li>Ve al menú de navegación</li>
+                            <li>Selecciona BigQuery</li>
+                            <li>Haz clic en el ícono de acciones junto a tu ID de proyecto</li>
+                            <li>Haz clic en "Crear conjunto de datos"</li>
+                            <li>Establece el ID del conjunto de datos como "nyctaxi"</li>
+                            <li>Deja los otros campos con sus valores predeterminados</li>
+                            <li>Haz clic en "Crear conjunto de datos"</li>
+                        </ol>
+                        
+                        <div class="note-block">
+                            <strong>Nota:</strong> Ahora deberías ver el conjunto de datos "nyctaxi" bajo el nombre de tu proyecto.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarea 2 -->
+                <div class="card task-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="task-icon">
+                                <span class="material-icons">upload_file</span>
+                            </div>
+                            <h3 class="card-title mb-0">Tarea 2: Ingerir un nuevo conjunto de datos desde un CSV</h3>
+                        </div>
+                        
+                        <p>En esta sección, cargarás un archivo CSV en una tabla de BigQuery.</p>
+                        
+                        <h5><span class="step-number">1</span>Descargar el archivo CSV:</h5>
+                        <div class="command-block">
+                            gsutil cp gs://cloud-training/OCBL013/nyc_tlc_yellow_trips_2018_subset_1.csv .
+                        </div>
+                        
+                        <h5><span class="step-number">2</span>Cargar el archivo en BigQuery usando la línea de comandos:</h5>
+                        <div class="command-block">
+                            bq load --autodetect --source_format=CSV nyctaxi.2018trips nyc_tlc_yellow_trips_2018_subset_1.csv
+                        </div>
+                        
+                        <h5><span class="step-number">3</span>O cargar directamente desde Cloud Storage:</h5>
+                        <div class="command-block">
+                            bq load --autodetect --source_format=CSV nyctaxi.2018trips gs://cloud-training/OCBL013/nyc_tlc_yellow_trips_2018_subset_1.csv
+                        </div>
+                        
+                        <h5><span class="step-number">4</span>Ejecutar una consulta para encontrar los 5 viajes más caros:</h5>
+                        <div class="command-block">
+                            bq query --nouse_legacy_sql 'SELECT * FROM nyctaxi.2018trips ORDER BY fare_amount DESC LIMIT 5'
+                        </div>
+                        
+                        <h5><span class="step-number">5</span>Verificar el número de filas en la tabla:</h5>
+                        <div class="command-block">
+                            bq query --nouse_legacy_sql 'SELECT COUNT(*) AS total_rows FROM nyctaxi.2018trips'
+                        </div>
+                        
+                        <div class="note-block">
+                            <strong>Resultado:</strong> La tabla contiene 10,018 filas.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarea 3 -->
+                <div class="card task-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="task-icon">
+                                <span class="material-icons">cloud_upload</span>
+                            </div>
+                            <h3 class="card-title mb-0">Tarea 3: Ingerir un nuevo conjunto de datos desde Google Cloud Storage</h3>
+                        </div>
+                        
+                        <p>En esta tarea, cargarás otro subconjunto de datos desde Cloud Storage usando la herramienta de línea de comandos.</p>
+                        
+                        <h5><span class="step-number">1</span>Cargar datos desde Cloud Storage:</h5>
+                        <div class="command-block">
+                            bq load --source_format=CSV --autodetect --noreplace nyctaxi.2018trips gs://cloud-training/OCBL013/nyc_tlc_yellow_trips_2018_subset_2.csv
+                        </div>
+                        
+                        <div class="note-block">
+                            <strong>Nota:</strong> Este comando está configurado para añadir los nuevos datos a la tabla existente, no para reemplazarlos.
+                        </div>
+                        
+                        <h5><span class="step-number">2</span>Verificar que el recuento de filas ha aumentado:</h5>
+                        <div class="command-block">
+                            bq query --nouse_legacy_sql 'SELECT COUNT(*) AS total_rows FROM nyctaxi.2018trips'
+                        </div>
+                        
+                        <h5><span class="step-number">3</span>Verificar si los 5 viajes más caros han cambiado:</h5>
+                        <div class="command-block">
+                            bq query --nouse_legacy_sql 'SELECT * FROM nyctaxi.2018trips ORDER BY fare_amount DESC LIMIT 5'
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tarea 4 -->
+                <div class="card task-card">
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="task-icon">
+                                <span class="material-icons">table_chart</span>
+                            </div>
+                            <h3 class="card-title mb-0">Tarea 4: Crear tablas a partir de otras tablas con DDL</h3>
+                        </div>
+                        
+                        <p>En esta tarea, usarás DDL (Data Definition Language) para extraer datos específicos y almacenarlos en otra tabla.</p>
+                        
+                        <h5><span class="step-number">1</span>Crear una tabla para los viajes de enero:</h5>
+                        <div class="command-block">
+                            bq query --nouse_legacy_sql 'CREATE TABLE nyctaxi.january_trips AS SELECT * FROM nyctaxi.2018trips WHERE EXTRACT(Month FROM pickup_datetime)=1;'
+                        </div>
+                        
+                        <h5><span class="step-number">2</span>Consultar el viaje más largo de enero:</h5>
+                        <div class="command-block">
+                            bq query --nouse_legacy_sql 'SELECT * FROM nyctaxi.january_trips ORDER BY trip_distance DESC LIMIT 1'
+                        </div>
+                        
+                        <div class="note-block">
+                            <strong>Resultado:</strong> Esta consulta te mostrará el viaje con la distancia más larga realizado en enero de 2018.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Conclusión -->
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Conclusión</h3>
+                        <p>¡Felicidades! Has completado con éxito el laboratorio GSP865. Ahora sabes cómo:</p>
+                        <ul>
+                            <li>Crear conjuntos de datos en BigQuery</li>
+                            <li>Cargar datos desde archivos CSV locales</li>
+                            <li>Cargar datos desde Google Cloud Storage</li>
+                            <li>Usar DDL para crear tablas a partir de consultas</li>
+                            <li>Ejecutar consultas analíticas en BigQuery</li>
+                        </ul>
+                        <p>Estos conocimientos son fundamentales para trabajar con análisis de datos a gran escala en Google Cloud Platform.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
