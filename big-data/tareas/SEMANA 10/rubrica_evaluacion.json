@@ -1,0 +1,82 @@
+{
+  "titulo": "Rúbrica de Evaluación - Gestión de Grandes Volúmenes de Datos",
+  "dimensiones": [
+    {
+      "nombre": "Dimensión Encargo",
+      "pasos": [
+        {
+          "numero": 1,
+          "descripcion": "Realizar las conexiones con la fuente de origen de datos",
+          "detalles": "Estas pueden ser bases de datos, archivos que deben descargar desde internet, etc."
+        },
+        {
+          "numero": 2,
+          "descripcion": "Descargar y/o generar los archivos al dataLake",
+          "detalles": "Utilizar servicios para compartir archivos con clientes o proveedores. Generar repositorios de datos que almacenan grandes cantidades de datos, realizando un DataLake con BigQuery o con Cloud Storage para compartir datos con clientes o proveedores."
+        },
+        {
+          "numero": 3,
+          "descripcion": "Construir los procesos de limpieza, transformación y carga al modelo de datos final"
+        },
+        {
+          "numero": 4,
+          "descripcion": "Construir los reportes y/o visualizaciones correspondientes",
+          "detalles": "Crear dashboard con 4 gráficos representativos y predictivos de la información procesada en el proceso desde los orígenes de datos."
+        }
+      ],
+      "requisitos": [
+        {
+          "descripcion": "Construir procesos de carga en data Lake, considerando disponibilidad de la información desde de la fuente"
+        },
+        {
+          "descripcion": "Construir procesos de transformación, limpieza de datos Batch"
+        },
+        {
+          "descripcion": "Construir procesos orquestados considerando disponibilidad de información y dependencias de grandes volúmenes de datos en formato Batch"
+        }
+      ],
+      "consideraciones": [
+        {
+          "nombre": "Control de errores",
+          "descripcion": "Todos los procesos pueden tener puntos de fallo, de acuerdo con lo identificado en la etapa de diseño, debe implementar los controles de errores correspondientes."
+        },
+        {
+          "nombre": "Control de duplicidad de archivos",
+          "descripcion": "Los DataLake contienen múltiples archivos, debe considerar que los procesos se pueden ejecutar múltiples veces, por tanto, sus procesos deben determinar qué hacer si un fichero y/o datos ya existen."
+        },
+        {
+          "nombre": "Registro de actividad",
+          "descripcion": "Los procesos se podrían ejecutar varias veces, debe incorporar el control de ejecución (ej.: ¿si el proceso ya se ejecutó lo debo volver a ejecutar, lo debo bloquear o debo pedir autorización para volver a ejecutar?)."
+        },
+        {
+          "nombre": "Validación de Datos y Procesos",
+          "descripcion": "Debe considerar en su construcción la validación de los procesos y la validación de los datos a trabajar, incluyendo procesos de transformación, manteniendo la trazabilidad de los datos desde el origen. Tenga en cuenta que al ser datos Batch, los procesos deben permitir reprocesar datos históricos en alguna fecha en particular."
+        }
+      ]
+    },
+    {
+      "nombre": "Dimensión Presentación",
+      "criterios": [
+        {
+          "descripcion": "Simular una entrega gerencial, evaluada individualmente"
+        },
+        {
+          "descripcion": "Presentar la construcción del proceso de carga de datos (ingesta) en diferentes formatos y de diversas fuentes, ya sea batch o streaming"
+        },
+        {
+          "descripcion": "Presentar la construcción de procesos con el fin de realizar limpieza, transformación y almacenamiento de grandes volúmenes de datos formato Batch"
+        },
+        {
+          "descripcion": "Presentar los resultados siguiendo una estructura lógica, considerando la información del informe"
+        },
+        {
+          "descripcion": "Utilizar un lenguaje técnico propio de la disciplina, además de justificar y responder preguntas sobre cualquier aspecto trabajado"
+        }
+      ]
+    }
+  ],
+  "notas_adicionales": [
+    "Se recomienda revisar la rúbrica de la evaluación para conocer detalladamente los aspectos a evaluar",
+    "Aunque esta evaluación se desarrolla en duplas, la calificación es de carácter individual y responde al desempeño particular de cada integrante"
+  ]
+}

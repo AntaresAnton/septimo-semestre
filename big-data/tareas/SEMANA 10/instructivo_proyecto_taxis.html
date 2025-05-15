@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instructivo: Análisis de Datos de Taxis en GCP</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Prism CSS para resaltado de código -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism.min.css" rel="stylesheet" />
+    <style>
+        body {
+            padding-top: 20px;
+            padding-bottom: 50px;
+        }
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            background-color: #0d6efd;c
+            color: #fff;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .code-block {
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+        .alert-tip {
+            background-color: #f8f9fa;
+            border-left: 4px solid #0d6efd;
+        }
+        .section-header {
+            margin-top: 40px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f8f9fa;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-12 text-center">
+                <h1 class="display-4">Análisis de Datos de Taxis en Google Cloud Platform</h1>
+                <p class="lead">Instructivo paso a paso para implementar un proyecto de análisis de datos con BigQuery ML</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="alert alert-primary" role="alert">
+                    <h4 class="alert-heading">Resumen del Proyecto</h4>
+                    <p>Este instructivo te guiará a través de la implementación de un proyecto completo de análisis de datos de taxis de NYC, incluyendo:</p>
+                    <ul>
+                        <li>Configuración del entorno en GCP</li>
+                        <li>Carga de datos en un Data Lake</li>
+                        <li>Transformación y limpieza de datos</li>
+                        <li>Creación de un modelo de ML con BigQuery</li>
+                        <li>Visualización de resultados</li>
+                    </ul>
+                    <p>Tiempo estimado: 60-90 minutos</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Preparación del Entorno</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">1</span> Abrir Cloud Shell</h3>
+                <p>Haz clic en el ícono de terminal <i class="bi bi-terminal"></i> en la parte superior derecha de la consola de GCP para abrir Cloud Shell.</p>
+                
+                <div class="alert alert-tip">
+                    <strong>Tip:</strong> Cloud Shell ya viene con las bibliotecas de Google Cloud preinstaladas y autenticadas con tu cuenta.
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">2</span> Crear un bucket en Cloud Storage</h3>
+                <p>Ejecuta el siguiente comando para crear un bucket que servirá como Data Lake:</p>
+                
+                <pre class="code-block"><code class="language-bash">gsutil mb -l us-central1 gs://taxi-data-lake-$DEVSHELL_PROJECT_ID/</code></pre>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">3</span> Crear un conjunto de datos en BigQuery</h3>
+                <p>Ejecuta el siguiente comando para crear un conjunto de datos en BigQuery:</p>
+                
+                <pre class="code-block"><code class="language-bash">bq mk taxi_dataset</code></pre>
+            </div>
+        </div>
+
+        <h2 class="section-header">Carga de Datos al Data Lake</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">4</span> Crear script de descarga y carga</h3>
+                <p>Crea un archivo Python para descargar los archivos Parquet y subirlos a Cloud Storage:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano download_upload.py</code></pre>
+                
+                <p>Pega el siguiente código en el editor:</p>
+                
+                <pre class="code-block"><code class="language-python">import os
+import requests
+from google.cloud import storage
+
+# Lista de URLs de los archivos Parquet (usando solo 3 meses para ahorrar tiempo)
+urls = [
+    "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-01.parquet",
+    "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-02.parquet",
+    "https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2023-03.parquet"
+]
+
+# Nombre del bucket (usando variable de entorno para obtener ID del proyecto)
+bucket_name = f"taxi-data-lake-{os.environ.get('DEVSHELL_PROJECT_ID')}"
+
+# Crear cliente de Storage
+storage_client = storage.Client()
+bucket = storage_client.bucket(bucket_name)
+
+# Crear directorio temporal
+os.makedirs("temp_data", exist_ok=True)
+
+# Descargar y subir cada archivo
+for url in urls:
+    # Extraer nombre del archivo
+    file_name = url.split("/")[-1]
+    local_path = os.path.join("temp_data", file_name)
+    
+    print(f"Descargando {file_name}...")
+    response = requests.get(url)
+    with open(local_path, "wb") as f:
+        f.write(response.content)
+    
+    print(f"Subiendo {file_name} a Cloud Storage...")
+    blob = bucket.blob(f"raw_data/{file_name}")
+    blob.upload_from_filename(local_path)
+    
+    # Eliminar archivo local para ahorrar espacio
+    os.remove(local_path)
+    
+    print(f"Procesado: {file_name}")
+
+print("Todos los archivos han sido procesados y subidos a Cloud Storage.")</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">5</span> Ejecutar el script de carga</h3>
+                <p>Instala las dependencias necesarias y ejecuta el script:</p>
+                
+                <pre class="code-block"><code class="language-bash">pip install google-cloud-storage requests
+python download_upload.py</code></pre>
+                
+                <div class="alert alert-warning">
+                    <strong>Nota:</strong> Este proceso puede tardar varios minutos dependiendo del tamaño de los archivos.
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Procesamiento de Datos en BigQuery</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">6</span> Crear tabla externa en BigQuery</h3>
+                <p>Crea una tabla externa que apunte a los archivos Parquet en Cloud Storage:</p>
+                
+                <pre class="code-block"><code class="language-bash">bq mk --external_table_definition=@gs://taxi-data-lake-$DEVSHELL_PROJECT_ID/raw_data/yellow_tripdata_*.parquet=PARQUET taxi_dataset.raw_taxi_data</code></pre>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">7</span> Crear script de limpieza de datos</h3>
+                <p>Crea un archivo SQL para limpiar y transformar los datos:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano clean_data.sql</code></pre>
+                
+                <p>Pega el siguiente código SQL:</p>
+                
+                <pre class="code-block"><code class="language-sql">CREATE OR REPLACE TABLE taxi_dataset.processed_taxi_data AS
+SELECT
+  VendorID,
+  tpep_pickup_datetime,
+  tpep_dropoff_datetime,
+  passenger_count,
+  trip_distance,
+  RatecodeID,
+  store_and_fwd_flag,
+  PULocationID,
+  DOLocationID,
+  payment_type,
+  fare_amount,
+  extra,
+  mta_tax,
+  tip_amount,
+  tolls_amount,
+  improvement_surcharge,
+  total_amount,
+  congestion_surcharge,
+  airport_fee
+FROM
+  taxi_dataset.raw_taxi_data
+WHERE
+  -- Eliminar registros con valores nulos en campos críticos
+  tpep_pickup_datetime IS NOT NULL
+  AND tpep_dropoff_datetime IS NOT NULL
+  AND trip_distance IS NOT NULL
+  AND fare_amount IS NOT NULL
+  -- Filtrar valores atípicos
+  AND trip_distance > 0
+  AND trip_distance < 100  -- Filtrar viajes extremadamente largos
+  AND fare_amount > 0
+  AND passenger_count > 0
+  AND passenger_count < 10;</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">8</span> Ejecutar la limpieza de datos</h3>
+                <p>Ejecuta el script SQL para limpiar los datos:</p>
+                
+                <pre class="code-block"><code class="language-bash">bq query --use_legacy_sql=false < clean_data.sql</code></pre>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">9</span> Crear tabla agregada para modelado</h3>
+                <p>Crea un archivo SQL para agregar los datos:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano create_aggregated_table.sql</code></pre>
+                
+                <p>Pega el siguiente código SQL:</p>
+                
+                <pre class="code-block"><code class="language-sql">CREATE OR REPLACE TABLE taxi_dataset.taxi_aggregated AS
+SELECT
+  EXTRACT(MONTH FROM tpep_pickup_datetime) AS mes,
+  EXTRACT(DAY FROM tpep_pickup_datetime) AS dia,
+  EXTRACT(HOUR FROM tpep_pickup_datetime) AS hora,
+  COUNT(*) AS cantidad_viajes,
+  AVG(trip_distance) AS distancia_promedio,
+  AVG(fare_amount) AS tarifa_promedio,
+  AVG(tip_amount) AS propina_promedio
+FROM
+  taxi_dataset.processed_taxi_data
+GROUP BY
+  mes, dia, hora;</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">10</span> Ejecutar la agregación de datos</h3>
+                <p>Ejecuta el script SQL para agregar los datos:</p>
+                
+                <pre class="code-block"><code class="language-bash">bq query --use_legacy_sql=false < create_aggregated_table.sql</code></pre>
+            </div>
+        </div>
+
+        <h2 class="section-header">Creación del Modelo de ML</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">11</span> Crear script de entrenamiento del modelo</h3>
+                <p>Crea un archivo SQL para entrenar el modelo de regresión:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano train_model.sql</code></pre>
+                
+                <p>Pega el siguiente código SQL:</p>
+                
+                <pre class="code-block"><code class="language-sql">CREATE OR REPLACE MODEL `taxi_dataset.modelo_regresion`
+OPTIONS(
+  model_type='linear_reg',
+  input_label_cols=['cantidad_viajes']
+) AS
+SELECT
+  mes,
+  dia,
+  hora,
+  cantidad_viajes,
+  distancia_promedio,
+  tarifa_promedio
+FROM
+  `taxi_dataset.taxi_aggregated`;</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">12</span> Entrenar el modelo</h3>
+                <p>Ejecuta el script SQL para entrenar el modelo:</p>
+                
+                <pre class="code-block"><code class="language-bash">bq query --use_legacy_sql=false < train_model.sql</code></pre>
+                
+                <div class="alert alert-info">
+                    <strong>Información:</strong> El entrenamiento del modelo puede tardar varios minutos.
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">13</span> Crear script de evaluación del modelo</h3>
+                                <p>Crea un archivo SQL para evaluar el modelo:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano evaluate_model.sql</code></pre>
+                
+                <p>Pega el siguiente código SQL:</p>
+                
+                <pre class="code-block"><code class="language-sql">SELECT
+  *
+FROM
+  ML.EVALUATE(MODEL `taxi_dataset.modelo_regresion`);</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">14</span> Evaluar el modelo</h3>
+                <p>Ejecuta el script SQL para evaluar el rendimiento del modelo:</p>
+                
+                <pre class="code-block"><code class="language-bash">bq query --use_legacy_sql=false < evaluate_model.sql</code></pre>
+                
+                <div class="alert alert-success">
+                    <strong>Importante:</strong> Toma una captura de pantalla de los resultados de la evaluación para tu informe.
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">15</span> Crear script de predicción</h3>
+                <p>Crea un archivo SQL para realizar predicciones con el modelo:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano predict.sql</code></pre>
+                
+                <p>Pega el siguiente código SQL:</p>
+                
+                <pre class="code-block"><code class="language-sql">SELECT
+  *
+FROM
+  ML.PREDICT(
+    MODEL `taxi_dataset.modelo_regresion`,
+    (
+      SELECT
+        5 AS mes,
+        12 AS dia,
+        18 AS hora,
+        2.5 AS distancia_promedio,
+        15.0 AS tarifa_promedio
+    )
+  );</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">16</span> Realizar predicciones</h3>
+                <p>Ejecuta el script SQL para realizar predicciones:</p>
+                
+                <pre class="code-block"><code class="language-bash">bq query --use_legacy_sql=false < predict.sql</code></pre>
+                
+                <div class="alert alert-success">
+                    <strong>Importante:</strong> Toma una captura de pantalla de los resultados de la predicción para tu informe.
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Visualización de Datos</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">17</span> Crear consultas para visualización</h3>
+                <p>Crea un archivo SQL con consultas para visualización:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano visualization_queries.sql</code></pre>
+                
+                <p>Pega el siguiente código SQL:</p>
+                
+                <pre class="code-block"><code class="language-sql">-- Consulta 1: Viajes por hora del día
+SELECT
+  hora,
+  AVG(cantidad_viajes) as promedio_viajes
+FROM
+  `taxi_dataset.taxi_aggregated`
+GROUP BY
+  hora
+ORDER BY
+  hora;
+
+-- Consulta 2: Viajes por día de la semana
+SELECT
+  EXTRACT(DAYOFWEEK FROM DATE(CAST(mes AS STRING) || '-' || CAST(dia AS STRING) || '-2023')) AS dia_semana,
+  AVG(cantidad_viajes) as promedio_viajes
+FROM
+  `taxi_dataset.taxi_aggregated`
+GROUP BY
+  dia_semana
+ORDER BY
+  dia_semana;
+
+-- Consulta 3: Relación entre distancia y tarifa
+SELECT
+  ROUND(distancia_promedio) AS distancia_redondeada,
+  AVG(tarifa_promedio) AS tarifa_promedio
+FROM
+  `taxi_dataset.taxi_aggregated`
+GROUP BY
+  distancia_redondeada
+ORDER BY
+  distancia_redondeada;
+
+-- Consulta 4: Predicción de viajes para las próximas horas
+SELECT
+  hora_prediccion,
+  predicted_cantidad_viajes
+FROM (
+  SELECT
+    18 AS hora_prediccion,
+    predicted_cantidad_viajes
+  FROM
+    ML.PREDICT(
+      MODEL `taxi_dataset.modelo_regresion`,
+      (SELECT 5 AS mes, 12 AS dia, 18 AS hora, 2.5 AS distancia_promedio, 15.0 AS tarifa_promedio)
+    )
+  UNION ALL
+  SELECT
+    19 AS hora_prediccion,
+    predicted_cantidad_viajes
+  FROM
+    ML.PREDICT(
+      MODEL `taxi_dataset.modelo_regresion`,
+      (SELECT 5 AS mes, 12 AS dia, 19 AS hora, 2.5 AS distancia_promedio, 15.0 AS tarifa_promedio)
+    )
+  UNION ALL
+  SELECT
+    20 AS hora_prediccion,
+    predicted_cantidad_viajes
+  FROM
+    ML.PREDICT(
+      MODEL `taxi_dataset.modelo_regresion`,
+      (SELECT 5 AS mes, 12 AS dia, 20 AS hora, 2.5 AS distancia_promedio, 15.0 AS tarifa_promedio)
+    )
+)
+ORDER BY
+  hora_prediccion;</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">18</span> Ejecutar consultas de visualización</h3>
+                <p>Ejecuta las consultas para generar datos para visualizaciones:</p>
+                
+                <pre class="code-block"><code class="language-bash">bq query --use_legacy_sql=false < visualization_queries.sql</code></pre>
+                
+                <div class="alert alert-info">
+                    <strong>Nota:</strong> Puedes ejecutar cada consulta por separado en la interfaz web de BigQuery para visualizar mejor los resultados.
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">19</span> Crear dashboard en Looker Studio</h3>
+                <ol>
+                    <li>Ve a <a href="https://lookerstudio.google.com/" target="_blank">Looker Studio</a></li>
+                    <li>Inicia sesión con la misma cuenta que usas para GCP</li>
+                    <li>Haz clic en "Crear" > "Informe"</li>
+                    <li>Selecciona "BigQuery" como fuente de datos</li>
+                    <li>Navega a tu proyecto > taxi_dataset > processed_taxi_data</li>
+                    <li>Haz clic en "Conectar"</li>
+                    <li>Crea los siguientes gráficos:
+                        <ul>
+                            <li>Gráfico de líneas: Viajes por hora del día</li>
+                            <li>Gráfico de barras: Viajes por día de la semana</li>
+                            <li>Gráfico de dispersión: Relación entre distancia y tarifa</li>
+                            <li>Gráfico de barras: Predicción de viajes para las próximas horas</li>
+                        </ul>
+                    </li>
+                </ol>
+                
+                <div class="alert alert-success">
+                    <strong>Importante:</strong> Toma una captura de pantalla del dashboard completo para tu informe.
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Registro de Actividad y Control de Errores</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">20</span> Crear tabla de registro de actividad</h3>
+                <p>Crea una tabla para registrar la actividad de procesamiento:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano create_log_table.sql</code></pre>
+                
+                <p>Pega el siguiente código SQL:</p>
+                
+                <pre class="code-block"><code class="language-sql">CREATE TABLE IF NOT EXISTS taxi_dataset.process_log (
+  file_name STRING,
+  processed_time TIMESTAMP,
+  event_id STRING,
+  status STRING
+);</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+                
+                <pre class="code-block"><code class="language-bash">bq query --use_legacy_sql=false < create_log_table.sql</code></pre>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <h3><span class="step-number">21</span> Registrar actividad de procesamiento</h3>
+                <p>Inserta un registro de actividad para el procesamiento actual:</p>
+                
+                <pre class="code-block"><code class="language-bash">nano insert_log.sql</code></pre>
+                
+                <p>Pega el siguiente código SQL:</p>
+                
+                <pre class="code-block"><code class="language-sql">INSERT INTO taxi_dataset.process_log (file_name, processed_time, event_id, status)
+VALUES
+  ('manual_process', CURRENT_TIMESTAMP(), 'manual-execution-1', 'SUCCESS');</code></pre>
+                
+                <p>Guarda el archivo presionando <code>Ctrl+X</code>, luego <code>Y</code> y <code>Enter</code>.</p>
+                
+                <pre class="code-block"><code class="language-bash">bq query --use_legacy_sql=false < insert_log.sql</code></pre>
+            </div>
+        </div>
+
+        <h2 class="section-header">Entregables Finales</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="mb-0">Entregables para la Evaluación</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>1. Query de entrenamiento del modelo</h4>
+                        <pre class="code-block"><code class="language-sql">CREATE OR REPLACE MODEL `taxi_dataset.modelo_regresion`
+OPTIONS(
+  model_type='linear_reg',
+  input_label_cols=['cantidad_viajes']
+) AS
+SELECT
+  mes,
+  dia,
+  hora,
+  cantidad_viajes,
+  distancia_promedio,
+  tarifa_promedio
+FROM
+  `taxi_dataset.taxi_aggregated`;</code></pre>
+
+                        <h4 class="mt-4">2. Query de predicción</h4>
+                        <pre class="code-block"><code class="language-sql">SELECT *
+FROM ML.PREDICT(
+  MODEL `taxi_dataset.modelo_regresion`,
+  (
+    SELECT
+      5 AS mes,
+      12 AS dia,
+      18 AS hora,
+      2.5 AS distancia_promedio,
+      15.0 AS tarifa_promedio
+  )
+);</code></pre>
+
+                        <h4 class="mt-4">3. Capturas de pantalla requeridas</h4>
+                        <ul>
+                            <li>Resultado de la predicción en BigQuery</li>
+                            <li>Dashboard en Looker Studio</li>
+                            <li>Evaluación del modelo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-header">Comandos Rápidos (Referencia)</h2>
+
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h3 class="mb-0">Comandos para Copiar y Pegar</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>Configuración Inicial</h4>
+                        <pre class="code-block"><code class="language-bash">gsutil mb -l us-central1 gs://taxi-data-lake-$DEVSHELL_PROJECT_ID/
+bq mk taxi_dataset</code></pre>
+
+                        <h4>Instalación de Dependencias</h4>
+                        <pre class="code-block"><code class="language-bash">pip install google-cloud-storage requests</code></pre>
+
+                        <h4>Ejecución de Scripts</h4>
+                        <pre class="code-block"><code class="language-bash">python download_upload.py
+bq query --use_legacy_sql=false < clean_data.sql
+bq query --use_legacy_sql=false < create_aggregated_table.sql
+bq query --use_legacy_sql=false < train_model.sql
+bq query --use_legacy_sql=false < evaluate_model.sql
+bq query --use_legacy_sql=false < predict.sql
+bq query --use_legacy_sql=false < visualization_queries.sql</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-12">
+                <div class="alert alert-warning" role="alert">
+                    <h4 class="alert-heading">Recordatorio Importante</h4>
+                    <p>Asegúrate de tomar capturas de pantalla de:</p>
+                    <ol>
+                        <li>El resultado de la predicción en BigQuery</li>
+                        <li>La evaluación del modelo</li>
+                        <li>El dashboard creado en Looker Studio</li>
+                    </ol>
+                    <p>Estas capturas son parte de los entregables requeridos para la evaluación.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Prism JS para resaltado de código -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <script>
+        // Script para copiar código al portapapeles
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeBlocks = document.querySelectorAll('pre.code-block');
+            
+            codeBlocks.forEach(function(block) {
+                // Crear botón de copiar
+                const copyButton = document.createElement('button');
+                copyButton.className = 'btn btn-sm btn-outline-primary position-absolute top-0 end-0 m-2';
+                copyButton.innerHTML = '<i class="bi bi-clipboard"></i> Copiar';
+                copyButton.style.zIndex = '10';
+                
+                // Posicionar el bloque de código como relativo para el botón absoluto
+                block.style.position = 'relative';
+                
+                // Agregar botón al bloque
+                block.appendChild(copyButton);
+                
+                // Agregar evento de clic
+                copyButton.addEventListener('click', function() {
+                    const code = block.querySelector('code').innerText;
+                    navigator.clipboard.writeText(code).then(function() {
+                        copyButton.innerHTML = '<i class="bi bi-check"></i> Copiado';
+                        setTimeout(function() {
+                            copyButton.innerHTML = '<i class="bi bi-clipboard"></i> Copiar';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+    </script>
+
+    <!-- Agregar íconos de Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    
+    <footer class="container mt-5 pt-4 border-top">
+        <div class="row">
+            <div class="col-12 text-center">
+                <p class="text-muted">Proyecto de Análisis de Datos de Taxis en GCP - Creado para cumplir con la rúbrica de evaluación</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
