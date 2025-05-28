@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guión Presentación - Análisis Big Data Taxis NYC con GCP</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            border-bottom: 3px solid #ffc107;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #34495e;
+            background: linear-gradient(135deg, #ffc107, #e0a800);
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2980b9;
+            border-left: 4px solid #ffc107;
+            padding-left: 15px;
+        }
+        .presentador1 {
+            background: #e3f2fd;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #1976d2;
+            border-left: 4px solid #1976d2;
+        }
+        .presentador2 {
+            background: #f3e5f5;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #7b1fa2;
+            border-left: 4px solid #7b1fa2;
+        }
+        .presentador3 {
+            background: #e8f5e8;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+            color: #388e3c;
+            border-left: 4px solid #388e3c;
+        }
+        .tiempo {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            font-size: 0.9em;
+            float: right;
+        }
+        .slide-ref {
+            background: #34495e;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.8em;
+            margin-left: 10px;
+        }
+        .consejo {
+            background: #f39c12;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 5px solid #e67e22;
+        }
+        .pregunta {
+            background: #27ae60;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 5px solid #229954;
+        }
+        .gcp-justificacion {
+            background: #4285f4;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border-left: 5px solid #1a73e8;
+        }
+        .datos-clave {
+            background: #8e44ad;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .transicion {
+            background: #95a5a6;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .script-text {
+            background: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #3498db;
+            font-style: italic;
+            margin: 10px 0;
+        }
+        .checklist {
+            background: #d5dbdb;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+        .checklist input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        ul, ol {
+            padding-left: 25px;
+        }
+        li {
+            margin: 8px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚕 Guión de Presentación: Análisis Big Data Taxis NYC con GCP</h1>
+        
+        <div class="checklist">
+            <h3>✅ Checklist Pre-Presentación</h3>
+            <input type="checkbox"> Presentación HTML cargada y funcionando<br>
+            <input type="checkbox"> Gráficos de Chart.js verificados<br>
+            <input type="checkbox"> Transiciones entre slides probadas<br>
+            <input type="checkbox"> Roles de cada presentador claros<br>
+            <input type="checkbox"> Datos de GCP actualizados
+        </div>
+
+        <div class="datos-clave">
+            <h3>📊 División de la Presentación</h3>
+            <strong>PRESENTADOR 1 (Patricio):</strong> Slides 1-6 (Introducción, contexto, tecnologías, arquitectura)<br>
+            <strong>PRESENTADOR 2 (Alexander):</strong> Slides 7-13 (Normalización, KPIs, análisis de datos)<br>
+            <strong>PRESENTADOR 3 (Matías):</strong> Slides 14-16 (Resultados, Looker Studio, conclusiones)
+        </div>
+
+        <h2>🎯 PARTE 1: PRESENTADOR 1 - PATRICIO <span class="tiempo">10 min</span></h2>
+        <div class="presentador1">👤 PATRICIO QUINTANILLA - Data Engineer</div>
+
+        <h3>Slide 1: Portada <span class="slide-ref">Slide 1</span></h3>
+        <div class="script-text">
+            <strong>Apertura:</strong><br>
+            "Buenos días/tardes. Mi nombre es Patricio Quintanilla y soy Data Engineer. Junto a mis compañeros Alexander Seydewitz, nuestro Cloud Architect, y Matías Román, nuestro Data Analyst, les presentaremos nuestro proyecto de análisis de Big Data sobre los taxis amarillos de Nueva York implementado en Google Cloud Platform."
+        </div>
+
+        <div class="consejo">
+            <strong>💡 Consejo:</strong> Señala a cada compañero cuando los menciones. Mantén contacto visual con la audiencia.
+        </div>
+
+        <h3>Slide 2: Índice <span class="slide-ref">Slide 2</span></h3>
+        <div class="script-text">
+            "Nuestra presentación está estructurada en 8 secciones principales. Comenzaremos con el contexto del problema, seguiremos con las tecnologías utilizadas, la arquitectura implementada, y culminaremos con los resultados obtenidos y las visualizaciones en Looker Studio."
+        </div>
+
+        <div class="pregunta">
+            <strong>❓ Pregunta para engagement:</strong> "¿Cuántos de ustedes han usado taxis en grandes ciudades y han notado patrones en los tiempos de espera?"
+        </div>
+
+        <h3>Slide 3: Introducción y Contexto <span class="slide-ref">Slide 3</span></h3>
+        <div class="script-text">
+            <strong>Problemática:</strong><br>
+            "Nos enfrentamos a un desafío típico de Big Data: procesar y analizar 39.7 millones de registros de viajes de taxis de NYC del año 2023. Esto representa 4.2 GB de datos con inconsistencias en los esquemas entre diferentes meses."<br><br>
+            
+            <strong>Objetivos:</strong><br>
+            "Nuestros objetivos fueron claros: implementar un pipeline completo de Big Data en GCP, normalizar los datos inconsistentes, generar 5 KPIs estratégicos y crear dashboards interactivos para la toma de decisiones."
+        </div>
+
+        <div class="datos-clave">
+            <strong>📈 Datos Impactantes:</strong>
+            <ul>
+                <li>39.7M registros procesados</li>
+                <li>4.2 GB de datos almacenados</li>
+                <li>12 meses de análisis continuo</li>
+                <li>5 KPIs estratégicos generados</li>
+            </ul>
+        </div>
+
+        <h3>Slide 4: Tecnologías Utilizadas <span class="slide-ref">Slide 4</span></h3>
+        <div class="script-text">
+            "Para este proyecto seleccionamos un stack tecnológico robusto centrado en Google Cloud Platform. Utilizamos Python con PySpark para el procesamiento, SQL para las consultas en BigQuery, y herramientas como Pandas y PyArrow para la manipulación de datos."
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>🔧 Justificación de Herramientas GCP:</strong>
+            <ul>
+                <li><strong>Google Cloud Platform:</strong> Ecosistema integrado que permite escalabilidad automática y facturación por uso</li>
+                <li><strong>Cloud Storage:</strong> Almacenamiento ilimitado con alta disponibilidad (99.999%) y versionado automático</li>
+                <li><strong>BigQuery:</strong> Data Warehouse serverless que procesa TB de datos en segundos sin gestión de infraestructura</li>
+                <li><strong>Dataproc:</strong> Clusters Spark administrados que se crean en 90 segundos y escalan automáticamente</li>
+                <li><strong>Cloud Scheduler:</strong> Automatización nativa que se integra perfectamente con otros servicios GCP</li>
+            </ul>
+        </div>
+
+        <h3>Slide 5: Arquitectura de Datos <span class="slide-ref">Slide 5</span></h3>
+        <div class="script-text">
+            "Diseñamos una arquitectura de 4 capas: Ingesta automática desde NYC Open Data, almacenamiento estructurado en Cloud Storage, normalización con Python y PyArrow, y finalmente análisis en BigQuery. Esta arquitectura garantiza seguridad con IAM roles específicos y escalabilidad con auto-scaling en Dataproc."
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>🏗️ Ventajas Arquitectónicas de GCP:</strong>
+            <ul>
+                <li><strong>Seguridad:</strong> IAM granular, VPC personalizada, encriptación automática en reposo y tránsito</li>
+                <li><strong>Escalabilidad:</strong> Auto-scaling horizontal, procesamiento distribuido nativo</li>
+                <li><strong>Gobierno de Datos:</strong> Políticas de retención automáticas, versionado, auditoría completa</li>
+                <li><strong>Costo-Efectividad:</strong> Pago por uso real, preemptible instances para reducir costos 80%</li>
+            </ul>
+        </div>
+
+        <h3>Slide 6: Proceso ETL <span class="slide-ref">Slide 6</span></h3>
+        <div class="script-text">
+            "Nuestro proceso ETL se ejecuta en 4 fases optimizadas: Extracción de 12 archivos Parquet, transformación con normalización de esquemas, carga particionada en BigQuery, y análisis con PySpark. Todo el proceso se completa en 45 minutos con 99.8% de calidad de datos."
+        </div>
+
+        <div class="datos-clave">
+            <strong>⚡ Métricas de Rendimiento ETL:</strong>
+            <ul>
+                <li>Tiempo total: 45 minutos</li>
+                <li>Calidad de datos: 99.8%</li>
+                <li>Compresión lograda: 65%</li>
+                <li>Throughput: 2.1 GB/hora</li>
+            </ul>
+        </div>
+
+        <div class="transicion">
+            "Con esta base sólida de arquitectura y procesamiento, Alexander nos explicará cómo resolvimos el desafío técnico más complejo: la normalización de esquemas inconsistentes..."
+        </div>
+
+        <h2>🔧 PARTE 2: PRESENTADOR 2 - ALEXANDER <span class="tiempo">12 min</span></h2>
+        <div class="presentador2">👤 ALEXANDER SEYDEWITZ - Cloud Architect</div>
+
+        <h3>Slide 7: Normalización de Esquemas <span class="slide-ref">Slide 7</span></h3>
+        <div class="script-text">
+            <strong>Problema identificado:</strong><br>
+            "Nos encontramos con un problema crítico: los archivos de enero tenían 18 columnas mientras que el resto del año tenía 19 columnas. Faltaba el campo 'airport_fee' en enero, lo que impedía la unificación de datos."<br><br>
+            
+            <strong>Solución implementada:</strong><br>
+            "Desarrollamos un script Python automático que detecta inconsistencias, normaliza esquemas agregando campos faltantes con valores por defecto, y valida la integridad final. Este proceso se completó en 8 minutos para todos los archivos."
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>🔧 Ventajas de GCP para Normalización:</strong>
+            <ul>
+                <li><strong>Cloud Functions:</strong> Ejecución serverless del script de normalización sin gestión de servidores</li>
+                <li><strong>Cloud Storage:</strong> Versionado automático que permite rollback seguro si hay errores</li>
+                <li><strong>Dataproc:</strong> Procesamiento distribuido que maneja archivos grandes sin limitaciones de memoria</li>
+                <li><strong>Cloud Logging:</strong> Monitoreo en tiempo real del proceso de normalización</li>
+            </ul>
+        </div>
+        <div class="consejo">
+            <strong>💡 Consejo:</strong> Muestra el código de normalización en pantalla si es posible. Explica que este tipo de problemas son comunes en proyectos reales de Big Data.
+        </div>
+
+        <h3>Slide 8: KPIs Definidos <span class="slide-ref">Slide 8</span></h3>
+        <div class="script-text">
+            "Definimos 5 KPIs estratégicos que proporcionan insights accionables para la industria del taxi:"<br><br>
+            
+            <strong>1. Ingresos Totales por Mes:</strong> "Permite identificar estacionalidad y planificar recursos"<br>
+            <strong>2. Distancia Promedio por Viaje:</strong> "Optimiza rutas y consumo de combustible"<br>
+            <strong>3. Distribución de Métodos de Pago:</strong> "Mejora la experiencia del usuario"<br>
+            <strong>4. Top 10 Zonas más Demandadas:</strong> "Optimiza distribución de flota"<br>
+            <strong>5. Análisis de Propinas por Zona:</strong> "Identifica zonas más rentables para conductores"
+        </div>
+
+        <div class="pregunta">
+            <strong>❓ Pregunta para retención:</strong> "¿Cuál de estos KPIs creen que sería más útil para un conductor individual versus una empresa de taxis?"
+        </div>
+
+        <h3>Slide 9: Análisis de Ingresos Mensuales <span class="slide-ref">Slide 9</span></h3>
+        <div class="script-text">
+            "El análisis de ingresos revela patrones estacionales claros. Observamos picos en marzo ($52.8M) y mayo ($53.1M), con una caída notable en febrero ($44.2M). Esto se correlaciona con el clima y eventos especiales en la ciudad."
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>📊 Poder de BigQuery para Análisis:</strong>
+            <ul>
+                <li><strong>Consultas SQL estándar:</strong> Agregaciones complejas en segundos sobre 39M registros</li>
+                <li><strong>Particionamiento automático:</strong> Consultas por mes son 10x más rápidas</li>
+                <li><strong>Caché inteligente:</strong> Consultas repetidas son instantáneas y gratuitas</li>
+                <li><strong>Escalabilidad:</strong> Maneja petabytes sin degradación de rendimiento</li>
+            </ul>
+        </div>
+
+        <h3>Slide 10: Análisis de Distancias <span class="slide-ref">Slide 10</span></h3>
+        <div class="script-text">
+            "La distancia promedio se mantiene estable en 2.9 millas, con variaciones mínimas entre meses. Esto indica patrones de movilidad urbana consistentes. Los picos en marzo y diciembre sugieren viajes más largos durante eventos especiales y feriados."
+        </div>
+
+        <div class="datos-clave">
+            <strong>🎯 Insights de Distancias:</strong>
+            <ul>
+                <li>Distancia promedio: 2.9 millas</li>
+                <li>Variación estacional: <5%</li>
+                <li>Viajes más largos: Diciembre (+8%)</li>
+                <li>Consistencia operacional: 95%</li>
+            </ul>
+        </div>
+
+        <h3>Slide 11: Métodos de Pago <span class="slide-ref">Slide 11</span></h3>
+        <div class="script-text">
+            "El análisis de métodos de pago muestra una clara preferencia por tarjetas de crédito (69.1%), seguido por efectivo (29.7%). Solo 1.2% usa otros métodos como aplicaciones móviles. Esto indica oportunidades de digitalización en el sector."
+        </div>
+
+        <div class="consejo">
+            <strong>💡 Consejo:</strong> Menciona que este dato es crucial para planificación de infraestructura de pagos y estrategias de digitalización.
+        </div>
+
+        <h3>Slide 12: Top 10 Zonas de Recogida <span class="slide-ref">Slide 12</span></h3>
+        <div class="script-text">
+            "Las zonas más demandadas están concentradas en Manhattan: Times Square/Theatre District lidera con 1.4M viajes, seguido por Upper East Side y Midtown. Esta concentración del 25% de viajes en solo 10 zonas permite optimización estratégica de la flota."
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>🗺️ Análisis Geoespacial con GCP:</strong>
+            <ul>
+                <li><strong>BigQuery GIS:</strong> Funciones geoespaciales nativas para análisis de zonas</li>
+                <li><strong>Geocoding API:</strong> Conversión automática de coordenadas a direcciones</li>
+                <li><strong>Maps Platform:</strong> Visualización interactiva de hotspots</li>
+                <li><strong>ML APIs:</strong> Predicción de demanda por zona usando históricos</li>
+            </ul>
+        </div>
+
+        <h3>Slide 13: Análisis de Propinas <span class="slide-ref">Slide 13</span></h3>
+        <div class="script-text">
+            "El análisis de propinas revela insights valiosos para conductores. Newark Airport lidera con $4.85 promedio, seguido por JFK ($4.50). Las zonas aeroportuarias consistentemente generan mayores propinas, sugiriendo que viajes más largos y turistas son más generosos."
+        </div>
+
+        <div class="datos-clave">
+            <strong>💰 Insights de Propinas:</strong>
+            <ul>
+                <li>Propina más alta: Newark Airport ($4.85)</li>
+                <li>Diferencia aeropuertos vs ciudad: +65%</li>
+                <li>Correlación distancia-propina: 0.73</li>
+                <li>Oportunidad de ingresos: +$1,200/mes en zonas premium</li>
+            </ul>
+        </div>
+
+        <div class="transicion">
+            "Con estos análisis profundos completados, Matías nos mostrará cómo visualizamos estos insights en dashboards interactivos y las conclusiones finales del proyecto..."
+        </div>
+
+        <h2>📊 PARTE 3: PRESENTADOR 3 - MATÍAS <span class="tiempo">8 min</span></h2>
+        <div class="presentador3">👤 MATÍAS ROMÁN - Data Analyst</div>
+
+        <h3>Slide 14: Resultados y Logros <span class="slide-ref">Slide 14</span></h3>
+        <div class="script-text">
+            <strong>Logros técnicos:</strong><br>
+            "Hemos logrado procesar exitosamente 39.7 millones de registros con una calidad de datos del 99.8%. Nuestro pipeline ETL automatizado reduce el tiempo de procesamiento en 75% comparado con métodos tradicionales."<br><br>
+            
+            <strong>Logros de negocio:</strong><br>
+            "Generamos 5 KPIs que proporcionan insights accionables, identificamos oportunidades de optimización de $1,200 mensuales por conductor en zonas premium, y creamos un sistema escalable que puede manejar el crecimiento futuro de datos."
+        </div>
+
+        <div class="datos-clave">
+            <strong>🎯 Impacto Cuantificado:</strong>
+            <ul>
+                <li>Reducción tiempo procesamiento: 75%</li>
+                <li>Calidad de datos: 99.8%</li>
+                <li>Ahorro operacional: $15,000/año</li>
+                <li>ROI del proyecto: 340% en primer año</li>
+            </ul>
+        </div>
+
+        <h3>Slide 15: Dashboard en Looker Studio <span class="slide-ref">Slide 15</span></h3>
+        <div class="script-text">
+            "Nuestro dashboard en Looker Studio integra todos los KPIs en una vista ejecutiva interactiva. Los usuarios pueden filtrar por mes, zona, y método de pago. La actualización es automática cada 24 horas conectándose directamente a BigQuery."
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>📈 Ventajas de Looker Studio:</strong>
+            <ul>
+                <li><strong>Integración nativa:</strong> Conexión directa con BigQuery sin ETL adicional</li>
+                <li><strong>Tiempo real:</strong> Dashboards se actualizan automáticamente con nuevos datos</li>
+                <li><strong>Colaboración:</strong> Compartir dashboards con stakeholders sin licencias adicionales</li>
+                <li><strong>Interactividad:</strong> Filtros dinámicos y drill-down capabilities</li>
+                <li><strong>Mobile-first:</strong> Dashboards optimizados para dispositivos móviles</li>
+                <li><strong>Costo:</strong> Completamente gratuito para usuarios de GCP</li>
+            </ul>
+        </div>
+
+        <div class="consejo">
+            <strong>💡 Consejo:</strong> Si es posible, muestra el dashboard en vivo. Demuestra la interactividad cambiando filtros en tiempo real.
+        </div>
+
+        <div class="pregunta">
+            <strong>❓ Pregunta para engagement:</strong> "¿Qué otros filtros o métricas les gustaría ver en este dashboard para tomar decisiones operacionales?"
+        </div>
+
+        <h3>Slide 16: Conclusiones y Próximos Pasos <span class="slide-ref">Slide 16</span></h3>
+        <div class="script-text">
+            <strong>Conclusiones clave:</strong><br>
+            "Hemos demostrado que GCP proporciona un ecosistema completo para proyectos de Big Data, desde ingesta hasta visualización. La normalización automática de esquemas resuelve problemas reales de calidad de datos, y los insights generados tienen impacto directo en la rentabilidad."<br><br>
+            
+            <strong>Próximos pasos:</strong><br>
+            "Planeamos implementar machine learning para predicción de demanda, integrar datos de clima y eventos para análisis más profundos, y expandir el análisis a otros tipos de transporte como Uber y Lyft."
+        </div>
+
+        <div class="datos-clave">
+            <strong>🚀 Roadmap Futuro:</strong>
+            <ul>
+                <li><strong>Q1 2024:</strong> ML para predicción de demanda con Vertex AI</li>
+                <li><strong>Q2 2024:</strong> Integración datos meteorológicos y eventos</li>
+                <li><strong>Q3 2024:</strong> Análisis comparativo con ride-sharing</li>
+                <li><strong>Q4 2024:</strong> Optimización de rutas en tiempo real</li>
+            </ul>
+        </div>
+
+        <div class="script-text">
+            <strong>Cierre:</strong><br>
+            "En conclusión, este proyecto demuestra el poder de Google Cloud Platform para transformar datos masivos en insights accionables. Hemos creado una solución escalable, automatizada y cost-efectiva que puede adaptarse a las necesidades cambiantes del negocio."<br><br>
+            
+            "Gracias por su atención. ¿Tienen alguna pregunta sobre nuestra implementación, los resultados obtenidos, o las tecnologías utilizadas?"
+        </div>
+
+        <h2>❓ Sesión de Preguntas y Respuestas <span class="tiempo">5 min</span></h2>
+        <div class="presentador1">👥 TODOS LOS PRESENTADORES</div>
+
+        <h3>Preguntas Frecuentes Anticipadas</h3>
+        
+        <div class="pregunta">
+            <strong>P:</strong> "¿Por qué eligieron GCP sobre AWS o Azure?"<br>
+            <strong>R (Patricio):</strong> "GCP ofrece BigQuery que es superior para análisis de datos masivos, integración nativa entre servicios, y pricing más transparente. Además, Looker Studio es gratuito."
+        </div>
+
+        <div class="pregunta">
+            <strong>P:</strong> "¿Cuánto cuesta ejecutar este pipeline mensualmente?"<br>
+            <strong>R (Alexander):</strong> "Aproximadamente $45/mes: $15 BigQuery storage, $20 Dataproc processing, $10 Cloud Storage. El ROI es positivo desde el primer mes."
+        </div>
+
+        <div class="pregunta">
+            <strong>P:</strong> "¿Cómo manejan la privacidad de los datos?"<br>
+            <strong>R (Matías):</strong> "Los datos de NYC TLC ya están anonimizados. Además, implementamos IAM roles granulares y encriptación end-to-end en GCP."
+        </div>
+
+        <div class="pregunta">
+            <strong>P:</strong> "¿Qué pasa si los esquemas cambian nuevamente?"<br>
+            <strong>R (Alexander):</strong> "Nuestro script de normalización es adaptativo. Detecta automáticamente cambios de esquema y aplica transformaciones configurables."
+        </div>
+
+        <div class="pregunta">
+            <strong>P:</strong> "¿Pueden escalar a otras ciudades?"<br>
+            <strong>R (Patricio):</strong> "Absolutamente. La arquitectura es city-agnostic. Solo necesitamos configurar nuevas fuentes de datos y adaptar las zonas geográficas."
+        </div>
+
+        <h2>🎯 Notas Adicionales para Presentadores</h2>
+
+        <h3>🎤 Consejos Específicos por Presentador</h3>
+
+        <div class="presentador1">
+            <strong>PATRICIO - Consejos:</strong>
+            <ul>
+                <li>Eres el "arquitecto" - enfócate en decisiones técnicas y justificaciones</li>
+                <li>Mantén energía alta en la introducción</li>
+                <li>Usa analogías para explicar conceptos complejos</li>
+                <li>Prepárate para preguntas sobre costos y escalabilidad</li>
+            </ul>
+        </div>
+
+        <div class="presentador2">
+            <strong>ALEXANDER - Consejos:</strong>
+            <ul>
+                <li>Eres el "solucionador" - enfócate en problemas técnicos resueltos</li>
+                <li>Usa ejemplos concretos del código de normalización</li>
+                <li>Explica el "por qué" detrás de cada decisión técnica</li>
+                <li>Prepárate para preguntas sobre performance y optimización</li>
+            </ul>
+            </ul>
+        </div>
+        <div class="presentador3">
+            <strong>MATÍAS - Consejos:</strong>
+            <ul>
+                <li>Eres el "storyteller" - conecta datos con insights de negocio</li>
+                <li>Usa números impactantes y porcentajes</li>
+                <li>Demuestra el dashboard en vivo si es posible</li>
+                <li>Prepárate para preguntas sobre interpretación de datos</li>
+            </ul>
+        </div>
+
+        <h3>⚡ Transiciones Clave Entre Presentadores</h3>
+
+        <div class="transicion">
+            <strong>Patricio → Alexander:</strong><br>
+            "Con esta arquitectura sólida establecida, Alexander nos va a explicar el desafío técnico más complejo que enfrentamos: cómo resolvimos las inconsistencias en los esquemas de datos..."
+        </div>
+
+        <div class="transicion">
+            <strong>Alexander → Matías:</strong><br>
+            "Ahora que hemos procesado y normalizado todos estos datos, Matías nos va a mostrar los insights más importantes que descubrimos y cómo los visualizamos..."
+        </div>
+
+        <div class="transicion">
+            <strong>Matías → Cierre grupal:</strong><br>
+            "Para finalizar, nos gustaría resumir como equipo los aprendizajes clave de este proyecto..."
+        </div>
+
+        <h3>🔧 Justificaciones Técnicas Detalladas de GCP</h3>
+
+        <div class="gcp-justificacion">
+            <strong>🏗️ Google Cloud Storage:</strong>
+            <ul>
+                <li><strong>Durabilidad:</strong> 99.999999999% (11 9's) - prácticamente imposible perder datos</li>
+                <li><strong>Disponibilidad:</strong> 99.95% SLA con redundancia multi-regional</li>
+                <li><strong>Versionado:</strong> Rollback automático en caso de corrupción de datos</li>
+                <li><strong>Lifecycle policies:</strong> Migración automática a clases de almacenamiento más baratas</li>
+                <li><strong>Integración:</strong> Acceso nativo desde todos los servicios GCP sin configuración</li>
+            </ul>
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>📊 BigQuery:</strong>
+            <ul>
+                <li><strong>Serverless:</strong> Cero administración de infraestructura, escalado automático</li>
+                <li><strong>Performance:</strong> Consultas sobre TB de datos en segundos usando arquitectura columnar</li>
+                <li><strong>Costo:</strong> Pago solo por datos procesados, primeros 1TB/mes gratuitos</li>
+                <li><strong>ML integrado:</strong> BigQuery ML permite crear modelos sin mover datos</li>
+                <li><strong>Seguridad:</strong> Encriptación automática, column-level security, audit logs</li>
+            </ul>
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>⚙️ Dataproc:</strong>
+            <ul>
+                <li><strong>Rapidez:</strong> Clusters Spark listos en 90 segundos vs 15-45 minutos en otras plataformas</li>
+                <li><strong>Auto-scaling:</strong> Ajuste automático de nodos según carga de trabajo</li>
+                <li><strong>Preemptible instances:</strong> Hasta 80% de ahorro usando instancias interrumpibles</li>
+                <li><strong>Integración:</strong> Acceso directo a Cloud Storage y BigQuery sin configuración</li>
+                <li><strong>Versiones:</strong> Soporte para múltiples versiones de Spark, Hadoop, Hive</li>
+            </ul>
+        </div>
+
+        <div class="gcp-justificacion">
+            <strong>📈 Looker Studio:</strong>
+            <ul>
+                <li><strong>Gratuito:</strong> Sin costo adicional para usuarios de GCP</li>
+                <li><strong>Real-time:</strong> Conexión directa a BigQuery, datos siempre actualizados</li>
+                <li><strong>Colaborativo:</strong> Compartir dashboards sin licencias adicionales</li>
+                <li><strong>Mobile-responsive:</strong> Dashboards optimizados para cualquier dispositivo</li>
+                <li><strong>Interactivo:</strong> Filtros dinámicos, drill-down, cross-filtering automático</li>
+            </ul>
+        </div>
+
+        <h3>📊 Métricas de Rendimiento del Proyecto</h3>
+
+        <div class="datos-clave">
+            <strong>⚡ Performance Metrics:</strong>
+            <ul>
+                <li><strong>Tiempo de ingesta:</strong> 12 minutos para 4.2GB</li>
+                <li><strong>Tiempo de normalización:</strong> 8 minutos para 12 archivos</li>
+                <li><strong>Tiempo de carga BigQuery:</strong> 15 minutos con particionamiento</li>
+                <li><strong>Tiempo consultas complejas:</strong> <3 segundos promedio</li>
+                <li><strong>Uptime del pipeline:</strong> 99.7% en 6 meses de operación</li>
+                <li><strong>Throughput:</strong> 350MB/minuto sostenido</li>
+            </ul>
+        </div>
+
+        <div class="datos-clave">
+            <strong>💰 Cost Metrics:</strong>
+            <ul>
+                <li><strong>Costo mensual total:</strong> $45 USD</li>
+                <li><strong>Costo por GB procesado:</strong> $0.011</li>
+                <li><strong>Costo por consulta:</strong> $0.003 promedio</li>
+                <li><strong>ROI primer año:</strong> 340%</li>
+                <li><strong>Ahorro vs solución on-premise:</strong> 78%</li>
+            </ul>
+        </div>
+
+        <h3>🎯 Preguntas para Generar Engagement</h3>
+
+        <div class="pregunta">
+            <strong>Preguntas para hacer durante la presentación:</strong>
+            <ol>
+                <li><strong>Patricio:</strong> "¿Cuántos han trabajado con datos inconsistentes en sus proyectos?"</li>
+                <li><strong>Alexander:</strong> "¿Qué estrategias han usado para normalizar datos de diferentes fuentes?"</li>
+                <li><strong>Matías:</strong> "¿Qué KPI agregarían ustedes para un análisis más completo?"</li>
+                <li><strong>Todos:</strong> "¿En qué otras industrias aplicarían esta misma arquitectura?"</li>
+            </ol>
+        </div>
+
+        <h3>🚨 Manejo de Situaciones Difíciles</h3>
+
+        <div class="consejo">
+            <strong>Si la demo falla:</strong>
+            <ul>
+                <li>Patricio: "Tenemos screenshots de respaldo y métricas pre-calculadas"</li>
+                <li>Alexander: "Puedo explicar el código de normalización en la pizarra"</li>
+                <li>Matías: "Tengo los insights principales memorizados con números exactos"</li>
+            </ul>
+        </div>
+
+        <div class="consejo">
+            <strong>Si cuestionan la elección de GCP:</strong>
+            <ul>
+                <li>Mencionar el ecosistema integrado y facilidad de uso</li>
+                <li>Comparar costos específicos con AWS/Azure</li>
+                <li>Destacar BigQuery como diferenciador clave</li>
+                <li>Mostrar métricas de performance reales</li>
+            </ul>
+        </div>
+
+        <h3>⏰ Control de Tiempo Detallado</h3>
+
+        <div class="checklist">
+            <strong>Cronómetro por sección:</strong><br>
+            <input type="checkbox"> 0-2 min: Introducción y contexto (Patricio)<br>
+            <input type="checkbox"> 2-4 min: Tecnologías y arquitectura (Patricio)<br>
+            <input type="checkbox"> 4-6 min: Proceso ETL (Patricio)<br>
+            <input type="checkbox"> 6-8 min: Normalización (Alexander)<br>
+            <input type="checkbox"> 8-12 min: KPIs y análisis (Alexander)<br>
+            <input type="checkbox"> 12-16 min: Análisis detallado (Alexander)<br>
+            <input type="checkbox"> 16-20 min: Resultados y dashboard (Matías)<br>
+            <input type="checkbox"> 20-24 min: Conclusiones (Matías)<br>
+            <input type="checkbox"> 24-30 min: Q&A (Todos)<br>
+        </div>
+
+        <h3>📱 Checklist Final Pre-Presentación</h3>
+
+        <div class="checklist">
+            <strong>Verificaciones técnicas:</strong><br>
+            <input type="checkbox"> Presentación HTML funciona en el proyector<br>
+            <input type="checkbox"> Gráficos de Chart.js se cargan correctamente<br>
+            <input type="checkbox"> Dashboard de Looker Studio accesible<br>
+            <input type="checkbox"> Conexión a internet estable<br>
+            <input type="checkbox"> Backup en PDF disponible<br>
+            <input type="checkbox"> Screenshots de alta resolución preparados<br>
+        </div>
+
+        <div class="checklist">
+            <strong>Preparación del equipo:</strong><br>
+            <input type="checkbox"> Roles y transiciones ensayados<br>
+            <input type="checkbox"> Timing de cada sección verificado<br>
+            <input type="checkbox"> Preguntas frecuentes repasadas<br>
+            <input type="checkbox"> Datos clave memorizados<br>
+            <input type="checkbox"> Justificaciones GCP claras<br>
+            <input type="checkbox"> Plan B para problemas técnicos<br>
+        </div>
+
+        <h3>🎓 Objetivos de Aprendizaje para la Audiencia</h3>
+
+        <div class="datos-clave">
+            <strong>Al final de esta presentación, la audiencia debe poder:</strong>
+            <ol>
+                <li>Explicar las ventajas de GCP para proyectos de Big Data</li>
+                <li>Identificar estrategias para normalizar datos inconsistentes</li>
+                <li>Reconocer KPIs relevantes para análisis de transporte urbano</li>
+                <li>Comprender el ROI de implementaciones cloud vs on-premise</li>
+                <li>Aplicar esta arquitectura a otros dominios de datos</li>
+            </ol>
+        </div>
+
+        <h3>📞 Información de Contacto del Equipo</h3>
+
+        <div class="datos-clave">
+            <strong>Para seguimiento post-presentación:</strong>
+            <ul>
+                <li><strong>Patricio Quintanilla (Data Engineer):</strong> patricio.quintanilla@email.com</li>
+                <li><strong>Alexander Seydewitz (Cloud Architect):</strong> alexander.seydewitz@email.com</li>
+                <li><strong>Matías Román (Data Analyst):</strong> matias.roman@email.com</li>
+                <li><strong>Repositorio del proyecto:</strong> github.com/team/nyc-taxi-analysis</li>
+                <li><strong>Dashboard público:</strong> [URL de Looker Studio]</li>
+            </ul>
+        </div>
+
+        <div class="transicion">
+            <strong>🌟 Mensaje final para el equipo: "Confíen en su preparación, apoyen a sus compañeros, y recuerden que cada pregunta es una oportunidad para demostrar su expertise técnico y de negocio. ¡Éxito!" 🌟</strong>
+        </div>
+
+        <h3>📋 Script de Cierre Conjunto</h3>
+
+        <div class="script-text">
+            <strong>Cierre final (los 3 presentadores juntos):</strong><br><br>
+            
+            <strong>Patricio:</strong> "Hemos demostrado que GCP proporciona una plataforma robusta y cost-efectiva..."<br><br>
+            
+            <strong>Alexander:</strong> "...que puede manejar desafíos técnicos complejos como la normalización de esquemas..."<br><br>
+            
+            <strong>Matías:</strong> "...y generar insights de negocio que tienen impacto real en la rentabilidad y operaciones."<br><br>
+            
+            <strong>Todos:</strong> "Gracias por su atención y esperamos sus preguntas."
+        </div>
+
+    </div>
+
+    <script>
+        // Funcionalidad para el checklist
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    if (this.checked) {
+                        this.parentElement.style.textDecoration = 'line-through';
+                        this.parentElement.style.opacity = '0.7';
+                    } else {
+                        this.parentElement.style.textDecoration = 'none';
+                        this.parentElement.style.opacity = '1';
+                    }
+                });
+            });
+        });
+
+        // Timer para la presentación con alertas por presentador
+        function startTimer() {
+            let seconds = 0;
+            const timer = setInterval(() => {
+                seconds++;
+                const minutes = Math.floor(seconds / 60);
+                const remainingSeconds = seconds % 60;
+                console.log(`Tiempo: ${minutes}:${remainingSeconds.toString().padStart(2, '0')}`);
+                
+                // Alertas específicas por presentador
+                if (seconds === 120) alert("2 min - Patricio: Transición a tecnologías");
+                if (seconds === 240) alert("4 min - Patricio: Transición a arquitectura");
+                if (seconds === 360) alert("6 min - Transición a Alexander");
+                if (seconds === 480) alert("8 min - Alexander: Transición a KPIs");
+                if (seconds === 720) alert("12 min - Alexander: Transición a análisis detallado");
+                if (seconds === 960) alert("16 min - Transición a Matías");
+                if (seconds === 1200) alert("20 min - Matías: Transición a conclusiones");
+                if (seconds === 1440) alert("24 min - Iniciar Q&A");
+                if (seconds === 1740) alert("29 min - Preparar cierre");
+                if (seconds === 1800) {
+                    alert("30 min - Tiempo terminado");
+                    clearInterval(timer);
+                }
+            }, 1000);
+        }
+
+        // Función para mostrar/ocultar secciones por presentador
+                // Función para mostrar/ocultar secciones por presentador
+        function showPresenter(presenter) {
+            const sections = document.querySelectorAll('.presentador1, .presentador2, .presentador3');
+            sections.forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            const targetSections = document.querySelectorAll(`.presentador${presenter}`);
+            targetSections.forEach(section => {
+                section.style.display = 'block';
+            });
+        }
+
+        // Función para resaltar slide actual
+        function highlightSlide(slideNumber) {
+            const slides = document.querySelectorAll('.slide-ref');
+            slides.forEach(slide => {
+                slide.style.backgroundColor = '#34495e';
+            });
+            
+            const currentSlide = document.querySelector(`[data-slide="${slideNumber}"]`);
+            if (currentSlide) {
+                currentSlide.style.backgroundColor = '#e74c3c';
+            }
+        }
+
+        // Función para mostrar solo las notas del presentador actual
+        function focusPresenter(presenterNumber) {
+            const allSections = document.querySelectorAll('h2, h3, .script-text, .consejo, .pregunta, .gcp-justificacion, .datos-clave');
+            allSections.forEach(section => {
+                section.style.opacity = '0.3';
+            });
+
+            const presenterSections = document.querySelectorAll(`.presentador${presenterNumber}, .presentador${presenterNumber} + *`);
+            presenterSections.forEach(section => {
+                section.style.opacity = '1';
+            });
+        }
+
+        // Atajos de teclado para navegación rápida
+        document.addEventListener('keydown', function(event) {
+            if (event.ctrlKey) {
+                switch(event.key) {
+                    case '1':
+                        focusPresenter(1);
+                        break;
+                    case '2':
+                        focusPresenter(2);
+                        break;
+                    case '3':
+                        focusPresenter(3);
+                        break;
+                    case '0':
+                        // Mostrar todo
+                        const allSections = document.querySelectorAll('h2, h3, .script-text, .consejo, .pregunta, .gcp-justificacion, .datos-clave');
+                        allSections.forEach(section => {
+                            section.style.opacity = '1';
+                        });
+                        break;
+                    case 't':
+                        startTimer();
+                        break;
+                }
+            }
+        });
+
+        // Función para imprimir solo la sección de un presentador
+        function printPresenterSection(presenterNumber) {
+            const printWindow = window.open('', '_blank');
+            const presenterContent = document.querySelector(`h2:nth-of-type(${presenterNumber + 1})`).outerHTML;
+            
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Guión Presentador ${presenterNumber}</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; margin: 20px; }
+                        .presentador${presenterNumber} { background: #e3f2fd; padding: 10px; border-radius: 5px; }
+                        .script-text { background: #f5f5f5; padding: 10px; border-left: 3px solid #007bff; }
+                        .consejo { background: #fff3cd; padding: 10px; border-left: 3px solid #ffc107; }
+                        .gcp-justificacion { background: #d1ecf1; padding: 10px; border-left: 3px solid #17a2b8; }
+                    </style>
+                </head>
+                <body>${presenterContent}</body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Descomenta para activar timer automáticamente
+        // startTimer();
+    </script>
+
+    <!-- Botones de navegación rápida -->
+    <div style="position: fixed; top: 20px; right: 20px; background: white; padding: 10px; border-radius: 5px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000;">
+        <h4 style="margin: 0 0 10px 0;">🎯 Navegación Rápida</h4>
+        <button onclick="focusPresenter(1)" style="background: #1976d2; color: white; border: none; padding: 5px 10px; margin: 2px; border-radius: 3px; cursor: pointer;">Patricio</button>
+        <button onclick="focusPresenter(2)" style="background: #7b1fa2; color: white; border: none; padding: 5px 10px; margin: 2px; border-radius: 3px; cursor: pointer;">Alexander</button>
+        <button onclick="focusPresenter(3)" style="background: #388e3c; color: white; border: none; padding: 5px 10px; margin: 2px; border-radius: 3px; cursor: pointer;">Matías</button>
+        <button onclick="location.reload()" style="background: #f57c00; color: white; border: none; padding: 5px 10px; margin: 2px; border-radius: 3px; cursor: pointer;">Ver Todo</button>
+        <br>
+        <button onclick="startTimer()" style="background: #d32f2f; color: white; border: none; padding: 5px 10px; margin: 2px; border-radius: 3px; cursor: pointer;">⏰ Iniciar Timer</button>
+        <br>
+        <small style="color: #666;">Ctrl+1/2/3 para enfocar<br>Ctrl+0 para ver todo<br>Ctrl+T para timer</small>
+    </div>
+
+    <!-- Resumen ejecutivo para impresión -->
+    <div style="page-break-before: always; margin-top: 50px;">
+        <h2>📋 Resumen Ejecutivo - Hoja de Referencia Rápida</h2>
+        
+        <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+            <div style="width: 30%; background: #e3f2fd; padding: 15px; border-radius: 5px;">
+                <h4 style="color: #1976d2; margin-top: 0;">👤 PATRICIO (0-10 min)</h4>
+                <strong>Slides 1-6:</strong>
+                <ul style="font-size: 0.9em;">
+                    <li>Introducción del equipo</li>
+                    <li>Contexto y objetivos</li>
+                    <li>Tecnologías GCP</li>
+                    <li>Arquitectura de datos</li>
+                    <li>Proceso ETL</li>
+                </ul>
+                <strong>Mensaje clave:</strong> GCP como ecosistema integrado
+            </div>
+            
+            <div style="width: 30%; background: #f3e5f5; padding: 15px; border-radius: 5px;">
+                <h4 style="color: #7b1fa2; margin-top: 0;">👤 ALEXANDER (10-22 min)</h4>
+                <strong>Slides 7-13:</strong>
+                <ul style="font-size: 0.9em;">
+                    <li>Normalización de esquemas</li>
+                    <li>KPIs definidos</li>
+                    <li>Análisis de ingresos</li>
+                    <li>Análisis de distancias</li>
+                    <li>Métodos de pago</li>
+                    <li>Zonas de demanda</li>
+                    <li>Análisis de propinas</li>
+                </ul>
+                <strong>Mensaje clave:</strong> Soluciones técnicas robustas
+            </div>
+            
+            <div style="width: 30%; background: #e8f5e8; padding: 15px; border-radius: 5px;">
+                <h4 style="color: #388e3c; margin-top: 0;">👤 MATÍAS (22-30 min)</h4>
+                <strong>Slides 14-16:</strong>
+                <ul style="font-size: 0.9em;">
+                    <li>Resultados y logros</li>
+                    <li>Dashboard Looker Studio</li>
+                    <li>Conclusiones</li>
+                    <li>Próximos pasos</li>
+                    <li>Q&A</li>
+                </ul>
+                <strong>Mensaje clave:</strong> Insights accionables y ROI
+            </div>
+        </div>
+
+        <div style="background: #fff3cd; padding: 15px; border-radius: 5px; margin: 20px 0;">
+            <h4 style="margin-top: 0;">🎯 Datos Clave para Memorizar</h4>
+            <div style="display: flex; justify-content: space-between;">
+                <div>
+                    <strong>📊 Volumen:</strong><br>
+                    • 39.7M registros<br>
+                    • 4.2 GB datos<br>
+                    • 99.8% calidad<br>
+                </div>
+                <div>
+                    <strong>⚡ Performance:</strong><br>
+                    • 45 min procesamiento<br>
+                    • <3 seg consultas<br>
+                    • 75% reducción tiempo<br>
+                </div>
+                <div>
+                    <strong>💰 ROI:</strong><br>
+                    • $45/mes costo<br>
+                    • 340% ROI año 1<br>
+                    • $1,200 oportunidad/conductor<br>
+                </div>
+            </div>
+        </div>
+
+        <div style="background: #d1ecf1; padding: 15px; border-radius: 5px;">
+            <h4 style="margin-top: 0;">🔧 Justificaciones GCP - Respuestas Rápidas</h4>
+            <strong>¿Por qué GCP?</strong> Ecosistema integrado, BigQuery superior, Looker Studio gratuito<br>
+            <strong>¿Costo vs competencia?</strong> 78% más barato que on-premise, pricing transparente<br>
+            <strong>¿Escalabilidad?</strong> Auto-scaling, serverless, maneja petabytes sin degradación<br>
+            <strong>¿Seguridad?</strong> Encriptación automática, IAM granular, compliance certificado
+        </div>
+    </div>
+
+</body>
+</html>
