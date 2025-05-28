@@ -1,0 +1,2105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación Plan de Proyecto - El Glotón</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconografía -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
+        .slide-container {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: none;
+            padding: 20px;
+            background-color: #f8f9fa;
+            overflow-y: auto;
+            aspect-ratio: 16/9;
+        }
+        
+        .slide.active {
+            display: block;
+        }
+        
+        .slide-content {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .slide-header {
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 20px;
+        }
+        
+        .slide-footer {
+            background-color: #343a40;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 0 0 10px 10px;
+            font-size: 0.8rem;
+            margin-top: auto; /* Empuja el footer al final */
+            position: relative; /* Cambiado de absolute a relative */
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        
+        .navigation {
+            position: fixed;
+            bottom: 80px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            z-index: 1000;
+            transition: opacity 0.3s ease;
+        }
+
+        
+        .nav-btn {
+            background-color: rgba(52, 58, 64, 0.7); /* Color oscuro con 70% de opacidad */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(3px); /* Efecto de desenfoque detrás del botón */
+        }
+    
+        .nav-btn:hover {
+            background-color: rgba(255, 107, 107, 0.8); /* Color rojo con 80% de opacidad al pasar el mouse */
+        }
+        
+        
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            margin-bottom: 25px;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card-header {
+            background-color: #ff6b6b;
+            color: white;
+            font-weight: 600;
+            border-radius: 10px 10px 0 0 !important;
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            color: #343a40;
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 70px;
+            height: 3px;
+            background-color: #ff6b6b;
+        }
+        
+        .icon-box {
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+        }
+        
+        .table-responsive {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead th {
+            background-color: #343a40;
+            color: white;
+            border: none;
+        }
+        
+        .badge-custom {
+            padding: 8px 12px;
+            font-weight: 500;
+        }
+        
+        .gantt-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .gantt-table th, .gantt-table td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+        }
+        
+        .gantt-table th {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+        }
+        
+        .gantt-bar {
+            background-color: #ff6b6b;
+            height: 20px;
+            border-radius: 5px;
+        }
+        
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #343a40;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            z-index: 1000;
+        }
+        
+        .menu {
+            position: fixed;
+            top: 0;
+            right: -300px;
+            width: 300px;
+            height: 100vh;
+            background-color: #343a40;
+            color: white;
+            padding: 20px;
+            transition: right 0.3s ease;
+            z-index: 1001;
+            overflow-y: auto;
+        }
+        
+        .menu.active {
+            right: 0;
+        }
+        
+        .menu-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .menu-item {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            cursor: pointer;
+        }
+        
+        .menu-item:hover {
+            color: #ff6b6b;
+        }
+        
+        .icon-box-xl {
+            font-size: 5rem;
+            color: #ff6b6b;
+            margin-bottom: 20px;
+        }
+        
+        #slide-counter {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(52, 58, 64, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            z-index: 1000;
+        }
+
+        @media print {
+        /* Configuración general de página */
+        @page {
+            size: A4 landscape;
+            margin: 0.5cm;
+        }
+        
+        body {
+            background-color: white !important;
+            font-size: 12pt;
+            color: black !important;
+        }
+        
+        /* Ocultar elementos no necesarios para impresión */
+        .menu-btn, 
+        .menu, 
+        .navigation, 
+        .slide-footer {
+            display: none !important;
+        }
+        
+        /* Ajustar diapositivas para impresión */
+        .slide-container {
+            width: 100% !important;
+            height: auto !important;
+            overflow: visible !important;
+        }
+        
+        .slide {
+            display: block !important;
+            position: relative !important;
+            page-break-after: always;
+            page-break-inside: avoid;
+            height: auto !important;
+            overflow: visible !important;
+            padding: 1cm !important;
+            margin-bottom: 1cm;
+            border: 1px solid #ddd;
+            box-shadow: none !important;
+        }
+        
+        /* Asegurar que los colores y fondos se impriman */
+        .card {
+            break-inside: avoid;
+            box-shadow: none !important;
+            border: 1px solid #ddd !important;
+        }
+        
+        .card-header {
+            background-color: #f8f9fa !important;
+            color: #333 !important;
+            border-bottom: 1px solid #ddd !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        /* Asegurar que los colores de fondo se impriman */
+        .bg-primary, .bg-success, .bg-info, .bg-warning, .bg-danger, .bg-dark {
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        /* Ajustar tablas para impresión */
+        .table {
+            border-collapse: collapse !important;
+        }
+        
+        .table th, 
+        .table td {
+            background-color: white !important;
+            border: 1px solid #ddd !important;
+        }
+        
+        .table thead th {
+            background-color: #f8f9fa !important;
+            color: #333 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        /* Ajustar iconos para impresión */
+        .icon-box {
+            color: #333 !important;
+        }
+        
+        /* Ajustar badges para impresión */
+        .badge {
+            border: 1px solid #ddd !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        /* Asegurar que las imágenes se impriman correctamente */
+        img {
+            max-width: 100% !important;
+        }
+        
+        /* Ajustar el gantt chart para impresión */
+        .gantt-bar {
+            background-color: #ccc !important;
+            border: 1px solid #999 !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+        
+        /* Asegurar que los colores de texto se impriman correctamente */
+        .text-white {
+            color: #333 !important;
+        }
+        
+        /* Optimizar el uso del espacio */
+        .container, 
+        .container-fluid, 
+        .row, 
+        .col, 
+        .col-md-3, 
+        .col-md-4, 
+        .col-md-6, 
+        .col-md-8, 
+        .col-12 {
+            width: 100% !important;
+            max-width: 100% !important;
+            flex: 0 0 100% !important;
+            padding: 5px !important;
+            margin: 0 !important;
+        }
+    }
+</style>
+
+    </style>
+</head>
+<body>
+    <!-- Menú de navegación -->
+    <span id="slide-counter"></span>
+    <button class="menu-btn" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i> Menú
+    </button>
+    
+<div class="menu" id="menu">
+    <button class="menu-close" onclick="toggleMenu()">
+        <i class="fas fa-times"></i>
+    </button>
+    <h4 class="mb-4">Contenido</h4>
+    <div class="menu-item" onclick="goToSlide(0)">Portada</div>
+    <div class="menu-item" onclick="goToSlide(1)">Versión del Plan</div>
+    <div class="menu-item" onclick="goToSlide(2)">Identificación del Proyecto</div>
+    <div class="menu-item" onclick="goToSlide(3)">Roles y Responsabilidades</div>
+    <div class="menu-item" onclick="goToSlide(4)">Metodologías</div>
+    <div class="menu-item" onclick="goToSlide(5)">Categorías</div>
+    <div class="menu-item" onclick="goToSlide(6)">RBS</div>
+    <div class="menu-item" onclick="goToSlide(7)">Recursos</div>
+    <div class="menu-item" onclick="goToSlide(8)">Cronograma</div>
+    <div class="menu-item" onclick="goToSlide(9)">EDT</div>
+    <div class="menu-item" onclick="goToSlide(10)">Matriz RACI</div>
+    <div class="menu-item" onclick="goToSlide(11)">Presupuesto</div>
+    <div class="menu-item" onclick="goToSlide(12)">Equipo del Proyecto</div>
+    <div class="menu-item" onclick="goToSlide(13)">Justificación Metodología Ágil</div>
+    <div class="menu-item" onclick="goToSlide(14)">Conclusiones</div>
+    <div class="menu-item" onclick="goToSlide(15)">Gracias</div>
+</div>
+
+       
+    <!-- Botones de navegación -->
+    <div class="navigation">
+        <button id="prev-btn" class="nav-btn">
+            <i class="fas fa-arrow-left"></i> Anterior
+        </button>
+        <button id="next-btn" class="nav-btn">
+            Siguiente <i class="fas fa-arrow-right"></i>
+        </button>
+    </div>
+    
+    <!-- Contenedor de diapositivas -->
+    <div class="slide-container">
+        <!-- Diapositiva 1: Portada -->
+        <div class="slide active" id="slide-0">
+            <div class="slide-content d-flex flex-column justify-content-center align-items-center h-100">
+                <div class="text-center">
+                    <i class="fas fa-utensils fa-5x mb-4 text-danger"></i>
+                    <h1 class="display-3 mb-4">Plan de Proyecto</h1>
+                    <h2 class="display-5 mb-5">Sistema de Gestión para Restaurante "El Glotón"</h2>
+                    <div class="mt-5">
+                        <h3 class="h4 mb-4">Equipo de Proyecto - Prueba 2</h3>
+                        <p class="lead">
+                            Italo Brignardello • Patricio Quintanilla • Claudio Sánchez • Alexander Seydewitz
+                        </p>
+                    </div>
+                    <p class="mt-5">Junio 2025</p>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 2: Versión del Plan -->
+        <div class="slide" id="slide-1">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-file-alt me-2"></i>Versión del Plan</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Versión</th>
+                                        <th>Fecha</th>
+                                        <th>Autor</th>
+                                        <th>Descripción</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1.0</td>
+                                        <td>15/06/2025</td>
+                                        <td>Equipo de Proyecto</td>
+                                        <td>Versión inicial del plan de proyecto</td>
+                                    </tr>
+                                    <tr>
+                                        <td>0.3</td>
+                                        <td>01/06/2025</td>
+                                        <td>Italo Brignardello, Patricio Quintanilla</td>
+                                        <td>Revisión de cronograma y presupuesto</td>
+                                    </tr>
+                                    <tr>
+                                        <td>0.2</td>
+                                        <td>15/05/2025</td>
+                                        <td>Claudio Sánchez, Alexander Seydewitz</td>
+                                        <td>Definición de roles y responsabilidades</td>
+                                    </tr>
+                                    <tr>
+                                        <td>0.1</td>
+                                        <td>01/05/2025</td>
+                                        <td>Equipo de Proyecto</td>
+                                        <td>Borrador inicial del plan</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+                <!-- Diapositiva 3: Identificación del Proyecto -->
+        <div class="slide" id="slide-2">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-id-card me-2"></i>Identificación del Proyecto</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-info-circle me-2"></i>Información General
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-project-diagram me-2"></i>Nombre del Proyecto:</span>
+                                        <span class="fw-bold">Sistema de Gestión para "El Glotón"</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-calendar-alt me-2"></i>Fecha de Inicio:</span>
+                                        <span class="fw-bold">01/07/2025</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-calendar-check me-2"></i>Fecha Estimada de Finalización:</span>
+                                        <span class="fw-bold">31/12/2025</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <span><i class="fas fa-user-tie me-2"></i>Patrocinador:</span>
+                                        <span class="fw-bold">Gerencia de "El Glotón"</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-bullseye me-2"></i>Objetivos del Proyecto
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>Implementar un sistema de gestión de pedidos para los 5 carros móviles
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>Automatizar el proceso de recepción y entrega de pedidos
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>Reducir los tiempos de espera y errores en los pedidos
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>Implementar un sistema de gestión de delivery
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check-circle text-success me-2"></i>Sentar las bases para la futura expansión del negocio
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 4: Roles y Responsabilidades -->
+        <div class="slide" id="slide-3">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-users me-2"></i>Roles y Responsabilidades</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Rol</th>
+                                        <th>Responsabilidades</th>
+                                        <th>Asignado a</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><i class="fas fa-user-tie me-2"></i>Product Owner</td>
+                                        <td>Representar al cliente, definir prioridades, gestionar el backlog del producto</td>
+                                        <td>Italo Brignardello</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-laptop-code me-2"></i>Scrum Master</td>
+                                        <td>Facilitar el proceso Scrum, eliminar impedimentos, coaching del equipo</td>
+                                        <td>Patricio Quintanilla</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-code me-2"></i>Equipo de Desarrollo</td>
+                                        <td>Implementación del sistema, pruebas unitarias, documentación técnica</td>
+                                        <td>Equipo de Desarrollo (4 personas)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-bug me-2"></i>QA Tester</td>
+                                        <td>Pruebas funcionales, pruebas de integración, reporte de errores</td>
+                                        <td>Claudio Sánchez</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-user-friends me-2"></i>Analista de Negocio</td>
+                                        <td>Relevamiento de requisitos, validación con usuarios, documentación funcional</td>
+                                        <td>Alexander Seydewitz</td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-server me-2"></i>DevOps</td>
+                                        <td>Configuración de CI/CD, infraestructura, seguridad, respaldos</td>
+                                        <td>Equipo de Infraestructura</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 5: Metodologías -->
+        <div class="slide" id="slide-4">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-tasks me-2"></i>Metodologías</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-sync-alt me-2"></i>Metodología de Desarrollo
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center icon-box">
+                                    <i class="fab fa-4x fa-jira"></i>
+                                </div>
+                                <h4 class="text-center mb-4">Scrum</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Sprints de 2 semanas
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Daily Standups a las 9:00 AM
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Sprint Planning al inicio de cada sprint
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Sprint Review y Retrospectiva al final de cada sprint
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Product Backlog gestionado en Jira
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-code-branch me-2"></i>Metodología de Gestión
+                            </div>
+                            <div class="card-body">
+                                <div class="text-center icon-box">
+                                    <i class="fas fa-4x fa-project-diagram"></i>
+                                </div>
+                                <h4 class="text-center mb-4">Híbrido Ágil/PMI</h4>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Gestión del Alcance mediante Product Backlog
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Gestión de Riesgos con matriz de riesgos
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Gestión de Comunicaciones con plan formal
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Gestión de Costos con seguimiento de presupuesto
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i>Informes de avance al final de cada sprint
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 6: Categorías -->
+        <div class="slide" id="slide-5">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-layer-group me-2"></i>Categorías</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-mobile-alt me-2"></i>Aplicación Móvil
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-box me-3">
+                                        <i class="fas fa-mobile-alt"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">Aplicación para Clientes</h5>
+                                        <small class="text-muted">Pedidos y seguimiento</small>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Registro y autenticación de usuarios</li>
+                                    <li class="list-group-item">Visualización de menú y precios</li>
+                                    <li class="list-group-item">Realización de pedidos</li>
+                                    <li class="list-group-item">Seguimiento de pedidos en tiempo real</li>
+                                    <li class="list-group-item">Historial de pedidos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-desktop me-2"></i>Sistema de Gestión
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-box me-3">
+                                        <i class="fas fa-desktop"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">Panel Administrativo</h5>
+                                        <small class="text-muted">Control y gestión</small>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Gestión de productos y precios</li>
+                                    <li class="list-group-item">Gestión de carros móviles</li>
+                                    <li class="list-group-item">Gestión de personal y turnos</li>
+                                    <li class="list-group-item">Reportes de ventas y estadísticas</li>
+                                    <li class="list-group-item">Gestión de clientes frecuentes</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-truck me-2"></i>Sistema de Delivery
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="icon-box me-3">
+                                        <i class="fas fa-truck"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-0">Gestión de Entregas</h5>
+                                        <small class="text-muted">Seguimiento y control</small>
+                                    </div>
+                                </div>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">Asignación de repartidores</li>
+                                    <li class="list-group-item">Gestión de tiempos de entrega</li>
+                                    <li class="list-group-item">Integración con servicios externos</li>
+                                    <li class="list-group-item">Reportes de eficiencia</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 7: RBS (Resource Breakdown Structure) -->
+        <div class="slide" id="slide-6">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-sitemap me-2"></i>RBS (Estructura de Desglose de Recursos)</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="mb-4"><i class="fas fa-users me-2"></i>Recursos Humanos</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Equipo Scrum
+                                        <span class="badge bg-primary badge-custom">10 personas</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Product Owner
+                                        <span class="badge bg-primary badge-custom">1 persona</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Scrum Master
+                                        <span class="badge bg-primary badge-custom">1 persona</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Equipo de Desarrollo
+                                        <span class="badge bg-primary badge-custom">4 personas</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Equipo de QA
+                                        <span class="badge bg-primary badge-custom">2 personas</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Equipo de DevOps
+                                        <span class="badge bg-primary badge-custom">2 personas</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="mb-4"><i class="fas fa-laptop me-2"></i>Recursos Tecnológicos</h4>
+                                <ul class="list-group mb-4">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Servidores Cloud
+                                        <span class="badge bg-success badge-custom">AWS</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Equipos de Desarrollo
+                                        <span class="badge bg-success badge-custom">10 laptops</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Dispositivos de Prueba
+                                        <span class="badge bg-success badge-custom">5 tablets</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Licencias de Software
+                                        <span class="badge bg-success badge-custom">Varias</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4 class="mb-4"><i class="fas fa-tools me-2"></i>Herramientas</h4>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Gestión de Proyectos
+                                        <span class="badge bg-info badge-custom">Jira</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Control de Versiones
+                                        <span class="badge bg-info badge-custom">Git/GitHub</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Comunicación
+                                        <span class="badge bg-info badge-custom">Slack</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Documentación
+                                        <span class="badge bg-info badge-custom">Confluence</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h4 class="mb-4"><i class="fas fa-dollar-sign me-2"></i>Recursos Financieros</h4>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Presupuesto de Personal
+                                        <span class="badge bg-warning text-dark badge-custom">60%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Presupuesto de Infraestructura
+                                        <span class="badge bg-warning text-dark badge-custom">20%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Presupuesto de Software
+                                        <span class="badge bg-warning text-dark badge-custom">15%</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Contingencia
+                                        <span class="badge bg-warning text-dark badge-custom">5%</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 8: Recursos -->
+        <div class="slide" id="slide-7">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-cubes me-2"></i>Recursos</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Tipo de Recurso</th>
+                                        <th>Descripción</th>
+                                        <th>Cantidad</th>
+                                        <th>Disponibilidad</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><i class="fas fa-user-tie me-2"></i>Product Owner</td>
+                                        <td>Profesional con experiencia en gestión de productos digitales</td>
+                                        <td>1</td>
+                                        <td><span class="badge bg-success">100%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-user-cog me-2"></i>Scrum Master</td>
+                                        <td>Profesional certificado en metodologías ágiles</td>
+                                        <td>1</td>
+                                        <td><span class="badge bg-success">100%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-laptop-code me-2"></i>Desarrollador Senior</td>
+                                        <td>Desarrollador con experiencia en aplicaciones web y móviles</td>
+                                        <td>2</td>
+                                        <td><span class="badge bg-success">100%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-code me-2"></i>Desarrollador Junior</td>
+                                        <td>Desarrollador con conocimientos en tecnologías web</td>
+                                        <td>2</td>
+                                        <td><span class="badge bg-success">100%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-database me-2"></i>Administrador de BD</td>
+                                        <td>Especialista en bases de datos relacionales y NoSQL</td>
+                                        <td>1</td>
+                                        <td><span class="badge bg-warning text-dark">50%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-bug me-2"></i>Tester QA</td>
+                                        <td>Especialista en pruebas de software</td>
+                                        <td>2</td>
+                                        <td><span class="badge bg-success">100%</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td><i class="fas fa-server me-2"></i>DevOps</td>
+                                        <td>Especialista en integración continua y despliegue</td>
+                                        <td>1</td>
+                                        <td><span class="badge bg-success">100%</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 9: Cronograma -->
+        <div class="slide" id="slide-8">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Cronograma</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered gantt-table">
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" style="vertical-align: middle;">Tarea</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Responsable</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Inicio</th>
+                                        <th rowspan="2" style="vertical-align: middle;">Fin</th>
+                                        <th colspan="6" class="text-center">Jul-Dic 2025</th>
+                                    </tr>
+                                    <tr>
+                                        <th>Jul</th>
+                                        <th>Ago</th>
+                                        <th>Sep</th>
+                                        <th>Oct</th>
+                                        <th>Nov</th>
+                                        <th>Dic</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Sprint 0: Inicio y Planificación</td>
+                                        <td>Equipo Completo</td>
+                                        <td>01/07/25</td>
+                                        <td>31/07/25</td>
+                                        <td>
+                                            <div class="gantt-bar" style="width: 100%;"></div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sprint 1-4: Sistema de Gestión</td>
+                                        <td>Equipo de Desarrollo</td>
+                                        <td>01/08/25</td>
+                                        <td>30/09/25</td>
+                                        <td></td>
+                                        <td>
+                                            <div class="gantt-bar" style="width: 100%;"></div>
+                                        </td>
+                                        <td>
+                                            <div class="gantt-bar" style="width: 100%;"></div>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sprint 5-7: Aplicación Móvil</td>
+                                        <td>Equipo de Desarrollo</td>
+                                        <td>01/10/25</td>
+                                        <td>15/11/25</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <div class="gantt-bar" style="width: 100%;"></div>
+                                        </td>
+                                        <td>
+                                            <div class="gantt-bar" style="width: 50%;"></div>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sprint 8-9: Sistema de Delivery</td>
+                                        <td>Equipo de Desarrollo</td>
+                                        <td>16/11/25</td>
+                                        <td>15/12/25</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <div class="gantt-bar" style="width: 50%;"></div>
+                                        </td>
+                                        <td>
+                                            <div class="gantt-bar" style="width: 50%;"></div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Fase 5: Pruebas y Despliegue</td>
+                                        <td>Equipo Completo</td>
+                                        <td>16/12/25</td>
+                                        <td>31/12/25</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <div class="gantt-bar" style="width: 50%;"></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="mt-4">
+                            <h5>Detalle de Actividades por Fase</h5>
+                            <div class="accordion" id="accordionCronograma">
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                            Fase 1: Inicio y Planificación
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionCronograma">
+                                        <div class="accordion-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Relevamiento de requisitos
+                                                    <span class="badge bg-primary">01/07/25 - 15/07/25</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Definición de arquitectura
+                                                    <span class="badge bg-primary">16/07/25 - 25/07/25</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Planificación detallada
+                                                    <span class="badge bg-primary">26/07/25 - 31/07/25</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                            Fase 2: Desarrollo del Sistema de Gestión
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionCronograma">
+                                        <div class="accordion-body">
+                                            <ul class="list-group list-group-flush">
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Desarrollo del backend
+                                                    <span class="badge bg-primary">01/08/25 - 20/08/25</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Desarrollo del frontend
+                                                    <span class="badge bg-primary">21/08/25 - 10/09/25</span>
+                                                </li>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Pruebas unitarias e integración
+                                                    <span class="badge bg-primary">11/09/25 - 30/09/25</span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<!-- Diapositiva 10: EDT (Estructura de Desglose de Trabajo) -->
+        <div class="slide" id="slide-9">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-project-diagram me-2"></i>EDT (Estructura de Desglose de Trabajo)</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <div class="card bg-dark text-white p-3 mb-3">
+                                    <h4 class="mb-0">Sistema de Gestión para Restaurante "El Glotón"</h4>
+                                </div>
+                                <div class="d-flex justify-content-center">
+                                    <i class="fas fa-arrow-down fa-2x text-secondary"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="card bg-primary text-white p-3 h-100">
+                                    <h5 class="mb-0">1. Inicio y Planificación</h5>
+                                    <small>(Sprint 0)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-success text-white p-3 h-100">
+                                    <h5 class="mb-0">2. Sistema de Gestión</h5>
+                                    <small>(Sprints 1-4)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-info text-white p-3 h-100">
+                                    <h5 class="mb-0">3. Aplicación Móvil</h5>
+                                    <small>(Sprints 5-7)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-warning text-dark p-3 h-100">
+                                    <h5 class="mb-0">4. Sistema de Delivery</h5>
+                                    <small>(Sprints 8-9)</small>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="d-flex justify-content-center mb-2">
+                                    <i class="fas fa-arrow-down text-secondary"></i>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        1.1 Relevamiento de requisitos
+                                        <span class="badge bg-primary rounded-pill">2 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        1.2 Definición de arquitectura
+                                        <span class="badge bg-primary rounded-pill">1.5 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        1.3 Planificación detallada
+                                        <span class="badge bg-primary rounded-pill">0.5 sem</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex justify-content-center mb-2">
+                                    <i class="fas fa-arrow-down text-secondary"></i>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        2.1 Desarrollo del backend
+                                        <span class="badge bg-success rounded-pill">3 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        2.2 Desarrollo del frontend
+                                        <span class="badge bg-success rounded-pill">3 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        2.3 Pruebas unitarias e integración
+                                        <span class="badge bg-success rounded-pill">2 sem</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex justify-content-center mb-2">
+                                    <i class="fas fa-arrow-down text-secondary"></i>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        3.1 Desarrollo de interfaces
+                                        <span class="badge bg-info rounded-pill">2 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        3.2 Integración con backend
+                                        <span class="badge bg-info rounded-pill">2 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        3.3 Pruebas en dispositivos
+                                        <span class="badge bg-info rounded-pill">2 sem</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="d-flex justify-content-center mb-2">
+                                    <i class="fas fa-arrow-down text-secondary"></i>
+                                </div>
+                                <ul class="list-group">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        4.1 Módulo de asignación
+                                        <span class="badge bg-warning text-dark rounded-pill">2 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        4.2 Seguimiento en tiempo real
+                                        <span class="badge bg-warning text-dark rounded-pill">2 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        4.3 Integración con servicios externos
+                                        <span class="badge bg-warning text-dark rounded-pill">2 sem</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12 text-center">
+                                <div class="d-flex justify-content-center mb-2">
+                                    <i class="fas fa-arrow-down fa-2x text-danger"></i>
+                                </div>
+                                <div class="card bg-danger text-white p-3 mb-3" style="max-width: 400px; margin: 0 auto;">
+                                    <h5 class="mb-0">5. Pruebas y Despliegue</h5>
+                                    <small>(2 semanas)</small>
+                                </div>
+                                <ul class="list-group" style="max-width: 600px; margin: 0 auto;">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        5.1 Pruebas de integración completa
+                                        <span class="badge bg-danger rounded-pill">1 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        5.2 Despliegue en producción
+                                        <span class="badge bg-danger rounded-pill">0.5 sem</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        5.3 Capacitación y documentación
+                                        <span class="badge bg-danger rounded-pill">0.5 sem</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Diapositiva 10: Matriz RACI -->
+        <div class="slide" id="slide-10">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-table me-2"></i>Matriz RACI</h2>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Actividad / Rol</th>
+                                        <th>Product Owner</th>
+                                        <th>Scrum Master</th>
+                                        <th>Equipo Desarrollo</th>
+                                        <th>QA Tester</th>
+                                        <th>Analista de Negocio</th>
+                                        <th>DevOps</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Definición de requisitos</td>
+                                        <td>A</td>
+                                        <td>C</td>
+                                        <td>I</td>
+                                        <td>C</td>
+                                        <td>R</td>
+                                        <td>I</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Diseño de arquitectura</td>
+                                        <td>A</td>
+                                        <td>C</td>
+                                        <td>R</td>
+                                        <td>I</td>
+                                        <td>C</td>
+                                        <td>C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Desarrollo del sistema</td>
+                                        <td>A</td>
+                                        <td>C</td>
+                                        <td>R</td>
+                                        <td>C</td>
+                                        <td>I</td>
+                                        <td>C</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Pruebas del sistema</td>
+                                        <td>A</td>
+                                        <td>C</td>
+                                        <td>C</td>
+                                        <td>R</td>
+                                        <td>C</td>
+                                        <td>I</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Configuración de infraestructura</td>
+                                        <td>A</td>
+                                        <td>C</td>
+                                        <td>I</td>
+                                        <td>I</td>
+                                        <td>I</td>
+                                        <td>R</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Capacitación a usuarios</td>
+                                        <td>A</td>
+                                        <td>C</td>
+                                        <td>C</td>
+                                        <td>C</td>
+                                        <td>R</td>
+                                        <td>I</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Despliegue en producción</td>
+                                        <td>A</td>
+                                        <td>C</td>
+                                        <td>C</td>
+                                        <td>C</td>
+                                        <td>I</td>
+                                        <td>R</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Soporte post-implementación</td>
+                                        <td>A</td>
+                                        <td>C</td>
+                                        <td>R</td>
+                                        <td>C</td>
+                                        <td>C</td>
+                                        <td>R</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="mt-3">
+                                <p><strong>Leyenda:</strong></p>
+                                <ul class="list-inline">
+                                    <li class="list-inline-item me-3"><span class="badge bg-primary">R</span> Responsable</li>
+                                    <li class="list-inline-item me-3"><span class="badge bg-success">A</span> Aprobador</li>
+                                    <li class="list-inline-item me-3"><span class="badge bg-info">C</span> Consultado</li>
+                                    <li class="list-inline-item"><span class="badge bg-secondary">I</span> Informado</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Diapositiva 11: Presupuesto -->
+        <div class="slide" id="slide-11">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-money-bill-wave me-2"></i>Presupuesto</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-chart-pie me-2"></i>Distribución del Presupuesto
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Categoría</th>
+                                                <th>Descripción</th>
+                                                <th>Monto (CLP)</th>
+                                                <th>Porcentaje</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><i class="fas fa-users me-2"></i>Recursos Humanos</td>
+                                                <td>Salarios y honorarios del equipo de proyecto</td>
+                                                <td>$45,000,000</td>
+                                                <td>60%</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-server me-2"></i>Infraestructura</td>
+                                                <td>Servidores, hosting, dominio, etc.</td>
+                                                <td>$15,000,000</td>
+                                                <td>20%</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-laptop-code me-2"></i>Software</td>
+                                                <td>Licencias, herramientas, servicios</td>
+                                                <td>$11,250,000</td>
+                                                <td>15%</td>
+                                            </tr>
+                                            <tr>
+                                                <td><i class="fas fa-exclamation-triangle me-2"></i>Contingencia</td>
+                                                <td>Reserva para imprevistos</td>
+                                                <td>$3,750,000</td>
+                                                <td>5%</td>
+                                            </tr>
+                                            <tr class="table-active fw-bold">
+                                                <td colspan="2">TOTAL</td>
+                                                <td>$75,000,000</td>
+                                                <td>100%</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-calendar-alt me-2"></i>Distribución Temporal
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Fase 1: Inicio y Planificación
+                                        <span class="badge bg-primary badge-custom">$10,000,000</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Fase 2: Sistema de Gestión
+                                        <span class="badge bg-primary badge-custom">$25,000,000</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Fase 3: Aplicación Móvil
+                                        <span class="badge bg-primary badge-custom">$20,000,000</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Fase 4: Sistema de Delivery
+                                        <span class="badge bg-primary badge-custom">$15,000,000</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        Fase 5: Pruebas y Despliegue
+                                        <span class="badge bg-primary badge-custom">$5,000,000</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <i class="fas fa-info-circle me-2"></i>Información Adicional
+                            </div>
+                            <div class="card-body">
+                                <p>El presupuesto ha sido aprobado por la gerencia de "El Glotón" y cuenta con un margen de contingencia del 5% para imprevistos.</p>
+                                <p>Se realizará un seguimiento mensual de la ejecución presupuestaria para asegurar el cumplimiento de los objetivos financieros del proyecto.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 12: Equipo del Proyecto -->
+        <div class="slide" id="slide-12">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-users me-2"></i>Equipo del Proyecto</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-user-tie me-2"></i>Líderes del Proyecto
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex mb-4">
+                                    <div class="flex-shrink-0">
+                                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                            <span class="h4 mb-0">IB</span>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h5 class="mb-1">Italo Brignardello</h5>
+                                        <p class="mb-1 text-muted">Product Owner</p>
+                                        <p class="mb-0 small">Responsable de definir prioridades y gestionar el backlog del producto.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-4">
+                                    <div class="flex-shrink-0">
+                                        <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                            <span class="h4 mb-0">PQ</span>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h5 class="mb-1">Patricio Quintanilla</h5>
+                                        <p class="mb-1 text-muted">Scrum Master</p>
+                                        <p class="mb-0 small">Responsable de facilitar el proceso Scrum y eliminar impedimentos.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-user-cog me-2"></i>Especialistas
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex mb-4">
+                                    <div class="flex-shrink-0">
+                                        <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                            <span class="h4 mb-0">CS</span>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h5 class="mb-1">Claudio Sánchez</h5>
+                                        <p class="mb-1 text-muted">QA Tester</p>
+                                        <p class="mb-0 small">Responsable de asegurar la calidad del software mediante pruebas exhaustivas.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-4">
+                                    <div class="flex-shrink-0">
+                                        <div class="rounded-circle bg-warning text-dark d-flex align-items-center justify-content-center" style="width: 60px; height: 60px;">
+                                            <span class="h4 mb-0">AS</span>
+                                        </div>
+                                    </div>
+                                    <div class="ms-3">
+                                        <h5 class="mb-1">Alexander Seydewitz</h5>
+                                        <p class="mb-1 text-muted">Analista de Negocio</p>
+                                        <p class="mb-0 small">Responsable del relevamiento de requisitos y validación con usuarios.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-handshake me-2"></i>Compromiso del Equipo
+                            </div>
+                            <div class="card-body">
+                                <p class="lead text-center mb-4">Nuestro equipo está comprometido con el éxito del proyecto y la satisfacción del cliente.</p>
+                                <div class="row text-center">
+                                    <div class="col-md-3 mb-3">
+                                        <div class="icon-box">
+                                            <i class="fas fa-clock"></i>
+                                        </div>
+                                        <h5>Puntualidad</h5>
+                                        <p class="small">Cumplimiento de plazos</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="icon-box">
+                                            <i class="fas fa-gem"></i>
+                                        </div>
+                                        <h5>Calidad</h5>
+                                        <p class="small">Excelencia en cada entrega</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="icon-box">
+                                            <i class="fas fa-comments"></i>
+                                        </div>
+                                        <h5>Comunicación</h5>
+                                        <p class="small">Transparencia constante</p>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <div class="icon-box">
+                                            <i class="fas fa-lightbulb"></i>
+                                        </div>
+                                        <h5>Innovación</h5>
+                                        <p class="small">Soluciones creativas</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 13: Justificación Metodología Ágil -->
+        <div class="slide" id="slide-13">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-sync-alt me-2"></i>Justificación Metodología Ágil</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-check-circle me-2"></i>¿Por qué Scrum para "El Glotón"?
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i><strong>Adaptabilidad al cambio:</strong> El negocio de restaurantes es dinámico y requiere ajustes constantes según el feedback de los clientes.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i><strong>Entregas incrementales:</strong> Permite implementar funcionalidades críticas primero (gestión de pedidos) y luego expandir (delivery, fidelización).
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i><strong>Feedback temprano:</strong> Los empleados y clientes pueden probar el sistema desde las primeras versiones y proporcionar retroalimentación valiosa.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i><strong>Transparencia:</strong> Reuniones diarias y revisiones de sprint mantienen a todos los interesados informados del progreso.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-check text-success me-2"></i><strong>Gestión de riesgos:</strong> Identificación temprana de problemas gracias a ciclos cortos de desarrollo.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-users-cog me-2"></i>Estructura del Equipo Ágil
+                            </div>
+                            <div class="card-body">
+                                <p>El equipo Scrum está diseñado específicamente para abordar las necesidades de "El Glotón":</p>
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <i class="fas fa-user-tie text-primary me-2"></i><strong>Product Owner:</strong> Representa la voz del negocio y los clientes, priorizando funcionalidades que generen mayor valor.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-user-cog text-success me-2"></i><strong>Scrum Master:</strong> Facilita la metodología y elimina impedimentos, asegurando la productividad del equipo.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-users text-info me-2"></i><strong>Equipo de Desarrollo:</strong> Multidisciplinario con habilidades en frontend, backend y móvil para cubrir todas las necesidades técnicas.
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-user-check text-warning me-2"></i><strong>QA Tester:</strong> Integrado desde el inicio para asegurar la calidad en cada incremento.
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-chart-line me-2"></i>Beneficios Esperados
+                            </div>
+                            <div class="card-body">
+                                <div class="row text-center">
+                                    <div class="col-6 mb-3">
+                                        <div class="icon-box">
+                                            <i class="fas fa-tachometer-alt"></i>
+                                        </div>
+                                        <h5>Tiempo al Mercado</h5>
+                                        <p class="small">Reducción del 40%</p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <div class="icon-box">
+                                            <i class="fas fa-bug"></i>
+                                        </div>
+                                        <h5>Defectos</h5>
+                                        <p class="small">Reducción del 60%</p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <div class="icon-box">
+                                            <i class="fas fa-smile"></i>
+                                        </div>
+                                        <h5>Satisfacción Cliente</h5>
+                                        <p class="small">Aumento del 35%</p>
+                                    </div>
+                                    <div class="col-6 mb-3">
+                                        <div class="icon-box">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </div>
+                                        <h5>Adaptabilidad</h5>
+                                        <p class="small">Aumento del 50%</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Diapositiva 14: Conclusiones -->
+        <div class="slide" id="slide-14">
+            <div class="slide-content">
+                <div class="slide-header">
+                    <h2 class="mb-0"><i class="fas fa-flag-checkered me-2"></i>Conclusiones</h2>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card h-100">
+                            <div class="card-header">
+                                <i class="fas fa-bullseye me-2"></i>Objetivos Clave
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="icon-box me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Automatización de Procesos</h5>
+                                        <p class="mb-0">Reducir la manualidad y errores en la toma de pedidos y gestión de delivery.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="icon-box me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Mejora de Experiencia del Cliente</h5>
+                                        <p class="mb-0">Reducir tiempos de espera y errores en los pedidos.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="icon-box me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Escalabilidad</h5>
+                                        <p class="mb-0">Sentar las bases tecnológicas para la expansión del negocio.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex align-items-center">
+                                    <div class="icon-box me-3">
+                                        <i class="fas fa-check-circle"></i>
+                                    </div>
+                                    <div>
+                                        <h5 class="mb-1">Fidelización de Clientes</h5>
+                                        <p class="mb-0">Implementar sistema de registro y descuentos para clientes frecuentes.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <i class="fas fa-road me-2"></i>Próximos Pasos
+                            </div>
+                            <div class="card-body">
+                                <ol class="list-group list-group-numbered">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Aprobación del Plan</div>
+                                            Obtener aprobación formal de la gerencia de "El Glotón"
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">Inmediato</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Conformación del Equipo</div>
+                                            Asignación formal de roles y responsabilidades
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">Semana 1</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Sprint 0</div>
+                                            Configuración de entorno y refinamiento de backlog
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">Semana 2-3</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto">
+                                            <div class="fw-bold">Inicio de Desarrollo</div>
+                                            Comienzo del primer sprint de desarrollo
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">Semana 4</span>
+                                    </li>
+                                </ol>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header">
+                                <i class="fas fa-star me-2"></i>Factores Críticos de Éxito
+                            </div>
+                            <div class="card-body">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <i class="fas fa-users text-primary me-2"></i>Compromiso de los stakeholders y usuarios finales
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-comments text-success me-2"></i>Comunicación efectiva y constante
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-tasks text-info me-2"></i>Gestión adecuada del alcance y prioridades
+                                    </li>
+                                    <li class="list-group-item">
+                                        <i class="fas fa-shield-alt text-warning me-2"></i>Plan de contingencia y gestión de riesgos
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slide-footer">
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                    </div>
+                    <div class="col-6 text-end">
+                        <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    <!-- Diapositiva 15: Gracias (modificada) -->
+    <div class="slide" id="slide-15">
+        <div class="slide-content d-flex flex-column justify-content-center align-items-center text-center">
+            <div class="icon-box-xl mb-4" style="font-size: 5rem;">
+                <i class="fas fa-utensils"></i>
+            </div>
+            <h1 class="display-4 mb-4">¡Gracias!</h1>
+            <p class="lead mb-5">Estamos listos para transformar la experiencia digital de "El Glotón"</p>
+        </div>
+        <div class="slide-footer">
+            <div class="row">
+                <div class="col-6">
+                    <p class="mb-0">Restaurante "El Glotón" - Plan de Proyecto</p>
+                </div>
+                <div class="col-6 text-end">
+                    <p class="mb-0">Junio 2025 | Versión 1.0</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+       document.addEventListener('DOMContentLoaded', function() {
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const slideCounter = document.getElementById('slide-counter');
+        const navigation = document.querySelector('.navigation');
+        let currentSlide = 0;
+        let inactivityTimer;
+        
+        // Ocultar todas las diapositivas excepto la primera
+        slides.forEach((slide, index) => {
+            if (index !== 0) {
+                slide.classList.remove('active');
+            }
+        });
+        
+        // Actualizar contador
+        updateCounter();
+        
+        // Evento para botón anterior
+        prevBtn.addEventListener('click', function() {
+            if (currentSlide > 0) {
+                slides[currentSlide].classList.remove('active');
+                currentSlide--;
+                slides[currentSlide].classList.add('active');
+                updateCounter();
+                resetInactivityTimer();
+            }
+        });
+        
+        // Evento para botón siguiente
+        nextBtn.addEventListener('click', function() {
+            if (currentSlide < slides.length - 1) {
+                slides[currentSlide].classList.remove('active');
+                currentSlide++;
+                slides[currentSlide].classList.add('active');
+                updateCounter();
+                resetInactivityTimer();
+            }
+        });
+        
+        // Función para ir a una diapositiva específica
+        window.goToSlide = function(index) {
+            if (index >= 0 && index < slides.length) {
+                slides[currentSlide].classList.remove('active');
+                currentSlide = index;
+                slides[currentSlide].classList.add('active');
+                updateCounter();
+                toggleMenu(); // Cerrar el menú después de navegar
+                resetInactivityTimer();
+            }
+        };
+        
+        // Actualizar contador de diapositivas
+        function updateCounter() {
+            slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+        }
+        
+        // Navegación con teclado
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') {
+                nextBtn.click();
+            } else if (e.key === 'ArrowLeft') {
+                prevBtn.click();
+            }
+            resetInactivityTimer();
+        });
+        
+        // Función para mostrar/ocultar el menú
+        window.toggleMenu = function() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('active');
+            resetInactivityTimer();
+        };
+        
+        // Función para ocultar los botones de navegación
+        function hideNavigationButtons() {
+            navigation.style.opacity = '0';
+            navigation.style.pointerEvents = 'none';
+        }
+        
+        // Función para mostrar los botones de navegación
+        function showNavigationButtons() {
+            navigation.style.opacity = '1';
+            navigation.style.pointerEvents = 'auto';
+            resetInactivityTimer();
+        }
+        
+        // Función para reiniciar el temporizador de inactividad
+        function resetInactivityTimer() {
+            clearTimeout(inactivityTimer);
+            showNavigationButtons();
+            inactivityTimer = setTimeout(hideNavigationButtons, 2000); // 2 segundos de inactividad
+        }
+        
+        // Iniciar el temporizador de inactividad
+        resetInactivityTimer();
+        
+        // Mostrar botones cuando el mouse se mueve
+        document.addEventListener('mousemove', function() {
+            showNavigationButtons();
+        });
+    });
+
+    </script>
+</body>
+</html>
+
+
