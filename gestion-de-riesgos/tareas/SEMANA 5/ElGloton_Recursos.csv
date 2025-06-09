@@ -1,10 +1,3 @@
-ID;Nombre;Tipo;Iniciales;Grupo;Tasa estandar;Tasa horas extra;Calendario;Correo electronico
-1;Analista de Sistemas;Trabajo;AS;Analisis;0;0;Estandar;analista@elgloton.com
-2;Desarrollador;Trabajo;DEV;Desarrollo;0;0;Estandar;desarrollador@elgloton.com
-3;Tester;Trabajo;TST;Pruebas;0;0;Estandar;tester@elgloton.com
-4;QA;Trabajo;QA;Pruebas;0;0;Estandar;qa@elgloton.com
-5;DBA;Trabajo;DBA;Implementacion;0;0;Estandar;dba@elgloton.com
-6;Administrador de Sistemas;Trabajo;ADM;Implementacion;0;0;Estandar;admin@elgloton.com
-7;Documentador;Trabajo;DOC;Capacitacion;0;0;Estandar;documentador@elgloton.com
-8;Soporte Tecnico;Trabajo;SPT;Soporte;0;0;Estandar;soporte@elgloton.com
-9;Capacitador;Trabajo;CAP;Implementacion;0;0;Estandar;capacitador@elgloton.com
+version https://git-lfs.github.com/spec/v1
+oid sha256:092de268728b040f706f9ba1d1cedd47025ae8344912698c16204fb049307e6b
+size 754

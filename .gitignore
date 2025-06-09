@@ -1,2 +1,153 @@
+# Archivos existentes
 deep-learning/pruebas/PRUEBA 1 AS_IB_PQ/Base_clientes_Monopoly-0.csv
 deep-learning/pruebas/PRUEBA 1 AS_IB_PQ/Base_clientes_Monopoly-0.xlsx
+
+# Archivos grandes (>10MB) - patrones comunes
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.iso
+*.dmg
+*.pkg
+*.deb
+*.rpm
+
+# Archivos de datos grandes
+*.csv
+*.xlsx
+*.xls
+*.json
+*.xml
+*.sql
+*.db
+*.sqlite
+*.sqlite3
+
+# Archivos de video/audio
+*.mp4
+*.avi
+*.mov
+*.wmv
+*.flv
+*.webm
+*.mp3
+*.wav
+*.flac
+*.aac
+
+# Archivos de imagen grandes
+*.psd
+*.ai
+*.eps
+*.tiff
+*.tif
+*.bmp
+
+# Modelos de ML y datasets
+*.h5
+*.pkl
+*.pickle
+*.joblib
+*.model
+*.weights
+*.pt
+*.pth
+*.ckpt
+*.pb
+
+# Archivos del sistema
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# IDEs y editores
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb
+
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Logs
+*.log
+logs/
+
+# Archivos temporales
+*.tmp
+*.temp
+*.bak
+*.backup
+*.old
+*.orig
+
+# Archivos comprimidos
+*.gz
+*.bz2
+*.xz
+*.lz
+*.lzma
+*.Z
+
+# Certificados y claves
+*.pem
+*.key
+*.crt
+*.cert
+*.p12
+*.pfx
+
+# Configuración local
+config.local.*
+.env.local
+.env.production
+secrets.json

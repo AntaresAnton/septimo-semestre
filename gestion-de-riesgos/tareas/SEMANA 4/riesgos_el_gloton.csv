@@ -1,21 +1,3 @@
-Descripción del Riesgo,Causa,Actividad Afectada,Fecha Identificación,Probabilidad,Impacto,Nivel de Riesgo,RBS
-Demoras en la entrega de pedidos,"Procesos manuales, falta de automatización",Atención al cliente / Delivery,04-04-2025,Alta,Alta,Alta,Operaciones
-Pedidos incompletos o mal preparados,"Comandas ilegibles, sin formato",Preparación de pedidos,04-04-2025,Alta,Alta,Alta,Calidad del servicio
-Registro deficiente de hora y estado de entrega,No existe sistema de control,Gestión de pedidos / Delivery,04-04-2025,Media,Alta,Alta,Tecnología
-Errores en valores del pedido,Precios no actualizados ni controlados,Facturación,04-04-2025,Alta,Media,Alta,Administración / Ventas
-Escasez de personal en horas punta,Turnos no planificados formalmente,Atención en carro / Cocina,04-04-2025,Alta,Alta,Alta,Recursos Humanos
-Roles mal definidos en el equipo,No existe una estructura organizacional clara,Operación general,04-04-2025,Alta,Media,Alta,Recursos Humanos
-Mala gestión de pedidos por WhatsApp,Asignación manual y no trazable,Gestión de pedidos / Delivery,04-04-2025,Alta,Alta,Alta,Tecnología / Procesos
-No hay registro de clientes frecuentes,No existe sistema de fidelización,Marketing / Atención,04-04-2025,Media,Media,Media,Marketing / Clientes
-Sistema puede fallar en horario de atención,No hay contingencia tecnológica,Atención al cliente,04-04-2025,Media,Alta,Alta,Tecnología
-Resistencia al uso de nueva tecnología,Falta de capacitación,Implementación tecnológica,04-04-2025,Alta,Media,Alta,Capacitación / RRHH
-Dificultad para escalar procesos a nuevos carros,Falta de estandarización,Expansión,04-04-2025,Alta,Alta,Alta,Estrategia / Escalabilidad
-Comunicación deficiente entre carros distribuidos,No existe sistema centralizado,Coordinación operativa,04-04-2025,Media,Alta,Alta,Tecnología / Comunicaciones
-Reclamos frecuentes por mal servicio,Mala experiencia del cliente no resuelta,Atención al cliente,04-04-2025,Alta,Alta,Alta,Calidad / Atención
-Problemas en implementación del nuevo sistema,Falta de planificación,Gestión de proyecto,04-04-2025,Media,Alta,Alta,Gestión de proyectos
-Sobreestimación de la capacidad operativa actual,No se han analizado métricas reales,Toma de decisiones,04-04-2025,Media,Media,Media,Dirección / Gestión Estratégica
-Entrega de productos sin pago confirmado,Falta de control en validación de pago,Delivery,04-04-2025,Media,Alta,Alta,Control Financiero
-Falta de datos históricos para tomar decisiones,Ausencia de sistemas de registro,Planificación estratégica,04-04-2025,Media,Media,Media,Información y Análisis
-Incompatibilidad entre sistemas tecnológicos,Selección de herramientas sin evaluación técnica,Integración tecnológica,04-04-2025,Media,Alta,Alta,Tecnología
-Pérdida de reputación en redes sociales,Manejo deficiente de reclamos públicos,Comunicación y marketing,04-04-2025,Media,Alta,Alta,Imagen Pública
-No cumplimiento de normativa sanitaria,Falta de protocolos documentados,Operación en carros,04-04-2025,Baja,Alta,Media,Cumplimiento Legal
+version https://git-lfs.github.com/spec/v1
+oid sha256:15fc777ece2b472b58e46ed5ac47120c8109ded23e012782a7115a6036f389be
+size 3073

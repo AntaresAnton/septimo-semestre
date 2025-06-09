@@ -1,24 +1,3 @@
-ID;Nombre;Duracion (dias);Comienzo;Fin;Predecesoras;Recursos;% Completado;Notas
-1;Implementacion Sistema El Gloton;120;2023-05-08;2023-10-27;;;0;Proyecto completo de implementacion
-2;Analisis de requerimientos;5;2023-05-08;2023-05-12;;Analista de Sistemas;0;Levantamiento inicial de requerimientos
-3;Diseno de la solucion;5;2023-05-15;2023-05-19;2;Analista de Sistemas;0;Diseno de arquitectura y funcionalidades
-4;Configuracion del sistema base;5;2023-05-22;2023-05-26;3;Desarrollador;0;Instalacion y configuracion inicial
-5;Personalizacion de modulos;5;2023-05-29;2023-06-02;4;Desarrollador;0;Adaptacion de modulos a necesidades especificas
-6;Desarrollo de integraciones;5;2023-06-05;2023-06-09;5;Desarrollador;0;Integracion con sistemas existentes
-7;Fase de Pruebas;20;2023-06-12;2023-07-14;6;;;0;Etapa de pruebas del sistema
-8;Pruebas unitarias;5;2023-06-12;2023-06-16;6;Tester;0;Pruebas de componentes individuales
-9;Pruebas de integracion;5;2023-06-19;2023-06-23;8;QA;0;Pruebas de integracion entre modulos
-10;Pruebas de aceptacion;5;2023-06-26;2023-06-30;9;QA;0;Pruebas con usuarios finales
-11;Implementacion;40;2023-07-03;2023-08-25;10;;;0;Fase de implementacion en produccion
-12;Migracion de datos;10;2023-07-03;2023-07-14;10;DBA;0;Migracion de datos existentes
-13;Configuracion de entorno productivo;10;2023-07-17;2023-07-28;12;Administrador de Sistemas;0;Preparacion del entorno de produccion
-14;Despliegue;20;2023-07-31;2023-08-25;13;;;0;Despliegue del sistema
-15;Instalacion en servidores;10;2023-07-31;2023-08-11;13;DBA;0;Instalacion en infraestructura final
-16;Configuracion final;10;2023-08-14;2023-08-25;15;Administrador de Sistemas;0;Ajustes finales de configuracion
-17;Capacitacion y Soporte;40;2023-08-28;2023-10-20;16;;;0;Fase de capacitacion y soporte inicial
-18;Preparacion de materiales;10;2023-08-28;2023-09-08;16;Documentador;0;Creacion de manuales y guias
-19;Capacitacion a usuarios;10;2023-09-11;2023-09-22;18;Documentador;0;Sesiones de capacitacion
-20;Soporte post-implementacion;20;2023-09-25;2023-10-20;19;;;0;Periodo de soporte inicial
-21;Soporte tecnico;10;2023-09-25;2023-10-06;19;Soporte Tecnico;0;Asistencia tecnica inicial
-22;Ajustes y correcciones;10;2023-10-09;2023-10-20;21;Capacitador;0;Correcciones basadas en feedback
-23;Cierre del proyecto;5;2023-10-23;2023-10-27;22;Analista de Sistemas;0;Documentacion y cierre formal
+version https://git-lfs.github.com/spec/v1
+oid sha256:61e114d8edbe54d1c68e1a42e51f68d848d138cb3ed5f94e499860304b9b1b86
+size 2387
