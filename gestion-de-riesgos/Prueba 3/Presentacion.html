@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Mitigación de Riesgos - Agencia On Tour</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .slide {
+            display: none;
+            min-height: 100vh;
+            padding: 40px;
+            position: relative;
+            color: white;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide h2 {
+            font-size: 2.8rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .slide h3 {
+            font-size: 2.2rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: #ffd700;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.2);
+            border: 2px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 12px 20px;
+            margin: 0 5px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(0,0,0,0.5);
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 500;
+        }
+
+        .card-interactive {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px;
+            transition: all 0.3s ease;
+            color: white;
+        }
+
+        .card-interactive:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .risk-high {
+            border-left: 5px solid #dc3545;
+            background: linear-gradient(135deg, rgba(220,53,69,0.2), rgba(220,53,69,0.1));
+        }
+
+        .risk-medium {
+            border-left: 5px solid #ffc107;
+            background: linear-gradient(135deg, rgba(255,193,7,0.2), rgba(255,193,7,0.1));
+        }
+
+        .risk-low {
+            border-left: 5px solid #28a745;
+            background: linear-gradient(135deg, rgba(40,167,69,0.2), rgba(40,167,69,0.1));
+        }
+
+        .metric-box {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            margin: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .metric-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: #ffd700;
+            display: block;
+        }
+
+        .progress-ring {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 20px;
+        }
+
+        .progress-ring circle {
+            fill: transparent;
+            stroke: rgba(255,255,255,0.3);
+            stroke-width: 8;
+        }
+
+        .progress-ring .progress {
+            stroke: #ffd700;
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            animation: progress 2s ease-in-out forwards;
+        }
+
+        @keyframes progress {
+            to {
+                stroke-dashoffset: 70;
+            }
+        }
+
+        .team-member {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .timeline-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 4px solid #ffd700;
+            backdrop-filter: blur(10px);
+        }
+
+        .chart-container {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .slide-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .slide-2 { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; }
+        .slide-3 { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; }
+        .slide-4 { background: linear-gradient(135deg, #134e5e 0%, #71b280 100%); color: white; }
+        .slide-5 { background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%); color: white; }
+        .slide-6 { background: linear-gradient(135deg, #2c3e50 0%, #4a6741 100%); color: white; }
+        .slide-7 { background: linear-gradient(135deg, #c0392b 0%, #8e44ad 100%); color: white; }
+        .slide-8 { background: linear-gradient(135deg, #2980b9 0%, #6bb6ff 100%); color: white; }
+        .slide-9 { background: linear-gradient(135deg, #d35400 0%, #e67e22 100%); color: white; }
+        .slide-10 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+        .slide-11 { background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); color: white; }
+
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 220px;
+            height: 80px;
+            background: white;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.2rem;
+        }
+
+        .fullscreen-btn {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .fullscreen-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .slide h1 { font-size: 2.5rem; }
+            .slide h2 { font-size: 2rem; }
+            .slide h3 { font-size: 1.8rem; }
+            .slide p, .slide li { font-size: 1.2rem; }
+            .slide-content { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Slide 1: Portada -->
+    <div class="slide slide-1 active">
+        <div class="logo"> <img style="width: auto; height: 50px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo_DuocUC.svg/711px-Logo_DuocUC.svg.png" alt="Logo de la empresa"></div>
+        <button class="fullscreen-btn" onclick="toggleFullscreen()">
+            <i class="fas fa-expand"></i>
+        </button>
+        <div class="slide-content">
+            <h1><i class="fas fa-shield-alt me-3"></i>Plan de Mitigación de Riesgos</h1>
+            <h3>Sistema de Gestión de Viajes de Estudio</h3>
+            <h3>Agencia "On Tour"</h3>
+            
+            <div class="row mt-5">
+                <div class="col-md-6">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h5>Italo Brignardello</h5>
+                        <p>Líder de Proyecto</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h5>Patricio Quintanilla</h5>
+                        <p>Analista de Riesgos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h5>Claudio Sánchez</h5>
+                        <p>Especialista en Seguridad</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h5>Alexander Seydewitz</h5>
+                        <p>Coordinador de Calidad</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="mt-4"><strong>Junio 2025 | Santiago, Chile</strong></p>
+        </div>
+    </div>
+
+    <!-- Slide 2: Contexto del Proyecto -->
+    <div class="slide slide-2">
+        <div class="slide-content">
+            <h2><i class="fas fa-map-marked-alt me-3"></i>Contexto del Proyecto</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-building me-2"></i>Agencia "On Tour"</h3>
+                        <ul class="text-start">
+                            <li>20+ años en turismo internacional</li>
+                            <li>Especialización en giras de estudio</li>
+                            <li>Clientes: colegios y organizaciones</li>
+                            <li>Crecimiento del 35% en demanda</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-exclamation-triangle me-2"></i>Problemática Actual</h3>
+                        <ul class="text-start">
+                            <li>Falta de transparencia en procesos</li>
+                            <li>Información limitada para apoderados</li>
+                            <li>Gestión manual de pagos y seguros</li>
+                            <li>Pérdida de oportunidades de negocio</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card-interactive mt-4">
+                <h3><i class="fas fa-bullseye me-2"></i>Objetivo del Sistema</h3>
+                <p class="lead">Desarrollar una plataforma integral que permita gestionar de manera transparente y eficiente los viajes de estudio, proporcionando información oportuna tanto a la agencia como a los apoderados.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 3: Metodología de Gestión de Riesgos -->
+    <div class="slide slide-3">
+        <div class="slide-content">
+            <h2><i class="fas fa-cogs me-3"></i>Metodología de Gestión de Riesgos</h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="timeline-item">
+                        <h4><i class="fas fa-search me-2"></i>Paso 1</h4>
+                        <h5>Identificación</h5>
+                        <p>Análisis exhaustivo del proyecto para identificar riesgos potenciales en todas las fases</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="timeline-item">
+                        <h4><i class="fas fa-chart-bar me-2"></i>Paso 2</h4>
+                        <h5>Evaluación</h5>
+                        <p>Clasificación por probabilidad e impacto usando matriz cuantitativa</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="timeline-item">
+                        <h4><i class="fas fa-shield-alt me-2"></i>Paso 3</h4>
+                        <h5>Mitigación</h5>
+                        <p>Desarrollo de planes específicos con responsables y métricas</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3>Técnicas Utilizadas</h3>
+                        <ul class="text-start">
+                            <li><strong>Análisis FODA:</strong> Fortalezas, Oportunidades, Debilidades, Amenazas</li>
+                            <li><strong>Matriz de Riesgos:</strong> Probabilidad vs Impacto</li>
+                            <li><strong>Análisis de Sensibilidad:</strong> Escenarios económicos</li>
+                            <li><strong>Análisis Cuantitativo:</strong> Impacto monetario</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3>Criterios de Clasificación</h3>
+                        <ul class="text-start">
+                            <li><strong>Alto:</strong> Probabilidad >60% e Impacto >$15M</li>
+                            <li><strong>Medio:</strong> Probabilidad 30-60% e Impacto $5-15M</li>
+                            <li><strong>Bajo:</strong> Probabilidad <30% e Impacto <$5M</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: Riesgos Identificados -->
+    <div class="slide slide-4">
+        <div class="slide-content">
+            <h2><i class="fas fa-exclamation-triangle me-3"></i>Riesgos Identificados</h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-interactive risk-high">
+                        <h3><i class="fas fa-exclamation-circle me-2"></i>Riesgos ALTOS</h3>
+                        <div class="metric-number">5</div>
+                        <ul class="text-start mt-3">
+                            <li>Fallas Integración Bancaria</li>
+                            <li>Vulnerabilidades Seguridad</li>
+                            <li>Sobrecostos del Proyecto</li>
+                            <li>Retrasos en Entrega</li>
+                            <li>Incumplimiento Normativas</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-interactive risk-medium">
+                        <h3><i class="fas fa-exclamation me-2"></i>Riesgos MEDIOS</h3>
+                        <div class="metric-number">4</div>
+                        <ul class="text-start mt-3">
+                            <li>Resistencia al Cambio</li>
+                            <li>Problemas de Rendimiento</li>
+                            <li>Capacitación Insuficiente</li>
+                            <li>Dependencia de Proveedores</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-interactive risk-low">
+                        <h3><i class="fas fa-info-circle me-2"></i>Riesgos BAJOS</h3>
+                        <div class="metric-number">3</div>
+                        <ul class="text-start mt-3">
+                            <li>Cambios en Alcance</li>
+                            <li>Rotación de Personal</li>
+                            <li>Problemas de Comunicación</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-interactive mt-4">
+                <h3>Distribución de Riesgos por Categoría</h3>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="metric-box">
+                            <span class="metric-number">42%</span>
+                            <p>Riesgos Altos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-box">
+                            <span class="metric-number">33%</span>
+                            <p>Riesgos Medios</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-box">
+                            <span class="metric-number">25%</span>
+                            <p>Riesgos Bajos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="metric-box">
+                            <span class="metric-number">12</span>
+                            <p>Total Riesgos</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 5: Planes de Acción Específicos -->
+    <div class="slide slide-5">
+        <div class="slide-content">
+            <h2><i class="fas fa-tasks me-3"></i>Planes de Acción Específicos</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-university me-2"></i>R001: Integración Bancaria</h3>
+                        <p><strong>Impacto:</strong> $25M CLP | <strong>Probabilidad:</strong> 70%</p>
+                        <ul class="text-start">
+                            <li>Pruebas exhaustivas de conectividad</li>
+                            <li>Ambiente de testing dedicado</li>
+                            <li>Plan de rollback automático</li>
+                            <li>Monitoreo 24/7 de transacciones</li>
+                        </ul>
+                        <p><strong>Responsable:</strong> Claudio Sánchez</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-lock me-2"></i>R003: Vulnerabilidades</h3>
+                        <p><strong>Impacto:</strong> $30M CLP | <strong>Probabilidad:</strong> 65%</p>
+                        <ul class="text-start">
+                            <li>Auditoría de seguridad externa</li>
+                            <li>Implementación de WAF</li>
+                            <li>Cifrado end-to-end</li>
+                            <li>Certificaciones de cumplimiento</li>
+                        </ul>
+                        <p><strong>Responsable:</strong> Claudio Sánchez</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-dollar-sign me-2"></i>R004: Sobrecostos</h3>
+                        <p><strong>Impacto:</strong> $20M CLP | <strong>Probabilidad:</strong> 60%</p>
+                        <ul class="text-start">
+                            <li>Control semanal de presupuesto</li>
+                            <li>Reserva de contingencia 15%</li>
+                            <li>Aprobaciones por etapas</li>
+                            <li>Revisión de alcance mensual</li>
+                        </ul>
+                        <p><strong>Responsable:</strong> Italo Brignardello</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-clock me-2"></i>R005: Retrasos</h3>
+                        <p><strong>Impacto:</strong> $18M CLP | <strong>Probabilidad:</strong> 65%</p>
+                        <ul class="text-start">
+                            <li>Metodología ágil con sprints</li>
+                            <li>Buffer de tiempo 20%</li>
+                            <li>Recursos adicionales standby</li>
+                            <li>Revisión semanal de hitos</li>
+                        </ul>
+                        <p><strong>Responsable:</strong> Alexander Seydewitz</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 6: Asignación de Responsables -->
+    <div class="slide slide-6">
+        <div class="slide-content">
+            <h2><i class="fas fa-users me-3"></i>Asignación de Responsables</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h4>Italo Brignardello</h4>
+                        <h5>Líder de Proyecto</h5>
+                        <ul class="text-start mt-3">
+                            <li>R004: Sobrecostos del Proyecto</li>
+                            <li>R009: Cambios en Alcance</li>
+                            <li>Coordinación general</li>
+                            <li>Toma de decisiones estratégicas</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h4>Patricio Quintanilla</h4>
+                        <h5>Analista de Riesgos</h5>
+                        <ul class="text-start mt-3">
+                            <li>R011: Problemas de Comunicación</li>
+                            <li>Monitoreo continuo de riesgos</li>
+                            <li>Reportes de seguimiento</li>
+                            <li>Actualización de planes</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h4>Claudio Sánchez</h4>
+                        <h5>Especialista en Seguridad</h5>
+                        <ul class="text-start mt-3">
+                            <li>R001: Fallas Integración Bancaria</li>
+                            <li>R003: Vulnerabilidades Seguridad</li>
+                            <li>R007: Incumplimiento Normativas</li>
+                            <li>Auditorías de seguridad</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h4>Alexander Seydewitz</h4>
+                        <h5>Coordinador de Calidad</h5>
+                        <ul class="text-start mt-3">
+                            <li>R002: Resistencia al Cambio</li>
+                            <li>R005: Retrasos en Entrega</li>
+                            <li>R006: Problemas Rendimiento</li>
+                            <li>R008: Capacitación Insuficiente</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-interactive mt-4">
+                <h3><i class="fas fa-sitemap me-2"></i>Estructura de Escalamiento</h3>
+                <p><strong>Nivel 1:</strong> Responsable directo → <strong>Nivel 2:</strong> Líder de Proyecto → <strong>Nivel 3:</strong> Comité Directivo</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 7: Métricas de Control -->
+    <div class="slide slide-7">
+        <div class="slide-content">
+            <h2><i class="fas fa-chart-line me-3"></i>Métricas de Control</h2>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="metric-box">
+                        <div class="progress-ring">
+                            <svg width="120" height="120">
+                                <circle cx="60" cy="60" r="45"></circle>
+                                <circle cx="60" cy="60" r="45" class="progress"></circle>
+                            </svg>
+                        </div>
+                        <span class="metric-number">25%</span>
+                        <p>Índice de Riesgo del Proyecto</p>
+                        <small>Meta: <30%</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-box">
+                        <div class="progress-ring">
+                            <svg width="120" height="120">
+                                <circle cx="60" cy="60" r="45"></circle>
+                                <circle cx="60" cy="60" r="45" class="progress"></circle>
+                            </svg>
+                        </div>
+                        <span class="metric-number">75%</span>
+                        <p>Efectividad de Mitigación</p>
+                        <small>Meta: >80%</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-box">
+                        <div class="progress-ring">
+                            <svg width="120" height="120">
+                                <circle cx="60" cy="60" r="45"></circle>
+                                <circle cx="60" cy="60" r="45" class="progress"></circle>
+                            </svg>
+                        </div>
+                        <span class="metric-number">85%</span>
+                        <p>Probabilidad de Éxito</p>
+                        <small>Meta: >90%</small>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="metric-box">
+                        <div class="progress-ring">
+                            <svg width="120" height="120">
+                                <circle cx="60" cy="60" r="45"></circle>
+                                <circle cx="60" cy="60" r="45" class="progress"></circle>
+                            </svg>
+                        </div>
+                        <span class="metric-number">226%</span>
+                        <p>ROI de Mitigación</p>
+                        <small>Excelente</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-tachometer-alt me-2"></i>KPIs por Categoría</h3>
+                        <ul class="text-start">
+                            <li><strong>Técnicos:</strong> Disponibilidad 99.5%, Tiempo respuesta <2s</li>
+                            <li><strong>Seguridad:</strong> 0 incidentes críticos, 100% cumplimiento</li>
+                            <li><strong>Financieros:</strong> Variación presupuesto <5%</li>
+                            <li><strong>Cronograma:</strong> Cumplimiento hitos >95%</li>
+                            <li><strong>Calidad:</strong> Satisfacción usuario >90%</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-calendar-check me-2"></i>Frecuencia de Monitoreo</h3>
+                        <ul class="text-start">
+                            <li><strong>Diario:</strong> Métricas técnicas y seguridad</li>
+                            <li><strong>Semanal:</strong> Avance del proyecto y presupuesto</li>
+                            <li><strong>Quincenal:</strong> Revisión de riesgos y planes</li>
+                            <li><strong>Mensual:</strong> Reportes ejecutivos</li>
+                            <li><strong>Trimestral:</strong> Evaluación integral</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 8: Análisis Económico -->
+    <div class="slide slide-8">
+        <div class="slide-content">
+            <h2><i class="fas fa-chart-pie me-3"></i>Análisis Económico</h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-exclamation-triangle me-2"></i>Impacto Sin Mitigación</h3>
+                        <div class="metric-number">$158M</div>
+                        <p>CLP - Pérdida Potencial</p>
+                        <ul class="text-start mt-3">
+                            <li>Fallas de seguridad: $30M</li>
+                            <li>Integración bancaria: $25M</li>
+                            <li>Sobrecostos: $20M</li>
+                            <li>Retrasos: $18M</li>
+                            <li>Otros riesgos: $65M</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-shield-alt me-2"></i>Costo de Mitigación</h3>
+                        <div class="metric-number">$31M</div>
+                        <p>CLP - Inversión Total</p>
+                        <ul class="text-start mt-3">
+                            <li>Controles seguridad: $12M</li>
+                            <li>Pruebas integración: $8.5M</li>
+                            <li>Reserva contingencia: $6M</li>
+                            <li>Capacitación: $4.5M</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-chart-line me-2"></i>Beneficio Neto</h3>
+                        <div class="metric-number">$70M</div>
+                        <p>CLP - Ahorro Potencial</p>
+                        <ul class="text-start mt-3">
+                            <li>ROI: 226%</li>
+                            <li>Reducción riesgo: 75%</li>
+                            <li>Payback: 8 meses</li>
+                            <li>VPN: $127M CLP</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-interactive mt-4">
+                <h3><i class="fas fa-balance-scale me-2"></i>Análisis de Sensibilidad por Escenarios</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="metric-box">
+                            <h5>Escenario Optimista</h5>
+                            <span class="metric-number">$95M</span>
+                            <p>Ahorro potencial</p>
+                            <small>Probabilidad: 25%</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-box">
+                            <h5>Escenario Base</h5>
+                            <span class="metric-number">$70M</span>
+                            <p>Ahorro esperado</p>
+                            <small>Probabilidad: 50%</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="metric-box">
+                            <h5>Escenario Pesimista</h5>
+                            <span class="metric-number">$45M</span>
+                            <p>Ahorro mínimo</p>
+                            <small>Probabilidad: 25%</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Cronograma de Implementación -->
+    <div class="slide slide-9">
+        <div class="slide-content">
+            <h2><i class="fas fa-calendar-alt me-3"></i>Cronograma de Implementación</h2>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-rocket me-2"></i>Fase 1: Implementación</h3>
+                        <p><strong>Semanas 1-12</strong></p>
+                        <ul class="text-start">
+                            <li>Configuración controles de seguridad</li>
+                            <li>Desarrollo ambiente de pruebas</li>
+                            <li>Implementación monitoreo básico</li>
+                            <li>Capacitación inicial del equipo</li>
+                            <li>Establecimiento de procesos</li>
+                        </ul>
+                        <div class="metric-box mt-3">
+                            <span class="metric-number">40%</span>
+                            <p>Reducción de riesgo esperada</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-search me-2"></i>Fase 2: Monitoreo</h3>
+                        <p><strong>Semanas 13-28</strong></p>
+                        <ul class="text-start">
+                            <li>Monitoreo continuo de métricas</li>
+                            <li>Ajustes basados en resultados</li>
+                            <li>Pruebas de stress del sistema</li>
+                            <li>Refinamiento de procesos</li>
+                            <li>Capacitación avanzada</li>
+                        </ul>
+                        <div class="metric-box mt-3">
+                            <span class="metric-number">65%</span>
+                            <p>Reducción de riesgo esperada</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-check-circle me-2"></i>Fase 3: Optimización</h3>
+                        <p><strong>Semanas 29-40</strong></p>
+                        <ul class="text-start">
+                            <li>Optimización de rendimiento</li>
+                            <li>Documentación final</li>
+                            <li>Transferencia de conocimiento</li>
+                            <li>Evaluación de resultados</li>
+                            <li>Cierre del proyecto</li>
+                        </ul>
+                        <div class="metric-box mt-3">
+                            <span class="metric-number">75%</span>
+                            <p>Reducción de riesgo final</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-interactive mt-4">
+                <h3><i class="fas fa-tasks me-2"></i>Hitos Críticos</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="timeline-item">
+                            <h5>Semana 4: Controles de Seguridad Activos</h5>
+                            <p>Implementación completa de WAF y cifrado</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5>Semana 8: Integración Bancaria Validada</h5>
+                            <p>Pruebas exitosas con todos los bancos</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="timeline-item">
+                            <h5>Semana 16: Monitoreo 24/7 Operativo</h5>
+                            <p>Dashboard completo y alertas automáticas</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h5>Semana 36: Go-Live del Sistema</h5>
+                            <p>Lanzamiento en producción con usuarios reales</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 10: Conclusiones -->
+    <div class="slide slide-10">
+        <div class="slide-content">
+            <h2><i class="fas fa-lightbulb me-3"></i>Conclusiones</h2>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-check-circle me-2"></i>Logros Esperados</h3>
+                        <ul class="text-start">
+                            <li><strong>Reducción de riesgos críticos:</strong> 75%</li>
+                            <li><strong>ROI de la inversión:</strong> 226%</li>
+                            <li><strong>Ahorro potencial:</strong> $70M CLP</li>
+                            <li><strong>Mejora en satisfacción:</strong> 40%</li>
+                            <li><strong>Incremento en ventas:</strong> 35%</li>
+                            <li><strong>Eficiencia operacional:</strong> +50%</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card-interactive">
+                        <h3><i class="fas fa-star me-2"></i>Factores Críticos de Éxito</h3>
+                        <ul class="text-start">
+                            <li><strong>Comunicación proactiva</strong> con stakeholders</li>
+                            <li><strong>Gestión del cambio</strong> estructurada</li>
+                            <li><strong>Monitoreo continuo</strong> de métricas</li>
+                            <li><strong>Flexibilidad</strong> ante cambios</li>
+                            <li><strong>Compromiso del equipo</strong> directivo</li>
+                            <li><strong>Capacitación integral</strong> de usuarios</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-interactive mt-4">
+                <h3><i class="fas fa-road me-2"></i>Próximos Pasos</h3>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="timeline-item">
+                            <h5><i class="fas fa-play me-2"></i>Inmediato</h5>
+                            <ul class="text-start">
+                                <li>Aprobación del plan por directorio</li>
+                                <li>Asignación de presupuesto</li>
+                                <li>Contratación de proveedores</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="timeline-item">
+                            <h5><i class="fas fa-forward me-2"></i>Corto Plazo</h5>
+                            <ul class="text-start">
+                                <li>Inicio de implementación</li>
+                                <li>Configuración de ambientes</li>
+                                <li>Capacitación del equipo</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="timeline-item">
+                            <h5><i class="fas fa-fast-forward me-2"></i>Mediano Plazo</h5>
+                            <ul class="text-start">
+                                <li>Monitoreo y ajustes</li>
+                                <li>Optimización continua</li>
+                                <li>Evaluación de resultados</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-interactive mt-4">
+                <h3><i class="fas fa-bullseye me-2"></i>Recomendaciones Finales</h3>
+                <p class="lead">La implementación del Plan de Mitigación de Riesgos es fundamental para el éxito del proyecto. Se recomienda iniciar inmediatamente con los riesgos de nivel alto y mantener un monitoreo continuo durante todo el ciclo de vida del proyecto.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 11: Agradecimientos -->
+    <div class="slide slide-11">
+        <div class="slide-content">
+            <h1><i class="fas fa-heart me-3"></i>Agradecimientos</h1>
+            
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <div class="card-interactive">
+                        <h3>Agradecemos especialmente a:</h3>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <ul class="text-start" style="font-size: 1.6rem;">
+                                    <li><strong>DUOC UC</strong> - Por la formación académica</li>
+                                    <li><strong>Docentes</strong> - Por la guía y conocimientos</li>
+                                    <li><strong>Agencia "On Tour"</strong> - Por el caso de estudio</li>
+                                    <li><strong>Compañeros de clase</strong> - Por el apoyo colaborativo</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="text-start" style="font-size: 1.6rem;">
+                                    <li><strong>Familias</strong> - Por el apoyo incondicional</li>
+                                    <li><strong>Profesionales del sector</strong> - Por sus aportes</li>
+                                    <li><strong>Comunidad académica</strong> - Por el intercambio de ideas</li>
+                                    <li><strong>Todos los stakeholders</strong> - Por su participación</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-5">
+                <h2><i class="fas fa-graduation-cap me-3"></i>¡Gracias por su atención!</h2>
+                <p class="lead mt-4">
+                    <strong>Gestión de Riesgos (GPY7111)</strong><br>
+                    DUOC UC - Junio 2025
+                </p>
+                
+                <div class="row mt-5">
+                    <div class="col-md-3">
+                        <div class="team-member">
+                            <div class="team-avatar">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <h6>Italo Brignardello</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="team-member">
+                            <div class="team-avatar">
+                                <i class="fas fa-user-cog"></i>
+                            </div>
+                            <h6>Patricio Quintanilla</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="team-member">
+                            <div class="team-avatar">
+                                <i class="fas fa-user-shield"></i>
+                            </div>
+                            <h6>Claudio Sánchez</h6>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="team-member">
+                            <div class="team-avatar">
+                                <i class="fas fa-user-check"></i>
+                            </div>
+                            <h6>Alexander Seydewitz</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navegación -->
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">11</span>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="nav-btn" onclick="nextSlide()">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <button class="nav-btn" onclick="toggleAutoplay()">
+            <i class="fas fa-play" id="autoplay-icon"></i>
+        </button>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 11;
+        let autoplayInterval;
+        let isAutoplay = false;
+
+        // Actualizar contador de slides
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            const slides = document.querySelectorAll('.slide');
+            
+            if (n > totalSlides) currentSlide = 1;
+            if (n < 1) currentSlide = totalSlides;
+            
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[currentSlide - 1].classList.add('active');
+            
+            document.getElementById('current-slide').textContent = currentSlide;
+            
+            // Actualizar gradiente de fondo
+            document.body.className = `slide-${currentSlide}`;
+        }
+
+        function nextSlide() {
+            currentSlide++;
+            showSlide(currentSlide);
+        }
+
+        function previousSlide() {
+            currentSlide--;
+            showSlide(currentSlide);
+        }
+
+        function toggleAutoplay() {
+            const icon = document.getElementById('autoplay-icon');
+            
+            if (isAutoplay) {
+                clearInterval(autoplayInterval);
+                icon.className = 'fas fa-play';
+                isAutoplay = false;
+            } else {
+                autoplayInterval = setInterval(() => {
+                    nextSlide();
+                }, 5000);
+                icon.className = 'fas fa-pause';
+                isAutoplay = true;
+            }
+        }
+
+        function toggleFullscreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        }
+
+        // Navegación con teclado
+        document.addEventListener('keydown', function(event) {
+            switch(event.key) {
+                case 'ArrowRight':
+                case ' ':
+                    event.preventDefault();
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    event.preventDefault();
+                    previousSlide();
+                    break;
+                case 'Home':
+                    event.preventDefault();
+                    currentSlide = 1;
+                    showSlide(currentSlide);
+                    break;
+                case 'End':
+                    event.preventDefault();
+                    currentSlide = totalSlides;
+                    showSlide(currentSlide);
+                    break;
+                case 'F11':
+                    event.preventDefault();
+                    toggleFullscreen();
+                    break;
+                case 'Escape':
+                    if (isAutoplay) {
+                        toggleAutoplay();
+                    }
+                    break;
+            }
+        });
+
+        // Navegación con gestos táctiles
+        let startX = 0;
+        let startY = 0;
+
+        document.addEventListener('touchstart', function(event) {
+            startX = event.touches[0].clientX;
+            startY = event.touches[0].clientY;
+        });
+
+        document.addEventListener('touchend', function(event) {
+            if (!startX || !startY) return;
+
+            let endX = event.changedTouches[0].clientX;
+            let endY = event.changedTouches[0].clientY;
+
+            let diffX = startX - endX;
+            let diffY = startY - endY;
+
+            if (Math.abs(diffX) > Math.abs(diffY)) {
+                if (diffX > 50) {
+                    nextSlide();
+                } else if (diffX < -50) {
+                    previousSlide();
+                }
+            }
+
+            startX = 0;
+            startY = 0;
+        });
+
+        // Inicializar presentación
+        document.addEventListener('DOMContentLoaded', function() {
+            showSlide(1);
+            
+            // Animar elementos cuando se cargan
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animationDelay = '0.2s';
+                        entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.card-interactive, .team-member, .metric-box').forEach(el => {
+                observer.observe(el);
+            });
+        });
+
+        // Prevenir zoom accidental
+        document.addEventListener('wheel', function(event) {
+            if (event.ctrlKey) {
+                event.preventDefault();
+            }
+        });
+
+        // Información de ayuda
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'h' || event.key === 'H') {
+                alert(`
+Controles de la presentación:
+• Flecha derecha / Espacio: Siguiente slide
+• Flecha izquierda: Slide anterior  
+• Home: Primer slide
+• End: Último slide
+• F11: Pantalla completa
+• H: Mostrar esta ayuda
+• Escape: Detener autoplay
+
+También puedes usar los botones de navegación o gestos táctiles.
+                `);
+            }
+        });
+    </script>
+
+    <style>
+        /* Animaciones adicionales para elementos específicos */
+        .progress-ring circle.progress {
+            animation: drawCircle 2s ease-in-out forwards;
+        }
+
+        @keyframes drawCircle {
+            from {
+                stroke-dashoffset: 283;
+            }
+            to {
+                stroke-dashoffset: 70;
+            }
+        }
+
+        /* Efectos hover mejorados */
+        .card-interactive {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .card-interactive:hover {
+            transform: translateY(-15px) scale(1.02);
+        }
+
+        /* Responsive mejorado */
+        @media (max-width: 992px) {
+            .slide-content {
+                padding: 20px;
+            }
+            
+            .card-interactive {
+                margin: 10px 0;
+            }
+            
+            .team-member {
+                margin: 10px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .slide h1 { font-size: 2rem; }
+            .slide h2 { font-size: 1.8rem; }
+            .slide h3 { font-size: 1.5rem; }
+            .slide p, .slide li { font-size: 1rem; }
+            
+            .navigation {
+                bottom: 15px;
+                right: 15px;
+            }
+            
+            .slide-counter {
+                bottom: 15px;
+                left: 15px;
+                font-size: 0.9rem;
+            }
+            
+            .nav-btn {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+        }
+
+        /* Mejoras de accesibilidad */
+        .nav-btn:focus,
+        .fullscreen-btn:focus {
+            outline: 2px solid #ffd700;
+            outline-offset: 2px;
+        }
+
+        /* Animación de entrada para métricas */
+        .metric-number {
+            animation: countUp 2s ease-out forwards;
+        }
+
+        @keyframes countUp {
+            from {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Efectos de transición entre slides */
+        .slide {
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .slide:not(.active) {
+            opacity: 0;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+    </style>
+
+</body>
+</html>
+

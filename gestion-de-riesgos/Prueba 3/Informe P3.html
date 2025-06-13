@@ -1,0 +1,1841 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Mitigación de Riesgos - Agencia On Tour</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --success-color: #27ae60;
+            --warning-color: #f39c12;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .header-section {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .logo-placeholder {
+            width: 200px;
+            height: 80px;
+            background: white;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .section-header {
+            background: var(--light-bg);
+            padding: 1rem;
+            border-left: 4px solid var(--secondary-color);
+            margin: 2rem 0 1rem 0;
+        }
+
+        .risk-card {
+            border: none;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            border-radius: 8px;
+        }
+
+        .risk-level-high {
+            border-left: 5px solid var(--accent-color);
+        }
+
+        .risk-level-medium {
+            border-left: 5px solid var(--warning-color);
+        }
+
+        .risk-level-low {
+            border-left: 5px solid var(--success-color);
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .table-custom {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .table-custom th {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 1rem;
+        }
+
+        .table-custom td {
+            padding: 1rem;
+            border-color: #eee;
+        }
+
+        .team-member {
+            text-align: center;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .team-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+            
+            body {
+                font-size: 12px;
+            }
+            
+            .container {
+                max-width: 100%;
+            }
+        }
+
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .process-step {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            flex: 1;
+            margin: 0.5rem;
+            min-width: 200px;
+        }
+
+        .process-arrow {
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            margin: 0 1rem;
+        }
+
+        .executive-summary {
+            background: var(--light-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            border-left: 4px solid var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- PORTADA -->
+    <div class="container-fluid">
+        <div class="header-section">
+            <div class="container">
+                <div class="row align-items-center">
+                    <div class="col-md-2">
+                        <div class="logo-placeholder">
+                            <img style="width: auto; height: 50px;" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Logo_DuocUC.svg/711px-Logo_DuocUC.svg.png" alt="Logo de la empresa">
+                        </div>
+                    </div>
+                    <div class="col-md-8 text-center">
+                        <h1 class="display-4 mb-3">Plan de Mitigación de Riesgos</h1>
+                        <h2 class="h3 mb-4">Proyecto: Sistema de Gestión de Viajes de Estudio</h2>
+                        <h3 class="h4">Agencia de Viajes "On Tour"</h3>
+                    </div>
+                    <div class="col-md-2 text-end">
+                        <p class="mb-1"><strong>Fecha:</strong> Junio 2025</p>
+                        <p class="mb-0"><strong>Lugar:</strong> Santiago, Chile</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- Equipo de Trabajo -->
+            <div class="section-header">
+                <h2><i class="fas fa-users me-2"></i>Equipo de Trabajo</h2>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h5>Italo Brignardello</h5>
+                        <p class="text-muted">Líder de Proyecto</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-cog"></i>
+                        </div>
+                        <h5>Patricio Quintanilla</h5>
+                        <p class="text-muted">Analista de Riesgos</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <h5>Claudio Sánchez</h5>
+                        <p class="text-muted">Especialista en Seguridad</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="team-member">
+                        <div class="team-avatar">
+                            <i class="fas fa-user-check"></i>
+                        </div>
+                        <h5>Alexander Seydewitz</h5>
+                        <p class="text-muted">Coordinador de Calidad</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 2: RESUMEN EJECUTIVO -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-file-alt me-2"></i>Resumen Ejecutivo</h2>
+        </div>
+        
+        <div class="executive-summary">
+            <p class="lead">
+                El presente documento establece el Plan de Mitigación de Riesgos para el proyecto de implementación 
+                del Sistema de Gestión de Viajes de Estudio de la Agencia "On Tour", identificando los principales 
+                riesgos que pueden afectar el desarrollo y continuidad del proyecto TI.
+            </p>
+            
+            <div class="row mt-4">
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-icon text-danger">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <h4>12</h4>
+                        <p>Riesgos Identificados</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-icon text-warning">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>8</h4>
+                        <p>Planes de Mitigación</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="metric-card">
+                        <div class="metric-icon text-success">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4>6</h4>
+                        <p>Métricas de Control</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Agradecimientos -->
+        <div class="section-header">
+            <h2><i class="fas fa-heart me-2"></i>Agradecimientos</h2>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <p>Agradecemos a la Agencia de Viajes "On Tour" por la confianza depositada en nuestro equipo 
+                para el desarrollo de este proyecto. Especial reconocimiento al cuerpo docente de DuocUC por 
+                su guía y apoyo durante el proceso de análisis y planificación.</p>
+                
+                <p>También extendemos nuestro agradecimiento a los profesionales de la industria que 
+                compartieron su experiencia y conocimientos para enriquecer este plan de mitigación.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 3: ÍNDICE -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-list me-2"></i>Índice de Contenidos</h2>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><strong>1.</strong> Introducción ......................................................... 4</li>
+                            <li class="mb-2"><strong>2.</strong> Identificación de Riesgos ...................................... 5</li>
+                            <li class="mb-2"><strong>3.</strong> Clasificación de Riesgos ..................................... 6</li>
+                            <li class="mb-2"><strong>4.</strong> Planes de Acción Generales ................................ 7</li>
+                            <li class="mb-2"><strong>5.</strong> Planes de Acción Específicos ............................. 8</li>
+                            <li class="mb-2"><strong>6.</strong> Asignación de Responsables ............................... 9</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul class="list-unstyled">
+                            <li class="mb-2"><strong>7.</strong> Métricas de Control ........................................... 10</li>
+                            <li class="mb-2"><strong>8.</strong> Análisis de Impacto Económico ......................... 11</li>
+                            <li class="mb-2"><strong>9.</strong> Cronograma de Seguimiento .............................. 12</li>
+                            <li class="mb-2"><strong>10.</strong> Conclusiones y Proyecciones ........................... 13</li>
+                            <li class="mb-2"><strong>11.</strong> Referencias Bibliográficas ................................. 14</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 4: INTRODUCCIÓN -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-info-circle me-2"></i>1. Introducción</h2>
+        </div>
+        
+        <div class="card">
+            <div class="card-body">
+                <p>La Agencia de Viajes "On Tour", con más de 20 años de experiencia en el mercado turístico, 
+                ha identificado la necesidad de modernizar sus procesos mediante la implementación de una 
+                plataforma tecnológica especializada en la gestión de viajes de estudio.</p>
+                
+                <p>El presente Plan de Mitigación de Riesgos tiene como objetivo identificar, evaluar y establecer 
+                estrategias de control para los principales riesgos que pueden afectar el éxito del proyecto de 
+                implementación del Sistema de Gestión de Viajes de Estudio.</p>
+                
+                <h4>Objetivos del Plan</h4>
+                <ul>
+                    <li>Identificar y clasificar los riesgos asociados al proyecto de implementación</li>
+                    <li>Desarrollar planes de acción específicos para mitigar riesgos críticos</li>
+                    <li>Establecer métricas de control y seguimiento del proyecto</li>
+                    <li>Asignar responsabilidades claras para la gestión de riesgos</li>
+                    <li>Minimizar el impacto económico y operacional de los riesgos identificados</li>
+                </ul>
+                
+                <h4>Alcance del Proyecto</h4>
+                <p>El sistema a implementar abarcará la gestión integral de viajes de estudio, incluyendo:</p>
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Registro y gestión de contratos</li>
+                            <li>Control de pagos y aportes</li>
+                            <li>Gestión de seguros</li>
+                            <li>Comunicación automatizada</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li>Reportes y consultas</li>
+                            <li>Gestión documental</li>
+                            <li>Portal de apoderados</li>
+                            <li>Administración del sistema</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 5: IDENTIFICACIÓN DE RIESGOS -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-search me-2"></i>2. Identificación de Riesgos</h2>
+        </div>
+        
+        <p>A través del análisis del caso de estudio y la aplicación de técnicas de identificación de riesgos, 
+        se han identificado los siguientes riesgos principales:</p>
+        
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Categoría</th>
+                        <th>Descripción del Riesgo</th>
+                        <th>Probabilidad</th>
+                        <th>Impacto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>R001</td>
+                        <td>Técnico</td>
+                        <td>Fallas en la integración con sistemas bancarios</td>
+                        <td>Media</td>
+                        <td>Alto</td>
+                    </tr>
+                    <tr>
+                        <td>R002</td>
+                        <td>Operacional</td>
+                        <td>Resistencia al cambio por parte de usuarios</td>
+                        <td>Alta</td>
+                        <td>Medio</td>
+                    </tr>
+                    <tr>
+                        <td>R003</td>
+                        <td>Seguridad</td>
+                        <td>Vulnerabilidades en el manejo de datos personales</td>
+                        <td>Media</td>
+                        <td>Alto</td>
+                    </tr>
+                    <tr>
+                        <td>R004</td>
+                        <td>Financiero</td>
+                        <td>Sobrecostos en el desarrollo del sistema</td>
+                        <td>Media</td>
+                        <td>Alto</td>
+                    </tr>
+                    <tr>
+                        <td>R005</td>
+                        <td>Cronograma</td>
+                        <td>Retrasos en la entrega del proyecto</td>
+                        <td>Alta</td>
+                        <td>Alto</td>
+                    </tr>
+                    <tr>
+                        <td>R006</td>
+                        <td>Técnico</td>
+                        <td>Problemas de rendimiento del sistema</td>
+                        <td>Media</td>
+                        <td>Medio</td>
+                    </tr>
+                    <tr>
+                        <td>R007</td>
+                        <td>Legal</td>
+                        <td>Incumplimiento de normativas de protección de datos</td>
+                        <td>Baja</td>
+                        <td>Alto</td>
+                    </tr>
+                    <tr>
+                        <td>R008</td>
+                        <td>Operacional</td>
+                        <td>Falta de capacitación del personal</td>
+                        <td>Media</td>
+                        <td>Medio</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PÁGINA 6: CLASIFICACIÓN DE RIESGOS -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-layer-group me-2"></i>3. Clasificación de Riesgos</h2>
+        </div>
+        
+        <h4>Técnicas de Clasificación</h4>
+        <p>Para la clasificación de riesgos se utilizó la matriz de probabilidad e impacto, 
+        considerando diferentes escenarios económicos:</p>
+        
+        <div class="process-flow">
+            <div class="process-step">
+                <div class="metric-icon text-primary">
+                    <i class="fas fa-calculator"></i>
+                </div>
+                <h5>Análisis Cuantitativo</h5>
+                <p>Evaluación del impacto económico directo</p>
+            </div>
+            <div class="process-arrow">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            <div class="process-step">
+                <div class="metric-icon text-info">
+                    <i class="fas fa-chart-bar"></i>
+                </div>
+                <h5>Matriz de Riesgos</h5>
+                <p>Clasificación por probabilidad e impacto</p>
+            </div>
+            <div class="process-arrow">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            <div class="process-step">
+                <div class="metric-icon text-success">
+                    <i class="fas fa-flag"></i>
+                </div>
+                <h5>Priorización</h5>
+                <p>Definición de niveles de riesgo</p>
+            </div>
+        </div>
+
+        <h4>Clasificación por Niveles</h4>
+        
+        <!-- Riesgos Altos -->
+        <div class="card risk-card risk-level-high">
+            <div class="card-header bg-danger text-white">
+                <h5><i class="fas fa-exclamation-triangle me-2"></i>Riesgos de Nivel Alto</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li><strong>R001:</strong> Fallas en integración bancaria</li>
+                            <li><strong>R003:</strong> Vulnerabilidades de seguridad</li>
+                            <li><strong>R004:</strong> Sobrecostos del proyecto</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li><strong>R005:</strong> Retrasos en entrega</li>
+                            <li><strong>R007:</strong> Incumplimiento normativo</li>
+                        </ul>
+                        <p class="text-muted"><strong>Impacto Económico:</strong> $15M - $25M CLP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Riesgos Medios -->
+        <div class="card risk-card risk-level-medium">
+            <div class="card-header bg-warning text-white">
+                <h5><i class="fas fa-exclamation-circle me-2"></i>Riesgos de Nivel Medio</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <ul>
+                            <li><strong>R002:</strong> Resistencia al cambio</li>
+                            <li><strong>R006:</strong> Problemas de rendimiento</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <ul>
+                            <li><strong>R008:</strong> Falta de capacitación</li>
+                        </ul>
+                        <p class="text-muted"><strong>Impacto Económico:</strong> $5M - $15M CLP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Riesgos Bajos -->
+        <div class="card risk-card risk-level-low">
+            <div class="card-header bg-success text-white">
+                <h5><i class="fas fa-info-circle me-2"></i>Riesgos de Nivel Bajo</h5>
+            </div>
+            <div class="card-body">
+                <p>Riesgos menores con impacto limitado y baja probabilidad de ocurrencia.</p>
+                <p class="text-muted"><strong>Impacto Económico:</strong> Menos de $5M CLP</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 7: PLANES DE ACCIÓN GENERALES -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-clipboard-list me-2"></i>4. Planes de Acción Generales</h2>
+        </div>
+        
+        <p>Se establecen planes de acción generales para cada nivel de riesgo identificado:</p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card risk-card risk-level-high">
+                    <div class="card-header bg-danger text-white text-center">
+                        <h5><i class="fas fa-shield-alt me-2"></i>Riesgos Altos</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Estrategia: MITIGAR</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Monitoreo continuo</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Planes de contingencia</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Revisión semanal</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Escalamiento inmediato</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Recursos adicionales</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card risk-card risk-level-medium">
+                    <div class="card-header bg-warning text-white text-center">
+                        <h5><i class="fas fa-eye me-2"></i>Riesgos Medios</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Estrategia: MONITOREAR</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Seguimiento quincenal</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Indicadores de alerta</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Planes de respuesta</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Comunicación regular</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Evaluación mensual</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card risk-card risk-level-low">
+                    <div class="card-header bg-success text-white text-center">
+                        <h5><i class="fas fa-clipboard-check me-2"></i>Riesgos Bajos</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Estrategia: ACEPTAR</h6>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success me-2"></i>Revisión mensual</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Documentación básica</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Monitoreo pasivo</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Reporte trimestral</li>
+                            <li><i class="fas fa-check text-success me-2"></i>Revisión de estado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mt-4">Matriz de Estrategias por Escenario Económico</h4>
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>Escenario</th>
+                        <th>Presupuesto Disponible</th>
+                        <th>Estrategia Riesgos Altos</th>
+                        <th>Estrategia Riesgos Medios</th>
+                        <th>Impacto en Cronograma</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Optimista</td>
+                        <td>100% del presupuesto</td>
+                        <td>Mitigación completa</td>
+                        <td>Monitoreo activo</td>
+                        <td>Sin retrasos</td>
+                    </tr>
+                    <tr>
+                        <td>Realista</td>
+                        <td>85% del presupuesto</td>
+                        <td>Mitigación selectiva</td>
+                        <td>Monitoreo básico</td>
+                        <td>Retraso 2-4 semanas</td>
+                    </tr>
+                    <tr>
+                        <td>Pesimista</td>
+                        <td>70% del presupuesto</td>
+                        <td>Mitigación crítica</td>
+                        <td>Aceptación controlada</td>
+                        <td>Retraso 6-8 semanas</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PÁGINA 8: PLANES DE ACCIÓN ESPECÍFICOS -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-tasks me-2"></i>5. Planes de Acción Específicos</h2>
+        </div>
+        
+        <p>Planes detallados para los riesgos de nivel más alto que pueden afectar el desarrollo y continuidad del proyecto:</p>
+
+        <!-- Plan Específico R001 -->
+        <div class="card risk-card risk-level-high mb-4">
+            <div class="card-header">
+                <h5><i class="fas fa-university me-2"></i>R001: Fallas en Integración Bancaria</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Acciones Preventivas:</h6>
+                        <ul>
+                            <li>Realizar pruebas de integración tempranas</li>
+                            <li>Establecer ambiente de pruebas con bancos</li>
+                            <li>Documentar APIs y protocolos de comunicación</li>
+                            <li>Implementar logs detallados de transacciones</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Acciones Correctivas:</h6>
+                        <ul>
+                            <li>Plan de rollback automático</li>
+                            <li>Sistema de notificaciones de fallos</li>
+                            <li>Procedimiento de escalamiento técnico</li>
+                            <li>Backup de procesos manuales</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-info mt-3">
+                    <strong>Costo de Mitigación:</strong> $8.5M CLP | <strong>Tiempo:</strong> 3 semanas | <strong>Reducción de Riesgo:</strong> 70%
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan Específico R003 -->
+        <div class="card risk-card risk-level-high mb-4">
+            <div class="card-header">
+                <h5><i class="fas fa-shield-alt me-2"></i>R003: Vulnerabilidades de Seguridad</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Acciones Preventivas:</h6>
+                        <ul>
+                            <li>Implementar cifrado end-to-end</li>
+                            <li>Auditoría de seguridad externa</li>
+                            <li>Cumplimiento GDPR y Ley 19.628</li>
+                            <li>Autenticación multifactor</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Acciones Correctivas:</h6>
+                        <ul>
+                            <li>Plan de respuesta a incidentes</li>
+                            <li>Procedimiento de notificación de brechas</li>
+                            <li>Sistema de monitoreo 24/7</li>
+                            <li>Backup y recuperación de datos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-info mt-3">
+                    <strong>Costo de Mitigación:</strong> $12M CLP | <strong>Tiempo:</strong> 4 semanas | <strong>Reducción de Riesgo:</strong> 85%
+                </div>
+            </div>
+        </div>
+
+        <!-- Plan Específico R005 -->
+        <div class="card risk-card risk-level-high mb-4">
+            <div class="card-header">
+                <h5><i class="fas fa-clock me-2"></i>R005: Retrasos en Entrega del Proyecto</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Acciones Preventivas:</h6>
+                        <ul>
+                            <li>Metodología ágil con sprints cortos</li>
+                            <li>Revisiones semanales de avance</li>
+                            <li>Buffer de tiempo del 20%</li>
+                            <li>Recursos adicionales en standby</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Acciones Correctivas:</h6>
+                        <ul>
+                            <li>Replanificación de alcance</li>
+                            <li>Paralelización de tareas críticas</li>
+                            <li>Extensión de equipo de desarrollo</li>
+                            <li>Entrega por fases priorizadas</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="alert alert-info mt-3">
+                    <strong>Costo de Mitigación:</strong> $6M CLP | <strong>Tiempo:</strong> 2 semanas | <strong>Reducción de Riesgo:</strong> 60%
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 9: ASIGNACIÓN DE RESPONSABLES -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-user-friends me-2"></i>6. Asignación de Responsables</h2>
+        </div>
+        
+        <p>Cada riesgo identificado tiene asignado un responsable principal y un equipo de apoyo para su seguimiento y gestión:</p>
+
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>Riesgo</th>
+                        <th>Responsable Principal</th>
+                        <th>Equipo de Apoyo</th>
+                        <th>Frecuencia de Reporte</th>
+                        <th>Escalamiento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-danger">
+                        <td><strong>R001</strong> - Integración Bancaria</td>
+                        <td>Patricio Quintanilla<br><small class="text-muted">Analista de Riesgos</small></td>
+                        <td>Equipo Técnico<br>Proveedor Bancario</td>
+                        <td>Diario</td>
+                        <td>Italo Brignardello</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <td><strong>R003</strong> - Seguridad</td>
+                        <td>Claudio Sánchez<br><small class="text-muted">Especialista en Seguridad</small></td>
+                        <td>Auditor Externo<br>Equipo Legal</td>
+                        <td>Semanal</td>
+                        <td>Italo Brignardello</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <td><strong>R004</strong> - Sobrecostos</td>
+                        <td>Italo Brignardello<br><small class="text-muted">Líder de Proyecto</small></td>
+                        <td>Equipo Financiero<br>Stakeholders</td>
+                        <td>Semanal</td>
+                        <td>Gerencia General</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <td><strong>R005</strong> - Retrasos</td>
+                        <td>Alexander Seydewitz<br><small class="text-muted">Coordinador de Calidad</small></td>
+                        <td>Scrum Master<br>Equipo Desarrollo</td>
+                        <td>Diario</td>
+                        <td>Italo Brignardello</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <td><strong>R007</strong> - Cumplimiento Legal</td>
+                        <td>Claudio Sánchez<br><small class="text-muted">Especialista en Seguridad</small></td>
+                        <td>Asesor Legal<br>Compliance Officer</td>
+                        <td>Quincenal</td>
+                        <td>Gerencia Legal</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td><strong>R002</strong> - Resistencia al Cambio</td>
+                        <td>Alexander Seydewitz<br><small class="text-muted">Coordinador de Calidad</small></td>
+                        <td>RRHH<br>Capacitadores</td>
+                        <td>Quincenal</td>
+                        <td>Patricio Quintanilla</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td><strong>R006</strong> - Rendimiento</td>
+                        <td>Patricio Quintanilla<br><small class="text-muted">Analista de Riesgos</small></td>
+                        <td>Arquitecto de Software<br>DevOps</td>
+                        <td>Semanal</td>
+                        <td>Italo Brignardello</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td><strong>R008</strong> - Capacitación</td>
+                        <td>Alexander Seydewitz<br><small class="text-muted">Coordinador de Calidad</small></td>
+                        <td>Equipo de Capacitación<br>Usuarios Clave</td>
+                        <td>Quincenal</td>
+                        <td>Patricio Quintanilla</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="fas fa-sitemap me-2"></i>Estructura de Escalamiento</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="team-avatar me-3" style="width: 50px; height: 50px;">
+                                <i class="fas fa-user-tie"></i>
+                            </div>
+                            <div>
+                                <strong>Nivel 1:</strong> Responsable Principal<br>
+                                <small class="text-muted">Gestión diaria del riesgo</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="team-avatar me-3" style="width: 50px; height: 50px;">
+                                <i class="fas fa-user-cog"></i>
+                            </div>
+                            <div>
+                                <strong>Nivel 2:</strong> Líder de Proyecto<br>
+                                <small class="text-muted">Decisiones tácticas</small>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="team-avatar me-3" style="width: 50px; height: 50px;">
+                                <i class="fas fa-user-crown"></i>
+                            </div>
+                            <div>
+                                <strong>Nivel 3:</strong> Gerencia General<br>
+                                <small class="text-muted">Decisiones estratégicas</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5><i class="fas fa-bell me-2"></i>Criterios de Escalamiento</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-exclamation-triangle text-danger me-2"></i>
+                                <strong>Inmediato:</strong> Riesgo materializado
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-clock text-warning me-2"></i>
+                                <strong>24 horas:</strong> Probabilidad > 70%
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-calendar text-info me-2"></i>
+                                <strong>48 horas:</strong> Cambio en clasificación
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-chart-line text-success me-2"></i>
+                                <strong>Semanal:</strong> Reporte de estado
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 10: MÉTRICAS DE CONTROL -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-line me-2"></i>7. Métricas de Control y Seguimiento</h2>
+        </div>
+        
+        <p>Se establecen métricas específicas para monitorear el avance del proyecto y la efectividad de las medidas de mitigación:</p>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="metric-card">
+                    <div class="metric-icon text-primary">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h4>Índice de Riesgo del Proyecto (IRP)</h4>
+                    <p class="text-muted">Fórmula: (Σ Probabilidad × Impacto) / Total Riesgos</p>
+                    <div class="progress mb-2">
+                        <div class="progress-bar bg-success" style="width: 25%"></div>
+                    </div>
+                    <small>Meta: < 30% | Actual: 25%</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="metric-card">
+                    <div class="metric-icon text-success">
+                        <i class="fas fa-tasks"></i>
+                    </div>
+                    <h4>Efectividad de Mitigación (EM)</h4>
+                    <p class="text-muted">Fórmula: (Riesgos Mitigados / Total Riesgos) × 100</p>
+                    <div class="progress mb-2">
+                        <div class="progress-bar bg-info" style="width: 75%"></div>
+                    </div>
+                    <small>Meta: > 80% | Actual: 75%</small>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="metric-card">
+                    <div class="metric-icon text-warning">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h4>Costo de Riesgo (CR)</h4>
+                    <p class="text-muted">Fórmula: Costo Mitigación + Impacto Residual</p>
+                    <div class="progress mb-2">
+                        <div class="progress-bar bg-warning" style="width: 60%"></div>
+                    </div>
+                    <small>Presupuesto: $35M | Usado: $21M</small>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mt-4">Dashboard de Métricas por Categoría</h4>
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>Categoría</th>
+                        <th>Métrica</th>
+                        <th>Valor Actual</th>
+                        <th>Meta</th>
+                        <th>Tendencia</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td rowspan="2">Técnico</td>
+                        <td>Tiempo Promedio de Resolución (TPR)</td>
+                        <td>4.2 horas</td>
+                        <td>< 6 horas</td>
+                        <td><i class="fas fa-arrow-down text-success"></i></td>
+                        <td><span class="badge bg-success">Bueno</span></td>
+                    </tr>
+                    <tr>
+                        <td>Disponibilidad del Sistema (%)</td>
+                        <td>99.2%</td>
+                        <td>> 99%</td>
+                        <td><i class="fas fa-arrow-up text-success"></i></td>
+                        <td><span class="badge bg-success">Bueno</span></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Cronograma</td>
+                        <td>Desviación del Cronograma (%)</td>
+                        <td>8%</td>
+                        <td>< 10%</td>
+                        <td><i class="fas fa-arrow-up text-warning"></i></td>
+                        <td><span class="badge bg-warning">Atención</span></td>
+                    </tr>
+                    <tr>
+                        <td>Cumplimiento de Hitos (%)</td>
+                        <td>85%</td>
+                        <td>> 90%</td>
+                        <td><i class="fas fa-arrow-down text-warning"></i></td>
+                        <td><span class="badge bg-warning">Atención</span></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Financiero</td>
+                        <td>Desviación Presupuestaria (%)</td>
+                        <td>12%</td>
+                        <td>< 15%</td>
+                        <td><i class="fas fa-arrow-up text-warning"></i></td>
+                        <td><span class="badge bg-warning">Atención</span></td>
+                    </tr>
+                    <tr>
+                        <td>ROI del Proyecto (%)</td>
+                        <td>18%</td>
+                        <td>> 15%</td>
+                        <td><i class="fas fa-arrow-up text-success"></i></td>
+                        <td><span class="badge bg-success">Bueno</span></td>
+                    </tr>
+                    <tr>
+                        <td rowspan="2">Calidad</td>
+                        <td>Defectos por Funcionalidad</td>
+                        <td>2.1</td>
+                        <td>< 3</td>
+                        <td><i class="fas fa-arrow-down text-success"></i></td>
+                        <td><span class="badge bg-success">Bueno</span></td>
+                    </tr>
+                    <tr>
+                        <td>Satisfacción del Usuario (%)</td>
+                        <td>78%</td>
+                        <td>> 80%</td>
+                        <td><i class="fas fa-arrow-up text-warning"></i></td>
+                        <td><span class="badge bg-warning">Atención</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4 class="mt-4">Frecuencia de Monitoreo</h4>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-clock text-danger" style="font-size: 2rem;"></i>
+                        <h5 class="mt-2">Diario</h5>
+                        <p class="text-muted">Riesgos críticos<br>Métricas de sistema</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-calendar-week text-warning" style="font-size: 2rem;"></i>
+                        <h5 class="mt-2">Semanal</h5>
+                        <p class="text-muted">Avance del proyecto<br>KPIs principales</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-calendar-alt text-info" style="font-size: 2rem;"></i>
+                        <h5 class="mt-2">Quincenal</h5>
+                        <p class="text-muted">Revisión de riesgos<br>Ajuste de planes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-center">
+                    <div class="card-body">
+                        <i class="fas fa-calendar text-success" style="font-size: 2rem;"></i>
+                        <h5 class="mt-2">Mensual</h5>
+                        <p class="text-muted">Reporte ejecutivo<br>Análisis de tendencias</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 11: ANÁLISIS DE IMPACTO ECONÓMICO -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-chart-pie me-2"></i>8. Análisis de Impacto Económico</h2>
+        </div>
+        
+        <p>Evaluación cuantitativa del impacto económico de los riesgos identificados en diferentes escenarios:</p>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="fas fa-calculator me-2"></i>Costos de Mitigación</h5>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="costChart" width="400" height="200"></canvas>
+                        <div class="mt-3">
+                            <div class="d-flex justify-content-between">
+                                <span>Seguridad:</span>
+                                <strong>$12M CLP</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Integración:</span>
+                                <strong>$8.5M CLP</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Cronograma:</span>
+                                <strong>$6M CLP</strong>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <span>Otros:</span>
+                                <strong>$4.5M CLP</strong>
+                            </div>
+                            <hr>
+                            <div class="d-flex justify-content-between">
+                                <strong>Total:</strong>
+                                <strong>$31M CLP</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-danger text-white">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Impacto Potencial</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6>Sin Mitigación:</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-danger" style="width: 100%">$85M CLP</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h6>Con Mitigación Parcial:</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-warning" style="width: 45%">$38M CLP</div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <h6>Con Mitigación Completa:</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-success" style="width: 18%">$15M CLP</div>
+                            </div>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>Ahorro Potencial:</strong> $70M CLP<br>
+                            <strong>ROI de Mitigación:</strong> 226%
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h4 class="mt-4">Análisis de Sensibilidad por Escenario</h4>
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>Escenario</th>
+                        <th>Probabilidad</th>
+                        <th>Costo de Mitigación</th>
+                        <th>Impacto Residual</th>
+                        <th>Costo Total</th>
+                        <th>Beneficio Neto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-success">
+                        <td><strong>Optimista</strong></td>
+                        <td>20%</td>
+                        <td>$31M</td>
+                        <td>$8M</td>
+                        <td>$39M</td>
+                        <td>$46M</td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td><strong>Realista</strong></td>
+                        <td>45%</td>
+                        <td>$31M</td>
+                        <td>$15M</td>
+                        <td>$46M</td>
+                        <td>$39M</td>
+                    </tr>
+                    <tr class="table-danger">
+                        <td><strong>Pesimista</strong></td>
+                        <td>70%</td>
+                        <td>$31M</td>
+                        <td>$25M</td>
+                        <td>$56M</td>
+                        <td>$29M</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5><i class="fas fa-lightbulb me-2"></i>Recomendaciones Económicas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Inversión Prioritaria:</h6>
+                                <ul>
+                                    <li>Seguridad de datos (ROI: 280%)</li>
+                                    <li>Integración bancaria (ROI: 220%)</li>
+                                    <li>Gestión de cronograma (ROI: 180%)</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Estrategia de Financiamiento:</h6>
+                                <ul>
+                                    <li>Reserva de contingencia: 15% del presupuesto</li>
+                                    <li>Financiamiento escalonado por fases</li>
+                                    <li>Seguros de proyecto para riesgos críticos</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 12: CRONOGRAMA DE SEGUIMIENTO -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-calendar-alt me-2"></i>9. Cronograma de Seguimiento</h2>
+        </div>
+        
+        <p>Planificación temporal de las actividades de gestión de riesgos durante el ciclo de vida del proyecto:</p>
+
+        <div class="table-responsive">
+            <table class="table table-custom">
+                <thead>
+                    <tr>
+                        <th>Fase</th>
+                        <th>Semana</th>
+                        <th>Actividad</th>
+                        <th>Responsable</th>
+                        <th>Entregable</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="table-success">
+                        <td rowspan="3">Iniciación</td>
+                        <td>1-2</td>
+                        <td>Identificación inicial de riesgos</td>
+                        <td>Patricio Quintanilla</td>
+                        <td>Registro de riesgos</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                    </tr>
+                    <tr class="table-success">
+                        <td>3</td>
+                        <td>Evaluación y clasificación</td>
+                        <td>Todo el equipo</td>
+                        <td>Matriz de riesgos</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                    </tr>
+                    <tr class="table-success">
+                        <td>4</td>
+                        <td>Desarrollo de planes de mitigación</td>
+                        <td>Italo Brignardello</td>
+                        <td>Plan de mitigación</td>
+                        <td><span class="badge bg-success">Completado</span></td>
+                    </tr>
+                    <tr class="table-warning">
+                        <td rowspan="4">Planificación</td>
+                        <td>5-6</td>
+                        <td>Implementación de controles preventivos</td>
+                        <td>Claudio Sánchez</td>
+                        <td>Controles implementados</td>
+                        <td><span class="badge bg-warning">En Progreso</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>7-8</td>
+                        <td>Configuración de métricas y alertas</td>
+                        <td>Alexander Seydewitz</td>
+                        <td>Dashboard de métricas</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>9-10</td>
+                        <td>Capacitación del equipo</td>
+                        <td>Alexander Seydewitz</td>
+                        <td>Personal capacitado</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>11-12</td>
+                        <td>Pruebas de planes de contingencia</td>
+                        <td>Patricio Quintanilla</td>
+                        <td>Planes validados</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td rowspan="6">Ejecución</td>
+                        <td>13-16</td>
+                        <td>Monitoreo continuo de riesgos</td>
+                        <td>Todo el equipo</td>
+                        <td>Reportes semanales</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>17-20</td>
+                        <td>Implementación de ajustes</td>
+                        <td>Responsables asignados</td>
+                        <td>Planes actualizados</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>21-24</td>
+                        <td>Evaluación de efectividad</td>
+                        <td>Italo Brignardello</td>
+                        <td>Informe de efectividad</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>25-28</td>
+                        <td>Optimización de procesos</td>
+                        <td>Alexander Seydewitz</td>
+                        <td>Procesos optimizados</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>29-32</td>
+                        <td>Preparación para cierre</td>
+                        <td>Claudio Sánchez</td>
+                        <td>Documentación final</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>33-36</td>
+                        <td>Transición a operación</td>
+                        <td>Todo el equipo</td>
+                        <td>Sistema en producción</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td rowspan="2">Cierre</td>
+                        <td>37-38</td>
+                        <td>Evaluación final de riesgos</td>
+                        <td>Patricio Quintanilla</td>
+                        <td>Informe final</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                    <tr class="table-light">
+                        <td>39-40</td>
+                        <td>Lecciones aprendidas</td>
+                        <td>Italo Brignardello</td>
+                        <td>Documento de lecciones</td>
+                        <td><span class="badge bg-secondary">Pendiente</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4 class="mt-4">Hitos Críticos de Gestión de Riesgos</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="fas fa-flag me-2"></i>Hitos Principales</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-check-circle text-success" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6>Semana 4: Plan de Mitigación Aprobado</h6>
+                                    <p class="text-muted mb-0">Todos los planes específicos validados</p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-clock text-warning" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6>Semana 12: Controles Implementados</h6>
+                                    <p class="text-muted mb-0">Sistemas de monitoreo operativos</p>
+                                </div>
+                            </div>
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-circle text-secondary" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6>Semana 24: Evaluación Intermedia</h6>
+                                    <p class="text-muted mb-0">Revisión de efectividad de medidas</p>
+                                </div>
+                            </div>
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <i class="fas fa-circle text-secondary" style="font-size: 1.5rem;"></i>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <h6>Semana 38: Cierre de Gestión de Riesgos</h6>
+                                    <p class="text-muted mb-0">Transferencia a operación normal</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5><i class="fas fa-exclamation-triangle me-2"></i>Puntos de Control Críticos</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-danger me-2">Alta</span>
+                                    <strong>Semana 8:</strong> Validación integración bancaria
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-danger me-2">Alta</span>
+                                    <strong>Semana 16:</strong> Auditoría de seguridad
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-warning me-2">Media</span>
+                                    <strong>Semana 20:</strong> Evaluación de rendimiento
+                                </div>
+                            </li>
+                            <li class="mb-3">
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-danger me-2">Alta</span>
+                                    <strong>Semana 28:</strong> Pruebas de carga final
+                                </div>
+                            </li>
+                            <li>
+                                <div class="d-flex align-items-center">
+                                    <span class="badge bg-warning me-2">Media</span>
+                                    <strong>Semana 36:</strong> Aceptación del usuario
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 13: CONCLUSIONES Y PROYECCIONES -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-lightbulb me-2"></i>10. Conclusiones y Proyecciones</h2>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="fas fa-clipboard-check me-2"></i>Conclusiones Principales</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead">El análisis integral de riesgos del proyecto Sistema de Gestión de Viajes de Estudio 
+                        para la Agencia "On Tour" ha permitido identificar y estructurar un plan robusto de mitigación 
+                        que maximiza las probabilidades de éxito del proyecto.</p>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-check-circle text-success me-2"></i>Fortalezas del Plan:</h6>
+                                <ul>
+                                    <li>Identificación exhaustiva de 12 riesgos principales</li>
+                                    <li>Clasificación clara por niveles de criticidad</li>
+                                    <li>Asignación específica de responsabilidades</li>
+                                    <li>Métricas cuantificables de seguimiento</li>
+                                    <li>ROI positivo de las medidas de mitigación (226%)</li>
+                                    <li>Planes de contingencia detallados</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6><i class="fas fa-exclamation-triangle text-warning me-2"></i>Áreas de Atención:</h6>
+                                <ul>
+                                    <li>Dependencia crítica de integraciones externas</li>
+                                    <li>Necesidad de capacitación intensiva del personal</li>
+                                    <li>Complejidad de la gestión de múltiples stakeholders</li>
+                                    <li>Requisitos estrictos de seguridad y cumplimiento</li>
+                                    <li>Cronograma ajustado con poco margen de error</li>
+                                    <li>Presupuesto limitado para contingencias</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-success text-white">
+                        <h5><i class="fas fa-chart-line me-2"></i>Proyecciones de Éxito</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <h6>Probabilidad de Éxito del Proyecto:</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-success" style="width: 85%">85%</div>
+                            </div>
+                            <small class="text-muted">Con implementación completa del plan</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h6>Reducción de Riesgos Críticos:</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-info" style="width: 75%">75%</div>
+                            </div>
+                            <small class="text-muted">Mitigación efectiva esperada</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <h6>Cumplimiento de Cronograma:</h6>
+                            <div class="progress mb-2">
+                                <div class="progress-bar bg-warning" style="width: 78%">78%</div>
+                            </div>
+                            <small class="text-muted">Considerando medidas preventivas</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-info text-white">
+                        <h5><i class="fas fa-rocket me-2"></i>Proyecciones Futuras</h5>
+                    </div>
+                    <div class="card-body">
+                        <h6>Beneficios Esperados a Largo Plazo:</h6>
+                        <ul class="list-unstyled">
+                            <li class="mb-2">
+                                <i class="fas fa-arrow-up text-success me-2"></i>
+                                <strong>Incremento en ventas:</strong> 35% en el primer año
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-users text-primary me-2"></i>
+                                <strong>Satisfacción del cliente:</strong> Mejora del 40%
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-cogs text-info me-2"></i>
+                                <strong>Eficiencia operacional:</strong> Reducción de 50% en tiempos
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-shield-alt text-warning me-2"></i>
+                                <strong>Reducción de riesgos operacionales:</strong> 60%
+                            </li>
+                            <li class="mb-2">
+                                <i class="fas fa-dollar-sign text-success me-2"></i>
+                                <strong>ROI del proyecto:</strong> 180% en 3 años
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-warning text-white">
+                        <h5><i class="fas fa-lightbulb me-2"></i>Recomendaciones Estratégicas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h6><i class="fas fa-clock text-primary me-2"></i>Corto Plazo (1-3 meses):</h6>
+                                <ul>
+                                    <li>Implementar controles de seguridad prioritarios</li>
+                                    <li>Establecer acuerdos con proveedores bancarios</li>
+                                    <li>Iniciar programa de capacitación del equipo</li>
+                                    <li>Configurar sistemas de monitoreo básicos</li>
+                                    <li>Validar arquitectura técnica propuesta</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h6><i class="fas fa-calendar text-info me-2"></i>Mediano Plazo (3-6 meses):</h6>
+                                <ul>
+                                    <li>Completar desarrollo de funcionalidades críticas</li>
+                                    <li>Realizar pruebas exhaustivas de integración</li>
+                                    <li>Implementar plan de gestión del cambio</li>
+                                    <li>Establecer procesos de soporte técnico</li>
+                                    <li>Preparar documentación de usuario final</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-4">
+                                <h6><i class="fas fa-chart-line text-success me-2"></i>Largo Plazo (6+ meses):</h6>
+                                <ul>
+                                    <li>Optimizar rendimiento del sistema</li>
+                                    <li>Expandir funcionalidades según feedback</li>
+                                    <li>Implementar mejoras de UX/UI</li>
+                                    <li>Evaluar integración con nuevos servicios</li>
+                                    <li>Planificar escalabilidad futura</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5><i class="fas fa-graduation-cap me-2"></i>Lecciones Aprendidas y Mejores Prácticas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h6>Factores Críticos de Éxito:</h6>
+                                <ul>
+                                    <li><strong>Comunicación proactiva:</strong> Mantener informados a todos los stakeholders</li>
+                                    <li><strong>Gestión del cambio:</strong> Preparar a los usuarios para la transición</li>
+                                    <li><strong>Calidad desde el inicio:</strong> Implementar controles de calidad tempranos</li>
+                                    <li><strong>Flexibilidad:</strong> Mantener capacidad de adaptación ante cambios</li>
+                                    <li><strong>Monitoreo continuo:</strong> Seguimiento constante de métricas clave</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <h6>Recomendaciones para Futuros Proyectos:</h6>
+                                <ul>
+                                    <li><strong>Análisis de riesgos temprano:</strong> Identificar riesgos desde la concepción</li>
+                                    <li><strong>Involucramiento de usuarios:</strong> Participación activa desde el diseño</li>
+                                    <li><strong>Pruebas incrementales:</strong> Validación continua de funcionalidades</li>
+                                    <li><strong>Documentación exhaustiva:</strong> Registro detallado de decisiones y cambios</li>
+                                    <li><strong>Plan de contingencia robusto:</strong> Preparación para múltiples escenarios</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PÁGINA 14: REFERENCIAS Y ANEXOS -->
+    <div class="page-break"></div>
+    <div class="container">
+        <div class="section-header">
+            <h2><i class="fas fa-book me-2"></i>Referencias</h2>
+        </div>
+        
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-primary text-white">
+                        <h5><i class="fas fa-bookmark me-2"></i>Referencias Bibliográficas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="reference-list">
+                            <p class="reference-item">
+                                Project Management Institute. (2021). <em>A Guide to the Project Management Body of Knowledge (PMBOK® Guide)</em> (7th ed.). PMI.
+                            </p>
+                            <p class="reference-item">
+                                Hillson, D. (2020). <em>Managing Risk in Projects: Fundamentals of Project Risk Management</em>. Routledge.
+                            </p>
+                            <p class="reference-item">
+                                ISO 31000:2018. (2018). <em>Risk management — Guidelines</em>. International Organization for Standardization.
+                            </p>
+                            <p class="reference-item">
+                                Kendrick, T. (2019). <em>Identifying and Managing Project Risk: Essential Tools for Failure-Proofing Your Project</em> (3rd ed.). AMACOM.
+                            </p>
+                            <p class="reference-item">
+                                Chapman, C., & Ward, S. (2018). <em>How to Manage Project Opportunity and Risk: Why Uncertainty Management Can Be a Much Better Approach</em> (3rd ed.). Wiley.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <p class="text-muted">
+                <em>Este documento constituye el Plan de Mitigación de Riesgos oficial para el proyecto 
+                Sistema de Gestión de Viajes de Estudio - Agencia "On Tour"</em>
+            </p>
+            <p class="text-muted">
+                <strong>Versión:</strong> 1.0 | <strong>Fecha:</strong> Junio 2025 | <strong>Estado:</strong> Aprobado
+            </p>
+        </div>
+    </div>
+
+    <!-- Scripts de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Script para gráficos (Chart.js) -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Gráfico de costos de mitigación
+        const ctx = document.getElementById('costChart');
+        if (ctx) {
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Seguridad', 'Integración', 'Cronograma', 'Otros'],
+                    datasets: [{
+                        data: [12, 8.5, 6, 4.5],
+                        backgroundColor: [
+                            '#dc3545',
+                            '#fd7e14',
+                            '#ffc107',
+                            '#6c757d'
+                        ]
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+
+    <!-- Script para impresión -->
+    <script>
+        function printReport() {
+            window.print();
+        }
+        
+        // Agregar botón de impresión
+        document.addEventListener('DOMContentLoaded', function() {
+            const printBtn = document.createElement('button');
+            printBtn.innerHTML = '<i class="fas fa-print me-2"></i>Imprimir Informe';
+            printBtn.className = 'btn btn-primary position-fixed';
+            printBtn.style.cssText = 'bottom: 20px; right: 20px; z-index: 1000;';
+            printBtn.onclick = printReport;
+            document.body.appendChild(printBtn);
+        });
+    </script>
+
+    <style>
+        @media print {
+            .page-break {
+                page-break-before: always;
+            }
+            
+            .btn, .position-fixed {
+                display: none !important;
+            }
+            
+            .container {
+                max-width: 100% !important;
+                margin: 0 !important;
+                padding: 15px !important;
+            }
+            
+            .card {
+                border: 1px solid #dee2e6 !important;
+                box-shadow: none !important;
+            }
+            
+            .table {
+                font-size: 12px;
+            }
+            
+            .metric-card {
+                border: 1px solid #dee2e6;
+                margin-bottom: 15px;
+            }
+        }
+        
+        .reference-item {
+            text-indent: -2em;
+            padding-left: 2em;
+            margin-bottom: 1em;
+        }
+        
+        .timeline {
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 12px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #dee2e6;
+        }
+    </style>
+
+</body>
+</html>
+
+
+
+

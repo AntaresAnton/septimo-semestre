@@ -1,0 +1,578 @@
+
+8
+ 
+ 
+1 Subdirección de Evaluación  de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 2- 2022 
+ 
+Evaluación Parcial 3  Presentando plan de mitigación de riesgos. 
+ 
+01. Agente evaluativo 
+X Heteroevaluación   Coevaluación   Autoevaluación 
+ 
+02. Tabla de Especificaciones 
+Resultado  de Aprendizaje  Indicador de Logro  (IL)  Indicador de Evaluación (IE)*   
+Ponderación 
+Indicador 
+Logro  
+Ponderación 
+Indicador de 
+Evaluación  
+RA7_Contruye un  plan  de  acción  
+ante  la  presencia  de  un  riesgo  que 
+puede afectar al desarrollo o 
+continuidad  del proyecto  TI.   
+IL 7.1_Define planes de acción 
+generales  para  los distintos nivel es  
+de  riesgos asociados  al proyecto   
+IE_1_Define planes de acción 
+generales  para  los distintos nivel es  
+de  riesgos asociados  al proyecto 
+ 
+.  
+ 15%  15% 
+IE_2_Presenta  de forma  escrita los 
+planes de acción generales ,   
+considerando los  distintos  nivel es  
+de riesgos y requisitos del  
+proyecto.   
+ 
+ 
+ 
+ 10%  10% 
+Sigla Nombre Asignatura Tiempo 
+Asignado 
+% 
+Ponderación 
+GPY7111 Gestión de Riesgos 3 h 35% 
+ 
+ 
+2 Subdirección de Evaluación  de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 2- 2022 
+ 
+IL 7.2_Diseña planes acción 
+específicos para los riesgos de 
+nivel  más altos que  pueden  afectar 
+al desarrollo y continuidad del  
+riesgo  TI 
+IE_3_Diseña planes acción 
+específicos para los riesgos de 
+nivel  más altos, que  pueden  afectar 
+al desarrollo y continuidad del  
+riesgo  TI. 
+ 20%  20% 
+IE_5_Presenta  de forma  escrita los 
+planes  acción  específicos  para  los 
+riesgos de nivel más altos, 
+siguiendo  una  estructura  lógica, de 
+acuerdo  a requisitos. 
+  
+5%  
+  
+ 5% 
+   
+IL  7.3_Asigna  responsable  para  el 
+seguimiento y  plan  de  acción  de  
+cada  riesgo  encontrado.   
+IE_7_  Asigna responsable  para  el 
+seguimiento  y plan  de acción  de 
+cada  riesgo  encontrado. 
+ 25% 
+  
+10%  
+IE_8_Presenta  de forma  escrita los 
+responsables  para  el seguimiento  y 
+plan de acción de cada riesgo,  
+siguiendo una estructura lógica,  
+considerando la informaci ón 
+presentada   
+  
+ 10%  
+IE_9_Establece comunicación 
+efectiva, utilizando lenguaj e 
+técnico  requerido  en  la  disciplina  y 
+contexto laboral.     
+ 
+  5% 
+IL 7.4_Utiliza métricas para la 
+revisión  del avance  del proyecto en 
+base  a riesgos detectados   
+IE_10_Utiliza métricas para la 
+revisión  del avance  del proyecto en 
+base  a riesgos detectados. 
+20%  
+  
+15%  
+IE_11_Presenta de forma escrita 
+las  métricas  para la  revisión del  
+avance del proyecto en base a 
+riesgos  detectados,  siguiendo  una 
+estructura  lógica,  considerando la 
+información  presentada. 
+  5% 
+IE_12_Establece comunicación 
+efectiva, utilizando lenguaj e 
+técnico  requerido  en  la  disciplina  y 
+contexto laboral.   
+5% 
+Total  100%   100% 
+  
+ 
+ 
+3 Subdirección de Evaluación  de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 2- 2022 
+ 
+03. Instrucciones para el/la estudiante 
+ Esta es una evaluación que corresponde a una entrega de encargo con presentación y tiene un 35% de ponderación sobre la nota 
+final de la asignatura. 
+ 
+El tiempo para presentar esta evaluación es de 15 minutos (8 de presentación y 7 minutos para la retroalimentación), y se realiza 
+en duplas en sala de proyectos. 
+ 
+La evaluación consiste en:  
+ 
+A partir de la identificación de los riegos del caso asignado y trabajado  en la experiencia  anterior, desarrollar el informe de Plan 
+de mitigación  de riesgos y presentar en un entorno simulado. 
+ 
+La pauta de evaluación corresponde a una rúbrica de 4 niveles que se aplicará de forma individual. 
+ 
+ 
+Instrucciones específicas del Plan de Gestión del plan de mitigación  de riesgos en proyectos TI: 
+ 
+La evidencia entregable  es un informe y PPT interactiva de no más de 8 láminas para exposición de resultados. 
+En este  aparatado  debe  presentar  la  Gestión  del  plan  de  mitigación  de los  riesgos del  proyecto TI,  considerando los siguientes   
+pasos: 
+ 
+ Paso 1: Definir técnicas para clasificación del riesgo, evidenciando alternativas en base a distintos escenarios económicos, 
+considerando impacto cuantitativo en la decisión de cada una de ellas. 
+ Paso 2: Construir plan de acción de acuerdo al nivel de clasificación de cada riesgo, indicando un responsable para cada 
+plan. 
+ Paso 3: Utilizar métricas para revisión de avance del proyecto en base a riegos detectados. 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+4 Subdirección de Evaluación  de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 2- 2022 
+ 
+Aspectos Formales del Informe: 
+  
+ Debe ser presentado en formato de informe de plan de gestión, debiendo incluir: 
+ Portada (Logo Duoc, Titulo del proyecto, Equipo de trabajo con roles, fecha y lugar). 
+ Resumen ejecutivo/Abstract del proyecto. 
+ Agradecimientos. 
+ Índice de contenidos. 
+ Introducción (1 Plana)  
+ Desarrollo. 
+ Conclusiones y proyecciones del proyecto. 
+ Cita en APA: https://bibliotecas.duoc.cl/citas-y-referencias-por-tipo-de-material-apa 
+ 
+El informe debe ser entregado en la semana 17, enviado en forma digital. 
+ 
+ 
+Aspectos formales de la presentación: 
+  
+La  presentación  debe  realizarse  utilizando  recursos  interactivos,  con  plantillas  dinámicas  en  las  cuales  se  priorice  el  uso  de 
+diagramas, flujos de procesos, tablas consolidadas, para optimizar la organización de la información. 
+  
+Se recomienda no extenderse de 10 láminas: 
+ 
+ Lámina 1: Portada (logo, título del proyecto, equipo de trabajo y funciones, fecha) 
+ Lamina 2 a 9: Desarrollo. 
+ Lámina 10: Conclusión y proyecciones. 
+ Lámina 11: Agradecimientos. 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+5 Subdirección de Evaluación  de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 2- 2022 
+ 
+  
+La presentación debe ser enviada al docente titular con 48 h de anticipación en horario de día hábil. 
+  
+  
+Recursos de apoyo  para el diseño de presentación de Proyecto. 
+  
+PPTs interactivas: 
+https://app.genial.ly/ 
+https://www.canva.com/es_419/ 
+https://prezi.com/es/ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6 Subdirección de Evaluación  de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 2- 2022 
+ 
+Pauta de Evaluación Pauta tipo: Escala de valoración / Rúbrica 
+ 
+ 
+Indicador de 
+Evaluación  
+Categorías  de Respuesta   Ponderación 
+del 
+Indicador de 
+Evaluación  
+Muy buen 
+desempeño  
+100%   
+Desempeño 
+aceptable  
+60%   
+Desempeño 
+incipiente  
+30%   
+Desempeño no 
+logrado  
+0%   
+ IE_1_Define  planes  de 
+acción generales  para 
+los distintos niveles  de 
+riesgos  asociados al 
+proyecto   
+ Define  la totalidad  de 
+los planes  de acción 
+generales  para  los 
+distintos niveles  de 
+riesgos  asociados al 
+proyecto   
+Define  la mayoría  de 
+los planes  de acción 
+generales  para  los 
+distintos niveles  de 
+riesgos  asociados al 
+proyecto    
+ Define  planes  de 
+acción minimos  para 
+los distintos niveles  de 
+riesgos  asociados al 
+proyecto   
+ No define  planes  de 
+acción generales  para 
+los distintos niveles  de 
+riesgos  asociados al 
+proyecto   
+ 15% 
+IE_2_Presenta de  form a 
+escrita los planes de 
+acción generales para 
+los distintos  niveles de 
+riesgos asociados al  
+proyecto,  siguiendo una 
+estructura lógica, de 
+acuerdo  a  la  informaci ón 
+presentada   
+  
+El texto presenta 
+información  completa 
+(ideas  detalladas 
+sobre  el tiempo,  el 
+lugar,  las 
+circunstancias, etc.). Y 
+El texto no  presenta 
+digresiones  temáticas, 
+ideas  inconexas ni 
+información 
+contradictoria.   
+El texto presenta 
+vacíos  de  información. 
+Y el texto no  presenta 
+digresiones  temáticas, 
+ideas  inconexas ni 
+información 
+contradictoria.   
+El texto presenta 
+vacíos  de  información. 
+O el texto presenta 
+algunas  (una  o dos) 
+digresiones  temáticas, 
+ideas  inconexas o 
+información 
+contradictoria.   
+El texto no  presenta 
+información  suficiente 
+para  construir  un 
+sentido. O  el texto 
+presenta  frecuentes 
+(tres o  más) 
+digresiones  temáticas, 
+ideas  inconexas o 
+información 
+contradictoria.   
+ 10% 
+Categoría % logro Descripción niveles de logro 
+Muy buen desempeño 100% Demuestra  un desempeño  destacado,  evidenciando  el logro  de todos  los aspectos evaluados  en el 
+indicador.   
+Desempeño aceptable  60% Demuestra  un desempeño  competente,  evidenciando  el logro  de los elementos  básicos del 
+indicador,  pero  con omisiones,  dificultades  o errores. 
+Desempeño incipiente  30% Presenta  importantes  omisiones,  dificultades  o  errores  en  el desempeño,  que  no  permiten  evidenciar 
+los elementos  básicos del logro  del indicador,  por  lo que  no puede  ser  considerado  competente. 
+Desempeño no logrado  0% Presenta  ausencia  o incorrecto  desempeño. 
+ 
+ 
+7 Subdirección de Evaluación  de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 2- 2022 
+ 
+      
+ IE_3_Diseña  planes 
+acción específicos  para 
+los riesgos de  nivel  más 
+altos  
+ Diseña  planes  acción 
+específicos 
+considerando  la 
+totalidad  de  los riesgos 
+de  nivel  más altos  
+ Diseña  planes  acción 
+específicos 
+considerando  la 
+mayoría  de los riesgos 
+de  nivel  más altos  
+ Diseña  planes  acción 
+específicos 
+considerando  los 
+riesgos  de nivel  más 
+altos esenciales. 
+ No diseña  planes 
+acción específicos 
+para  los riesgos  de 
+nivel  más altos  
+ 20% 
+IE_4_Presenta de  form a 
+escrita  los planes  acción 
+específicos para los 
+riesgos de nivel más 
+altos, siguiendo una 
+estructura lógica,  
+considerando la 
+información  presentada   
+  
+El texto presenta 
+información  completa 
+(ideas  detalladas 
+sobre  el tiempo,  el 
+lugar,  las 
+circunstancias, etc.). Y 
+El texto no  presenta 
+digresiones  temáticas, 
+ideas  inconexas ni 
+información 
+contradictoria.   
+El texto presenta 
+vacíos  de  información. 
+Y el texto no  presenta 
+digresiones  temáticas, 
+ideas  inconexas ni 
+información 
+contradictoria.   
+El texto presenta 
+vacíos  de  información. 
+O el texto presenta 
+algunas  (una  o dos) 
+digresiones  temáticas, 
+ideas  inconexas o 
+información 
+contradictoria.   
+El texto no  presenta 
+información  suficiente 
+para  construir  un 
+sentido. O  el texto 
+presenta  frecuentes 
+(tres o  más) 
+digresiones  temáticas, 
+ideas  inconexas o 
+información 
+contradictoria.   
+  5% 
+IE_5_  Asigna 
+responsable para el  
+seguimiento y plan de 
+acción de cada riesgo 
+encontrado. 
+Asigna responsable 
+para  el seguimiento  y 
+plan  de acción  de la 
+totalidad  de  los 
+riesgos. 
+Asigna responsable 
+para  el seguimiento  y 
+plan  de acción  de la 
+mayoría  de los 
+riesgos. 
+Asigna responsable 
+para  el seguimiento  y 
+plan  de acción  de los 
+riesgos  minimos. 
+No  asigna  responsable 
+para  el seguimiento  y 
+plan  de acción  para 
+cada  riesgo. 
+10%  
+_IE_6_Presenta de 
+forma escrita los 
+responsables para el  
+seguimiento y plan de 
+acción de cada riesgo,  
+siguiendo  una  estructura 
+lógica, considerando la 
+información  presentada   
+  
+El texto presenta 
+información  completa 
+(ideas  detalladas 
+sobre  el tiempo,  el 
+lugar,  las 
+circunstancias, etc.). Y 
+El texto no  presenta 
+digresiones  temáticas, 
+ideas  inconexas ni 
+información 
+contradictoria.   
+El texto presenta 
+vacíos  de  información. 
+Y el texto no  presenta 
+digresiones  temáticas, 
+ideas  inconexas ni 
+información 
+contradictoria.   
+El texto presenta 
+vacíos  de  información. 
+O el texto presenta 
+algunas  (una  o dos) 
+digresiones  temáticas, 
+ideas  inconexas o 
+información 
+contradictoria.   
+El texto no  presenta 
+información  suficiente 
+para  construir  un 
+sentido. O  el texto 
+presenta  frecuentes 
+(tres o  más) 
+digresiones  temáticas, 
+ideas  inconexas o 
+información 
+contradictoria.   
+ 10%  
+IE_7_Utiliza  métricas 
+para  la revisión  del 
+avance  del proyecto  en 
+base  a riesgos 
+detectados.   
+Utiliza de  forma 
+adecuada  métricas 
+para  la revisión  del 
+avance  del proyecto 
+en  base a riesgos 
+detectados   
+Utiliza de  forma  bien 
+empleada  métricas 
+para  la revisión  del 
+avance  del proyecto 
+en  base a riesgos 
+detectados   
+Utiliza de  forma  parcial 
+métricas para  la 
+revisión  del avance  del 
+proyecto  en base  a 
+riesgos  detectados   
+  
+No  utiliza de forma 
+parcial  métricas para 
+la revisión  del avance 
+del  proyecto en  base  a 
+riesgos  detectados   
+  
+15%  
+ 
+ 
+8 Subdirección de Evaluación  de Resultados de Aprendizaje - Subdirección de Diseño Instruccional 2- 2022 
+ 
+    
+IE_8_Presenta de  form a 
+escrita  las  métricas  para 
+la revisión  del avance  del  
+proyecto en base a 
+riesgos detectados,  
+siguiendo  una  estructura 
+lógica, considerando la 
+información  presentada.   
+  
+El texto presenta 
+información  completa 
+(ideas  detalladas 
+sobre  el tiempo,  el 
+lugar,  las 
+circunstancias, etc.). Y 
+El texto no  presenta 
+digresiones  temáticas, 
+ideas  inconexas ni 
+información 
+contradictoria.   
+El texto presenta 
+vacíos  de  información. 
+Y el texto no  presenta 
+digresiones  temáticas, 
+ideas  inconexas ni 
+información 
+contradictoria.   
+El texto presenta 
+vacíos  de  información. 
+O el texto presenta 
+algunas  (una  o dos) 
+digresiones  temáticas, 
+ideas  inconexas o 
+información 
+contradictoria.   
+El texto no  presenta 
+información  suficiente 
+para  construir  un 
+sentido. O  el texto 
+presenta  frecuentes 
+(tres o  más) 
+digresiones  temáticas, 
+ideas  inconexas o 
+información 
+contradictoria.   
+  5% 
+IE_9_Establece 
+comunicación efectiva,  
+utilizando lenguaj e 
+técnico  requerido en  la 
+disciplina y contexto 
+laboral.   
+Ejecuta de  forma 
+apropiada  y utiliza 
+lenguaje  técnico al 
+presentar  la 
+información  de forma 
+verbal.   
+En general,  articula 
+claramente  sus 
+argumentos  utilizando 
+lenguaje  técnico en  su 
+mayor  parte  correcto.  
+Presenta  sus 
+argumentos  en  forma 
+confusa  utilizando 
+lenguaje  técnico 
+medianamente 
+correcto.   
+No  presenta  sus 
+argumentos  en  forma 
+clara  ni utiliza lenguaje 
+técnico.  
+  
+10% 
+Total  100% 
+ 
