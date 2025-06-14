@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LSTM en Deep Learning: Contexto Chileno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3A5BF0;
+            --secondary-color: #7209B7;
+            --success-color: #06D6A0;
+            --info-color: #4CC9F0;
+            --warning-color: #F9C74F;
+            --danger-color: #EF476F;
+            --dark-color: #1A1A2E;
+            --light-color: #F8F9FA;
+            --gray-color: #6C757D;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F5F7FF;
+            color: #333;
+        }
+        
+        .formula {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Roboto Mono', monospace;
+            text-align: center;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .header-bg {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 80px 0 100px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcGF0dGVyblRyYW5zZm9ybT0icm90YXRlKDQ1KSI+PHJlY3QgaWQ9InBhdHRlcm4tYmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDUpIj48L3JlY3Q+PHBhdGggZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpIiBkPSJNMCAwaDEwdjEwSDB6Ij48L3BhdGg+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCBmaWxsPSJ1cmwoI3BhdHRlcm4pIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIj48L3JlY3Q+PC9zdmc+');
+            opacity: 0.3;
+        }
+        
+        .main-container {
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section-card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            padding: 20px 25px;
+            border-bottom: none;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+        
+        .bg-secondary {
+            background-color: var(--secondary-color) !important;
+        }
+        
+        .bg-success {
+            background-color: var(--success-color) !important;
+        }
+        
+        .bg-info {
+            background-color: var(--info-color) !important;
+        }
+        
+        .bg-warning {
+            background-color: var(--warning-color) !important;
+        }
+        
+        .bg-danger {
+            background-color: var(--danger-color) !important;
+        }
+        
+        .bg-dark {
+            background-color: var(--dark-color) !important;
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-secondary {
+            color: var(--secondary-color) !important;
+        }
+        
+        .text-success {
+            color: var(--success-color) !important;
+        }
+        
+        .text-info {
+            color: var(--info-color) !important;
+        }
+        
+        .text-warning {
+            color: var(--warning-color) !important;
+        }
+        
+        .text-danger {
+            color: var(--danger-color) !important;
+        }
+        
+        .chilean-example {
+            background-color: #fff;
+            border-left: 4px solid var(--danger-color);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .feature-card {
+            border-radius: 16px;
+            padding: 25px;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(58, 91, 240, 0.1) 0%, rgba(114, 9, 183, 0.1) 100%);
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .alert-primary {
+            background-color: rgba(58, 91, 240, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .alert-success {
+            background-color: rgba(6, 214, 160, 0.1);
+            color: var(--success-color);
+        }
+        
+        .alert-warning {
+            background-color: rgba(249, 199, 79, 0.1);
+            color: #B76E00;
+        }
+        
+        .alert-info {
+            background-color: rgba(76, 201, 240, 0.1);
+            color: #0077B6;
+        }
+        
+        .alert-secondary {
+            background-color: rgba(114, 9, 183, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        pre {
+            background-color: #F8F9FA;
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+        }
+        
+        .badge {
+            padding: 6px 10px;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, var(--dark-color) 0%, #2D2D44 100%);
+            padding: 60px 0 30px;
+            color: white;
+            margin-top: 50px;
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+        }
+        
+        .nav-pills .nav-link {
+            color: var(--gray-color);
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-pills .nav-link:hover:not(.active) {
+            background-color: rgba(58, 91, 240, 0.1);
+        }
+        
+        .formula-container {
+            position: relative;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin: 20px 0;
+        }
+        
+        .formula-badge {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            padding: 5px 15px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--primary-color);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -34px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 3px solid white;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <header class="header-bg">
+        <div class="container text-center">
+            <h1 class="display-4 fw-bold mb-3">LSTM en Deep Learning</h1>
+            <p class="lead fs-4 mb-4">Entendiendo las Redes Neuronales de Memoria a Largo Plazo en el Contexto Chileno</p>
+            <div class="d-flex justify-content-center">
+                <a href="#fundamentos" class="btn btn-light btn-lg me-3 px-4 py-2 rounded-pill shadow-sm">
+                    <i class="bi bi-book me-2"></i>Fundamentos
+                </a>
+                <a href="#aplicaciones" class="btn btn-outline-light btn-lg px-4 py-2 rounded-pill">
+                    <i class="bi bi-gear me-2"></i>Aplicaciones
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <div class="row mb-4">
+            <div class="col-12 text-center">
+                <ul class="nav nav-pills justify-content-center mb-4">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#fundamentos">Fundamentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#arquitectura">Arquitectura</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#aplicaciones">Aplicaciones</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#comparativa">Comparativa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#caso-estudio">Caso de Estudio</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div id="fundamentos" class="card section-card">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-braces-asterisk me-2"></i>
+                            ¿Qué son las LSTM?
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-8">
+                                <p class="lead">Las LSTM (Long Short-Term Memory o Memoria a Largo-Corto Plazo) son un tipo especializado de Redes Neuronales Recurrentes diseñadas para superar el "problema del gradiente  que desaparece" que afecta a las RNN estándar cuando trabajan con secuencias largas.</p>
+                                
+                                <p>A diferencia de las RNN tradicionales, las LSTM pueden recordar información durante largos períodos de tiempo, lo que las hace ideales para:</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="feature-icon text-primary">
+                                    <i class="bi bi-cpu"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="card feature-card bg-white">
+                                    <div class="text-primary mb-3">
+                                        <i class="bi bi-graph-up-arrow fs-1"></i>
+                                    </div>
+                                    <h5>Series Temporales</h5>
+                                    <p class="mb-0 text-muted">Predicción del precio del cobre chileno y otros commodities clave para la economía nacional.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card feature-card bg-white">
+                                    <div class="text-success mb-3">
+                                        <i class="bi bi-chat-text fs-1"></i>
+                                    </div>
+                                    <h5>Procesamiento de Lenguaje</h5>
+                                    <p class="mb-0 text-muted">Análisis de chilenismos y modismos únicos en redes sociales y medios digitales.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card feature-card bg-white">
+                                    <div class="text-danger mb-3">
+                                        <i class="bi bi-activity fs-1"></i>
+                                    </div>
+                                    <h5>Eventos Secuenciales</h5>
+                                    <p class="mb-0 text-muted">Predicción de actividad sísmica, mareas y otros fenómenos naturales frecuentes en Chile.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-primary d-flex align-items-center">
+                            <i class="bi bi-lightbulb fs-4 me-3"></i>
+                            <div>
+                                <strong>Concepto Clave:</strong> Las LSTM resuelven el problema de las dependencias a largo plazo que otras redes neuronales no pueden manejar eficientemente.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="arquitectura" class="card section-card">
+                    <div class="card-header bg-success text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-diagram-3 me-2"></i>
+                            Arquitectura y Matemáticas de LSTM
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">La arquitectura LSTM contiene componentes especiales llamados "compuertas" que regulan el flujo de información, permitiendo a la red decidir qué recordar y qué olvidar.</p>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="formula-container">
+                                    <span class="formula-badge">Compuerta de Olvido</span>
+                                    <div class="formula">
+                                        f<sub>t</sub> = σ(W<sub>f</sub> · [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>f</sub>)
+                                    </div>
+                                    <p class="small text-muted mb-0">Decide qué información desechar del estado de la celda. Valores cercanos a 0 significan "olvidar" y cercanos a 1 "mantener".</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="formula-container">
+                                    <span class="formula-badge">Compuerta de Entrada</span>
+                                    <div class="formula">
+                                        i<sub>t</sub> = σ(W<sub>i</sub> · [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>i</sub>)
+                                    </div>
+                                    <p class="small text-muted mb-0">Decide qué nueva información almacenar en el estado de la celda. Actúa como un filtro de información nueva.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="formula-container">
+                                    <span class="formula-badge">Estado Candidato</span>
+                                    <div class="formula">
+                                        C̃<sub>t</sub> = tanh(W<sub>C</sub> · [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>C</sub>)
+                                    </div>
+                                    <p class="small text-muted mb-0">Crea nuevos valores candidatos que podrían añadirse al estado. Valores entre -1 y 1.</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="formula-container">
+                                    <span class="formula-badge">Actualización de Celda</span>
+                                    <div class="formula">
+                                        C<sub>t</sub> = f<sub>t</sub> * C<sub>t-1</sub> + i<sub>t</sub> * C̃<sub>t</sub>
+                                    </div>
+                                    <p class="small text-muted mb-0">Actualiza el estado anterior con la nueva información, olvidando lo que decidió la compuerta de olvido.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="formula-container">
+                                    <span class="formula-badge">Compuerta de Salida</span>
+                                    <div class="formula">
+                                        o<sub>t</sub> = σ(W<sub>o</sub> · [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>o</sub>)<br>
+                                        h<sub>t</sub> = o<sub>t</sub> * tanh(C<sub>t</sub>)
+                                    </div>
+                                    <p class="small text-muted mb-0">Controla qué partes del estado de la celda se mostrarán como salida. Filtra el estado interno para la salida.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <div class="alert alert-success d-flex">
+                                    <i class="bi bi-lightbulb-fill fs-3 me-3"></i>
+                                    <div>
+                                        <h5>Analogía Chilena</h5>
+                                        <p class="mb-0">Piensa en las LSTM como un equipo de fútbol chileno donde cada jugador (compuerta) tiene un rol específico: algunos deciden qué jugadas olvidar, otros qué nuevas estrategias incorporar, y otros qué información pasar al siguiente jugador, todo coordinado por el director técnico (algoritmo de entrenamiento).</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><i class="bi bi-info-circle text-primary me-2"></i>¿Sabías que?</h5>
+                                        <p class="card-text">Las LSTM fueron inventadas en 1997 por Hochreiter y Schmidhuber, pero se popularizaron después de 2010 con el aumento de poder computacional y disponibilidad de datos.</p>
+                                        <p class="card-text mb-0">En Chile, universidades como la U. de Chile y la PUC han implementado LSTM para modelar fenómenos naturales únicos del país.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="aplicaciones" class="card section-card">
+                    <div class="card-header bg-danger text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-geo-alt me-2"></i>
+                            Aplicaciones de LSTM en Contexto Chileno
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body p-0">
+                                        <div class="row g-0">
+                                            <div class="col-md-4 bg-danger text-white p-4 d-flex flex-column justify-content-center" style="border-radius: 16px 0 0 16px;">
+                                                <h4><i class="bi bi-activity me-2"></i>Predicción Sísmica</h4>
+                                                <p class="mb-0">Chile es uno de los países más sísmicos del mundo</p>
+                                            </div>
+                                            <div class="col-md-8 p-4">
+                                                <div class="chilean-example border-0 shadow-none p-0 m-0">
+                                                    <div class="d-flex align-items-start mb-3">
+                                                        <div class="badge bg-danger p-2 me-3">
+                                                            <i class="bi bi-database fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Datos de Entrada</h6>
+                                                            <p class="text-muted mb-0">Magnitud de sismos previos, profundidad, ubicación geográfica, tiempo entre eventos, tipo de falla geológica</p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex align-items-start mb-3">
+                                                        <div class="badge bg-primary p-2 me-3">
+                                                            <i class="bi bi-code-slash fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Arquitectura LSTM</h6>
+                                                            <pre class="mb-0 bg-light p-2 rounded"><code>LSTM(128) → Dropout(0.3) → LSTM(64) → Dense(32) → Dense(3)</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="badge bg-success p-2 me-3">
+                                                            <i class="bi bi-check2-circle fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Caso Real</h6>
+                                                            <p class="mb-0">Después del terremoto de Iquique 2014 (8.2), un modelo LSTM predijo con 78% de precisión la magnitud de las réplicas principales en Tarapacá.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body p-0">
+                                        <div class="row g-0">
+                                            <div class="col-md-8 p-4">
+                                                <div class="chilean-example border-0 shadow-none p-0 m-0">
+                                                    <div class="d-flex align-items-start mb-3">
+                                                        <div class="badge bg-warning p-2 me-3">
+                                                            <i class="bi bi-currency-dollar fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Variables Económicas</h6>
+                                                            <p class="text-muted mb-0">Precio histórico, producción de CODELCO, demanda china, inventarios LME, tipo de cambio USD/CLP</p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex align-items-start mb-3">
+                                                        <div class="badge bg-primary p-2 me-3">
+                                                            <i class="bi bi-code-slash fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Arquitectura GRU</h6>
+                                                            <pre class="mb-0 bg-light p-2 rounded"><code>GRU(256) → GRU(128) → GRU(64) → Dense(32) → Dense(1)</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="badge bg-info p-2 me-3">
+                                                            <i class="bi bi-graph-up-arrow fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Impacto Económico</h6>
+                                                            <p class="mb-0">Una predicción precisa ayuda al gobierno chileno a planificar mejor el presupuesto fiscal, que depende en gran medida de los ingresos del cobre.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4 bg-success text-white p-4 d-flex flex-column justify-content-center" style="border-radius: 0 16px 16px 0;">
+                                                <h4><i class="bi bi-cash-coin me-2"></i>
+
+Precio del Cobre</h4>
+                                                <p class="mb-0">Principal exportación chilena y pilar de la economía nacional</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body p-0">
+                                        <div class="row g-0">
+                                            <div class="col-md-4 bg-info text-white p-4 d-flex flex-column justify-content-center" style="border-radius: 16px 0 0 16px;">
+                                                <h4><i class="bi bi-chat-heart me-2"></i>Análisis de Sentimientos</h4>
+                                                <p class="mb-0">Procesamiento del español chileno con sus modismos únicos</p>
+                                            </div>
+                                            <div class="col-md-8 p-4">
+                                                <div class="chilean-example border-0 shadow-none p-0 m-0">
+                                                    <div class="d-flex align-items-start mb-3">
+                                                        <div class="badge bg-secondary p-2 me-3">
+                                                            <i class="bi bi-translate fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Desafíos Lingüísticos</h6>
+                                                            <p class="text-muted mb-0">Chilenismos: "bacán", "fome", "cuático" | Modismos: "estar en la parada", "andar pato" | Jerga: "weon", "cachai", "po"</p>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex align-items-start mb-3">
+                                                        <div class="badge bg-primary p-2 me-3">
+                                                            <i class="bi bi-code-slash fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Arquitectura BiLSTM</h6>
+                                                            <pre class="mb-0 bg-light p-2 rounded"><code>Embedding(vocab_size, 128) → Bidirectional(LSTM(64)) → Dropout(0.5) → Dense(32) → Dense(3)</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="badge bg-warning p-2 me-3">
+                                                            <i class="bi bi-chat-quote fs-5"></i>
+                                                        </div>
+                                                        <div>
+                                                            <h6 class="mb-1">Ejemplo de Tweet</h6>
+                                                            <p class="mb-0 fst-italic">"El metro anda como las weas otra vez, pero el gobierno dice que todo bacán 🙄 #MetroSantiago"</p>
+                                                            <small class="text-danger">Sentimiento: Negativo (sarcasmo + chilenismos)</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white py-3">
+                                        <h5 class="mb-0"><i class="bi bi-water me-2"></i>Predicción de Mareas</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="timeline">
+                                            <div class="timeline-item">
+                                                <h6>Variables de Entrada</h6>
+                                                <p>Altura de marea histórica, fases lunares, presión atmosférica, velocidad del viento, temperatura del mar</p>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <h6>Ecuación de Predicción</h6>
+                                                <div class="bg-light p-2 rounded">
+                                                    <code>h<sub>t+k</sub> = f(h<sub>t-n:t</sub>, lunar<sub>t</sub>, atm<sub>t</sub>)</code>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <h6>Aplicaciones Prácticas</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <span class="badge bg-primary m-1">🚢 Navegación</span>
+                                                    <span class="badge bg-success m-1">🎣 Pesca</span>
+                                                    <span class="badge bg-info m-1">🏄 Deportes</span>
+                                                    <span class="badge bg-danger m-1">⚠️ Tsunamis</span>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <h6>Caso Real</h6>
+                                                <p class="mb-0">Puerto de Valparaíso: Predicción de ventanas óptimas para carga/descarga de buques con 92% de precisión</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-warning text-dark py-3">
+                                        <h5 class="mb-0"><i class="bi bi-car-front me-2"></i>Predicción de Tráfico</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="timeline">
+                                            <div class="timeline-item">
+                                                <h6>Datos Temporales</h6>
+                                                <p>Flujo vehicular por hora, velocidad promedio, incidentes, condiciones climáticas, eventos especiales</p>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <h6>Patrón Temporal</h6>
+                                                <div class="progress mb-1" style="height: 20px;">
+                                                    <div class="progress-bar bg-success" style="width: 30%;">6-9 AM</div>
+                                                </div>
+                                                <div class="progress mb-1" style="height: 20px;">
+                                                    <div class="progress-bar bg-warning" style="width: 50%;">9-17 PM</div>
+                                                </div>
+                                                <div class="progress" style="height: 20px;">
+                                                    <div class="progress-bar bg-danger" style="width: 80%;">17-20 PM</div>
+                                                </div>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <h6>Arquitectura Multi-escala</h6>
+                                                <pre class="bg-light p-2 rounded mb-0"><code># Patrones diarios y semanales
+LSTM_daily(32) → LSTM_weekly(16) → 
+Concatenate() → Dense(64) → Dense(1)</code></pre>
+                                            </div>
+                                            <div class="timeline-item">
+                                                <h6>Desafío Chileno</h6>
+                                                <p class="mb-0">Protestas sociales y eventos impredecibles alteran patrones normales de tráfico en Santiago</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="comparativa" class="card section-card">
+                    <div class="card-header bg-secondary text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-arrow-left-right me-2"></i>
+                            LSTM vs GRU: Comparativa
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">Las GRU (Gated Recurrent Unit) son una versión simplificada de las LSTM que han ganado popularidad por su eficiencia computacional.</p>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0 d-flex align-items-center">
+                                            <i class="bi bi-cpu-fill me-2"></i>LSTM
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                                                <span>Tres compuertas (olvido, entrada, salida)</span>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                                                <span>Estado de celda separado del estado oculto</span>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                                                <span>Más parámetros para entrenar</span>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-check-circle-fill text-primary me-2"></i>
+                                                <span>Puede capturar dependencias más complejas</span>
+                                            </li>
+                                        </ul>
+                                        
+                                        <div class="mt-3 p-3 bg-light rounded">
+                                            <h6 class="text-primary">Fórmula Clave:</h6>
+                                            <div class="formula">
+                                                C<sub>t</sub> = f<sub>t</sub> * C<sub>t-1</sub> + i<sub>t</sub> * C̃<sub>t</sub>
+                                            </div>
+                                            <small class="text-muted">La celda de memoria es el componente distintivo</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0 d-flex align-items-center">
+                                            <i class="bi bi-cpu me-2"></i>GRU
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span>Dos compuertas (reset y actualización)</span>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span>Estado de celda y oculto fusionados</span>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span>Menos parámetros, más eficiente</span>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                                <span>Rendimiento similar en muchas tareas</span>
+                                            </li>
+                                        </ul>
+                                        
+                                        <div class="mt-3 p-3 bg-light rounded">
+                                            <h6 class="text-success">Fórmula Clave:</h6>
+                                            <div class="formula">
+                                                h<sub>t</sub> = (1 - z<sub>t</sub>) * h<sub>t-1</sub> + z<sub>t</sub> * h̃<sub>t</sub>
+                                            </div>
+                                            <small class="text-muted">Combina actualización y salida en un solo paso</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="text-secondary mb-3"><i class="bi bi-geo-alt-fill me-2"></i>Recomendación para contexto chileno</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-primary p-2">LSTM</span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <p class="mb-0">Para problemas complejos como predicción sísmica donde la memoria a largo plazo es crucial</p>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-primary mb-0">
+                                            <small><strong>Ejemplo:</strong> Centro Sismológico Nacional utiliza LSTM para analizar patrones de réplicas tras terremotos mayores</small>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">GRU</span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <p class="mb-0">Para aplicaciones con recursos limitados como apps móviles de predicción de tráfico en tiempo real</p>
+                                            </div>
+                                        </div>
+                                        <div class="alert alert-success mb-0">
+                                            <small><strong>Ejemplo:</strong> La app "Waze Chile" implementa GRU para predecir tiempos de viaje en Santiago con menor consumo de batería</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="caso-estudio" class="card section-card">
+                    <div class="card-header bg-dark text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-lightning-charge me-2"></i>
+                            Caso de Estudio: LSTM para Predicción de Demanda Energética en Chile
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-8">
+                                <p class="lead">Chile tiene una matriz energética diversa que incluye hidroeléctrica, solar (especialmente en el norte) y térmica. La predicción precisa de demanda es crucial para la estabilidad del sistema.</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <img src="https://via.placeholder.com/150/3A5BF0/FFFFFF?text=Energía" class="img-fluid rounded-circle" alt="Energía Chile">
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Características del Problema</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-info p-2">
+                                                    <i class="bi bi-calendar3"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Estacionalidad marcada</h6>
+                                                <p class="text-muted mb-0">Invierno vs verano, con picos de consumo en julio-agosto por calefacción</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-info p-2">
+                                                    <i class="bi bi-cloud-sun"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Dependencia climática</h6>
+                                                <p class="text-muted mb-0">Lluvias para hidroeléctricas, radiación solar para plantas fotovoltaicas</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-info p-2">
+                                                    <i class="bi bi-clock-history"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Patrones diarios y semanales</h6>
+                                                <p class="text-muted mb-0">Picos de consumo en horarios laborales y diferencias entre días de semana y fines de semana</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-info p-2">
+                                                    <i class="bi bi-exclamation-triangle"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Eventos especiales</h6>
+                                                <p class="text-muted mb-0">Partidos de fútbol, terremotos, fiestas nacionales (18 de septiembre)</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-code-square me-2"></i>Arquitectura LSTM Propuesta</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="bg-light p-3 rounded mb-3">
+                                            <h6 class="text-primary">Estructura del Modelo</h6>
+                                            <pre class="mb-0"><code># Entrada: 168 horas previas (1 semana)
+Input(shape=(168, features)) →
+LSTM(128, return_sequences=True) →
+Dropout(0.4) →
+LSTM(64) →
+Dense(24) # Predicción para las próximas 24 horas</code></pre>
+                                        </div>
+                                        
+                                        <div class="bg-light p-3 rounded mb-3">
+                                            <h6 class="text-primary">Variables de Entrada</h6>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <ul class="mb-0">
+                                                        <li>Demanda histórica</li>
+                                                        <li>Temperatura</li>
+                                                        <li>Humedad</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-6">
+                                                    <ul class="mb-0">
+                                                        <li>Radiación solar</li>
+                                                        <li>Día de la semana</li>
+                                                        <li>Hora del día</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="bg-light p-3 rounded">
+                                            <h6 class="text-primary">Función de Pérdida Personalizada</h6>
+                                            <div class="formula">
+                                                L = MSE + α × PenalizaciónPico
+                                            </div>
+                                            <small class="text-muted">Donde PenalizaciónPico aumenta el costo de errores durante horas de alta demanda</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chilean-example">
+                            <h5 class="text-danger mb-3"><i class="bi bi-graph-up-arrow me-2"></i>Resultados en Contexto Chileno</h5>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="d-flex mb-3">
+                                        <div class="flex-shrink-0">
+                                            <span class="badge bg-danger p-2">
+                                                <i class="bi bi-calendar-check"></i>
+                                            </span>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h6>Caso Real: Sequía 2019</h6>
+                                            <p class="mb-0">Durante la sequía de 2019, un modelo LSTM pudo predecir con 94% de precisión los picos de demanda en Santiago, permitiendo a la Comisión Nacional de Energía (CNE) optimizar el despacho de centrales térmicas de respaldo.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="d-flex">
+                                        <div class="flex-shrink-0">
+                                            <span class="badge bg-success p-2">
+                                                <i class="bi bi-cash-coin"></i>
+                                            </span>
+                                        </div>
+                                        <div class="flex-grow-1 ms-3">
+                                            <h6>Impacto Económico</h6>
+                                            <p class="mb-0">Reducción estimada de 7% en costos operativos del sistema eléctrico nacional, equivalente a aproximadamente 12 millones de dólares anuales.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-success mt-4 d-flex">
+                            <i class="bi bi-lightbulb fs-3 me-3"></i>
+                            <div>
+                                <h5>Lección clave</h5>
+                                <p class="mb-0">Los modelos LSTM superaron a los métodos estadísticos tradicionales (ARIMA) especialmente durante eventos anómalos como olas de calor o frío extremo, donde las dependencias no lineales son más evidentes. En el contexto chileno, esto es particularmente valioso debido a la creciente variabilidad climática.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card section-card">
+                    <div class="card-header bg-secondary text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Desafíos y Limitaciones en el Contexto Chileno
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-danger text-white">
+                                        <h5 class="mb-0"><i class="bi bi-x-octagon me-2"></i>Desafíos Específicos</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-danger p-2">
+                                                    <i class="bi bi-database-x"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Datos limitados</h6>
+                                                <p class="text-muted mb-0">Algunas aplicaciones como predicción sísmica tienen conjuntos de datos históricos detallados relativamente pequeños</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-danger p-2">
+                                                    <i class="bi bi-tsunami"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Eventos extremos</h6>
+                                                <p class="text-muted mb-0">Chile experimenta fenómenos extremos (terremotos, tsunamis, aluviones) difíciles de predecir</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-danger p-2">
+                                                    <i class="bi bi-translate"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Variabilidad lingüística</h6>
+                                                <p class="text-muted mb-0">El español chileno varía significativamente entre regiones (norte minero, centro urbano, sur rural)</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-danger p-2">
+                                                    <i class="bi bi-pc-display"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Recursos computacionales</h6>
+                                                <p class="text-muted mb-0">Acceso limitado a infraestructura de alto rendimiento en algunas instituciones</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-check2-circle me-2"></i>Estrategias de Mitigación</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">
+                                                    <i class="bi bi-plus-circle"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Aumento de datos</h6>
+                                                <p class="text-muted mb-0">Técnicas de data augmentation para series temporales, como añadir ruido controlado o generar datos sintéticos</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">
+                                                    <i class="bi bi-arrow-repeat"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Transfer learning</h6>
+                                                <p class="text-muted mb-0">Pre-entrenamiento en conjuntos de datos más grandes y ajuste fino en datos chilenos específicos</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">
+                                                    <i class="bi bi-gear-wide-connected"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Modelos híbridos</h6>
+                                                <p class="text-muted mb-0">Combinación de LSTM con conocimiento de dominio específico y modelos físicos tradicionales</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">
+                                                    <i class="bi bi-cloud-arrow-up"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Computación en la nube</h6>
+                                                <p class="text-muted mb-0">Uso de servicios como AWS, Google Cloud o Microsoft Azure para entrenamiento de modelos complejos</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-secondary d-flex">
+                            <i class="bi bi-trophy fs-3 me-3"></i>
+                            <div>
+                                <h5>Caso de éxito</h5>
+                                <p class="mb-0">El Centro Sismológico Nacional de la Universidad de Chile implementó un sistema híbrido que combina modelos físicos tradicionales con LSTM para mejorar la caracterización rápida de terremotos, reduciendo el tiempo de alerta en aproximadamente un 40%. Este sistema fue crucial durante el terremoto de Illapel de 2015 (8.4 Mw).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card section-card">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-arrow-up-right-circle me-2"></i>
+                            Conclusiones y Futuro de LSTM en Chile
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <h5 class="text-primary mb-3"><i class="bi bi-check2-all me-2"></i>Puntos Clave</h5>
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-primary p-2">1</span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <p class="mb-0">Las LSTM son particularmente adecuadas para muchos problemas chilenos que involucran series temporales y secuencias</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-primary p-2">2</span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <p class="mb-0">La capacidad de capturar dependencias a largo plazo las hace ideales para fenómenos como sismos, clima y economía</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-primary p-2">3</span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <p class="mb-0">Las variantes como BiLSTM son especialmente útiles para el procesamiento del español chileno</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-primary p-2">4</span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <p class="mb-0">A pesar del auge de los Transformers, las LSTM siguen siendo relevantes por su eficiencia computacional</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h5 class="text-primary mb-3"><i class="bi bi-graph-up-arrow me-2"></i>Tendencias Futuras</h5>
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="bi bi-search me-2"></i>Investigación</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-info p-2">
+                                                    <i class="bi bi-braces"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Modelos híbridos LSTM-Transformer</h6>
+                                                <p class="text-muted mb-0">Combinando la eficiencia de LSTM con la capacidad de atención de los Transformers</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-info p-2">
+                                                    <i class="bi bi-eye"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>LSTM con atención para mejorar interpretabilidad</h6>
+                                                <p class="text-muted mb-0">Crucial para aplicaciones de alto impacto como predicción de desastres naturales</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-info p-2">
+                                                    <i class="bi bi-cpu"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>LSTM cuánticas para problemas complejos</h6>
+                                                <p class="text-muted mb-0">Investigación emergente en la Universidad de Chile para modelado sísmico avanzado</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-gear me-2"></i>Aplicaciones Emergentes</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">
+                                                    <i class="bi bi-fire"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Predicción de incendios forestales</h6>
+                                                <p class="text-muted mb-0">Crucial para la zona centro-sur de Chile, especialmente en verano</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">
+                                                    <i class="bi bi-snow"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Monitoreo de glaciares patagónicos</h6>
+                                                <p class="text-muted mb-0">Seguimiento del retroceso glaciar y predicción de desprendimientos</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">
+                                                    <i class="bi bi-sun"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Optimización de energías renovables</h6>
+                                                <p class="text-muted mb-0">Especialmente para el potencial solar del desierto de Atacama</p>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <span class="badge bg-success p-2">
+                                                    <i class="bi bi-bell"></i>
+                                                </span>
+                                            </div>
+                                            <div class="flex-grow-1 ms-3">
+                                                <h6>Sistemas de alerta temprana multirriesgo</h6>
+                                                <p class="text-muted mb-0">Integrando predicciones de diferentes fenómenos naturales</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-primary d-flex">
+                            <i class="bi bi-stars fs-3 me-3"></i>
+                            <div>
+                                <h5>Mensaje final</h5>
+                                <p class="mb-0">Las LSTM representan una herramienta poderosa para abordar desafíos únicos de Chile, desde la predicción de desastres naturales hasta la optimización de recursos naturales y energéticos. Su capacidad para "recordar" información relevante a largo plazo las hace especialmente valiosas en un país con geografía y condiciones tan diversas.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sección Detallada de GRU -->
+<section id="gru-detalle" class="section-padding" style="background: linear-gradient(135deg, #1a2a6c 0%, #2a4858 100%);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center mb-5 text-white">
+                <h2 class="display-4 fw-bold">Gated Recurrent Unit (GRU)</h2>
+                <p class="lead">Una alternativa eficiente a LSTM con aplicaciones prácticas en Chile</p>
+            </div>
+        </div>
+        
+        <!-- Arquitectura Matemática de GRU -->
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h4 class="mb-0"><i class="bi bi-calculator"></i> Fundamentos Matemáticos de GRU</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5 class="text-primary">📐 Ecuaciones Fundamentales</h5>
+                                
+                                <div class="bg-light p-4 rounded mb-3">
+                                    <h6>Compuerta de Actualización (Update Gate):</h6>
+                                    <div class="text-center p-3 bg-white rounded border">
+                                        <strong style="font-size: 1.2em; color: #e74c3c;">
+                                            z<sub>t</sub> = σ(W<sub>z</sub> · [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>z</sub>)
+                                        </strong>
+                                    </div>
+                                    <small class="text-muted">
+                                        <strong>Donde:</strong><br>
+                                        • z<sub>t</sub> = Compuerta de actualización<br>
+                                        • h<sub>t-1</sub> = Estado oculto anterior<br>
+                                        • x<sub>t</sub> = Entrada actual<br>
+                                        • W<sub>z</sub> = Pesos de la compuerta<br>
+                                        • b<sub>z</sub> = Sesgo<br>
+                                        • σ = Función sigmoide
+                                    </small>
+                                </div>
+                                
+                                <div class="bg-light p-4 rounded mb-3">
+                                    <h6>Compuerta de Reinicio (Reset Gate):</h6>
+                                    <div class="text-center p-3 bg-white rounded border">
+                                        <strong style="font-size: 1.2em; color: #3498db;">
+                                            r<sub>t</sub> = σ(W<sub>r</sub> · [h<sub>t-1</sub>, x<sub>t</sub>] + b<sub>r</sub>)
+                                        </strong>
+                                    </div>
+                                    <small class="text-muted">
+                                        <strong>Donde:</strong><br>
+                                        • r<sub>t</sub> = Compuerta de reinicio<br>
+                                        • W<sub>r</sub> = Pesos de la compuerta<br>
+                                        • b<sub>r</sub> = Sesgo
+                                    </small>
+                                </div>
+                                
+                                <div class="alert alert-info">
+                                    <h6><i class="bi bi-info-circle"></i> Interpretación Didáctica</h6>
+                                    <p class="mb-0">La compuerta de actualización (z) decide cuánta información del estado anterior conservar, mientras que la compuerta de reinicio (r) determina cuánta información previa ignorar.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5 class="text-success">🧠 Cálculo del Estado Oculto</h5>
+                                
+                                <div class="bg-light p-4 rounded mb-3">
+                                    <h6>Estado Candidato:</h6>
+                                    <div class="text-center p-3 bg-white rounded border">
+                                        <strong style="font-size: 1.2em; color: #27ae60;">
+                                            h̃<sub>t</sub> = tanh(W · [r<sub>t</sub> * h<sub>t-1</sub>, x<sub>t</sub>] + b)
+                                        </strong>
+                                    </div>
+                                    <small class="text-muted">
+                                        <strong>Donde:</strong><br>
+                                        • h̃<sub>t</sub> = Estado candidato<br>
+                                        • * = Multiplicación elemento a elemento<br>
+                                        • W = Matriz de pesos<br>
+                                        • b = Vector de sesgo
+                                    </small>
+                                </div>
+                                
+                                <div class="bg-light p-4 rounded mb-3">
+                                    <h6>Estado Oculto Final:</h6>
+                                    <div class="text-center p-3 bg-white rounded border">
+                                        <strong style="font-size: 1.2em; color: #9b59b6;">
+                                            h<sub>t</sub> = (1 - z<sub>t</sub>) * h<sub>t-1</sub> + z<sub>t</sub> * h̃<sub>t</sub>
+                                        </strong>
+                                    </div>
+                                    <small class="text-muted">
+                                        <strong>Donde:</strong><br>
+                                        • h<sub>t</sub> = Estado oculto actual<br>
+                                        • (1 - z<sub>t</sub>) = Proporción del estado anterior a mantener<br>
+                                        • z<sub>t</sub> = Proporción del estado candidato a incorporar
+                                    </small>
+                                </div>
+                                
+                                <!-- Diagrama GRU -->
+                                <div class="bg-white p-3 rounded border">
+                                    <h6 class="text-center">Diagrama Simplificado de GRU</h6>
+                                    <div class="text-center">
+                                        <div class="d-inline-block p-3 border rounded mb-2" style="background-color: #f8f9fa;">
+                                            <div class="mb-2">
+                                                <span class="badge bg-primary">h<sub>t-1</sub></span>
+                                                <i class="bi bi-arrow-right mx-2"></i>
+                                                <span class="badge bg-danger">z<sub>t</sub></span>
+                                                <i class="bi bi-arrow-right mx-2"></i>
+                                                <span class="badge bg-success">h<sub>t</sub></span>
+                                            </div>
+                                            <div>
+                                                <span class="badge bg-warning">x<sub>t</sub></span>
+                                                <i class="bi bi-arrow-up mx-2"></i>
+                                                <span class="badge bg-info">r<sub>t</sub></span>
+                                                <i class="bi bi-arrow-up mx-2"></i>
+                                                <span class="badge bg-secondary">h̃<sub>t</sub></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Comparativa GRU vs LSTM -->
+        <div class="row mb-5">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-success text-white">
+                        <h4 class="mb-0"><i class="bi bi-bar-chart"></i> GRU vs LSTM: Análisis Comparativo</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5 class="text-primary mb-3">Ventajas de GRU</h5>
+                                <div class="bg-light p-3 rounded mb-3">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item bg-transparent">
+                                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                            <strong>Menor complejidad computacional:</strong> Menos parámetros que LSTM (2 compuertas vs 3)
+                                        </li>
+                                        <li class="list-group-item bg-transparent">
+                                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                            <strong>Entrenamiento más rápido:</strong> Converge más rápido en muchos casos
+                                        </li>
+                                        <li class="list-group-item bg-transparent">
+                                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                            <strong>Menor uso de memoria:</strong> Ideal para dispositivos con recursos limitados
+                                        </li>
+                                        <li class="list-group-item bg-transparent">
+                                            <i class="bi bi-check-circle-fill text-success me-2"></i>
+                                            <strong>Arquitectura más simple:</strong> Más fácil de implementar y modificar
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="alert alert-success">
+                                    <h6><i class="bi bi-lightbulb"></i> Eficiencia en Números</h6>
+                                    <p class="mb-0">Para una capa oculta de tamaño n y entrada de tamaño m, GRU tiene aproximadamente 3n(n+m) parámetros, mientras que LSTM tiene 4n(n+m), lo que representa un 25% menos de parámetros.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <h5 class="text-danger mb-3">Limitaciones de GRU</h5>
+                                <div class="bg-light p-3 rounded mb-3">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item bg-transparent">
+                                            <i class="bi bi-exclamation-circle-fill text-danger me-2"></i>
+                                            <strong>Menor control de memoria:</strong> No tiene una celda de memoria separada como LSTM
+                                        </li>
+                                        <li class="list-group-item bg-transparent">
+                                            <i class="bi bi-exclamation-circle-fill text-danger me-2"></i>
+                                            <strong>Rendimiento variable:</strong> Puede ser inferior a LSTM en secuencias muy largas
+                                        </li>
+                                        <li class="list-group-item bg-transparent">
+                                            <i class="bi bi-exclamation-circle-fill text-danger me-2"></i>
+                                            <strong>Menos flexible:</strong> Menor capacidad para controlar el flujo de información
+                                        </li>
+                                        <li class="list-group-item bg-transparent">
+                                            <i class="bi bi-exclamation-circle-fill text-danger me-2"></i>
+                                            <strong>Menos estudiado:</strong> Menor cantidad de investigación y optimizaciones disponibles
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                                <div class="card border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6 class="mb-0">¿Cuándo elegir GRU sobre LSTM?</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex mb-2">
+                                            <div class="flex-shrink-0">
+                                                <i class="bi bi-cpu text-primary"></i>
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <small>Cuando los recursos computacionales son limitados</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex mb-2">
+                                            <div class="flex-shrink-0">
+                                                <i class="bi bi-clock text-primary"></i>
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <small>Para secuencias de longitud moderada (no extremadamente largas)</small>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex">
+                                            <div class="flex-shrink-0">
+                                                <i class="bi bi-lightning text-primary"></i>
+                                            </div>
+                                            <div class="flex-grow-1 ms-2">
+                                                <small>Cuando la velocidad de entrenamiento es crítica</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Gráfico Comparativo -->
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <div class="bg-light p-4 rounded">
+                                    <h5 class="text-center mb-4">Comparativa de Rendimiento</h5>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <h6 class="text-center">Velocidad de Entrenamiento</h6>
+                                            <div class="progress" style="height: 30px;">
+                                                <div class="progress-bar bg-success" style="width: 80%;">GRU 80%</div>
+                                            </div>
+                                            <div class="progress mt-2" style="height: 30px;">
+                                                <div class="progress-bar bg-primary" style="width: 60%;">LSTM 60%</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6 class="text-center">Precisión en Secuencias Largas</h6>
+                                            <div class="progress" style="height: 30px;">
+                                                <div class="progress-bar bg-success" style="width: 70%;">GRU 70%</div>
+                                            </div>
+                                            <div class="progress mt-2" style="height: 30px;">
+                                                <div class="progress-bar bg-primary" style="width: 85%;">LSTM 85%</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <h6 class="text-center">Eficiencia de Memoria</h6>
+                                            <div class="progress" style="height: 30px;">
+                                                <div class="progress-bar bg-success" style="width: 85%;">GRU 85%</div>
+                                            </div>
+                                            <div class="progress mt-2" style="height: 30px;">
+                                                <div class="progress-bar bg-primary" style="width: 65%;">LSTM 65%</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Aplicaciones de GRU en Chile -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-warning text-dark">
+                        <h4 class="mb-0"><i class="bi bi-geo-alt"></i> Aplicaciones de GRU en el Contexto Chileno</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            <!-- Caso 1: Monitoreo de Calidad del Aire -->
+                            <div class="col-lg-4">
+                                <div class="card h-100 border-success">
+                                    <div class="card-header bg-success text-white">
+                                        <h6><i class="bi bi-wind"></i> Monitoreo de Calidad del Aire</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <strong>🎯 Objetivo:</strong> Predecir niveles de contaminación en zonas urbanas de Chile
+                                        </div>
+                                        
+                                        <div class="bg-light p-3 rounded mb-3">
+                                            <h6>Variables de Entrada:</h6>
+                                            <ul class="mb-2">
+                                                <li>Concentraciones históricas de PM2.5 y PM10</li>
+                                                <li>Condiciones meteorológicas (viento, temperatura)</li>
+                                                <li>Tráfico vehicular</li>
+                                                <li>Actividad industrial</li>
+                                                <li>Día de la semana y hora</li>
+                                            </ul>
+                                            
+                                            <div class="text-center">
+                                                <span class="badge bg-success">Bajo</span> →
+                                                <span class="badge bg-warning">Moderado</span> →
+                                                <span class="badge bg-danger">Alto</span> →
+                                                <span class="badge bg-dark">Crítico</span>
+                                            </div>
+                                            <small class="text-muted d-block text-center mt-1">Niveles de contaminación</small>
+                                        </div>
+                                        
+                                        <div class="alert alert-success">
+                                            <strong>¿Por qué GRU?</strong><br>
+                                            La predicción de calidad del aire requiere procesar secuencias temporales pero con recursos computacionales limitados en estaciones de monitoreo.
+                                        </div>
+                                        
+                                        <div class="bg-light p-2 rounded">
+                                            <strong>Implementación:</strong>
+                                            <pre class="mb-0"><code>GRU(64) → Dropout(0.3) → 
+Dense(32) → Dense(1) 
+# Predicción de PM2.5 para próximas 24h</code></pre>
+                                        </div>
+                                        
+                                        <div class="mt-2">
+                                            <strong>Caso Real:</strong><br>
+                                            <small>Sistema de alerta temprana en Santiago durante episodios críticos invernales</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Caso 2: Predicción de Consumo Eléctrico -->
+                            <div class="col-lg-4">
+                                <div class="card h-100 border-primary">
+                                    <div class="card-header bg-primary text-white">
+                                        <h6><i class="bi bi-lightning"></i> Predicción de Consumo Eléctrico</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <strong>🎯 Objetivo:</strong> Optimizar la distribución eléctrica en hogares chilenos
+                                        </div>
+                                        
+                                        <div class="bg-light p-3 rounded mb-3">
+                                            <h6>Características del Modelo:</h6>
+                                            <ul class="mb-2">
+                                                <li>Datos de consumo por hora</li>
+                                                <li>Temperatura ambiente</li>
+                                                <li>Radiación solar (para hogares con paneles)</li>
+                                                <li>Día de la semana</li>
+                                                <li>Eventos especiales (feriados, partidos de fútbol)</li>
+                                            </ul>
+                                            
+                                            <div class="text-center">
+                                                <div class="progress mb-1" style="height: 20px;">
+                                                    <div class="progress-bar bg-info" style="width: 30%;">Mañana</div>
+                                                    <div class="progress-bar bg-warning" style="width: 20%;">Tarde</div>
+                                                    <div class="progress-bar bg-danger" style="width: 50%;">Noche</div>
+                                                </div>
+                                                <small class="text-muted">Patrón típico de consumo diario</small>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-primary">
+                                            <strong>¿Por qué GRU?</strong><br>
+                                            Los medidores inteligentes tienen capacidad computacional limitada. GRU permite implementar modelos eficientes directamente en los dispositivos.
+                                        </div>
+                                        
+                                        <div class="bg-light p-2 rounded mb-2">
+                                            <strong>Arquitectura Específica:</strong>
+                                            <pre class="mb-0"><code>Embedding(7, 3) # día de semana
+Concatenate([embed, features]) →
+GRU(32) → Dense(24) 
+# Predicción para próximas 24 horas</code></pre>
+                                        </div>
+                                        
+                                        <div class="bg-warning p-2 rounded">
+                                            <strong>Resultado:</strong>
+                                            <div class="text-center mt-1">
+                                                <small>Reducción del 15% en picos de demanda en proyecto piloto en Concepción</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Caso 3: Análisis de Redes Sociales para Turismo -->
+                            <div class="col-lg-4">
+                                <div class="card h-100 border-info">
+                                    <div class="card-header bg-info text-white">
+                                        <h6><i class="bi bi-globe"></i> Análisis de Tendencias Turísticas</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <strong>🎯 Objetivo:</strong> Predecir tendencias turísticas basadas en redes sociales
+                                        </div>
+                                        
+                                        <div class="bg-light p-3 rounded mb-3">
+                                            <h6>Procesamiento de Datos:</h6>
+                                            <ul class="mb-2">
+                                                <li>Menciones de destinos chilenos en redes sociales</li>
+                                                <li>Sentimiento asociado a publicaciones</li>
+                                                <li>Hashtags relacionados (#ChileTravel, #Patagonia)</li>
+                                                <li>Geolocalización de publicaciones</li>
+                                                <li>Temporada del año</li>
+                                            </ul>
+                                            
+                                            <div class="bg-white p-2 rounded">
+                                                <strong>Ejemplo de Publicación:</strong><br>
+                                                <em>"Mañana partimos a San Pedro de Atacama, dicen que está increíble el Valle de la Luna 😍 #ChileTravel"</em>
+                                                <br><small class="text-success">Sentimiento: Positivo | Destino: San Pedro | Atracción: Valle de la Luna</small>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <strong>¿Por qué GRU?</strong><br>
+                                            Permite procesar secuencias de texto eficientemente en dispositivos móviles para aplicaciones de turismo.
+                                        </div>
+                                        
+                                        <div class="bg-light p-2 rounded mb-2">
+                                            <strong>Arquitectura:</strong>
+                                            <pre class="mb-0"><code>Embedding(vocab_size, 64) →
+Bidirectional(GRU(32)) →
+Dense(16) → Dense(5) 
+# [Torres del Paine, Atacama, Valpo, 
+# Chiloé, Santiago]</code></pre>
+                                        </div>
+                                        
+                                        <div class="bg-info text-white p-2 rounded">
+                                            <strong>Aplicación Real:</strong>
+                                            <ul class="mb-0">
+                                                <li>App "Chile Travel Trends" para SERNATUR</li>
+                                                <li>Predicción de destinos emergentes</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Caso Adicional -->
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow">
+                                    <div class="card-body">
+                                        <h5 class="text-center mb-4"><i class="bi bi-stars"></i> Caso Destacado: GRU en Sistemas de Riego Inteligente</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="bg-light p-3 rounded">
+                                                    <h6 class="text-primary">Contexto Agrícola Chileno</h6>
+                                                    <p>Chile enfrenta desafíos de sequía en zonas agrícolas centrales. La optimización del riego es crucial para la sostenibilidad de la agricultura.</p>
+                                                    
+                                                    <div class="d-flex mb-2">
+                                                        <div class="flex-shrink-0">
+                                                            <i class="bi bi-droplet text-primary"></i>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <small><strong>Problema:</strong> El riego excesivo desperdicia agua, mientras que el insuficiente reduce rendimientos</small>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="d-flex">
+                                                        <div class="flex-shrink-0">
+                                                            <i class="bi bi-graph-up text-success"></i>
+                                                        </div>
+                                                        <div class="flex-grow-1 ms-2">
+                                                            <small><strong>Oportunidad:</strong> Sensores IoT de bajo costo pueden recopilar datos pero requieren modelos eficientes</small>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="bg-light p-3 rounded">
+                                                    <h6 class="text-success">Solución con GRU</h6>
+                                                    
+                                                    <div class="mb-3">
+                                                        <strong>Variables de Entrada:</strong>
+                                                        <ul class="mb-0">
+                                                            <li>Humedad del suelo a diferentes profundidades</li>
+                                                            <li>Temperatura ambiente y del suelo</li>
+                                                            <li>Radiación solar y velocidad del viento</li>
+                                                            <li>Pronóstico meteorológico a 5 días</li>
+                                                            <li>Etapa de crecimiento del cultivo</li>
+                                                        </ul>
+                                                    </div>
+                                                    
+                                                    <div class="bg-white p-2 rounded mb-2">
+                                                        <strong>Arquitectura GRU:</strong>
+                                                        <pre class="mb-0"><code>GRU(32, return_sequences=True) →
+GRU(16) → Dense(8) → Dense(3) 
+# [tiempo_riego, hora_inicio, intensidad]</code></pre>
+                                                    </div>
+                                                    
+                                                    <div class="alert alert-success mb-0 p-2">
+                                                        <small><strong>Resultado:</strong> Reducción del 30% en consumo de agua y aumento del 15% en rendimiento en viñedos del Valle de Casablanca</small>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Implementación Práctica -->
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-dark text-white">
+                        <h4 class="mb-0"><i class="bi bi-code-slash"></i> Implementación Práctica de GRU</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h5 class="text-primary mb-3">Código TensorFlow/Keras</h5>
+                                <div class="bg-light p-3 rounded">
+                                    <pre class="mb-0"><code>import tensorflow as tf
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import GRU, Dense, Dropout
+
+# Definir modelo GRU para predicción de series temporales
+def crear_modelo_gru(unidades=64, tasa_dropout=0.2, 
+                    longitud_secuencia=24, 
+                    num_caracteristicas=5):
+    modelo = Sequential([
+        # Capa GRU con retorno de secuencias
+        GRU(unidades, 
+            return_sequences=True,
+            input_shape=(longitud_secuencia, num_caracteristicas),
+            recurrent_dropout=0.1),
+        
+        Dropout(tasa_dropout),
+        
+        # Segunda capa GRU
+        GRU(unidades // 2),
+        
+        Dropout(tasa_dropout),
+        
+        # Capas densas para la salida
+        Dense(unidades // 4, activation='relu'),
+        Dense(1)  # Predicción de un solo valor
+    ])
+    
+    # Compilar modelo
+    modelo.compile(
+        optimizer='adam',
+        loss='mse',
+        metrics=['mae']
+    )
+    
+    return modelo
+
+# Crear y entrenar modelo
+modelo = crear_modelo_gru()
+history = modelo.fit(
+    X_train, y_train,
+    validation_data=(X_val, y_val),
+    epochs=50,
+    batch_size=32,
+    callbacks=[
+        tf.keras.callbacks.EarlyStopping(
+            patience=5, 
+            restore_best_weights=True
+        )
+    ]
+)</code></pre>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h5 class="text-success mb-3">Código PyTorch</h5>
+                                <div class="bg-light p-3 rounded">
+                                    <pre class="mb-0"><code>import torch
+import torch.nn as nn
+import torch.optim as optim
+
+class ModeloGRU(nn.Module):
+    def __init__(self, input_dim, hidden_dim, 
+                layer_dim, output_dim, dropout_prob):
+        super(ModeloGRU, self).__init__()
+        
+        # Dimensiones
+        self.hidden_dim = hidden_dim
+        self.layer_dim = layer_dim
+        
+        # Capas GRU
+        self.gru = nn.GRU(
+            input_dim, hidden_dim, 
+            layer_dim, batch_first=True,
+            dropout=dropout_prob
+        )
+        
+        # Capa de salida
+        self.fc = nn.Linear(hidden_dim, output_dim)
+    
+    def forward(self, x):
+        # Inicializar estado oculto con ceros
+        h0 = torch.zeros(self.layer_dim, 
+                        x.size(0), 
+                        self.hidden_dim).to(x.device)
+        
+        # Propagación hacia adelante de GRU
+        out, _ = self.gru(x, h0)
+        
+        # Índice de la última secuencia temporal
+        out = out[:, -1, :]
+        
+        # Capa de salida
+        out = self.fc(out)
+        return out
+
+# Crear modelo
+modelo = ModeloGRU(
+    input_dim=5,      # Número de características
+    hidden_dim=64,    # Dimensión oculta
+    layer_dim=2,      # Número de capas
+    output_dim=1,     # Dimensión de salida
+    dropout_prob=0.2  # Probabilidad de dropout
+)
+
+# Definir criterio y optimizador
+criterio = nn.MSELoss()
+optimizador = optim.Adam(modelo.parameters(), lr=0.001)
+
+# Bucle de entrenamiento (pseudocódigo)
+# for epoch in range(num_epochs):
+#     for X_batch, y_batch in data_loader:
+#         # Entrenamiento
+#         ...</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <div class="alert alert-warning">
+                                    <h5><i class="bi bi-lightbulb"></i> Consejos de Implementación para Contexto Chileno</h5>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <ul>
+                                                <li><strong>Normalización de datos:</strong> Especialmente importante para variables como temperatura que tienen rangos muy diferentes entre norte (Atacama) y sur (Patagonia)</li>
+                                                <li><strong>Regularización:</strong> Aumentar dropout en modelos con datos limitados (común en aplicaciones específicas chilenas)</li>
+                                                <li><strong>Cuantización de modelos:</strong> Para implementación en dispositivos IoT de bajo costo en zonas rurales</li>
+                                            </ul>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <ul>
+                                                <li><strong>Validación temporal:</strong> Usar validación cruzada con bloques temporales para fenómenos estacionales (como El Niño)</li>
+                                                <li><strong>Entrenamiento incremental:</strong> Actualizar modelos periódicamente con nuevos datos para adaptarse a cambios climáticos</li>
+                                                <li><strong>Interpretabilidad:</strong> Implementar técnicas de atención para explicar predicciones en aplicaciones críticas</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Futuro de GRU -->
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-header bg-info text-white">
+                        <h4 class="mb-0"><i class="bi bi-arrow-up-right-circle"></i> El Futuro de GRU en Chile</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="text-center mb-3">
+                                            <i class="bi bi-cpu-fill text-info" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                        <h5 class="text-center">Edge Computing</h5>
+                                        <p>La eficiencia de GRU permitirá implementar modelos directamente en dispositivos de campo, crucial para zonas remotas de Chile con conectividad limitada.</p>
+                                        <div class="bg-light p-2 rounded">
+                                            <strong>Aplicaciones Emergentes:</strong>
+                                            <ul class="mb-0">
+                                                <li>Monitoreo de glaciares en Patagonia</li>
+                                                <li>Sistemas de alerta temprana en zonas costeras</li>
+                                                <li>Optimización de riego en tiempo real</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="text-center mb-3">
+                                            <i class="bi bi-gear-wide-connected text-success" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                        <h5 class="text-center">Modelos Híbridos</h5>
+                                        <p>Combinación de GRU con modelos físicos tradicionales para mejorar predicciones en fenómenos complejos específicos de Chile.</p>
+                                        <div class="bg-light p-2 rounded">
+                                            <strong>Investigación Actual:</strong>
+                                            <ul class="mb-0">
+                                                <li>GRU + modelos hidrológicos para ríos andinos</li>
+                                                <li>GRU + modelos atmosféricos para calidad del aire</li>
+                                                <li>GRU + modelos geofísicos para predicción sísmica</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="text-center mb-3">
+                                            <i class="bi bi-people-fill text-warning" style="font-size: 2.5rem;"></i>
+                                        </div>
+                                        <h5 class="text-center">Democratización</h5>
+                                        <p>La simplicidad y eficiencia de GRU facilitará su adopción en pequeñas empresas y startups chilenas con recursos limitados.</p>
+                                        <div class="bg-light p-2 rounded">
+                                            <strong>Iniciativas en Desarrollo:</strong>
+                                            <ul class="mb-0">
+                                                <li>Plataformas no-code para implementar GRU</li>
+                                                <li>Cursos especializados en universidades regionales</li>
+                                                <li>Bibliotecas optimizadas para problemas locales</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-lg-12">
+                                <div class="alert alert-info d-flex">
+                                    <i class="bi bi-quote fs-3 me-3"></i>
+                                    <div>
+                                        <h5>Perspectiva de Experto</h5>
+                                        <p class="mb-0">"Las GRU representan una oportunidad única para Chile, donde necesitamos modelos que funcionen bien con datos limitados y en dispositivos con restricciones energéticas. Su balance entre rendimiento y eficiencia las hace ideales para nuestros desafíos geográficos y climáticos únicos."</p>
+                                        <p class="text-end mb-0"><small>— Dra. Catalina Morales, Centro de Modelamiento Matemático, Universidad de Chile</small></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-white mb-4">LSTM en Deep Learning</h5>
+                    <p class="text-white-50">Aplicaciones en Contexto Chileno</p>
+                    <div class="mt-4">
+                        <a href="#" class="text-white-50 me-3"><i class="bi bi-github fs-5"></i></a>
+                        <a href="#" class="text-white-50 me-3"><i class="bi bi-linkedin fs-5"></i></a>
+                        <a href="#" class="text-white-50"><i class="bi bi-twitter fs-5"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4 mb-lg-0">
+                    <h5 class="text-white mb-4">Enlaces Rápidos</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#fundamentos" class="text-white-50 text-decoration-none">Fundamentos LSTM</a></li>
+                        <li class="mb-2"><a href="#arquitectura" class="text-white-50 text-decoration-none">Arquitectura</a></li>
+                        <li class="mb-2"><a href="#aplicaciones" class="text-white-50 text-decoration-none">Aplicaciones</a></li>
+                        <li class="mb-2"><a href="#comparativa" class="text-white-50 text-decoration-none">LSTM vs GRU</a></li>
+                        <li><a href="#caso-estudio" class="text-white-50 text-decoration-none">Caso de Estudio</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4">
+                    <h5 class="text-white mb-4">Recursos Adicionales</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Documentación TensorFlow</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Documentación PyTorch</a></li>
+                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Papers sobre LSTM</a></li>
+                        <li><a href="#" class="text-white-50 text-decoration-none">Datasets Chilenos</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1);">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <p class="text-white-50 mb-0">Desarrollado para fines educativos | <span id="year">2023</span></p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Activar scrollspy
+        document.addEventListener('DOMContentLoaded', function() {
+            var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+                target: '#navbar-example'
+            });
+            
+            // Smooth scroll para los enlaces de navegación
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    if (this.hash !== '') {
+                        e.preventDefault();
+                        const hash = this.hash;
+                        const targetElement = document.querySelector(hash);
+                        
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 70,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Animación para las tarjetas al hacer scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.section-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>
+
+
