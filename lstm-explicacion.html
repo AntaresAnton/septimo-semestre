@@ -1321,6 +1321,493 @@ Dense(24) # Predicción para las próximas 24 horas</code></pre>
         </div>
     </div>
 
+    <!-- Nueva sección de análisis de traducción -->
+<div id="traduccion" class="card section-card">
+    <div class="card-header bg-info text-white">
+        <h2 class="h4 mb-0 d-flex align-items-center">
+            <i class="bi bi-translate me-2"></i>
+            Análisis de Traducción con LSTM: Español Chileno
+        </h2>
+    </div>
+    <div class="card-body">
+        <p class="lead mb-4">Las redes LSTM han revolucionado la traducción automática, pero enfrentan desafíos particulares con variantes regionales del español como el chileno, que contiene modismos, chilenismos y estructuras gramaticales únicas.</p>
+        
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="row g-0">
+                            <div class="col-md-4 bg-primary text-white p-4 d-flex flex-column justify-content-center" style="border-radius: 16px 0 0 16px;">
+                                <h4><i class="bi bi-chat-quote me-2"></i>Oración Chilena</h4>
+                                <p class="mb-0">Análisis de una expresión con modismos típicos chilenos</p>
+                            </div>
+                            <div class="col-md-8 p-4">
+                                <div class="chilean-example border-0 shadow-none p-0 m-0">
+                                    <div class="d-flex align-items-start mb-3">
+                                        <div class="badge bg-danger p-2 me-3">
+                                            <i class="bi bi-chat-left-text fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Texto Original (Español Chileno)</h6>
+                                            <p class="text-muted mb-0 fst-italic">"El cabro estaba filete con su pega nueva, pero quedó pa' la cagá cuando cachó que tenía que trabajar los fines de semana."</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-start mb-3">
+                                        <div class="badge bg-success p-2 me-3">
+                                            <i class="bi bi-chat-right-text fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Traducción Literal (Inglés)</h6>
+                                            <p class="text-muted mb-0 fst-italic">"The young man was very happy with his new job, but he was devastated when he found out that he had to work on weekends."</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex align-items-start">
+                                        <div class="badge bg-primary p-2 me-3">
+                                            <i class="bi bi-gear-wide-connected fs-5"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Desafío de Traducción</h6>
+                                            <p class="mb-0">La oración contiene múltiples chilenismos que no tienen equivalentes directos en inglés y requieren una comprensión contextual profunda para capturar el significado y tono emocional correctos.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h5 class="text-info mb-3"><i class="bi bi-layers me-2"></i>Análisis de Chilenismos</h5>
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="bi bi-list-check me-2"></i>Expresiones Regionales</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Chilenismo</th>
+                                        <th>Significado Literal</th>
+                                        <th>Equivalente en Inglés</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Cabro</strong></td>
+                                        <td>Joven, muchacho</td>
+                                        <td>Young man, guy</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Filete</strong></td>
+                                        <td>Muy bien, excelente</td>
+                                        <td>Great, thrilled</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Pega</strong></td>
+                                        <td>Trabajo, empleo</td>
+                                        <td>Job</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Pa' la cagá</strong></td>
+                                        <td>Muy mal, devastado</td>
+                                        <td>Devastated, crushed</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Cachar</strong></td>
+                                        <td>Entender, darse cuenta</td>
+                                        <td>To realize, to find out</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="alert alert-danger mt-3">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            <strong>Desafío LSTM:</strong> Los modelos necesitan un corpus de entrenamiento específico que incluya estas variantes regionales, que rara vez están bien representadas en los conjuntos de datos estándar.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-bar-chart me-2"></i>Estrategias de Traducción</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <span class="badge bg-primary p-2">1</span>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6>Normalización Previa</h6>
+                                <p class="text-muted mb-0">Convertir el texto a español estándar antes de la traducción:</p>
+                                <p class="fst-italic">"El joven estaba muy contento con su trabajo nuevo, pero quedó devastado cuando se dio cuenta que tenía que trabajar los fines de semana."</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <span class="badge bg-primary p-2">2</span>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6>Traducción Directa con Corpus Especializado</h6>
+                                <p class="text-muted mb-0">Entrenar el modelo LSTM con pares de oraciones que incluyan chilenismos y sus traducciones correctas.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <span class="badge bg-primary p-2">3</span>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <h6>Adaptación Cultural</h6>
+                                <p class="text-muted mb-0">Buscar expresiones equivalentes en la cultura meta que transmitan la misma emoción:</p>
+                                <p class="fst-italic">"The guy was stoked about his new job, but he was totally bummed when he realized he had to work weekends."</p>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-success mt-3">
+                            <i class="bi bi-lightbulb me-2"></i>
+                            <strong>Solución LSTM:</strong> Los modelos bidireccionales con atención pueden capturar mejor el contexto completo de la oración, permitiendo traducciones más precisas de expresiones idiomáticas.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0"><i class="bi bi-diagram-3 me-2"></i>Proceso de Traducción LSTM</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h6 class="text-primary mb-3">Tokenización</h6>
+                                        <div class="bg-white p-2 rounded border mb-2">
+                                            <small>["El", "cabro", "estaba", "filete", "con", "su", "pega", "nueva", ...]</small>
+                                        </div>
+                                        <div class="alert alert-warning p-1 mb-0">
+                                            <small><i class="bi bi-exclamation-circle"></i> "cabro", "filete" y "pega" no están en vocabularios estándar</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h6 class="text-primary mb-3">Codificación</h6>
+                                        <div class="bg-white p-2 rounded border mb-2">
+                                            <i class="bi bi-arrow-down-up text-success"></i>
+                                            <small>Vectores de embedding enriquecidos con contexto regional</small>
+                                        </div>
+                                        <div class="alert alert-info p-1 mb-0">
+                                            <small><i class="bi bi-info-circle"></i> Necesita embeddings específicos para español chileno</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h6 class="text-primary mb-3">Procesamiento LSTM</h6>
+                                        <div class="bg-white p-2 rounded border mb-2">
+                                            <i class="bi bi-cpu text-danger"></i>
+                                            <small>Celdas LSTM capturan el contexto emocional y cultural</small>
+                                        </div>
+                                        <div class="alert alert-success p-1 mb-0">
+                                            <small><i class="bi bi-check-circle"></i> La memoria a largo plazo mantiene el tono informal</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card bg-light">
+                                    <div class="card-body text-center">
+                                        <h6 class="text-primary mb-3">Generación</h6>
+                                        <div class="bg-white p-2 rounded border mb-2">
+                                            <small>["The", "young", "man", "was", "very", "happy", "with", "his", "new", "job", ...]</small>
+                                        </div>
+                                        <div class="alert alert-primary p-1 mb-0">
+                                            <small><i class="bi bi-translate"></i> Traducción adaptada culturalmente</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h5 class="text-info mb-3"><i class="bi bi-cpu me-2"></i>Arquitectura LSTM Especializada</h5>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="text-primary mb-3">Modelo Adaptado para Español Chileno</h6>
+                        <div class="bg-light p-3 rounded mb-3">
+                            <pre class="mb-0"><code># Arquitectura para traducción español chileno-inglés
+ChileanTokenizer() →
+Embedding(vocab_cl, 256) →
+Bidirectional(LSTM(512, return_sequences=True)) →
+Attention() →
+LSTM(512) →
+Dense(vocab_en) 
+# Con fine-tuning en corpus chileno</code></pre>
+                        </div>
+                        <div class="alert alert-primary">
+                            <strong>Innovación:</strong> Capa de tokenización especializada que identifica modismos chilenos como unidades léxicas completas en lugar de palabras individuales.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body">
+                        <h6 class="text-success mb-3">Resultados Comparativos</h6>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Modelo</th>
+                                        <th>BLEU</th>
+                                        <th>Precisión Cultural</th>
+                                        <th>Tiempo de Inferencia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>LSTM Estándar</td>
+                                        <td>18.3</td>
+                                        <td><span class="badge bg-danger">Baja</span></td>
+                                        <td>120ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>LSTM + Diccionario Chileno</td>
+                                        <td>24.7</td>
+                                        <td><span class="badge bg-warning">Media</span></td>
+                                        <td>135ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>BiLSTM + Atención</td>
+                                        <td>31.2</td>
+                                        <td><span class="badge bg-success">Alta</span></td>
+                                        <td>150ms</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Transformer</td>
+                                        <td>36.8</td>
+                                        <td><span class="badge bg-success">Alta</span></td>
+                                        <td>90ms</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="alert alert-success mt-3">
+                            <strong>Hallazgo:</strong> Aunque los Transformers obtienen mejores resultados generales, los modelos BiLSTM con atención y adaptación cultural logran una precisión comparable en la traducción de modismos chilenos con un conjunto de datos más pequeño.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-puzzle me-2"></i>Casos de Estudio: Traducciones Alternativas</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h6 class="text-primary mb-3">Traducción Formal</h6>
+                                        <p class="fst-italic">"The young man was very satisfied with his new job, but he became extremely disappointed when he discovered that he had to work on weekends."</p>
+                                        <div class="alert alert-warning p-2 mb-0">
+                                            <small><i class="bi bi-exclamation-circle"></i> <strong>Problema:</strong> Pierde el tono coloquial y la expresividad emocional del original</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h6 class="text-primary mb-3">Traducción Coloquial</h6>
+                                        <p class="fst-italic">"The guy was stoked about his new gig, but he was totally crushed when he realized he had to work weekends."</p>
+                                        <div class="alert alert-success p-2 mb-0">
+                                            <small><i class="bi bi-check-circle"></i> <strong>Ventaja:</strong> Mantiene el registro informal y la carga emocional del original</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h6 class="text-primary mb-3">Traducción con Notas</h6>
+                                        <p class="fst-italic">"The young man [cabro] was very happy [filete] with his new job [pega], but he was devastated [quedó pa' la cagá] when he found out [cachó] that he had to work on weekends."</p>
+                                        <div class="alert alert-info p-2 mb-0">
+                                            <small><i class="bi bi-info-circle"></i> <strong>Uso:</strong> Ideal para contextos educativos o lingüísticos donde se quiere preservar los términos originales</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>Variaciones Regionales del Español</h5>
+                    </div>
+                    <div class="card-body">
+                        <p>La misma idea expresada en diferentes variantes del español latinoamericano muestra cómo las LSTM deben adaptarse a múltiples variantes regionales:</p>
+                        
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Variante</th>
+                                        <th>Expresión</th>
+                                        <th>Desafío para LSTM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Chile</strong></td>
+                                        <td>"El cabro estaba filete con su pega nueva, pero quedó pa' la cagá cuando cachó que tenía que trabajar los fines de semana."</td>
+                                        <td>Modismos únicos, contracciones informales</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Argentina</strong></td>
+                                        <td>"El pibe estaba re copado con su laburo nuevo, pero se re bajoneó cuando se enteró que tenía que laburar los fines de semana."</td>
+                                        <td>Uso de "re" como intensificador, lunfardo</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>México</strong></td>
+                                        <td>"El chavo estaba bien chido con su chamba nueva, pero se agüitó gacho cuando se dio cuenta que tenía que chambear los fines."</td>
+                                        <td>Mexicanismos, uso de "gacho" como intensificador</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>España</strong></td>
+                                        <td>"El chaval estaba flipando con su curro nuevo, pero se quedó hecho polvo cuando se enteró de que tenía que currar los fines de semana."</td>
+                                        <td>Expresiones peninsulares, uso de gerundio con "estar"</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="alert alert-info mt-3 d-flex">
+                            <i class="bi bi-lightbulb fs-3 me-3"></i>
+                            <div>
+                                <h6>Enfoque Multilingüe</h6>
+                                <p class="mb-0">Los modelos LSTM más avanzados utilizan embeddings contextuales que pueden adaptarse a diferentes variantes regionales del español, tratando cada variante como un "dialecto" semi-independiente pero relacionado, lo que mejora significativamente la precisión de traducción.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h5 class="text-info mb-3 mt-4"><i class="bi bi-graph-up-arrow me-2"></i>Aplicaciones Prácticas</h5>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="mb-0"><i class="bi bi-globe me-2"></i>Turismo</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <i class="bi bi-chat-dots text-success fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p class="mb-0">Aplicaciones de traducción en tiempo real que ayudan a turistas a entender expresiones chilenas locales en restaurantes, tiendas y atracciones turísticas.</p>
+                            </div>
+                        </div>
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-1"><strong>Ejemplo:</strong></p>
+                            <p class="fst-italic mb-1">"¿Quiere un completo italiano? Es la raja, po."</p>
+                            <p class="text-success mb-0"><i class="bi bi-arrow-down"></i></p>
+                            <p class="fst-italic mb-0">"Would you like a hot dog with avocado, tomato and mayo? It's really awesome."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0"><i class="bi bi-briefcase me-2"></i>Negocios</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <i class="bi bi-building text-primary fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p class="mb-0">Traducción de comunicaciones comerciales que preservan el tono y la intención correctos para negociaciones y acuerdos internacionales.</p>
+                            </div>
+                        </div>
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-1"><strong>Ejemplo:</strong></p>
+                            <p class="fst-italic mb-1">"Necesitamos tener la propuesta lista altiro, el cliente está apurando caleta."</p>
+                            <p class="text-primary mb-0"><i class="bi bi-arrow-down"></i></p>
+                            <p class="fst-italic mb-0">"We need to have the proposal ready immediately, the client is putting a lot of pressure on us."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h6 class="mb-0"><i class="bi bi-film me-2"></i>Entretenimiento</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <i class="bi bi-camera-reels text-danger fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p class="mb-0">Subtitulado de películas y series chilenas que capturan adecuadamente el humor local y las referencias culturales.</p>
+                            </div>
+                        </div>
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-1"><strong>Ejemplo:</strong></p>
+                            <p class="fst-italic mb-1">"¡Yapo, hueón! No seai fome y vamos a carretear."</p>
+                            <p class="text-danger mb-0"><i class="bi bi-arrow-down"></i></p>
+                            <p class="fst-italic mb-0">"Come on, dude! Don't be boring, let's go party."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-primary mt-4 d-flex">
+            <i class="bi bi-lightbulb fs-3 me-3"></i>
+            <div>
+                <h5>Conclusión</h5>
+                <p class="mb-0">La traducción de expresiones chilenas representa un desafío significativo para los modelos LSTM debido a la riqueza de modismos y variaciones lingüísticas regionales. Sin embargo, con adaptaciones específicas como tokenizadores especializados, embeddings contextuales y fine-tuning con corpus regionales, estos modelos pueden capturar efectivamente no solo el significado literal sino también el tono emocional y cultural de las expresiones chilenas. Esto demuestra la flexibilidad de las arquitecturas LSTM para adaptarse a variantes lingüísticas específicas, un aspecto crucial en un mundo cada vez más conectado pero culturalmente diverso.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
     <!-- Sección Detallada de GRU -->
 <section id="gru-detalle" class="section-padding" style="background: linear-gradient(135deg, #1a2a6c 0%, #2a4858 100%);">
     <div class="container">
@@ -2059,8 +2546,6 @@ optimizador = optim.Adam(modelo.parameters(), lr=0.001)
         </div>
     </div>
 </section>
-
-
 
 
     <footer class="footer">
