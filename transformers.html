@@ -1,0 +1,2531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transformers en Deep Learning</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Esquema de colores principal - Azul Índigo y Naranja */
+            --primary-color: #4F46E5; /* Índigo */
+            --primary-dark: #3730A3;
+            --primary-light: #818CF8;
+            
+            --secondary-color: #F97316; /* Naranja */
+            --secondary-dark: #C2410C;
+            --secondary-light: #FB923C;
+            
+            /* Colores complementarios */
+            --success-color: #10B981; /* Esmeralda */
+            --info-color: #06B6D4; /* Cian */
+            --warning-color: #FBBF24; /* Ámbar */
+            --danger-color: #EF4444; /* Rojo */
+            
+            /* Colores neutros */
+            --dark-color: #1E293B; /* Slate 800 */
+            --light-color: #F8FAFC; /* Slate 50 */
+            --gray-color: #64748B; /* Slate 500 */
+            --gray-light: #E2E8F0; /* Slate 200 */
+            --gray-dark: #334155; /* Slate 700 */
+            
+            /* Colores de fondo */
+            --bg-gradient-primary: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            --bg-gradient-secondary: linear-gradient(135deg, var(--secondary-color) 0%, var(--secondary-dark) 100%);
+            --bg-gradient-dark: linear-gradient(135deg, var(--dark-color) 0%, #0F172A 100%);
+        }
+        
+        /* Sobreescribir clases de Bootstrap */
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+        
+        .bg-secondary {
+            background-color: var(--secondary-color) !important;
+        }
+        
+        .bg-success {
+            background-color: var(--success-color) !important;
+        }
+        
+        .bg-info {
+            background-color: var(--info-color) !important;
+        }
+        
+        .bg-warning {
+            background-color: var(--warning-color) !important;
+        }
+        
+        .bg-danger {
+            background-color: var(--danger-color) !important;
+        }
+        
+        .bg-dark {
+            background-color: var(--dark-color) !important;
+        }
+        
+        .bg-light {
+            background-color: var(--light-color) !important;
+        }
+        
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        
+        .text-secondary {
+            color: var(--secondary-color) !important;
+        }
+        
+        .text-success {
+            color: var(--success-color) !important;
+        }
+        
+        .text-info {
+            color: var(--info-color) !important;
+        }
+        
+        .text-warning {
+            color: var(--warning-color) !important;
+        }
+        
+        .text-danger {
+            color: var(--danger-color) !important;
+        }
+        
+        .text-dark {
+            color: var(--dark-color) !important;
+        }
+        
+        .text-light {
+            color: var(--light-color) !important;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+        
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+            border-color: var(--secondary-dark);
+        }
+        
+        .btn-outline-primary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-primary:hover {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-secondary {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+        
+        .alert-primary {
+            background-color: rgba(79, 70, 229, 0.1);
+            border-color: rgba(79, 70, 229, 0.2);
+            color: var(--primary-color);
+        }
+        
+        .alert-secondary {
+            background-color: rgba(249, 115, 22, 0.1);
+            border-color: rgba(249, 115, 22, 0.2);
+            color: var(--secondary-color);
+        }
+        
+        .alert-success {
+            background-color: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.2);
+            color: var(--success-color);
+        }
+        
+        .alert-info {
+            background-color: rgba(6, 182, 212, 0.1);
+            border-color: rgba(6, 182, 212, 0.2);
+            color: var(--info-color);
+        }
+        
+        .alert-warning {
+            background-color: rgba(251, 191, 36, 0.1);
+            border-color: rgba(251, 191, 36, 0.2);
+            color: #92400E;
+        }
+        
+        .alert-danger {
+            background-color: rgba(239, 68, 68, 0.1);
+            border-color: rgba(239, 68, 68, 0.2);
+            color: var(--danger-color);
+        }
+        
+        /* Estilos generales */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F1F5F9;
+            color: var(--dark-color);
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+        
+        code, pre {
+            font-family: 'Roboto Mono', monospace;
+        }
+        
+        .header-bg {
+            background: var(--bg-gradient-primary);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxkZWZzPjxwYXR0ZXJuIGlkPSJwYXR0ZXJuIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgcGF0dGVyblRyYW5zZm9ybT0icm90YXRlKDQ1KSI+PHJlY3QgaWQ9InBhdHRlcm4tYmciIHdpZHRoPSI0MDAiIGhlaWdodD0iNDAwIiBmaWxsPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDAuMDUpIj48L3JlY3Q+PHBhdGggZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjEpIiBkPSJNMCAwaDEwdjEwSDB6Ij48L3BhdGg+PC9wYXR0ZXJuPjwvZGVmcz48cmVjdCBmaWxsPSJ1cmwoI3BhdHRlcm4pIiBoZWlnaHQ9IjEwMCUiIHdpZHRoPSIxMDAlIj48L3JlY3Q+PC9zdmc+');
+            opacity: 0.3;
+        }
+        
+        .main-container {
+            margin-top: -50px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section-card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 30px;
+            border: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .section-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            padding: 20px 25px;
+            border-bottom: none;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .feature-card {
+            border-radius: 16px;
+            padding: 25px;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            padding: 15px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(55, 48, 163, 0.1) 100%);
+        }
+        
+        .formula {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Roboto Mono', monospace;
+            text-align: center;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .formula-container {
+            position: relative;
+            padding: 20px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin: 20px 0;
+        }
+        
+        .formula-badge {
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            padding: 5px 15px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+        
+        .timeline::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: var(--primary-color);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 30px;
+        }
+        
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -34px;
+            top: 0;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 3px solid white;
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: var(--primary-color);
+        }
+        
+        .nav-pills .nav-link {
+            color: var(--gray-color);
+            border-radius: 10px;
+            padding: 10px 20px;
+            margin: 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-pills .nav-link:hover:not(.active) {
+            background-color: rgba(79, 70, 229, 0.1);
+        }
+        
+        .badge {
+            padding: 6px 10px;
+            font-weight: 500;
+            border-radius: 6px;
+        }
+        
+        .footer {
+            background: var(--bg-gradient-dark);
+            padding: 60px 0 30px;
+            color: white;
+            margin-top: 50px;
+        }
+        
+        .code-block {
+            background-color: var(--dark-color);
+            color: #E2E8F0;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        .code-block {
+            background-color: var(--dark-color);
+            color: #E2E8F0;
+            border-radius: 10px;
+            padding: 20px;
+            font-family: 'Roboto Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+        }
+        
+        .code-comment {
+            color: #94A3B8;
+        }
+        
+        .code-keyword {
+            color: #818CF8;
+        }
+        
+        .code-string {
+            color: #FCA5A5;
+        }
+        
+        .code-function {
+            color: #93C5FD;
+        }
+        
+        .code-number {
+            color: #FBBF24;
+        }
+        
+        .model-card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .model-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+        
+        .model-card .card-header {
+            padding: 15px 20px;
+        }
+        
+        .model-card .card-body {
+            padding: 20px;
+        }
+        
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+        }
+        
+        .comparison-table thead th {
+            background-color: var(--primary-light);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table tbody tr:nth-child(odd) {
+            background-color: rgba(79, 70, 229, 0.05);
+        }
+        
+        .attention-visualization {
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .attention-cell {
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            margin: 2px;
+            border-radius: 4px;
+        }
+        
+        .bg-gradient-primary {
+            background: var(--bg-gradient-primary);
+        }
+        
+        .bg-gradient-secondary {
+            background: var(--bg-gradient-secondary);
+        }
+        
+        .bg-gradient-dark {
+            background: var(--bg-gradient-dark);
+        }
+        
+        .quote-card {
+            background-color: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            position: relative;
+        }
+        
+        .quote-card::before {
+            content: """;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-size: 5rem;
+            font-family: Georgia, serif;
+            color: rgba(79, 70, 229, 0.1);
+            line-height: 1;
+        }
+        
+        .application-icon {
+            font-size: 2rem;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
+        
+        .resource-link {
+            display: block;
+            padding: 15px;
+            border-radius: 10px;
+            background-color: white;
+            margin-bottom: 15px;
+            text-decoration: none;
+            color: var(--dark-color);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+        }
+        
+        .resource-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+            color: var(--primary-color);
+        }
+        
+        .sticky-toc {
+            position: sticky;
+            top: 20px;
+        }
+        
+        .toc-link {
+            display: block;
+            padding: 8px 15px;
+            border-radius: 8px;
+            margin-bottom: 5px;
+            text-decoration: none;
+            color: var(--gray-color);
+            transition: all 0.2s ease;
+        }
+        
+        .toc-link:hover, .toc-link.active {
+            background-color: rgba(79, 70, 229, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .toc-link.level-2 {
+            padding-left: 30px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 991.98px) {
+            .sticky-toc {
+                position: static;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header-bg">
+        <div class="container text-center">
+            <h1 class="display-3 fw-bold mb-3">Transformers en Deep Learning</h1>
+            <p class="lead fs-4 mb-4">La arquitectura que revolucionó el procesamiento del lenguaje natural y más allá</p>
+            <div class="d-flex justify-content-center">
+                <a href="#fundamentos" class="btn btn-light btn-lg me-3 px-4 py-2 rounded-pill shadow-sm">
+                    <i class="bi bi-book me-2"></i>Fundamentos
+                </a>
+                <a href="#aplicaciones" class="btn btn-outline-light btn-lg px-4 py-2 rounded-pill">
+                    <i class="bi bi-gear me-2"></i>Aplicaciones
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container main-container">
+        <div class="row">
+            <!-- Tabla de Contenidos -->
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sticky-toc">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Contenido</h5>
+                        </div>
+                        <div class="card-body p-3">
+                            <a href="#introduccion" class="toc-link">Introducción</a>
+                            <a href="#fundamentos" class="toc-link">Fundamentos</a>
+                            <a href="#arquitectura" class="toc-link">Arquitectura</a>
+                            <a href="#atencion" class="toc-link level-2">Mecanismo de Atención</a>
+                            <a href="#codificacion" class="toc-link level-2">Codificación Posicional</a>
+                            <a href="#modelos" class="toc-link">Modelos Principales</a>
+                            <a href="#bert" class="toc-link level-2">BERT</a>
+                            <a href="#gpt" class="toc-link level-2">GPT</a>
+                            <a href="#t5" class="toc-link level-2">T5</a>
+                            <a href="#aplicaciones" class="toc-link">Aplicaciones</a>
+                            <a href="#implementacion" class="toc-link">Implementación</a>
+                            <a href="#comparativa" class="toc-link">Comparativa</a>
+                            <a href="#futuro" class="toc-link">Futuro</a>
+                            <a href="#recursos" class="toc-link">Recursos</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contenido Principal -->
+            <div class="col-lg-9">
+                <div id="introduccion" class="card section-card">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-stars me-2"></i>
+                            Introducción a los Transformers
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <div class="row align-items-center mb-4">
+                            <div class="col-md-8">
+                                <p class="lead">Los Transformers son una arquitectura de redes neuronales introducida en 2017 por Vaswani et al. en el paper "Attention is All You Need", que revolucionó el campo del procesamiento del lenguaje natural (NLP) y posteriormente se extendió a otras áreas.</p>
+                                
+                                <p>A diferencia de las arquitecturas recurrentes (RNN, LSTM, GRU) que procesan secuencias paso a paso, los Transformers utilizan un mecanismo de atención que permite procesar todos los elementos de una secuencia en paralelo, capturando eficientemente dependencias a larga distancia.</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div class="feature-icon text-primary">
+                                    <i class="bi bi-cpu"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="card feature-card bg-white">
+                                    <div class="text-primary mb-3">
+                                        <i class="bi bi-lightning fs-1"></i>
+                                    </div>
+                                    <h5>Procesamiento Paralelo</h5>
+                                    <p class="mb-0 text-muted">A diferencia de las RNN, los Transformers procesan toda la secuencia simultáneamente, lo que permite un entrenamiento más rápido y eficiente.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card feature-card bg-white">
+                                    <div class="text-secondary mb-3">
+                                        <i class="bi bi-arrow-left-right fs-1"></i>
+                                    </div>
+                                    <h5>Atención Multidimensional</h5>
+                                    <p class="mb-0 text-muted">Captura relaciones complejas entre elementos de la secuencia, independientemente de su distancia.</p>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card feature-card bg-white">
+                                    <div class="text-success mb-3">
+                                        <i class="bi bi-diagram-3 fs-1"></i>
+                                    </div>
+                                    <h5>Arquitectura Versátil</h5>
+                                    <p class="mb-0 text-muted">Adaptable a múltiples tareas: traducción, clasificación, generación de texto, visión por computadora y más.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline">
+                            <h5 class="mb-4">Evolución de los Transformers</h5>
+                            <div class="timeline-item">
+                                <h6>2017: Nacimiento</h6>
+                                <p>Google Brain publica "Attention is All You Need", presentando la arquitectura Transformer original para traducción automática.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h6>2018: BERT</h6>
+                                <p>Google introduce BERT (Bidirectional Encoder Representations from Transformers), revolucionando las tareas de comprensión del lenguaje.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h6>2019: GPT-2</h6>
+                                <p>OpenAI lanza GPT-2, demostrando capacidades impresionantes de generación de texto coherente y contextualmente relevante.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h6>2020: GPT-3</h6>
+                                <p>OpenAI presenta GPT-3 con 175 mil millones de parámetros, mostrando capacidades casi humanas en múltiples tareas de lenguaje.</p>
+                            </div>
+                            <div class="timeline-item">
+                                <h6>2021-2023: Modelos Multimodales</h6>
+                                <p>Surgen modelos como DALL-E, Stable Diffusion y GPT-4, extendiendo los Transformers a imágenes, audio y otras modalidades.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-primary d-flex align-items-center mt-4">
+                            <i class="bi bi-lightbulb fs-4 me-3"></i>
+                            <div>
+                                <strong>Impacto Revolucionario:</strong> Los Transformers han redefinido el estado del arte en prácticamente todas las tareas de NLP, superando significativamente a arquitecturas anteriores y permitiendo aplicaciones que antes parecían ciencia ficción.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="fundamentos" class="card section-card">
+                    <div class="card-header bg-secondary text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-book me-2"></i>
+                            Fundamentos de los Transformers
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">Los Transformers se basan en principios fundamentales que les permiten procesar secuencias de manera eficiente sin depender de la recurrencia o la convolución.</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="text-primary mb-3">Principios Clave</h5>
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0">
+                                                        <span class="badge bg-primary p-2">1</span>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6>Auto-atención (Self-Attention)</h6>
+                                                        <p class="mb-0">Permite a cada elemento de la secuencia atender a todos los demás elementos, capturando dependencias sin importar la distancia entre ellos.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0">
+                                                        <span class="badge bg-primary p-2">2</span>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6>Codificación Posicional</h6>
+                                                        <p class="mb-0">Incorpora información sobre la posición de cada elemento en la secuencia, ya que el modelo procesa todos los elementos en paralelo.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0">
+                                                        <span class="badge bg-primary p-2">3</span>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6>Arquitectura Encoder-Decoder</h6>
+                                                        <p class="mb-0">Estructura modular que permite adaptar el modelo a diferentes tipos de tareas, desde comprensión hasta generación.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="d-flex">
+                                                    <div class="flex-shrink-0">
+                                                        <span class="badge bg-primary p-2">4</span>
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-3">
+                                                        <h6>Normalización por Capas</h6>
+                                                        <p class="mb-0">Estabiliza el entrenamiento y permite construir redes muy profundas sin problemas de convergencia.</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="atencion" class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-eye me-2"></i>Mecanismo de Atención</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-7">
+                                                <p>El mecanismo de atención es el componente central de los Transformers. Permite al modelo "enfocarse" en diferentes partes de la secuencia de entrada al procesar cada elemento.</p>
+                                                
+                                                <div class="formula-container">
+                                                    <span class="formula-badge">Atención Escalada de Producto Punto</span>
+                                                    <div class="formula">
+                                                        Attention(Q, K, V) = softmax(QK<sup>T</sup> / √d<sub>k</sub>)V
+                                                    </div>
+                                                    <p class="small text-muted mb-0">Donde Q (consulta), K (clave) y V (valor) son proyecciones lineales de la entrada, y d<sub>k</sub> es la dimensión de las claves.</p>
+                                                </div>
+                                                
+                                                <h6 class="mt-4">Atención Multi-Cabeza</h6>
+                                                <p>Permite al modelo atender simultáneamente a información de diferentes subspacios de representación:</p>
+                                                
+                                                <div class="formula">
+                                                    MultiHead(Q, K, V) = Concat(head<sub>1</sub>, ..., head<sub>h</sub>)W<sup>O</sup>
+                                                </div>
+                                                <div class="formula">
+                                                    head<sub>i</sub> = Attention(QW<sub>i</sub><sup>Q</sup>, KW<sub>i</sub><sup>K</sup>, VW<sub>i</sub><sup>V</sup>)
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="attention-visualization">
+                                                    <h6 class="text-center mb-3">Visualización de Atención</h6>
+                                                    <div class="text-center">
+                                                        <div>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.2);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.7);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.3);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.8);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.2);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.9);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.2);"></span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.2);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.3);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.8);"></span>
+                                                        </div>
+                                                        <div>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.7);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.1);"></span>
+                                                            <span class="attention-cell" style="background-color: rgba(79, 70, 229, 0.5);"></span>
+                                                        </div>
+                                                    </div>
+                                                    <p class="text-center small text-muted mt-2">Matriz de atención: colores más intensos indican mayor atención entre tokens</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-secondary mt-4">
+                                            <h6><i class="bi bi-lightbulb"></i> Ventajas del Mecanismo de Atención</h6>
+                                            <ul class="mb-0">
+                                                <li><strong>Captura dependencias a larga distancia</strong> sin degradación de la señal</li>
+                                                <li><strong>Paralelización completa</strong> durante el entrenamiento</li>
+                                                <li><strong>Interpretabilidad</strong> a través de la visualización de las matrices de atención</li>
+                                                <li><strong>Flexibilidad</strong> para adaptarse a diferentes tipos de tareas y dominios</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="codificacion" class="row">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-secondary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-123 me-2"></i>Codificación Posicional</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Como los Transformers procesan todos los elementos de la secuencia en paralelo, necesitan una forma de incorporar información sobre la posición de cada elemento.</p>
+                                        
+                                        <div class="row align-items-center">
+                                            <div class="col-md-7">
+                                                <div class="formula-container">
+                                                    <span class="formula-badge">Codificación Sinusoidal</span>
+                                                    <div class="formula">
+                                                        PE<sub>(pos,2i)</sub> = sin(pos/10000<sup>2i/d<sub>model</sub></sup>)
+                                                    </div>
+                                                    <div class="formula">
+                                                        PE<sub>(pos,2i+1)</sub> = cos(pos/10000<sup>2i/d<sub>model</sub></sup>)
+                                                    </div>
+                                                    <p class="small text-muted mb-0">Donde pos es la posición y i es la dimensión. Esta codificación permite al modelo extrapolar a secuencias más largas que las vistas durante el entrenamiento.</p>
+                                                </div>
+                                                
+                                                <div class="alert alert-primary mt-3">
+                                                    <h6><i class="bi bi-info-circle"></i> Alternativas</h6>
+                                                    <p class="mb-0">Además de la codificación sinusoidal, existen otras opciones como embeddings posicionales aprendidos, codificación relativa, y esquemas híbridos que pueden ser más efectivos para tareas específicas.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <div class="bg-light p-3 rounded">
+                                                    <h6 class="text-center mb-3">Visualización de Codificación Posicional</h6>
+                                                    <img src="https://miro.medium.com/max/1400/1*HBJSaILHUyIY5X0zXILNIg.png" alt="Codificación Posicional" class="img-fluid rounded">
+                                                    <p class="text-center small text-muted mt-2">Patrones sinusoidales para diferentes posiciones y dimensiones</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="arquitectura" class="card section-card">
+                    <div class="card-header bg-success text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-diagram-3 me-2"></i>
+                            Arquitectura del Transformer
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">La arquitectura original del Transformer consta de un encoder y un decoder, cada uno compuesto por múltiples capas con componentes específicos.</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-lg-12 text-center">
+                                <img src="https://miro.medium.com/max/1400/1*BHzGVskWGS_3jEcYYi6miQ.png" alt="Arquitectura Transformer" class="img-fluid rounded shadow-sm" style="max-width: 700px;">
+                                <p class="text-muted mt-2">Arquitectura completa del Transformer original (Vaswani et al., 2017)</p>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0">Encoder</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Procesa la secuencia de entrada y genera representaciones contextualizadas para cada elemento.</p>
+                                        
+                                        <h6 class="mt-3 mb-2">Componentes por Capa</h6>
+                                        <ul>
+                                            <li><strong>Multi-Head Self-Attention:</strong> Permite a cada elemento atender a todos los elementos de la secuencia</li>
+                                            <li><strong>Feed-Forward Network:</strong> Red neuronal de dos capas aplicada independientemente a cada posición</li>
+                                            <li><strong>Add & Norm:</strong> Conexiones residuales y normalización por capas para estabilizar el entrenamiento</li>
+                                        </ul>
+                                        
+                                        <div class="code-block mt-3">
+                                            <span class="code-comment"># Pseudocódigo de una capa del encoder</span>
+                                            <span class="code-keyword">def</span> <span class="code-function">encoder_layer</span>(x):
+                                                <span class="code-comment"># Self-attention</span>
+                                                attn_output = <span class="code-function">multi_head_attention</span>(x, x, x)
+                                                x = <span class="code-function">layer_norm</span>(x + attn_output)
+                                                
+                                                <span class="code-comment"># Feed-forward network</span>
+                                                ffn_output = <span class="code-function">feed_forward</span>(x)
+                                                output = <span class="code-function">layer_norm</span>(x + ffn_output)
+                                                
+                                                <span class="code-keyword">return</span> output
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-secondary text-white">
+                                        <h5 class="mb-0">Decoder</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Genera la secuencia de salida elemento por elemento, utilizando tanto la salida del encoder como las salidas previamente generadas.</p>
+                                        
+                                        <h6 class="mt-3 mb-2">Componentes por Capa</h6>
+                                        <ul>
+                                            <li><strong>Masked Multi-Head Self-Attention:</strong> Atención solo a posiciones previas para preservar la autoregresividad</li>
+                                            <li><strong>Multi-Head Cross-Attention:</strong> Atención a las salidas del encoder</li>
+                                            <li><strong>Feed-Forward Network:</strong> Similar al encoder</li>
+                                            <li><strong>Add & Norm:</strong> Conexiones residuales y normalización</li>
+                                        </ul>
+                                        
+                                        <div class="code-block mt-3">
+                                            <span class="code-comment"># Pseudocódigo de una capa del decoder</span>
+                                            <span class="code-keyword">def</span> <span class="code-function">decoder_layer</span>(x, encoder_output):
+                                                <span class="code-comment"># Masked self-attention</span>
+                                                masked_attn = <span class="code-function">masked_multi_head_attention</span>(x, x, x)
+                                                x = <span class="code-function">layer_norm</span>(x + masked_attn)
+                                                
+                                                <span class="code-comment"># Cross-attention to encoder</span>
+                                                cross_attn = <span class="code-function">multi_head_attention</span>(x, encoder_output, encoder_output)
+                                                x = <span class="code-function">layer_norm</span>(x + cross_attn)
+                                                
+                                                <span class="code-comment"># Feed-forward network</span>
+                                                ffn_output = <span class="code-function">feed_forward</span>(x)
+                                                output = <span class="code-function">layer_norm</span>(x + ffn_output)
+                                                
+                                                <span class="code-keyword">return</span> output
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="text-success mb-3">Flujo de Datos en el Transformer</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="bg-light p-3 rounded">
+                                                    <h6 class="text-primary">Proceso de Codificación</h6>
+                                                    <ol>
+                                                        <li>La secuencia de entrada se convierte en embeddings</li>
+                                                        <li>Se añade la codificación posicional</li>
+                                                        <li>Los datos pasan por N capas de encoder</li>
+                                                        <li>Cada capa actualiza las representaciones con información contextual</li>
+                                                        <li>La salida final contiene representaciones contextualizadas para cada token</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="bg-light p-3 rounded">
+                                                    <h6 class="text-secondary">Proceso de Decodificación</h6>
+                                                    <ol>
+                                                        <li>La secuencia de salida (parcial) se convierte en embeddings</li>
+                                                        <li>Se añade la codificación posicional</li>
+                                                        <li>Se aplica atención enmascarada para ver solo tokens previos</li>
+                                                        <li>Se realiza atención cruzada con la salida del encoder</li>
+                                                        <li>Se genera la probabilidad del siguiente token</li>
+                                                        <li>El proceso se repite autoregresivamente</li>
+                                                    </ol>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-success mt-4">
+                                            <h6><i class="bi bi-check-circle"></i> Ventajas de esta Arquitectura</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <ul>
+                                                        <li>Paralelización completa durante el entrenamiento</li>
+                                                        <li>Camino más corto entre dependencias a larga distancia</li>
+                                                        <li>Representaciones contextualizadas ricas</li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <ul>
+                                                        <li>Escalabilidad a modelos muy grandes</li>
+                                                        <li>Flexibilidad para diferentes tareas</li>
+                                                        <li>Mayor interpretabilidad que RNNs</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="modelos" class="card section-card">
+                    <div class="card-header bg-info text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-collection me-2"></i>
+                            Modelos Principales basados en Transformers
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">Desde la introducción del Transformer original, han surgido numerosas variantes y evoluciones que han definido el estado del arte en diferentes tareas de NLP y más allá.</p>
+                        
+                        <div id="bert" class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="model-card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0 d-flex align-items-center">
+                                            <i class="bi bi-braces me-2"></i>BERT (Bidirectional Encoder Representations from Transformers)
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-8">
+                                                <p>Desarrollado por Google en 2018, BERT revolucionó las tareas de comprensión del lenguaje al utilizar un entrenamiento bidireccional que permite entender el contexto completo de una palabra.</p>
+                                                
+                                                <h6 class="mt-3">Características Clave</h6>
+                                                <ul>
+                                                    <li><strong>Bidireccionalidad:</strong> Considera el contexto tanto a la izquierda como a la derecha de cada palabra</li>
+                                                    <li><strong>Pre-entrenamiento:</strong> Utiliza Masked Language Modeling (MLM) y Next Sentence Prediction (NSP)</li>
+                                                    <li><strong>Fine-tuning:</strong> Se adapta fácilmente a tareas específicas con una capa adicional</li>
+                                                </ul>
+                                                
+                                                <div class="alert alert-primary mt-3">
+                                                    <h6><i class="bi bi-graph-up"></i> Impacto</h6>
+                                                    <p class="mb-0">BERT superó el estado del arte en 11 tareas de NLP diferentes cuando se introdujo, incluyendo GLUE, SQuAD y SWAG.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="bg-light p-3 rounded text-center">
+                                                    <h6 class="text-primary mb-3">Variantes de BERT</h6>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="badge bg-primary mb-2 p-2">BERT-base (110M parámetros)</span>
+                                                        <span class="badge bg-primary mb-2 p-2">BERT-large (340M parámetros)</span>
+                                                        <span class="badge bg-secondary mb-2 p-2">RoBERTa (Facebook)</span>
+                                                        <span class="badge bg-secondary mb-2 p-2">DistilBERT (Hugging Face)</span>
+                                                        <span class="badge bg-secondary mb-2 p-2">ALBERT (Google)</span>
+                                                        <span class="badge bg-secondary p-2">DeBERTa (Microsoft)</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="mt-3 text-center">
+                                                    <img src="https://miro.medium.com/max/1400/1*wLZu_RPYoc7TzNSkRoTJVw.png" alt="BERT Architecture" class="img-fluid rounded">
+                                                    <p class="small text-muted mt-1">Arquitectura de BERT</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="code-block mt-4">
+                                            <span class="code-comment"># Ejemplo de uso de BERT con Hugging Face Transformers</span>
+                                            <span class="code-keyword">from</span> transformers <span class="code-keyword">import</span> BertTokenizer, BertModel
+                                            
+                                            <span class="code-comment"># Cargar tokenizador y modelo pre-entrenado</span>
+                                            tokenizer = BertTokenizer.<span class="code-function">from_pretrained</span>(<span class="code-string">'bert-base-uncased'</span>)
+                                            model = BertModel.<span class="code-function">from_pretrained</span>(<span class="code-string">'bert-base-uncased'</span>)
+                                            
+                                            <span class="code-comment"># Tokenizar texto</span>
+                                            text = <span class="code-string">"Transformers han revolucionado el NLP."</span>
+                                            inputs = tokenizer(text, return_tensors=<span class="code-string">"pt"</span>)
+                                            
+                                            <span class="code-comment"># Obtener embeddings contextualizados</span>
+                                            outputs = model(**inputs)
+                                            last_hidden_states = outputs.last_hidden_state
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="gpt" class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="model-card">
+                                    <div class="card-header bg-secondary text-white">
+                                        <h5 class="mb-0 d-flex align-items-center">
+                                            <i class="bi bi-chat-dots me-2"></i>GPT (Generative Pre-trained Transformer)
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-8">
+                                                <p>Desarrollado por OpenAI, GPT se centra en la generación de texto utilizando un enfoque autoregresivo. Ha evolucionado a través de varias versiones, cada una más grande y capaz que la anterior.</p>
+                                                
+                                                <h6 class="mt-3">Características Clave</h6>
+                                                <ul>
+                                                    <li><strong>Unidireccionalidad:</strong> Procesa el texto de izquierda a derecha, prediciendo el siguiente token</li>
+                                                    <li><strong>Pre-entrenamiento generativo:</strong> Entrenado para predecir el siguiente token en secuencias largas de texto</li>
+                                                    <li><strong>Escalabilidad:</strong> Ha demostrado mejoras consistentes al aumentar el tamaño del modelo</li>
+                                                    <li><strong>Zero/Few-shot learning:</strong> Capacidad para realizar tareas con pocos o ningún ejemplo específico</li>
+                                                </ul>
+                                                
+                                                <div class="alert alert-secondary mt-3">
+                                                    <h6><i class="bi bi-arrow-up-right"></i> Evolución</h6>
+                                                    <p class="mb-0">GPT ha evolucionado desde 117M parámetros (GPT-1) hasta más de 175B (GPT-3) y modelos multimodales como GPT-4, mostrando capacidades casi humanas en muchas tareas.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="bg-light p-3 rounded text-center">
+                                                    <h6 class="text-secondary mb-3">Familia GPT</h6>
+                                                    <div class="d-flex flex-column">
+                                                        <span class="badge bg-secondary mb-2 p-2">GPT-1 (2018, 117M parámetros)</span>
+                                                        <span class="badge bg-secondary mb-2 p-2">GPT-2 (2019, 1.5B parámetros)</span>
+                                                        <span class="badge bg-secondary mb-2 p-2">GPT-3 (2020, 175B parámetros)</span>
+                                                        <span class="badge bg-secondary mb-2 p-2">InstructGPT (2022)</span>
+                                                        <span class="badge bg-secondary mb-2 p-2">ChatGPT (2022)</span>
+                                                        <span class="badge bg-secondary p-2">GPT-4 (2023, multimodal)</span>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="mt-3 text-center">
+                                                    <img src="https://miro.medium.com/max/1400/1*aTrIpYIVwn2y2KVdAeOjxw.png" alt="GPT Architecture" class="img-fluid rounded">
+                                                    <p class="small text-muted mt-1">Arquitectura de GPT</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="code-block mt-4">
+                                            <span class="code-comment"># Ejemplo de generación de texto con GPT-2</span>
+                                            <span class="code-keyword">from</span> transformers <span class="code-keyword">import</span> GPT2Tokenizer, GPT2LMHeadModel
+                                            
+                                            <span class="code-comment"># Cargar tokenizador y modelo</span>
+                                            tokenizer = GPT2Tokenizer.<span class="code-function">from_pretrained</span>(<span class="code-string">'gpt2'</span>)
+                                            model = GPT2LMHeadModel.<span class="code-function">from_pretrained</span>(<span class="code-string">'gpt2'</span>)
+                                            
+                                            <span class="code-comment"># Generar texto</span>
+                                            prompt = <span class="code-string">"Los Transformers son modelos de deep learning que"</span>
+                                            inputs = tokenizer(prompt, return_tensors=<span class="code-string">"pt"</span>)
+                                            
+                                            <span class="code-comment"># Generar respuesta</span>
+                                            outputs = model.<span class="code-function">generate</span>(
+                                                inputs[<span class="code-string">"input_ids"</span>],
+                                                max_length=<span class="code-number">100</span>,
+                                                num_return_sequences=<span class="code-number">1</span>,
+                                                temperature=<span class="code-number">0.7</span>
+                                            )
+                                            
+                                            <span class="code-comment"># Decodificar la respuesta</span>
+                                            generated_text = tokenizer.<span class="code-function">decode</span>(outputs[<span class="code-number">0</span>], skip_special_tokens=<span class="code-keyword">True</span>)
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div id="t5" class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="model-card">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0 d-flex align-items-center">
+                                            <i class="bi bi-arrow-repeat me-2"></i>T5 (Text-to-Text Transfer Transformer)
+                                        </h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row align-items-center">
+                                            <div class="col-md-8">
+                                                <p>Desarrollado por Google en 2019, T5 unifica todas las tareas de NLP en un formato de texto a texto, lo que permite utilizar la misma arquitectura, objetivos de entrenamiento y métricas para cualquier tarea.</p>
+                                                
+                                                <h6 class="mt-3">Características Clave</h6>
+                                                <ul>
+                                                    <li><strong>Enfoque unificado:</strong> Todas las tareas se reformulan como generación de texto</li>
+                                                    <li><strong>Arquitectura encoder-decoder:</strong> Utiliza ambos componentes del Transformer original</li>
+                                                    <li><strong>Transferencia multitarea:</strong> Pre-entrenado en múltiples tareas simultáneamente</li>
+                                                    <li><strong>Escalabilidad:</strong> Disponible en diferentes tamaños, desde small hasta XXL</li>
+                                                </ul>
+                                                
+                                                <div class="alert alert-success mt-3">
+                                                    <h6><i class="bi bi-shuffle"></i> Versatilidad</h6>
+                                                    <p class="mb-0">T5 puede abordar traducción, resumen, clasificación, respuesta a preguntas y más, simplemente cambiando el prefijo de la tarea en la entrada.</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="bg-light p-3 rounded">
+                                                    <h6 class="text-success mb-3">Ejemplos de Formato T5</h6>
+                                                    <div class="mb-2">
+                                                        <strong>Traducción:</strong><br>
+                                                        <code>translate English to German: The house is wonderful. → Das Haus ist wunderbar.</code>
+                                                    </div>
+                                                    <div class="mb-2">
+                                                        <strong>Resumen:</strong><br>
+                                                        <code>summarize: [artículo largo] → [resumen corto]</code>
+                                                    </div>
+                                                    <div>
+                                                        <strong>Clasificación:</strong><br>
+                                                        <code>classify sentiment: I love this movie! → positive</code>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div class="mt-3 text-center">
+                                                    <img src="https://miro.medium.com/max/1400/1*iJcUH1F0TmCQE0L5P7Rj2Q.png" alt="T5 Architecture" class="img-fluid rounded">
+                                                    <p class="small text-muted mt-1">Arquitectura de T5</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="code-block mt-4">
+                                            <span class="code-comment"># Ejemplo de uso de T5 para traducción</span>
+                                            <span class="code-keyword">from</span> transformers <span class="code-keyword">import</span> T5Tokenizer, T5ForConditionalGeneration
+                                            
+                                            <span class="code-comment"># Cargar tokenizador y modelo</span>
+                                            tokenizer = T5Tokenizer.<span class="code-function">from_pretrained</span>(<span class="code-string">'t5-base'</span>)
+                                            model = T5ForConditionalGeneration.<span class="code-function">from_pretrained</span>(<span class="code-string">'t5-base'</span>)
+                                            
+                                            <span class="code-comment"># Preparar entrada con prefijo de tarea</span>
+                                            input_text = <span class="code-string">"translate English to German: The house is wonderful."</span>
+                                            input_ids = tokenizer(input_text, return_tensors=<span class="code-string">"pt"</span>).input_ids
+                                            
+                                            <span class="code-comment"># Generar traducción</span>
+                                            outputs = model.<span class="code-function">generate</span>(input_ids)
+                                            translation = tokenizer.<span class="code-function">decode</span>(outputs[<span class="code-number">0</span>], skip_special_tokens=<span class="code-keyword">True</span>)
+                                            <span class="code-comment"># Resultado: "Das Haus ist wunderbar."</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="bi bi-grid-3x3-gap me-2"></i>Otros Modelos Importantes</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-4">
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-primary">BART (Facebook)</h6>
+                                                        <p>Combina un encoder bidireccional (como BERT) con un decoder autoregresivo (como GPT). Ideal para tareas de generación como resumen y traducción.</p>
+                                                        <div class="badge bg-primary">Generación de Texto</div>
+                                                        <div class="badge bg-secondary">Resumen</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-warning">XLNet (Google/CMU)</h6>
+                                                        <p>Utiliza permutación autoregresiva para combinar las ventajas de los modelos autoregresivos y los bidireccionales.</p>
+                                                        <div class="badge bg-warning text-dark">Bidireccional</div>
+                                                        <div class="badge bg-secondary">Permutación</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-success">ELECTRA (Google)</h6>
+                                                        <p>Utiliza un enfoque de entrenamiento más eficiente basado en la detección de tokens reemplazados, en lugar de predecir tokens enmascarados.</p>
+                                                        <div class="badge bg-success">Eficiencia</div>
+                                                        <div class="badge bg-secondary">Discriminador</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-danger">ViT (Vision Transformer)</h6>
+                                                        <p>Adapta la arquitectura Transformer para visión por computadora, tratando las imágenes como secuencias de parches.</p>
+                                                        <div class="badge bg-danger">Visión</div>
+                                                        <div class="badge bg-secondary">Multimodal</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-info">CLIP (OpenAI)</h6>
+                                                        <p>Modelo multimodal que conecta texto e imágenes, entrenado en 400 millones de pares de imágenes y textos de internet.</p>
+                                                        <div class="badge bg-info">Multimodal</div>
+                                                        <div class="badge bg-secondary">Zero-shot</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-secondary">Reformer (Google)</h6>
+                                                        <p>Versión más eficiente del Transformer que utiliza hashing sensible a la localidad para reducir la complejidad computacional de la atención.</p>
+                                                        <div class="badge bg-secondary">Eficiencia</div>
+                                                        <div class="badge bg-primary">Secuencias Largas</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="aplicaciones" class="card section-card">
+                    <div class="card-header bg-warning text-dark">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-gear me-2"></i>
+                            Aplicaciones de los Transformers
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">Los Transformers han revolucionado numerosos campos y aplicaciones, extendiendo su impacto mucho más allá del procesamiento del lenguaje natural.</p>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="application-icon bg-primary text-white">
+                                            <i class="bi bi-translate"></i>
+                                        </div>
+                                        <h5>Traducción Automática</h5>
+                                        <p>Los Transformers han establecido nuevos estándares en traducción automática, superando a los sistemas basados en RNN/LSTM.</p>
+                                        <div class="bg-light p-3 rounded">
+                                            <h6 class="text-primary">Ejemplos</h6>
+                                            <ul class="mb-0">
+                                                <li>Google Translate</li>
+                                                <li>DeepL Translator</li>
+                                                <li>Facebook Translation</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="application-icon bg-success text-white">
+                                            <i class="bi bi-chat-dots"></i>
+                                        </div>
+                                        <h5>Chatbots y Asistentes</h5>
+                                        <p>Los modelos basados en Transformers han permitido crear asistentes conversacionales mucho más naturales y capaces.</p>
+                                        <div class="bg-light p-3 rounded">
+                                            <h6 class="text-success">Ejemplos</h6>
+                                            <ul class="mb-0">
+                                                <li>ChatGPT (OpenAI)</li>
+                                                <li>Bard (Google)</li>
+                                                <li>Claude (Anthropic)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="application-icon bg-danger text-white">
+                                            <i class="bi bi-file-text"></i>
+                                        </div>
+                                        <h5>Generación de Contenido</h5>
+                                        <p>Creación automática de textos coherentes y relevantes para diversos propósitos y formatos.</p>
+                                        <div class="bg-light p-3 rounded">
+                                            <h6 class="text-danger">Ejemplos</h6>
+                                            <ul class="mb-0">
+                                                <li>Generación de artículos</li>
+                                                <li>Copywriting automatizado</li>
+                                                <li>Creación de guiones</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="application-icon bg-info text-white">
+                                            <i class="bi bi-search"></i>
+                                        </div>
+                                        <h5>Búsqueda Semántica</h5>
+                                        <p>Mejora de los sistemas de búsqueda mediante la comprensión del significado y contexto de las consultas.</p>
+                                        <div class="bg-light p-3 rounded">
+                                            <h6 class="text-info">Ejemplos</h6>
+                                            <ul class="mb-0">
+                                                <li>Bing (Microsoft)</li>
+                                                <li>Google Search</li>
+                                                <li>Elasticsearch con embeddings</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="application-icon bg-secondary text-white">
+                                            <i class="bi bi-code-slash"></i>
+                                        </div>
+                                        <h5>Asistencia de Código</h5>
+                                        <p>Generación, completado y explicación de código en múltiples lenguajes de programación.</p>
+                                        <div class="bg-light p-3 rounded">
+                                            <h6 class="text-secondary">Ejemplos</h6>
+                                            <ul class="mb-0">
+                                                <li>GitHub Copilot</li>
+                                                <li>CodeWhisperer (Amazon)</li>
+                                                <li>Tabnine</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-body">
+                                        <div class="application-icon bg-warning text-dark">
+                                            <i class="bi bi-image"></i>
+                                        </div>
+                                        <h5>Generación de Imágenes</h5>
+                                        <p>Creación de imágenes a partir de descripciones textuales utilizando Transformers multimodales.</p>
+                                        <div class="bg-light p-3 rounded">
+                                            <h6 class="text-warning">Ejemplos</h6>
+                                            <ul class="mb-0">
+                                                <li>DALL-E (OpenAI)</li>
+                                                <li>Stable Diffusion</li>
+                                                <li>Midjourney</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-clipboard-data me-2"></i>Análisis de Datos</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Los Transformers están transformando el análisis de datos estructurados y no estructurados:</p>
+                                        <ul>
+                                            <li><strong>Análisis de sentimientos:</strong> Detección de opiniones y emociones en textos</li>
+                                            <li><strong>Extracción de información:</strong> Identificación de entidades y relaciones</li>
+                                            <li><strong>Clasificación de documentos:</strong> Categorización automática de textos</li>
+                                            <li><strong>Resumen automático:</strong> Generación de resúmenes concisos</li>
+                                        </ul>
+                                        
+                                        <div class="alert alert-primary">
+                                            <h6><i class="bi bi-building"></i> Aplicación Empresarial</h6>
+                                            <p class="mb-0">Las empresas utilizan Transformers para analizar feedback de clientes, informes internos, noticias y tendencias de mercado, obteniendo insights valiosos de manera automática.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-heart-pulse me-2"></i>Aplicaciones Científicas</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Los Transformers están acelerando la investigación científica en múltiples campos:</p>
+                                        <ul>
+                                            <li><strong>Bioinformática:</strong> Predicción de estructuras de proteínas (AlphaFold)</li>
+                                            <li><strong>Química:</strong> Diseño de moléculas y predicción de reacciones</li>
+                                            <li><strong>Física:</strong> Modelado de sistemas complejos</li>
+                                            <li><strong>Medicina:</strong> Análisis de imágenes médicas e historiales clínicos</li>
+                                        </ul>
+                                        
+                                        <div class="alert alert-success">
+                                            <h6><i class="bi bi-journal-medical"></i> Caso de Éxito</h6>
+                                            <p class="mb-0">AlphaFold 2 de DeepMind, basado en Transformers, revolucionó la biología estructural al predecir con precisión la estructura 3D de proteínas, un problema que llevaba décadas sin resolverse.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="quote-card mt-4">
+                            <p class="lead fst-italic">"Los Transformers han democratizado el acceso a la inteligencia artificial avanzada, permitiendo que desarrolladores de todo el mundo construyan aplicaciones que antes requerían equipos especializados y grandes presupuestos."</p>
+                            <p class="text-end mb-0"><strong>— Andrej Karpathy</strong>, ex Director de IA en Tesla</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="implementacion" class="card section-card">
+                    <div class="card-header bg-danger text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-code-square me-2"></i>
+                            Implementación Práctica
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">Implementar y utilizar modelos Transformer se ha vuelto accesible gracias a bibliotecas y frameworks modernos. Veamos cómo trabajar con estos modelos en la práctica.</p>
+                        
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-tools me-2"></i>Herramientas y Frameworks</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-4">
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-primary">Hugging Face Transformers</h6>
+                                                        <p>La biblioteca más popular para trabajar con modelos Transformer pre-entrenados. Ofrece acceso a miles de modelos con una API unificada.</p>
+                                                        <div class="d-flex justify-content-between">
+                                                            <span class="badge bg-primary">PyTorch</span>
+                                                            <span class="badge bg-secondary">TensorFlow</span>
+                                                            <span class="badge bg-success">JAX</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-danger">PyTorch</h6>
+                                                        <p>Framework de deep learning que ofrece implementaciones de referencia de arquitecturas Transformer y herramientas para entrenarlas.</p>
+                                                        <div class="d-flex justify-content-between">
+                                                            <span class="badge bg-danger">Dinámico</span>
+                                                            <span class="badge bg-secondary">Investigación</span>
+                                                            <span class="badge bg-warning">Flexible</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="card h-100">
+                                                    <div class="card-body">
+                                                        <h6 class="text-success">TensorFlow</h6>
+                                                        <p>Framework de Google que incluye implementaciones de Transformers y herramientas para despliegue en producción.</p>
+                                                        <div class="d-flex justify-content-between">
+                                                            <span class="badge bg-success">Producción</span>
+                                                            <span class="badge bg-secondary">TF Serving</span>
+                                                            <span class="badge bg-info">TFLite</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mb-4">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-code me-2"></i>Ejemplos de Código</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="nav nav-tabs mb-3" id="codeTab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link active" id="classification-tab" data-bs-toggle="tab" data-bs-target="#classification" type="button" role="tab" aria-controls="classification" aria-selected="true">Clasificación</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="generation-tab" data-bs-toggle="tab" data-bs-target="#generation" type="button" role="tab" aria-controls="generation" aria-selected="false">Generación</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="qa-tab" data-bs-toggle="tab" data-bs-target="#qa" type="button" role="tab" aria-controls="qa" aria-selected="false">Preguntas y Respuestas</button>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <button class="nav-link" id="finetuning-tab" data-bs-toggle="tab" data-bs-target="#finetuning" type="button" role="tab" aria-controls="finetuning" aria-selected="false">Fine-tuning</button>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="codeTabContent">
+                                            <div class="tab-pane fade show active" id="classification" role="tabpanel" aria-labelledby="classification-tab">
+                                                <div class="code-block">
+                                                    <span class="code-comment"># Clasificación de sentimientos con BERT</span>
+                                                    <span class="code-keyword">from</span> transformers <span class="code-keyword">import</span> AutoTokenizer, AutoModelForSequenceClassification
+                                                    <span class="code-keyword">import</span> torch
+                                                    
+                                                    <span class="code-comment"># Cargar tokenizador y modelo pre-entrenado para análisis de sentimientos</span>
+                                                    tokenizer = AutoTokenizer.<span class="code-function">from_pretrained</span>(<span class="code-string">'distilbert-base-uncased-finetuned-sst-2-english'</span>)
+                                                    model = AutoModelForSequenceClassification.<span class="code-function">from_pretrained</span>(<span class="code-string">'distilbert-base-uncased-finetuned-sst-2-english'</span>)
+                                                    
+                                                    <span class="code-comment"># Texto a clasificar</span>
+                                                    text = <span class="code-string">"I really enjoyed this movie. The acting was fantastic!"</span>
+                                                    
+                                                    <span class="code-comment"># Tokenizar y preparar para el modelo</span>
+                                                    inputs = tokenizer(text, return_tensors=<span class="code-string">"pt"</span>, truncation=<span class="code-keyword">True</span>, padding=<span class="code-keyword">True</span>)
+                                                    
+                                                    <span class="code-comment"># Realizar la predicción</span>
+                                                    <span class="code-keyword">with</span> torch.no_grad():
+                                                        outputs = model(**inputs)
+                                                        predictions = torch.nn.functional.<span class="code-function">softmax</span>(outputs.logits, dim=-<span class="code-number">1</span>)
+                                                    
+                                                    <span class="code-comment"># Interpretar resultados</span>
+                                                    positive_score = predictions[<span class="code-number">0</span>, <span class="code-number">1</span>].item()
+                                                    negative_score = predictions[<span class="code-number">0</span>, <span class="code-number">0</span>].item()
+                                                    
+                                                    <span class="code-keyword">print</span>(<span class="code-string">f"Positive score: {positive_score:.4f}, Negative score: {negative_score:.4f}"</span>)
+                                                    <span class="code-keyword">print</span>(<span class="code-string">f"Sentiment: {'Positive' if positive_score > negative_score else 'Negative'}"</span>)
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="generation" role="tabpanel" aria-labelledby="generation-tab">
+                                                <div class="code-block">
+                                                    <span class="code-comment"># Generación de texto con GPT-2</span>
+                                                    <span class="code-keyword">from</span> transformers <span class="code-keyword">import</span> GPT2Tokenizer, GPT2LMHeadModel
+                                                    
+                                                    <span class="code-comment"># Cargar tokenizador y modelo</span>
+                                                    tokenizer = GPT2Tokenizer.<span class="code-function">from_pretrained</span>(<span class="code-string">'gpt2'</span>)
+                                                    model = GPT2LMHeadModel.<span class="code-function">from_pretrained</span>(<span class="code-string">'gpt2'</span>)
+                                                    
+                                                    <span class="code-comment"># Configurar el tokenizador</span>
+                                                    tokenizer.pad_token = tokenizer.eos_token
+                                                    
+                                                    <span class="code-comment"># Texto inicial (prompt)</span>
+                                                    prompt = <span class="code-string">"Deep learning has revolutionized artificial intelligence by"</span>
+                                                    
+                                                    <span class="code-comment"># Tokenizar</span>
+                                                    inputs = tokenizer(prompt, return_tensors=<span class="code-string">"pt"</span>)
+                                                    
+                                                    <span class="code-comment"># Generar texto</span>
+                                                    output = model.<span class="code-function">generate</span>(
+                                                        inputs[<span class="code-string">"input_ids"</span>],
+                                                        max_length=<span class="code-number">150</span>,
+                                                        num_return_sequences=<span class="code-number">1</span>,
+                                                        temperature=<span class="code-number">0.8</span>,
+                                                        top_p=<span class="code-number">0.9</span>,
+                                                        do_sample=<span class="code-keyword">True</span>,
+                                                        no_repeat_ngram_size=<span class="code-number">2</span>
+                                                    )
+                                                    
+                                                    <span class="code-comment"># Decodificar y mostrar el resultado</span>
+                                                    generated_text = tokenizer.<span class="code-function">decode</span>(output[<span class="code-number">0</span>], skip_special_tokens=<span class="code-keyword">True</span>)
+                                                    <span class="code-keyword">print</span>(generated_text)
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="qa" role="tabpanel" aria-labelledby="qa-tab">
+                                                <div class="code-block">
+                                                    <span class="code-comment"># Respuesta a preguntas con BERT</span>
+                                                    <span class="code-keyword">from</span> transformers <span class="code-keyword">import</span> AutoTokenizer, AutoModelForQuestionAnswering
+                                                    <span class="code-keyword">import</span> torch
+                                                    
+                                                    <span class="code-comment"># Cargar tokenizador y modelo</span>
+                                                    tokenizer = AutoTokenizer.<span class="code-function">from_pretrained</span>(<span class="code-string">"distilbert-base-cased-distilled-squad"</span>)
+                                                    model = AutoModelForQuestionAnswering.<span class="code-function">from_pretrained</span>(<span class="code-string">"distilbert-base-cased-distilled-squad"</span>)
+                                                    
+                                                    <span class="code-comment"># Contexto y pregunta</span>
+                                                    context = <span class="code-string">"""
+                                                    Transformers are neural network architectures that were introduced in 2017 
+                                                    in the paper "Attention Is All You Need" by researchers at Google. 
+                                                    They have revolutionized natural language processing and are now used 
+                                                    for a wide range of tasks including translation, summarization, and 
+                                                    question answering. The key innovation of Transformers is the self-attention 
+                                                    mechanism, which allows the model to weigh the importance of different words 
+                                                    in a sentence when making predictions.
+                                                    """</span>
+                                                    
+                                                    question = <span class="code-string">"When were Transformers introduced?"</span>
+                                                    
+                                                    <span class="code-comment"># Tokenizar</span>
+                                                    inputs = tokenizer(question, context, return_tensors=<span class="code-string">"pt"</span>)
+                                                    
+                                                    <span class="code-comment"># Obtener predicciones</span>
+                                                    <span class="code-keyword">with</span> torch.no_grad():
+                                                        outputs = model(**inputs)
+                                                    
+                                                    <span class="code-comment"># Procesar resultados</span>
+                                                    answer_start = torch.<span class="code-function">argmax</span>(outputs.start_logits)
+                                                    answer_end = torch.<span class="code-function">argmax</span>(outputs.end_logits) + <span class="code-number">1</span>
+                                                    
+                                                    answer = tokenizer.<span class="code-function">convert_tokens_to_string</span>(
+                                                        tokenizer.<span class="code-function">convert_ids_to_tokens</span>(inputs.input_ids[<span class="code-number">0</span>][answer_start:answer_end])
+                                                    )
+                                                    
+                                                    <span class="code-keyword">print</span>(<span class="code-string">f"Question: {question}"</span>)
+                                                    <span class="code-keyword">print</span>(<span class="code-string">f"Answer: {answer}"</span>)
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="finetuning" role="tabpanel" aria-labelledby="finetuning-tab">
+                                                <div class="code-block">
+                                                    <span class="code-comment"># Fine-tuning de BERT para clasificación</span>
+                                                    <span class="code-keyword">from</span> transformers <span class="code-keyword">import</span> AutoTokenizer, AutoModelForSequenceClassification, Trainer, TrainingArguments
+                                                    <span class="code-keyword">from</span> datasets <span class="code-keyword">import</span> load_dataset
+                                                    <span class="code-keyword">import</span> numpy <span class="code-keyword">as</span> np
+                                                    <span class="code-keyword">from</span> sklearn.metrics <span class="code-keyword">import</span> accuracy_score, precision_recall_fscore_support
+                                                    
+                                                    <span class="code-comment"># Cargar dataset (ejemplo con IMDB)</span>
+                                                    dataset = load_dataset(<span class="code-string">"imdb"</span>)
+                                                    
+                                                    <span class="code-comment"># Cargar tokenizador y modelo</span>
+                                                    tokenizer = AutoTokenizer.<span class="code-function">from_pretrained</span>(<span class="code-string">"distilbert-base-uncased"</span>)
+                                                    model = AutoModelForSequenceClassification.<span class="code-function">from_pretrained</span>(
+                                                        <span class="code-string">"distilbert-base-uncased"</span>, 
+                                                        num_labels=<span class="code-number">2</span>
+                                                    )
+                                                    
+                                                    <span class="code-comment"># Función de tokenización</span>
+                                                    <span class="code-keyword">def</span> <span class="code-function">tokenize_function</span>(examples):
+                                                        <span class="code-keyword">return</span> tokenizer(examples[<span class="code-string">"text"</span>], padding=<span class="code-string">"max_length"</span>, truncation=<span class="code-keyword">True</span>)
+                                                    
+                                                    <span class="code-comment"># Aplicar tokenización</span>
+                                                    tokenized_datasets = dataset.<span class="code-function">map</span>(tokenize_function, batched=<span class="code-keyword">True</span>)
+                                                    
+                                                    <span class="code-comment"># Función de métricas</span>
+                                                    <span class="code-keyword">def</span> <span class="code-function">compute_metrics</span>(pred):
+                                                        labels = pred.label_ids
+                                                        preds = pred.predictions.<span class="code-function">argmax</span>(-<span class="code-number">1</span>)
+                                                        precision, recall, f1, _ = precision_recall_fscore_support(labels, preds, average=<span class="code-string">'binary'</span>)
+                                                        acc = accuracy_score(labels, preds)
+                                                        <span class="code-keyword">return</span> {
+                                                            <span class="code-string">'accuracy'</span>: acc,
+                                                            <span class="code-string">'f1'</span>: f1,
+                                                            <span class="code-string">'precision'</span>: precision,
+                                                            <span class="code-string">'recall'</span>: recall
+                                                        }
+                                                    
+                                                    <span class="code-comment"># Configurar entrenamiento</span>
+                                                    training_args = TrainingArguments(
+                                                        output_dir=<span class="code-string">'./results'</span>,
+                                                        num_train_epochs=<span class="code-number">3</span>,
+                                                        per_device_train_batch_size=<span class="code-number">16</span>,
+                                                        per_device_eval_batch_size=<span class="code-number">64</span>,
+                                                        warmup_steps=<span class="code-number">500</span>,
+                                                        weight_decay=<span class="code-number">0.01</span>,
+                                                        logging_dir=<span class="code-string">'./logs'</span>,
+                                                        logging_steps=<span class="code-number">10</span>,
+                                                        evaluation_strategy=<span class="code-string">"epoch"</span>,
+                                                    )
+                                                    
+                                                    <span class="code-comment"># Inicializar Trainer</span>
+                                                    trainer = Trainer(
+                                                        model=model,
+                                                        args=training_args,
+                                                        train_dataset=tokenized_datasets[<span class="code-string">"train"</span>],
+                                                        eval_dataset=tokenized_datasets[<span class="code-string">"test"</span>],
+                                                        compute_metrics=compute_metrics
+                                                    )
+                                                    
+                                                    <span class="code-comment"># Entrenar modelo</span>
+                                                    trainer.<span class="code-function">train</span>()
+                                                    
+                                                    <span class="code-comment"># Evaluar modelo</span>
+                                                    eval_results = trainer.<span class="code-function">evaluate</span>()
+                                                    <span class="code-keyword">print</span>(eval_results)
+                                                    
+                                                    <span class="code-comment"># Guardar modelo</span>
+                                                    model.<span class="code-function">save_pretrained</span>(<span class="code-string">"./fine_tuned_model"</span>)
+                                                    tokenizer.<span class="code-function">save_pretrained</span>(<span class="code-string">"./fine_tuned_model"</span>)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-lightning me-2"></i>Optimización y Despliegue</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>Los modelos Transformer suelen ser grandes y computacionalmente costosos. Estas son algunas técnicas para optimizarlos y desplegarlos eficientemente:</p>
+                                        
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="card h-100">
+                                                    <div class="card-header bg-light">
+                                                        <h6 class="mb-0">Técnicas de Optimización</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item">
+                                                                <strong>Destilación del conocimiento:</strong> Crear modelos más pequeños que aprenden del comportamiento de modelos grandes (ej. DistilBERT)
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <strong>Cuantización:</strong> Reducir la precisión de los pesos (de float32 a int8) con mínima pérdida de rendimiento
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <strong>Poda:</strong> Eliminar conexiones o neuronas menos importantes
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <strong>Factorización de matrices:</strong> Descomponer matrices grandes en productos de matrices más pequeñas
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <strong>Atención eficiente:</strong> Implementaciones alternativas como Linformer, Reformer o Performer
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="card h-100">
+                                                    <div class="card-header bg-light">
+                                                        <h6 class="mb-0">Opciones de Despliegue</h6>
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <ul class="list-group list-group-flush">
+                                                            <li class="list-group-item">
+                                                                <strong>ONNX Runtime:</strong> Convertir modelos a formato ONNX para inferencia optimizada en múltiples plataformas
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <strong>TensorRT:</strong> Optimizador de NVIDIA para inferencia de alta velocidad en GPUs
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <strong>TensorFlow Serving:</strong> Sistema de despliegue para modelos TensorFlow en producción
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <strong>Hugging Face Inference API:</strong> Servicio gestionado para desplegar modelos Transformer
+                                                            </li>
+                                                            <li class="list-group-item">
+                                                                <strong>FastAPI + Docker:</strong> Crear APIs personalizadas y containerizadas para modelos
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-warning mt-4">
+                                            <h6><i class="bi bi-lightbulb"></i> Consejo Práctico</h6>
+                                            <p class="mb-0">Para aplicaciones en producción, considere primero modelos más pequeños y eficientes como DistilBERT, MobileBERT o TinyBERT, que ofrecen un buen equilibrio entre rendimiento y eficiencia. Solo escale a modelos más grandes si es absolutamente necesario para su caso de uso.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="desafios" class="card section-card">
+                    <div class="card-header bg-secondary text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-exclamation-triangle me-2"></i>
+                            Desafíos y Limitaciones
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">A pesar de su éxito, los Transformers enfrentan varios desafíos y limitaciones importantes que deben considerarse al trabajar con ellos.</p>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-danger text-white">
+                                        <h5 class="mb-0"><i class="bi bi-cpu me-2"></i>Desafíos Computacionales</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-danger me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Complejidad cuadrática:</strong> La atención estándar tiene complejidad O(n²) con respecto a la longitud de la secuencia, limitando su aplicación a secuencias largas.
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-danger me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Requisitos de memoria:</strong> Los modelos grandes requieren GPUs con mucha memoria, limitando quién puede entrenarlos y utilizarlos.
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-danger me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Costos energéticos:</strong> El entrenamiento de modelos grandes tiene una huella de carbono significativa.
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-danger me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Latencia de inferencia:</strong> Los modelos grandes pueden ser lentos para generar respuestas en tiempo real.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        
+                                        <div class="alert alert-danger mt-3">
+                                            <h6><i class="bi bi-graph-up-arrow"></i> Tendencia Preocupante</h6>
+                                            <p class="mb-0">El tamaño de los modelos de lenguaje ha crecido exponencialmente, de millones a cientos de miles de millones de parámetros en pocos años, haciendo que el entrenamiento desde cero sea inaccesible para la mayoría de organizaciones.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-shield-exclamation me-2"></i>Desafíos Éticos y Sociales</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-warning me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Sesgos:</strong> Los modelos pueden perpetuar o amplificar sesgos presentes en los datos de entrenamiento.
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-warning me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Desinformación:</strong> Capacidad para generar contenido falso pero convincente a gran escala.
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-warning me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Privacidad:</strong> Riesgo de memorización de datos sensibles durante el entrenamiento.
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-warning me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Concentración de poder:</strong> Solo grandes empresas pueden desarrollar los modelos más avanzados.
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item d-flex">
+                                                <i class="bi bi-exclamation-circle text-warning me-2 flex-shrink-0 mt-1"></i>
+                                                <div>
+                                                    <strong>Impacto laboral:</strong> Potencial automatización de tareas creativas y cognitivas.
+                                                </div>
+                                            </li>
+                                        </ul>
+                                        
+                                        <div class="alert alert-warning mt-3">
+                                            <h6><i class="bi bi-people"></i> Responsabilidad Compartida</h6>
+                                            <p class="mb-0">Desarrolladores, empresas, gobiernos y usuarios deben colaborar para establecer estándares éticos, regulaciones apropiadas y prácticas responsables en el desarrollo y despliegue de estos modelos.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="bi bi-puzzle me-2"></i>Limitaciones Técnicas</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row g-4">
+                                            <div class="col-md-6">
+                                                <div class="limitation-card">
+                                                    <h6><i class="bi bi-chat-square-text me-2"></i>Razonamiento y Comprensión</h6>
+                                                    <p>Los Transformers pueden generar texto que parece inteligente, pero a menudo carecen de comprensión real y razonamiento sólido:</p>
+                                                    <ul>
+                                                        <li>Dificultad con la lógica compleja</li>
+                                                        <li>Problemas con el razonamiento matemático</li>
+                                                        <li>Falta de comprensión causal</li>
+                                                        <li>"Alucinaciones" o generación de información falsa con confianza</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="limitation-card">
+                                                    <h6><i class="bi bi-clock-history me-2"></i>Contexto y Memoria</h6>
+                                                    <p>Limitaciones en el manejo de información a largo plazo:</p>
+                                                    <ul>
+                                                        <li>Ventana de contexto limitada (aunque creciente)</li>
+                                                        <li>Dificultad para mantener coherencia en textos muy largos</li>
+                                                        <li>Problemas para actualizar conocimiento sin reentrenamiento</li>
+                                                        <li>Conocimiento limitado al momento del entrenamiento</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="limitation-card">
+                                                    <h6><i class="bi bi-translate me-2"></i>Multilingüismo y Multimodalidad</h6>
+                                                    <p>Desafíos en la diversidad lingüística y de formatos:</p>
+                                                    <ul>
+                                                        <li>Rendimiento desigual entre idiomas (sesgo hacia el inglés)</li>
+                                                        <li>Dificultad con lenguas de bajos recursos</li>
+                                                        <li>Integración imperfecta entre modalidades (texto, imagen, audio)</li>
+                                                        <li>Comprensión limitada de contenido visual complejo</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="limitation-card">
+                                                    <h6><i class="bi bi-gear-wide-connected me-2"></i>Adaptabilidad y Generalización</h6>
+                                                    <p>Retos para adaptarse a nuevos dominios y tareas:</p>
+                                                    <ul>
+                                                        <li>Necesidad de grandes cantidades de datos para fine-tuning</li>
+                                                        <li>Dificultad para transferir conocimiento entre dominios muy diferentes</li>
+                                                        <li>Problemas con la generalización fuera de la distribución</li>
+                                                        <li>Sensibilidad a pequeñas perturbaciones en la entrada</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-info mt-4">
+                                            <h6><i class="bi bi-lightbulb"></i> Perspectiva Equilibrada</h6>
+                                            <p class="mb-0">Es importante reconocer tanto el impresionante progreso como las limitaciones actuales de los Transformers. Estas limitaciones no son razones para descartar la tecnología, sino áreas de investigación activa que probablemente verán mejoras significativas en los próximos años.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="futuro" class="card section-card">
+                    <div class="card-header bg-primary text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-arrow-up-right-circle me-2"></i>
+                            El Futuro de los Transformers
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">La arquitectura Transformer continúa evolucionando rápidamente. Estas son algunas de las direcciones más prometedoras para el futuro.</p>
+                        
+                        <div class="row g-4 mb-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-graph-up-arrow me-2"></i>Tendencias Emergentes</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="d-flex mb-3">
+                                            <div class="trend-icon bg-success text-white">
+                                                <i class="bi bi-infinity"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6>Transformers Eficientes</h6>
+                                                <p class="mb-0">Nuevas arquitecturas que reducen la complejidad computacional de O(n²) a O(n log n) o incluso O(n), permitiendo procesar secuencias mucho más largas.</p>
+                                                <div class="mt-1">
+                                                    <span class="badge bg-light text-dark">Longformer</span>
+                                                    <span class="badge bg-light text-dark">Performer</span>
+                                                    <span class="badge bg-light text-dark">Linformer</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex mb-3">
+                                            <div class="trend-icon bg-primary text-white">
+                                                <i class="bi bi-braces"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6>Modelos Multimodales</h6>
+                                                <p class="mb-0">Integración de múltiples tipos de datos (texto, imágenes, audio, video) en un único modelo Transformer.</p>
+                                                <div class="mt-1">
+                                                    <span class="badge bg-light text-dark">CLIP</span>
+                                                    <span class="badge bg-light text-dark">DALL-E</span>
+                                                    <span class="badge bg-light text-dark">Flamingo</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="d-flex">
+                                            <div class="trend-icon bg-warning text-dark">
+                                                <i class="bi bi-cpu"></i>
+                                            </div>
+                                            <div class="ms-3">
+                                                <h6>Modelos de Razonamiento</h6>
+                                                <p class="mb-0">Transformers mejorados con capacidades explícitas de razonamiento, memoria externa o integración con herramientas.</p>
+                                                <div class="mt-1">
+                                                    <span class="badge bg-light text-dark">Chain-of-Thought</span>
+                                                    <span class="badge bg-light text-dark">Tool-Augmented LLMs</span>
+                                                    <span class="badge bg-light text-dark">Retrieval-Augmented Generation</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Áreas de Investigación Activa</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="research-area">
+                                            <h6><i class="bi bi-shield-check me-2"></i>Alineación y Seguridad</h6>
+                                            <p>Desarrollo de técnicas para alinear los modelos con valores humanos y hacerlos más seguros:</p>
+                                            <ul>
+                                                <li>Aprendizaje por refuerzo con feedback humano (RLHF)</li>
+                                                <li>Evaluación de riesgos y mitigación de daños</li>
+                                                <li>Detección y prevención de usos maliciosos</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="research-area">
+                                            <h6><i class="bi bi-eye me-2"></i>Interpretabilidad</h6>
+                                            <p>Mejora de nuestra comprensión del funcionamiento interno de los Transformers:</p>
+                                            <ul>
+                                                <li>Visualización de patrones de atención</li>
+                                                <li>Identificación de neuronas y circuitos funcionales</li>
+                                                <li>Explicabilidad de decisiones y predicciones</li>
+                                            </ul>
+                                        </div>
+                                        
+                                        <div class="research-area">
+                                            <h6><i class="bi bi-globe me-2"></i>Democratización</h6>
+                                            <p>Hacer que los beneficios de los Transformers sean más accesibles:</p>
+                                            <ul>
+                                                <li>Modelos más pequeños y eficientes</li>
+                                                <li>Mejora del soporte multilingüe</li>
+                                                <li>Reducción de barreras técnicas y económicas</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-header bg-dark text-white">
+                                        <h5 class="mb-0"><i class="bi bi-stars me-2"></i>Visión a Largo Plazo</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="vision-card">
+                                                    <h6 class="text-primary">Integración con Sistemas Simbólicos</h6>
+                                                    <p>Combinación de las fortalezas de los Transformers (aprendizaje de patrones, flexibilidad) con sistemas simbólicos (razonamiento lógico, garantías formales).</p>
+                                                    <div class="vision-example">
+                                                        <strong>Ejemplo:</strong> Modelos que pueden realizar razonamiento matemático riguroso o seguir instrucciones complejas con precisión.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="vision-card">
+                                                    <h6 class="text-success">Agentes Autónomos</h6>
+                                                    <p>Transformers como núcleo de sistemas que pueden planificar, razonar y actuar de forma autónoma en entornos complejos.</p>
+                                                    <div class="vision-example">
+                                                        <strong>Ejemplo:</strong> Asistentes personales que pueden realizar tareas complejas, investigar temas y aprender continuamente de la interacción.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="vision-card">
+                                                    <h6 class="text-danger">Modelos Especializados por Dominio</h6>
+                                                    <p>Evolución hacia ecosistemas de modelos Transformer especializados para dominios específicos, en lugar de modelos generalistas cada vez más grandes.</p>
+                                                    <div class="vision-example">
+                                                        <strong>Ejemplo:</strong> Modelos optimizados para medicina, derecho, ciencia o educación, con conocimiento profundo de su dominio.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="vision-card">
+                                                    <h6 class="text-info">Transformers Continuamente Aprendiendo</h6>
+                                                    <p>Modelos que pueden actualizar su conocimiento y habilidades sin necesidad de reentrenamiento completo.</p>
+                                                    <div class="vision-example">
+                                                        <strong>Ejemplo:</strong> Sistemas que aprenden de la interacción, incorporan nueva información y mejoran con el tiempo.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="quote-card mt-4">
+                                            <p class="lead fst-italic">"Los Transformers han cambiado fundamentalmente nuestra comprensión de lo que es posible en inteligencia artificial. Estamos solo al comienzo de explorar su potencial y sus implicaciones para la sociedad."</p>
+                                            <p class="text-end mb-0"><strong>— Yoshua Bengio</strong>, pionero en deep learning</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="recursos" class="card section-card">
+                    <div class="card-header bg-success text-white">
+                        <h2 class="h4 mb-0 d-flex align-items-center">
+                            <i class="bi bi-book me-2"></i>
+                            Recursos de Aprendizaje
+                        </h2>
+                    </div>
+                    <div class="card-body">
+                        <p class="lead mb-4">Una colección de recursos para profundizar en el estudio y aplicación de los Transformers.</p>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="mb-0"><i class="bi bi-journal-text me-2"></i>Artículos Fundamentales</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <a href="https://arxiv.org/abs/1706.03762" target="_blank" class="text-decoration-none">
+                                                    <strong>Attention Is All You Need</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">El paper original que introdujo la arquitectura Transformer (Vaswani et al., 2017)</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://arxiv.org/abs/1810.04805" target="_blank" class="text-decoration-none">
+                                                    <strong>BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Introducción de BERT (Devlin et al., 2018)</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://arxiv.org/abs/2005.14165" target="_blank" class="text-decoration-none">
+                                                    <strong>Language Models are Few-Shot Learners</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Paper de GPT-3 que demostró capacidades emergentes (Brown et al., 2020)</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://arxiv.org/abs/1910.10683" target="_blank" class="text-decoration-none">
+                                                    <strong>Exploring the Limits of Transfer Learning with a Unified Text-to-Text Transformer</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Introducción de T5 (Raffel et al., 2019)</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-success text-white">
+                                        <h5 class="mb-0"><i class="bi bi-mortarboard me-2"></i>Cursos y Tutoriales</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <a href="https://www.coursera.org/specializations/natural-language-processing" target="_blank" class="text-decoration-none">
+                                                    <strong>Natural Language Processing Specialization</strong> (Coursera)
+                                                </a>
+                                                <p class="small text-muted mb-0">Curso completo que cubre Transformers y otras técnicas de NLP</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://huggingface.co/course" target="_blank" class="text-decoration-none">
+                                                    <strong>Hugging Face Course</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Curso gratuito sobre NLP con Transformers usando la biblioteca Hugging Face</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://www.deeplearning.ai/short-courses/" target="_blank" class="text-decoration-none">
+                                                    <strong>Building Systems with the ChatGPT API</strong> (DeepLearning.AI)
+                                                </a>
+                                                <p class="small text-muted mb-0">Curso práctico sobre cómo construir aplicaciones con modelos GPT</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://www.youtube.com/watch?v=TQQlZhbC5ps" target="_blank" class="text-decoration-none">
+                                                    <strong>The Illustrated Transformer</strong> (YouTube)
+                                                </a>
+                                                <p class="small text-muted mb-0">Explicación visual detallada de la arquitectura Transformer</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-info text-white">
+                                        <h5 class="mb-0"><i class="bi bi-code-slash me-2"></i>Bibliotecas y Herramientas</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <a href="https://huggingface.co/transformers/" target="_blank" class="text-decoration-none">
+                                                    <strong>Hugging Face Transformers</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Biblioteca principal para trabajar con modelos Transformer pre-entrenados</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://www.tensorflow.org/text" target="_blank" class="text-decoration-none">
+                                                    <strong>TensorFlow Text</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Herramientas de TensorFlow para procesamiento de texto y modelos Transformer</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://pytorch.org/text/" target="_blank" class="text-decoration-none">
+                                                    <strong>PyTorch Text</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Utilidades de PyTorch para NLP y modelos de lenguaje</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://github.com/openai/openai-python" target="_blank" class="text-decoration-none">
+                                                    <strong>OpenAI API</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Acceso a modelos GPT y otros modelos de OpenAI</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card h-100 border-0 shadow-sm">
+                                    <div class="card-header bg-warning text-dark">
+                                        <h5 class="mb-0"><i class="bi bi-people me-2"></i>Comunidades y Foros</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <ul class="list-group list-group-flush">
+                                            <li class="list-group-item">
+                                                <a href="https://discuss.huggingface.co/" target="_blank" class="text-decoration-none">
+                                                    <strong>Hugging Face Forums</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Comunidad activa para discutir implementaciones de Transformers</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://www.reddit.com/r/MachineLearning/" target="_blank" class="text-decoration-none">
+                                                    <strong>r/MachineLearning</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Subreddit con discusiones sobre avances en Transformers y ML</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://paperswithcode.com/methods/category/transformers" target="_blank" class="text-decoration-none">
+                                                    <strong>Papers with Code - Transformers</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Colección de papers sobre Transformers con implementaciones</p>
+                                            </li>
+                                            <li class="list-group-item">
+                                                <a href="https://discord.gg/huggingface" target="_blank" class="text-decoration-none">
+                                                    <strong>Hugging Face Discord</strong>
+                                                </a>
+                                                <p class="small text-muted mb-0">Canal de Discord para ayuda en tiempo real</p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-success mt-4">
+                            <h6><i class="bi bi-lightbulb"></i> Consejo para Principiantes</h6>
+                            <p class="mb-0">Si estás comenzando con Transformers, recomendamos seguir este camino de aprendizaje: primero, entender los conceptos básicos a través de tutoriales visuales; luego, experimentar con modelos pre-entrenados usando Hugging Face; finalmente, profundizar en los detalles técnicos con los papers originales y cursos avanzados.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-3 d-none d-lg-block">
+                <div class="sticky-top pt-5">
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-dark text-white">
+                            <h5 class="mb-0"><i class="bi bi-list-ul me-2"></i>Contenido</h5>
+                        </div>
+                        <div class="card-body">
+                            <nav id="toc" class="nav flex-column">
+                                <a class="nav-link" href="#introduccion">Introducción</a>
+                                <a class="nav-link" href="#fundamentos">Fundamentos</a>
+                                <a class="nav-link" href="#arquitectura">Arquitectura</a>
+                                <a class="nav-link" href="#modelos">Modelos Principales</a>
+                                <a class="nav-link" href="#aplicaciones">Aplicaciones</a>
+                                <a class="nav-link" href="#implementacion">Implementación</a>
+                                <a class="nav-link" href="#desafios">Desafíos</a>
+                                <a class="nav-link" href="#futuro">Futuro</a>
+                                <a class="nav-link" href="#recursos">Recursos</a>
+                            </nav>
+                        </div>
+                    </div>
+                    
+                    <div class="card border-0 shadow-sm mb-4">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-lightbulb me-2"></i>Conceptos Clave</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-2">
+                                <span class="badge bg-primary">Atención</span>
+                                <span class="badge bg-secondary">Self-Attention</span>
+                                <span class="badge bg-success">Encoder-Decoder</span>
+                                <span class="badge bg-danger">Embeddings</span>
+                                <span class="badge bg-warning text-dark">Fine-tuning</span>
+                                <span class="badge bg-info">Multi-head</span>
+                                <span class="badge bg-dark">Tokenización</span>
+                                <span class="badge bg-secondary">Positional Encoding</span>
+                                <span class="badge bg-primary">Transfer Learning</span>
+                                <span class="badge bg-success">Generación</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0"><i class="bi bi-download me-2"></i>Recursos Descargables</h5>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex align-items-center">
+                                    <i class="bi bi-file-pdf text-danger me-2 fs-5"></i>
+                                    <a href="#" class="text-decoration-none">Guía de Transformers (PDF)</a>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <i class="bi bi-file-code text-primary me-2 fs-5"></i>
+                                    <a href="#" class="text-decoration-none">Ejemplos de código (ZIP)</a>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <i class="bi bi-file-earmark-slides text-success me-2 fs-5"></i>
+                                    <a href="#" class="text-decoration-none">Presentación (PPT)</a>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <i class="bi bi-card-checklist text-warning me-2 fs-5"></i>
+                                    <a href="#" class="text-decoration-none">Cheat Sheet</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="bg-dark text-white py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5 class="mb-3">Transformers en Deep Learning</h5>
+                <p class="text-muted">Una guía completa sobre la arquitectura Transformer, sus variantes y aplicaciones en el campo del aprendizaje profundo.</p>
+                <div class="mt-3">
+                    <a href="#" class="text-decoration-none me-3 text-white-50"><i class="bi bi-github"></i></a>
+                    <a href="#" class="text-decoration-none me-3 text-white-50"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-decoration-none me-3 text-white-50"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="text-decoration-none text-white-50"><i class="bi bi-youtube"></i></a>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4 mb-md-0">
+                <h5 class="mb-3">Enlaces Rápidos</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#introduccion" class="text-decoration-none text-white-50">Introducción</a></li>
+                    <li class="mb-2"><a href="#arquitectura" class="text-decoration-none text-white-50">Arquitectura</a></li>
+                    <li class="mb-2"><a href="#modelos" class="text-decoration-none text-white-50">Modelos Principales</a></li>
+                    <li class="mb-2"><a href="#aplicaciones" class="text-decoration-none text-white-50">Aplicaciones</a></li>
+                    <li><a href="#recursos" class="text-decoration-none text-white-50">Recursos</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4">
+                <h5 class="mb-3">Contacto</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="bi bi-envelope me-2 text-white-50"></i> <a href="mailto:info@example.com" class="text-decoration-none text-white-50">info@example.com</a></li>
+                    <li class="mb-2"><i class="bi bi-geo-alt me-2 text-white-50"></i> <span class="text-white-50">Santiago, Chile</span></li>
+                    <li><i class="bi bi-telephone me-2 text-white-50"></i> <span class="text-white-50">+56 9 1234 5678</span></li>
+                </ul>
+                <div class="mt-3">
+                    <a href="#" class="btn btn-outline-light btn-sm">Suscríbete al Newsletter</a>
+                </div>
+            </div>
+        </div>
+        <hr class="mt-4 mb-4 border-secondary">
+        <div class="row">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="mb-0 text-white-50">&copy; 2023 Transformers en Deep Learning. Todos los derechos reservados.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <p class="mb-0 text-white-50">Diseñado con <i class="bi bi-heart-fill text-danger"></i> por <a href="#" class="text-white-50">Tu Nombre</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Prism JS para resaltado de código -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+
+<script>
+    // Activar todos los tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+    
+    // Smooth scroll para los enlaces de navegación
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            
+            const targetId = this.getAttribute('href');
+            const targetElement = document.querySelector(targetId);
+            
+            if (targetElement) {
+                window.scrollTo({
+                    top: targetElement.offsetTop - 70,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Activar scrollspy
+    document.addEventListener('DOMContentLoaded', function() {
+        var scrollSpy = new bootstrap.ScrollSpy(document.body, {
+            target: '#toc',
+            offset: 100
+        });
+        
+        // Destacar sección activa en el TOC
+        const navLinks = document.querySelectorAll('#toc .nav-link');
+        
+        window.addEventListener('scroll', function() {
+            let current = '';
+            
+            document.querySelectorAll('section[id], div[id].section-card').forEach(function(section) {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= sectionTop - 150) {
+                    current = '#' + section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(function(link) {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+    });
+    
+    // Animación para las cards al hacer scroll
+    const animateOnScroll = function() {
+        const cards = document.querySelectorAll('.section-card');
+        
+        cards.forEach(card => {
+            const cardPosition = card.getBoundingClientRect().top;
+            const screenPosition = window.innerHeight / 1.3;
+            
+            if (cardPosition < screenPosition) {
+                card.classList.add('animate__animated', 'animate__fadeInUp');
+            }
+        });
+    };
+    
+    window.addEventListener('scroll', animateOnScroll);
+    
+    // Inicializar animación al cargar la página
+    document.addEventListener('DOMContentLoaded', animateOnScroll);
+</script>
+</body>
+</html>

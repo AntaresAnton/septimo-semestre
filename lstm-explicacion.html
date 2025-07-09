@@ -2548,88 +2548,453 @@ optimizador = optim.Adam(modelo.parameters(), lr=0.001)
 </section>
 
 
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <h5 class="text-white mb-4">LSTM en Deep Learning</h5>
-                    <p class="text-white-50">Aplicaciones en Contexto Chileno</p>
-                    <div class="mt-4">
-                        <a href="#" class="text-white-50 me-3"><i class="bi bi-github fs-5"></i></a>
-                        <a href="#" class="text-white-50 me-3"><i class="bi bi-linkedin fs-5"></i></a>
-                        <a href="#" class="text-white-50"><i class="bi bi-twitter fs-5"></i></a>
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-4 mb-lg-0">
-                    <h5 class="text-white mb-4">Enlaces Rápidos</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#fundamentos" class="text-white-50 text-decoration-none">Fundamentos LSTM</a></li>
-                        <li class="mb-2"><a href="#arquitectura" class="text-white-50 text-decoration-none">Arquitectura</a></li>
-                        <li class="mb-2"><a href="#aplicaciones" class="text-white-50 text-decoration-none">Aplicaciones</a></li>
-                        <li class="mb-2"><a href="#comparativa" class="text-white-50 text-decoration-none">LSTM vs GRU</a></li>
-                        <li><a href="#caso-estudio" class="text-white-50 text-decoration-none">Caso de Estudio</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-4">
-                    <h5 class="text-white mb-4">Recursos Adicionales</h5>
-                    <ul class="list-unstyled">
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Documentación TensorFlow</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Documentación PyTorch</a></li>
-                        <li class="mb-2"><a href="#" class="text-white-50 text-decoration-none">Papers sobre LSTM</a></li>
-                        <li><a href="#" class="text-white-50 text-decoration-none">Datasets Chilenos</a></li>
-                    </ul>
-                </div>
+<div id="encoder-decoder" class="card section-card">
+    <div class="card-header bg-info text-white">
+        <h2 class="h4 mb-0 d-flex align-items-center">
+            <i class="bi bi-arrow-left-right me-2"></i>
+            Arquitecturas Encoder-Decoder: Secuencia a Secuencia
+        </h2>
+    </div>
+    <div class="card-body">
+        <p class="lead mb-4">Las arquitecturas encoder-decoder (codificador-decodificador) son un tipo especial de redes neuronales diseñadas para transformar una secuencia de entrada en otra secuencia de salida, potencialmente de diferente longitud.</p>
+        
+        <div class="row align-items-center mb-4">
+            <div class="col-md-7">
+                <h5 class="text-info mb-3"><i class="bi bi-diagram-3 me-2"></i>¿Cómo funcionan?</h5>
+                <p>La arquitectura consta de dos componentes principales:</p>
+                <ul>
+                    <li><strong>Encoder (Codificador):</strong> Procesa la secuencia de entrada completa y la comprime en una representación de contexto (vector o conjunto de vectores).</li>
+                    <li><strong>Decoder (Decodificador):</strong> Toma la representación generada por el encoder y produce secuencialmente los elementos de salida.</li>
+                </ul>
+                <p>Esta estructura es ideal para tareas donde tanto la entrada como la salida son secuencias, como traducción automática, resumen de texto, o conversión de voz a texto.</p>
             </div>
-            <hr class="mt-4 mb-4" style="border-color: rgba(255,255,255,0.1);">
-            <div class="row">
-                <div class="col-md-12 text-center">
-                    <p class="text-white-50 mb-0">Desarrollado para fines educativos | <span id="year">2023</span></p>
+            <div class="col-md-5 text-center">
+                <div class="bg-light p-3 rounded">
+                    <h6 class="text-primary mb-3">Arquitectura Básica</h6>
+                    <div class="d-inline-block p-3 border rounded mb-2" style="background-color: #f8f9fa;">
+                        <div class="mb-3">
+                            <span class="badge bg-primary p-2">Secuencia de Entrada</span>
+                            <i class="bi bi-arrow-down mx-2"></i>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-success p-2">Encoder (LSTM/GRU)</span>
+                            <i class="bi bi-arrow-down mx-2"></i>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-warning p-2">Vector de Contexto</span>
+                            <i class="bi bi-arrow-down mx-2"></i>
+                        </div>
+                        <div class="mb-3">
+                            <span class="badge bg-danger p-2">Decoder (LSTM/GRU)</span>
+                            <i class="bi bi-arrow-down mx-2"></i>
+                        </div>
+                        <div>
+                            <span class="badge bg-info p-2">Secuencia de Salida</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </footer>
+        
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-puzzle me-2"></i>Componentes Clave</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h6 class="text-primary mb-3">Mecanismo de Atención</h6>
+                                        <p>Permite al decodificador enfocarse en diferentes partes de la secuencia de entrada en cada paso de la generación de salida.</p>
+                                        <div class="alert alert-primary p-2 mb-0">
+                                            <small><i class="bi bi-lightbulb"></i> <strong>Ventaja:</strong> Mejora significativamente el rendimiento en secuencias largas al evitar el cuello de botella del vector de contexto único.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h6 class="text-primary mb-3">Teacher Forcing</h6>
+                                        <p>Técnica de entrenamiento donde se usa la salida correcta del paso anterior como entrada al decodificador, en lugar de la salida predicha.</p>
+                                        <div class="alert alert-warning p-2 mb-0">
+                                            <small><i class="bi bi-exclamation-circle"></i> <strong>Desafío:</strong> Puede crear discrepancia entre entrenamiento e inferencia si no se maneja adecuadamente.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card h-100 bg-light">
+                                    <div class="card-body">
+                                        <h6 class="text-primary mb-3">Beam Search</h6>
+                                        <p>Algoritmo de decodificación que mantiene las k secuencias más probables en cada paso, en lugar de elegir solo la mejor.</p>
+                                        <div class="alert alert-success p-2 mb-0">
+                                            <small><i class="bi bi-check-circle"></i> <strong>Resultado:</strong> Genera secuencias de mayor calidad al explorar múltiples posibilidades simultáneamente.</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h5 class="text-info mb-3"><i class="bi bi-code-slash me-2"></i>Implementación con LSTM/GRU</h5>
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">Encoder LSTM</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="bg-light p-3 rounded mb-3">
+                            <pre class="mb-0"><code># Encoder
+encoder_inputs = Input(shape=(None, input_dim))
+encoder = LSTM(hidden_units, return_state=True)
+_, state_h, state_c = encoder(encoder_inputs)
+encoder_states = [state_h, state_c]  # Estados LSTM</code></pre>
+                        </div>
+                        <p class="small text-muted">El encoder procesa la secuencia completa y devuelve solo los estados finales (h, c) que capturan la información de toda la secuencia de entrada.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">Decoder LSTM</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="bg-light p-3 rounded mb-3">
+                            <pre class="mb-0"><code># Decoder
+decoder_inputs = Input(shape=(None, output_dim))
+decoder_lstm = LSTM(hidden_units, return_sequences=True, 
+                   return_state=True)
+decoder_outputs, _, _ = decoder_lstm(decoder_inputs, 
+                                   initial_state=encoder_states)
+decoder_dense = Dense(output_vocab_size, activation='softmax')
+decoder_outputs = decoder_dense(decoder_outputs)</code></pre>
+                        </div>
+                        <p class="small text-muted">El decoder utiliza los estados del encoder como estado inicial y genera la secuencia de salida paso a paso, utilizando su propia salida anterior como entrada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="caso-chileno" class="card border-0 shadow-sm mb-4">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0"><i class="bi bi-geo-alt me-2"></i>Caso de Estudio Chileno: Traducción Español-Mapudungun</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="chilean-example">
+                            <h6 class="text-danger mb-3">Contexto Cultural</h6>
+                            <p>El mapudungun es la lengua del pueblo Mapuche, originario del centro-sur de Chile y Argentina. Con menos de 200,000 hablantes activos, es considerada una lengua en peligro de extinción.</p>
+                            <p>La preservación y revitalización del mapudungun es un desafío importante para la conservación del patrimonio cultural chileno.</p>
+                            
+                            <div class="alert alert-warning">
+                                <strong>Desafíos Lingüísticos:</strong>
+                                <ul class="mb-0">
+                                    <li>Estructura gramatical muy diferente al español</li>
+                                    <li>Escasez de corpus paralelos digitalizados</li>
+                                    <li>Variaciones dialectales significativas</li>
+                                    <li>Sistema de escritura no estandarizado completamente</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="bg-light p-3 rounded">
+                            <h6 class="text-primary mb-3">Arquitectura Encoder-Decoder con Atención</h6>
+                            <p>Investigadores de la Universidad de la Frontera (UFRO) y la Universidad de Chile desarrollaron un modelo de traducción español-mapudungun utilizando:</p>
+                            
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <span class="badge bg-primary p-2">1</span>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="mb-0"><strong>Encoder BiLSTM</strong> para capturar mejor el contexto bidireccional del español</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <span class="badge bg-primary p-2">2</span>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="mb-0"><strong>Mecanismo de atención</strong> para manejar las diferencias estructurales entre ambos idiomas</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex mb-3">
+                                <div class="flex-shrink-0">
+                                    <span class="badge bg-primary p-2">3</span>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="mb-0"><strong>Decoder LSTM</strong> con beam search para generar traducciones más coherentes</p>
+                                </div>
+                            </div>
+                            
+                            <div class="d-flex">
+                                <div class="flex-shrink-0">
+                                    <span class="badge bg-primary p-2">4</span>
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <p class="mb-0"><strong>Técnicas de data augmentation</strong> para ampliar el limitado corpus de entrenamiento</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-lg-12">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <h6 class="text-center mb-4">Ejemplos de Traducción</h6>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered">
+                                        <thead class="table-primary">
+                                            <tr>
+                                                <th>Español</th>
+                                                <th>Mapudungun (Traducción del Modelo)</th>
+                                                <th>Traducción Correcta</th>
+                                                <th>Precisión</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>"Buenos días, ¿cómo estás?"</td>
+                                                <td>"Mari mari, chumleymi?"</td>
+                                                <td>"Mari mari, chumleymi?"</td>
+                                                <td><span class="badge bg-success">Alta</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>"La tierra es nuestra madre y debemos cuidarla"</td>
+                                                <td>"Mapu ta iñchiñ taiñ ñuke, ka müley taiñ kuñiwtual"</td>
+                                                <td>"Mapu ta iñchiñ taiñ ñuke, ka müley taiñ kuñiwtual"</td>
+                                                <td><span class="badge bg-success">Alta</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>"Los niños juegan en el bosque nativo"</td>
+                                                <td>"Pu pichikeche aukantuy mawida mew"</td>
+                                                <td>"Pu pichikeche aukantuy pu mawida mew"</td>
+                                                <td><span class="badge bg-warning">Media</span></td>
+                                            </tr>
+                                            <tr>
+                                                <td>"La tecnología moderna debe respetar las tradiciones ancestrales"</td>
+                                                <td>"We rakizuam müley ñi yamael kuyfike az mongen"</td>
+                                                <td>"We rakizuam müley ñi ekuñpewael kuyfike az mongen"</td>
+                                                <td><span class="badge bg-danger">Baja</span></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <div class="alert alert-success">
+                            <h6><i class="bi bi-graph-up"></i> Resultados del Proyecto</h6>
+                            <ul class="mb-0">
+                                <li>BLEU Score: 0.42 (comparable a sistemas de traducción entre idiomas con recursos limitados)</li>
+                                <li>Precisión en vocabulario básico: 78%</li>
+                                <li>Precisión en frases culturalmente relevantes: 65%</li>
+                                <li>Adopción por comunidades educativas en La Araucanía</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="alert alert-info">
+                            <h6><i class="bi bi-lightbulb"></i> Impacto Cultural</h6>
+                            <p class="mb-0">El sistema se ha implementado en una aplicación móvil llamada "Kimün" (conocimiento en mapudungun) que facilita la comunicación entre hablantes de español y mapudungun, especialmente en contextos educativos y de salud en zonas rurales del sur de Chile.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <h5 class="text-info mb-3"><i class="bi bi-gear me-2"></i>Aplicaciones de Encoder-Decoder</h5>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h6 class="mb-0"><i class="bi bi-translate me-2"></i>Traducción Automática</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>Transformación de texto de un idioma a otro, donde las estructuras gramaticales pueden ser completamente diferentes.</p>
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-1"><strong>Ejemplo:</strong></p>
+                            <p class="fst-italic mb-1">"The weather is nice today" → "El clima está agradable hoy"</p>
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge bg-primary">Google Translate</span>
+                            <span class="badge bg-secondary">DeepL</span>
+                            <span class="badge bg-info">Microsoft Translator</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h6 class="mb-0"><i class="bi bi-file-text me-2"></i>Resumen de Texto</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>Condensación de documentos largos en versiones más cortas manteniendo la información clave.</p>
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-1"><strong>Entrada:</strong> Documento extenso (varios párrafos)</p>
+                            <p class="mb-1"><strong>Salida:</strong> Resumen conciso (pocas oraciones)</p>
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge bg-success">Abstractivo</span>
+                            <span class="badge bg-warning">Extractivo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h6 class="mb-0"><i class="bi bi-chat-dots me-2"></i>Chatbots y Asistentes</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>Generación de respuestas coherentes y contextuales a preguntas o comentarios de usuarios.</p>
+                        <div class="bg-light p-2 rounded">
+                            <p class="mb-1"><strong>Usuario:</strong> "¿Cuál es el mejor lugar para visitar en Santiago?"</p>
+                            <p class="mb-1"><strong>Bot:</strong> "El Cerro San Cristóbal ofrece vistas panorámicas de la ciudad y es ideal para visitar en días despejados."</p>
+                        </div>
+                        <div class="mt-2">
+                            <span class="badge bg-danger">Atención al Cliente</span>
+                            <span class="badge bg-info">Asistencia Virtual</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-warning text-dark">
+                        <h6 class="mb-0"><i class="bi bi-mic me-2"></i>Reconocimiento de Voz</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>Conversión de señales de audio en texto, donde el encoder procesa características acústicas y el decoder genera la transcripción.</p>
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <i class="bi bi-soundwave text-warning fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p class="mb-0">Especialmente útil para el reconocimiento del español chileno con sus modismos y acentos regionales.</p>
+                            </div>
+                        </div>
+                        <div class="alert alert-warning p-2 mb-0">
+                            <small><i class="bi bi-info-circle"></i> <strong>Aplicación:</strong> Sistemas de transcripción para el Congreso Nacional de Chile y tribunales de justicia.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h6 class="mb-0"><i class="bi bi-image me-2"></i>Descripción de Imágenes</h6>
+                    </div>
+                    <div class="card-body">
+                        <p>Generación de descripciones textuales a partir de imágenes, donde el encoder es una CNN que procesa la imagen y el decoder genera la descripción.</p>
+                        <div class="d-flex mb-3">
+                            <div class="flex-shrink-0">
+                                <i class="bi bi-camera text-info fs-4"></i>
+                            </div>
+                            <div class="flex-grow-1 ms-3">
+                                <p class="mb-0">Permite describir paisajes chilenos, flora y fauna endémica, o elementos culturales distintivos.</p>
+                            </div>
+                        </div>
+                        <div class="alert alert-info p-2 mb-0">
+                            <small><i class="bi bi-info-circle"></i> <strong>Proyecto:</strong> Sistema de accesibilidad para personas con discapacidad visual en museos chilenos.</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="alert alert-primary mt-4 d-flex">
+            <i class="bi bi-lightbulb fs-3 me-3"></i>
+            <div>
+                <h5>Avances Recientes: Transformers</h5>
+                <p class="mb-0">Aunque las arquitecturas encoder-decoder basadas en LSTM/GRU siguen siendo útiles, los modelos Transformer han revolucionado este campo desde 2017. Los Transformers reemplazan las redes recurrentes por mecanismos de atención de múltiples cabezas, permitiendo un procesamiento paralelo más eficiente y capturando mejor las dependencias a larga distancia. Modelos como BERT, GPT y T5 son ejemplos de arquitecturas basadas en Transformers que han establecido nuevos estándares en tareas de procesamiento de lenguaje natural.</p>
+            </div>
+        </div>
+        
+        <div class="row mt-4">
+            <div class="col-lg-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0"><i class="bi bi-arrow-left-right me-2"></i>LSTM vs Transformers en Encoder-Decoder</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Característica</th>
+                                        <th>LSTM Encoder-Decoder</th>
+                                        <th>Transformer Encoder-Decoder</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Procesamiento</strong></td>
+                                        <td>Secuencial (más lento)</td>
+                                        <td>Paralelo (más rápido)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Dependencias a larga distancia</strong></td>
+                                        <td>Limitadas por el problema del gradiente que desaparece</td>
+                                        <td>Capturadas eficientemente por la atención de múltiples cabezas</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Recursos computacionales</strong></td>
+                                        <td>Moderados</td>
+                                        <td>Altos (especialmente para entrenamiento)</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Tamaño del modelo</strong></td>
+                                        <td>Generalmente más pequeño</td>
+                                        <td>Generalmente más grande</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Rendimiento en datos limitados</strong></td>
+                                        <td>Mejor en conjuntos pequeños</td>
+                                        <td>Requiere más datos para rendimiento óptimo</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Aplicación en dispositivos</strong></td>
+                                        <td>Más adecuado para dispositivos con recursos limitados</td>
+                                        <td>Mejor para sistemas con alta capacidad computacional</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div class="alert alert-secondary mt-3">
+                            <strong>Recomendación para contexto chileno:</strong> Para aplicaciones con recursos limitados o datos escasos (como lenguas indígenas o aplicaciones rurales), las arquitecturas basadas en LSTM siguen siendo una opción viable y eficiente. Para proyectos con mayor disponibilidad de recursos y datos, los Transformers ofrecen un rendimiento superior.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
-        
-        // Activar scrollspy
-        document.addEventListener('DOMContentLoaded', function() {
-            var scrollSpy = new bootstrap.ScrollSpy(document.body, {
-                target: '#navbar-example'
-            });
-            
-            // Smooth scroll para los enlaces de navegación
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    if (this.hash !== '') {
-                        e.preventDefault();
-                        const hash = this.hash;
-                        const targetElement = document.querySelector(hash);
-                        
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 70,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Animación para las tarjetas al hacer scroll
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('animate__animated', 'animate__fadeInUp');
-                    }
-                });
-            }, { threshold: 0.1 });
-            
-            document.querySelectorAll('.section-card').forEach(card => {
-                observer.observe(card);
-            });
-        });
-    </script>
+
 </body>
 </html>
-
-
